@@ -22,4 +22,6 @@ path = "src/day5.rs"
 
 [dependencies]
 csv = "~0.7.0"
+docopt = "~0.6.8"
+docopt_macros = "~0.6.8"
 slow_primes = "~0.1.4"
