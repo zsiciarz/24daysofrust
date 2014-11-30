@@ -3,3 +3,6 @@
 name = "24daysofrust"
 version = "0.0.1"
 authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
+
+[dependencies]
+slow_primes = "~0.1.4"
