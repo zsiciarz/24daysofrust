@@ -11,6 +11,7 @@ fn num_divisors(n: uint, primes: &Primes) -> Option<uint> {
 }
 
 fn main() {
+    println!("24 days of Rust - slow_primes (day 2)");
     let sieve = Primes::sieve(10000u);
     let suspect = 5273u;
     println!("{} is prime: {}", suspect, sieve.is_prime(suspect));
