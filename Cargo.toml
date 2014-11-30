@@ -4,5 +4,9 @@ name = "24daysofrust"
 version = "0.0.1"
 authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 
+[[bin]]
+name = "day2"
+path = "src/day2.rs"
+
 [dependencies]
 slow_primes = "~0.1.4"
