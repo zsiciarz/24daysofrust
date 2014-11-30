@@ -13,4 +13,5 @@ name = "day3"
 path = "src/day3.rs"
 
 [dependencies]
+csv = "~0.7.0"
 slow_primes = "~0.1.4"
