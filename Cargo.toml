@@ -8,5 +8,9 @@ authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 name = "day2"
 path = "src/day2.rs"
 
+[[bin]]
+name = "day3"
+path = "src/day3.rs"
+
 [dependencies]
 slow_primes = "~0.1.4"
