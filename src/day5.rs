@@ -1,31 +1,20 @@
 extern crate hyper;
 
-use hyper::Url;
+use hyper::{HttpError, HttpResult, Url};
 use hyper::client::Request;
+
+fn get_content(url: &str) -> HttpResult<String> {
+    let url = match Url::parse(url) {
+        Ok(url) => url,
+        Err(_) => return Err(HttpError::HttpUriError),
+    };
+    let fresh_request = try!(Request::get(url));
+    let streaming_request = try!(fresh_request.start());
+    let mut response = try!(streaming_request.send());
+    Ok(try!(response.read_to_string()))
+}
 
 fn main() {
     println!("24 days of Rust - hyper (day 5)");
-    let url = match Url::parse("http://httpbin.org/status/200") {
-        Ok(url) => url,
-        Err(_) => panic!("Uh oh."),
-    };
-    println!("> get: {}", url);
-    let fresh_request = match Request::get(url) {
-        Ok(request) => request,
-        Err(_) => panic!("Whoops."),
-    };
-    let streaming_request = match fresh_request.start() {
-        Ok(request) => request,
-        Err(_) => panic!("Noooo."),
-    };
-    let mut response = match streaming_request.send() {
-        Ok(response) => response,
-        Err(_) => panic!("So close..."),
-    };
-    println!("< status code: {}", response.status);
-    let content = match response.read_to_string() {
-        Ok(content) => content,
-        Err(_) => panic!("I give up."),
-    };
-    println!("{}", content);
+    println!("{}", get_content("http://httpbin.org/status/200"));
 }
