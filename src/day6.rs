@@ -1,3 +1,3 @@
 fn main() {
-    println!("24 days of Rust - json_macros (day 6)");
+    println!("24 days of Rust - json (day 6)");
 }
