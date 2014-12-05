@@ -21,7 +21,6 @@ fn main() {
     println!("24 days of Rust - json (day 6)");
     println!("{}", json::encode(&42i));
     println!("{}", json::encode(&vec!["to", "be", "or", "not", "to", "be"]));
-    println!("{}", json::encode(&vec!["to", "be", "or", "not", "to", "be"]));
     let user = User {
         name: "Zbyszek".to_string(),
         post_count: 100u,
