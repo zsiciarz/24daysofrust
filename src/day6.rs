@@ -1,4 +1,8 @@
 #![feature(if_let)]
+#![feature(phase)]
+
+#[phase(plugin)]
+extern crate json_macros;
 
 extern crate serialize;
 
@@ -54,4 +58,15 @@ fn main() {
             }
         }
     }
+    let config = json!({
+        "hostname": "localhost",
+        "port": 6543,
+        "allowed_methods": ["get", "post"],
+        "limits": {
+            "bandwidth": (500 * 16u),
+            "rate": null
+        }
+    });
+    println!("Configuration: {}", config);
+    println!("Bandwidth: {}", config.search("bandwidth").unwrap());
 }
