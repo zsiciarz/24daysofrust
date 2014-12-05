@@ -36,7 +36,8 @@ fn post_query(url: &str, query: Query) -> HttpResult<String> {
     Ok(try!(response.read_to_string()))
 }
 
-fn post_json<'a, T: Encodable<json::Encoder<'a>, IoError>>(url: &str, payload: &T) -> HttpResult<String> {
+fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
+    where T: Encodable<json::Encoder<'a>, IoError> {
     let body = json::encode(payload);
     let url = match Url::parse(url) {
         Ok(url) => url,
