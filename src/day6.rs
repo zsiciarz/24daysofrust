@@ -1,3 +1,5 @@
+#![feature(if_let)]
+
 extern crate serialize;
 
 use serialize::{Decodable, Encodable, json};
@@ -39,4 +41,17 @@ fn main() {
     }
     let encoded = String::from_utf8(buffer).unwrap();
     println!("{}", encoded);
+    let incoming_request = "{\"name\":\"John\",\"post_count\":2,\"likes_burgers\":false,\"avatar\":null}";
+    let decoded: User = json::decode(incoming_request).unwrap();
+    println!("My name is {} and I {} burgers",
+        decoded.name, if decoded.likes_burgers { "love" } else { "don't like" });
+    assert!(decoded.avatar.is_none());
+    let new_request = "{\"id\":64,\"title\":\"24days\",\"stats\":{\"pageviews\":1500}}";
+    if let Ok(request_json) = json::from_str(new_request) {
+        if let Some(ref stats) = request_json.find("stats") {
+            if let Some(ref pageviews) = stats.find("pageviews") {
+                println!("Pageviews: {}", pageviews);
+            }
+        }
+    }
 }
