@@ -6,7 +6,7 @@ extern crate json_macros;
 
 extern crate serialize;
 
-use serialize::{Decodable, Encodable, json};
+use serialize::{Encodable, json};
 use serialize::json::PrettyEncoder;
 
 #[deriving(Decodable, Encodable)]
