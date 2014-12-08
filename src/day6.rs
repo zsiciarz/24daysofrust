@@ -1,4 +1,3 @@
-#![feature(if_let)]
 #![feature(phase)]
 
 #[phase(plugin)]
