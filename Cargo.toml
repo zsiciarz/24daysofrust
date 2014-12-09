@@ -52,6 +52,10 @@ path = "src/day13.rs"
 name = "day14"
 path = "src/day14.rs"
 
+[[bin]]
+name = "dayN-fuse"
+path = "src/dayN_fuse.rs"
+
 [dependencies]
 anymap = "~0.9.2"
 csv = "~0.7.3"
@@ -72,3 +76,6 @@ git = "https://github.com/PistonDevelopers/image"
 
 [dependencies.nalgebra]
 git = "https://github.com/sebcrozet/nalgebra.git"
+
+[dependencies.fuse]
+git = "https://github.com/zargony/rust-fuse.git"
