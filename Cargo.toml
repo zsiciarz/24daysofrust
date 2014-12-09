@@ -33,6 +33,7 @@ name = "day9"
 path = "src/day9.rs"
 
 [dependencies]
+anymap = "~0.9.2"
 csv = "~0.7.0"
 docopt = "~0.6.11"
 docopt_macros = "~0.6.11"
