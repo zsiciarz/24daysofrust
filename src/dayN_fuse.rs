@@ -25,6 +25,11 @@ impl Filesystem for JsonFilesystem {
             reply.error(ENOSYS);
         }
     }
+
+    fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
+        println!("readdir(): ino {}, fh {}, ofset {}", ino, fh, offset);
+        reply.error(ENOSYS);
+    }
 }
 
 fn main() {
