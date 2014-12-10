@@ -19,14 +19,23 @@ impl Filesystem for JsonFilesystem {
     fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
         println!("getattr(): ino {}", ino);
         let mut attr: FileAttr = unsafe { mem::zeroed() };
-        attr.ino = 1;
-        attr.kind = FileType::Directory;
-        attr.perm = USER_DIR;
         let ttl = Timespec::new(1, 0);
         if ino == 1 {
+            attr.ino = 1;
+            attr.kind = FileType::Directory;
+            attr.perm = USER_DIR;
             reply.attr(&ttl, &attr);
         } else {
-            reply.error(ENOSYS);
+            let tree_index = (ino - 2) as uint;
+            println!("\ttree_index {}", tree_index);
+            if tree_index < self.tree.len() {
+                attr.ino = ino;
+                attr.kind = FileType::RegularFile;
+                attr.perm = USER_FILE;
+                reply.attr(&ttl, &attr);
+            } else {
+                reply.error(ENOSYS);
+            }
         }
     }
 
