@@ -39,6 +39,11 @@ impl Filesystem for JsonFilesystem {
         }
     }
 
+    fn lookup(&mut self, _req: &Request, parent: u64, name: &PosixPath, reply: ReplyEntry) {
+        println!("lookup(): parent {}, name {}", parent, name.display());
+        reply.error(ENOENT);
+    }
+
     fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
         println!("readdir(): ino {}, fh {}, ofset {}", ino, fh, offset);
         if ino == 1 {
