@@ -48,6 +48,7 @@ impl Filesystem for JsonFilesystem {
                 for (i, key) in self.tree.keys().enumerate() {
                     let inode: u64 = 2 + i as u64;
                     let offset: u64 = 2 + i as u64;
+                    println!("\tkey: {}, inode: {} offset: {}", key, inode, offset);
                     reply.add(inode, offset, FileType::RegularFile, &PosixPath::new(key));
                 }
             }
