@@ -17,7 +17,7 @@ struct JsonFilesystem {
 
 impl Filesystem for JsonFilesystem {
     fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
-        println!("getattr(): ino {}", ino);
+        println!("getattr(ino={})", ino);
         let mut attr: FileAttr = unsafe { mem::zeroed() };
         let ttl = Timespec::new(1, 0);
         if ino == 1 {
@@ -27,7 +27,7 @@ impl Filesystem for JsonFilesystem {
             reply.attr(&ttl, &attr);
         } else {
             let tree_index = (ino - 2) as uint;
-            println!("\ttree_index {}", tree_index);
+            println!("\ttree_index={}", tree_index);
             if tree_index < self.tree.len() {
                 attr.ino = ino;
                 attr.kind = FileType::RegularFile;
@@ -40,12 +40,12 @@ impl Filesystem for JsonFilesystem {
     }
 
     fn lookup(&mut self, _req: &Request, parent: u64, name: &PosixPath, reply: ReplyEntry) {
-        println!("lookup(): parent {}, name {}", parent, name.display());
+        println!("lookup(parent={}, name={})", parent, name.display());
         reply.error(ENOENT);
     }
 
     fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
-        println!("readdir(): ino {}, fh {}, ofset {}", ino, fh, offset);
+        println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
         if ino == 1 {
             if offset == 0 {
                 reply.add(1, 0, FileType::Directory, &PosixPath::new("."));
@@ -53,7 +53,7 @@ impl Filesystem for JsonFilesystem {
                 for (i, key) in self.tree.keys().enumerate() {
                     let inode: u64 = 2 + i as u64;
                     let offset: u64 = 2 + i as u64;
-                    println!("\tkey: {}, inode: {} offset: {}", key, inode, offset);
+                    println!("\tkey={}, inode={}, offset={}", key, inode, offset);
                     reply.add(inode, offset, FileType::RegularFile, &PosixPath::new(key));
                 }
             }
