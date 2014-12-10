@@ -16,9 +16,9 @@ path = "src/day3.rs"
 name = "day4"
 path = "src/day4.rs"
 
-#[[bin]]
-#name = "day5"
-#path = "src/day5.rs"
+[[bin]]
+name = "day5"
+path = "src/day5.rs"
 
 [[bin]]
 name = "day6"
@@ -46,5 +46,5 @@ json_macros = "~0.0.4"
 slow_primes = "~0.1.4"
 tau = "~1.0.0"
 
-#[dependencies.hyper]
-#git = "https://github.com/hyperium/hyper"
+[dependencies.hyper]
+git = "https://github.com/hyperium/hyper"
