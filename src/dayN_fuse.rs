@@ -1,6 +1,7 @@
 extern crate fuse;
 extern crate time;
 extern crate libc;
+extern crate serialize;
 
 use std::io::{FileType, USER_FILE, USER_DIR};
 use std::mem;
@@ -8,8 +9,11 @@ use std::os;
 use libc::{ENOENT, ENOSYS};
 use time::Timespec;
 use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyEntry, ReplyDirectory};
+use serialize::json;
 
-struct JsonFilesystem;
+struct JsonFilesystem {
+    tree: json::Object,
+}
 
 impl Filesystem for JsonFilesystem {
     fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
@@ -32,6 +36,9 @@ impl Filesystem for JsonFilesystem {
             if offset == 0 {
                 reply.add(1, 0, FileType::Directory, &PosixPath::new("."));
                 reply.add(1, 1, FileType::Directory, &PosixPath::new(".."));
+                for (i, key) in self.tree.keys().enumerate() {
+                    reply.add(1, i as u64, FileType::RegularFile, &PosixPath::new(key));
+                }
             }
             reply.ok();
         } else {
@@ -42,6 +49,9 @@ impl Filesystem for JsonFilesystem {
 
 fn main() {
     println!("24 days of Rust - fuse (day N)");
+    let data = json::from_str("{\"foo\": \"bar\", \"answer\": 42}").unwrap();
+    let tree = data.as_object().unwrap();
+    let fs = JsonFilesystem { tree: tree.clone() };
     let mountpoint = Path::new(os::args()[1].as_slice());
-    fuse::mount(JsonFilesystem, &mountpoint, &[]);
+    fuse::mount(fs, &mountpoint, &[]);
 }
