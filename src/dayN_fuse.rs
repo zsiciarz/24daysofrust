@@ -41,7 +41,27 @@ impl Filesystem for JsonFilesystem {
 
     fn lookup(&mut self, _req: &Request, parent: u64, name: &PosixPath, reply: ReplyEntry) {
         println!("lookup(parent={}, name={})", parent, name.display());
-        reply.error(ENOENT);
+        let mut attr: FileAttr = unsafe { mem::zeroed() };
+        let ttl = Timespec::new(1, 0);
+        let name = name.as_str().unwrap();
+        if name == "/" {
+            attr.ino = 1;
+            attr.kind = FileType::Directory;
+            attr.perm = USER_DIR;
+            reply.entry(&ttl, &attr, 0);
+        } else {
+            match self.tree.get(name) {
+                Some(value) => {
+                    println!("\t name={}, value={}", name, value);
+                    attr.kind = FileType::RegularFile;
+                    attr.perm = USER_FILE;
+                    // TODO: correct attributes!
+                    attr.ino = 2;
+                    reply.entry(&ttl, &attr, 0);
+                },
+                None => reply.error(ENOENT)
+            };
+        }
     }
 
     fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
