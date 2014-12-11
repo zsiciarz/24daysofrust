@@ -12,10 +12,8 @@ fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     println!("Executing query: {}", query);
     let stmt = try!(conn.prepare(query));
     let mut rows = try!(stmt.query(&[]));
-    match rows.next() {
-        Some(row) => row.get_opt(0),
-        None => Err(Error::BadData),
-    }
+    let row = try!(rows.next().ok_or(Error::BadData));
+    row.get_opt(0)
 }
 
 fn main() {
