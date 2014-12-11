@@ -16,4 +16,16 @@ fn main() {
         id serial primary key,
         title varchar(255),
         body text)", &[]).ok().expect("Table creation failed");
+    let stmt = match conn.prepare("insert into blog (title, body) values ($1, $2)") {
+        Ok(stmt) => stmt,
+        Err(e) => {
+            println!("Preparing query failed: {}", e);
+            return;
+        }
+    };
+    for i in range(1, 5u) {
+        let title = format!("Blogpost number {}", i);
+        let text = format!("Content of the blogpost #{}", i);
+        stmt.execute(&[&title, &text]).ok().expect("Inserting blogposts failed");
+    }
 }
