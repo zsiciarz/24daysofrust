@@ -57,6 +57,7 @@ fn main() {
         println!("ID={}, title={}", id, title);
     }
     println!("{}", get_single_value::<bool>(&conn, "select 1=1"));
+    println!("{}", get_single_value::<i32>(&conn, "select 1=1"));
     type IntArray = ArrayBase<Option<i32>>;
     let arr: IntArray = get_single_value(&conn, "select '{4, 5, 6}'::int[]").unwrap();
     println!("{}", arr.values().collect::<Vec<_>>());
