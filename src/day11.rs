@@ -1,6 +1,22 @@
+extern crate serialize;
 extern crate postgres;
 
-use postgres::{Connection, SslMode};
+use postgres::{Connection, Error, FromSql, SslMode};
+use postgres::Result as PgResult;
+use postgres::types::array::ArrayBase;
+
+use serialize::json::Json;
+
+fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
+    where T: FromSql {
+    println!("Executing query: {}", query);
+    let stmt = try!(conn.prepare(query));
+    let mut rows = try!(stmt.query(&[]));
+    match rows.next() {
+        Some(row) => row.get_opt(0),
+        None => Err(Error::BadData),
+    }
+}
 
 fn main() {
     println!("24 days of Rust - postgres (day 11)");
@@ -42,4 +58,10 @@ fn main() {
         let title: String = row.get("title");
         println!("ID={}, title={}", id, title);
     }
+    println!("{}", get_single_value::<bool>(&conn, "select 1=1"));
+    type IntArray = ArrayBase<Option<i32>>;
+    let arr: IntArray = get_single_value(&conn, "select '{4, 5, 6}'::int[]").unwrap();
+    println!("{}", arr.values().collect::<Vec<_>>());
+    let json: Json = get_single_value(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json").unwrap();
+    println!("{}", json);
 }
