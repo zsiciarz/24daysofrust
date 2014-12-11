@@ -59,8 +59,10 @@ fn main() {
     println!("{}", get_single_value::<bool>(&conn, "select 1=1"));
     println!("{}", get_single_value::<i32>(&conn, "select 1=1"));
     type IntArray = ArrayBase<Option<i32>>;
-    let arr: IntArray = get_single_value(&conn, "select '{4, 5, 6}'::int[]").unwrap();
-    println!("{}", arr.values().collect::<Vec<_>>());
-    let json: Json = get_single_value(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json").unwrap();
+    let arr = get_single_value::<IntArray>(&conn, "select '{4, 5, 6}'::int[]");
+    println!("{}", arr.map(|arr| arr.values()
+            .filter_map(|x| *x) // unwraps Some values and skips None
+            .collect::<Vec<_>>()));
+    let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{}", json);
 }
