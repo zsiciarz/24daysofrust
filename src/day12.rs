@@ -8,4 +8,11 @@ fn main() {
     let filtered = img.fliph();
     let out = File::create(&Path::new("out.jpg")).unwrap();
     let _ = filtered.save(out, image::JPEG).ok().expect("Saving image failed");
+
+    let kernel = [-1.0f32, -1.0, -1.0,
+                  -1.0, 8.0, -1.0,
+                  -1.0, -1.0, -1.0];
+    let filtered = img.filter3x3(&kernel);
+    let out = File::create(&Path::new("out.jpg")).unwrap();
+    let _ = filtered.save(out, image::JPEG).ok().expect("Saving image failed");
 }
