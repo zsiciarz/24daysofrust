@@ -1,5 +1,10 @@
+#![feature(phase)]
+
 extern crate serialize;
 extern crate postgres;
+
+#[phase(plugin)]
+extern crate postgres_macros;
 
 use postgres::{Connection, Error, FromSql, SslMode};
 use postgres::Result as PgResult;
@@ -65,4 +70,7 @@ fn main() {
             .collect::<Vec<_>>()));
     let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{}", json);
+
+    let query = sql!("select '{4, 5, 6}'::int[]");
+    println!("{}", query);
 }
