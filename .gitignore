@@ -1,4 +1,4 @@
 /target
 Cargo.lock
-out.jpg
-out.png
+out*.jpg
+out*.png
