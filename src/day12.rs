@@ -1,6 +1,6 @@
 extern crate image;
 
-use image::{GenericImage, Pixel};
+use image::{FilterType, GenericImage, Pixel};
 
 use std::io::File;
 use std::rand;
@@ -33,4 +33,8 @@ fn main() {
     }
     let out = File::create(&Path::new("out.jpg")).unwrap();
     let _ = noisy.save(out, image::JPEG).ok().expect("Saving image failed");
+
+    let thumbnail = img.resize(120, 120, FilterType::Lanczos3);
+    let out = File::create(&Path::new("out_thumb.jpg")).unwrap();
+    let _ = thumbnail.save(out, image::JPEG).ok().expect("Saving image failed");
 }
