@@ -44,6 +44,10 @@ path = "src/day11.rs"
 name = "day12"
 path = "src/day12.rs"
 
+[[bin]]
+name = "day13"
+path = "src/day13.rs"
+
 [dependencies]
 anymap = "~0.9.2"
 #csv = "~0.7.2"
@@ -56,6 +60,7 @@ postgres = "~0.2.0"
 postgres_macros = "~0.0.1"
 #slow_primes = "~0.1.4"
 tau = "~1.0.0"
+uuid = "~0.1.1"
 
 [dependencies.image]
 git = "https://github.com/PistonDevelopers/image"
