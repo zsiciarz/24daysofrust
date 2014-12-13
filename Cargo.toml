@@ -46,7 +46,7 @@ path = "src/day12.rs"
 
 [dependencies]
 anymap = "~0.9.2"
-csv = "~0.7.0"
+csv = "~0.7.2"
 docopt = "~0.6.11"
 docopt_macros = "~0.6.11"
 hyper = "~0.0.11"
