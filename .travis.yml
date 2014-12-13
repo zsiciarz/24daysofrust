@@ -1,4 +1,4 @@
 language: rust
 script:
     - cargo build
-    - cargo run --bin=day4
+    - cargo run --bin=day6
