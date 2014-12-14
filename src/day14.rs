@@ -47,14 +47,15 @@ fn main() {
     println!("{}", nalgebra::cross(&v1, &v2));
     println!("{}", nalgebra::cross(&v2, &v1));
 
-    let sine = DVec::from_fn(512, |i: uint| {
+    const SIZE: uint = 512;
+    let sine = DVec::from_fn(SIZE, |i: uint| {
         let t = i as f64 / 16.0f64;
         t.sin()
     });
     draw(&sine, &Path::new("out_sine.png"));
 
-    let window = DVec::from_fn(512, |i: uint| {
-        0.54f64 - 0.46 * (PI_2 * (i as f64) / 511f64).cos()
+    let window = DVec::from_fn(SIZE, |i: uint| {
+        0.54f64 - 0.46 * (PI_2 * (i as f64) / (SIZE - 1) as f64).cos()
     });
     draw(&window, &Path::new("out_window.png"));
 
