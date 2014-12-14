@@ -1,7 +1,7 @@
 extern crate image;
 extern crate nalgebra;
 
-use std::f64::consts::FRAC_PI_2;
+use std::f64::consts::{PI_2, FRAC_PI_2};
 use std::io::File;
 use std::num::FloatMath;
 use image::{GenericImage, Pixel};
@@ -52,4 +52,11 @@ fn main() {
         t.sin()
     });
     draw(&sine, &Path::new("out_sine.png"));
+
+    let window = DVec::from_fn(512, |i: uint| {
+        0.54f64 - 0.46 * (PI_2 * (i as f64) / 511f64).cos()
+    });
+    draw(&window, &Path::new("out_window.png"));
+
+    draw(&(sine * window), &Path::new("out_windowed.png"));
 }
