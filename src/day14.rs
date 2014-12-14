@@ -1,7 +1,28 @@
+extern crate image;
 extern crate nalgebra;
 
 use std::f64::consts::FRAC_PI_2;
-use nalgebra::{Mat2, Pnt2, Rot2, Vec1, Vec2, Vec3};
+use std::io::File;
+use std::num::FloatMath;
+use image::{GenericImage, Pixel};
+use nalgebra::{DVec, Mat2, Pnt2, Rot2, Vec1, Vec2, Vec3};
+
+fn draw(v: &DVec<f64>, path: &Path) {
+    let width = v.len() as u32;
+    let height = 128u32;
+    let white = Pixel::from_channels(255, 255, 255, 255);
+    let buffer = image::ImageBuffer::from_fn(width, height, |_, _| white);
+    let mut img = image::DynamicImage::ImageRgba8(buffer);
+    let red = Pixel::from_channels(255, 0, 0, 255);
+    for i in range(0u32, width) {
+        let half = (height / 2) as f64;
+        let y = half * (1.0 + v[i as uint]);
+        let y = nalgebra::clamp(y as u32, 0u32, height - 1);
+        img.put_pixel(i, y, red);
+    }
+    let out = File::create(path).unwrap();
+    let _ = img.save(out, image::PNG);
+}
 
 fn main() {
     println!("24 days of Rust - nalgebra (day 14)");
@@ -25,4 +46,10 @@ fn main() {
 
     println!("{}", nalgebra::cross(&v1, &v2));
     println!("{}", nalgebra::cross(&v2, &v1));
+
+    let sine = DVec::from_fn(512, |i: uint| {
+        let t = i as f64 / 16.0f64;
+        t.sin()
+    });
+    draw(&sine, &Path::new("out_sine.png"));
 }
