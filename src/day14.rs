@@ -22,4 +22,7 @@ fn main() {
     if nalgebra::approx_eq(&0.0f64, &nalgebra::dot(&v1, &v2)) {
         println!("v1 is orthogonal to v2");
     }
+
+    println!("{}", nalgebra::cross(&v1, &v2));
+    println!("{}", nalgebra::cross(&v2, &v1));
 }
