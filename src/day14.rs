@@ -17,8 +17,8 @@ fn draw(v: &DVec<f64>, path: &Path) {
     for i in range(0u32, width) {
         let half = (height / 2) as f64;
         let y = half * (1.0 + v[i as uint]);
-        let y = nalgebra::clamp(y as u32, 0u32, height - 1);
-        img.put_pixel(i, y, red);
+        let y = nalgebra::clamp(y as u32, 1u32, height);
+        img.put_pixel(i, height - y, red);
     }
     let out = File::create(path).unwrap();
     let _ = img.save(out, image::PNG);
