@@ -7,65 +7,72 @@ extern crate time;
 extern crate libc;
 extern crate serialize;
 
+use std::collections::TreeMap;
 use std::io::{FileType, USER_FILE, USER_DIR};
 use std::mem;
 use std::os;
-use libc::{ENOENT, ENOSYS};
+use libc::{ENOENT};
 use time::Timespec;
 use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyEntry, ReplyDirectory};
 use serialize::json;
 
 struct JsonFilesystem {
     tree: json::Object,
+    attrs: TreeMap<u64, FileAttr>,
+    inodes: TreeMap<String, u64>,
+}
+
+impl JsonFilesystem {
+    fn new(tree: &json::Object) -> JsonFilesystem {
+        let mut attrs = TreeMap::new();
+        let mut inodes = TreeMap::new();
+        let mut attr: FileAttr = unsafe { mem::zeroed() };
+        attr.ino = 1;
+        attr.kind = FileType::Directory;
+        attr.perm = USER_DIR;
+        attrs.insert(1, attr);
+        inodes.insert("/".to_string(), 1);
+        for (i, key) in tree.keys().enumerate() {
+            let mut attr: FileAttr = unsafe { mem::zeroed() };
+            attr.ino = i as u64 + 2;
+            attr.kind = FileType::RegularFile;
+            attr.perm = USER_FILE;
+            attrs.insert(attr.ino, attr);
+            inodes.insert(key.clone(), attr.ino);
+        }
+        JsonFilesystem { tree: tree.clone(), attrs: attrs, inodes: inodes }
+    }
 }
 
 impl Filesystem for JsonFilesystem {
     fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
         println!("getattr(ino={})", ino);
-        let mut attr: FileAttr = unsafe { mem::zeroed() };
-        let ttl = Timespec::new(1, 0);
-        if ino == 1 {
-            attr.ino = 1;
-            attr.kind = FileType::Directory;
-            attr.perm = USER_DIR;
-            reply.attr(&ttl, &attr);
-        } else {
-            let tree_index = (ino - 2) as uint;
-            println!("\ttree_index={}", tree_index);
-            if tree_index < self.tree.len() {
-                attr.ino = ino;
-                attr.kind = FileType::RegularFile;
-                attr.perm = USER_FILE;
-                reply.attr(&ttl, &attr);
-            } else {
-                reply.error(ENOSYS);
-            }
-        }
+        match self.attrs.get(&ino) {
+            Some(attr) => {
+                let ttl = Timespec::new(1, 0);
+                reply.attr(&ttl, attr);
+            },
+            None => reply.error(ENOENT),
+        };
     }
 
     fn lookup(&mut self, _req: &Request, parent: u64, name: &PosixPath, reply: ReplyEntry) {
         println!("lookup(parent={}, name={})", parent, name.display());
-        let mut attr: FileAttr = unsafe { mem::zeroed() };
-        let ttl = Timespec::new(1, 0);
-        let name = name.as_str().unwrap();
-        if name == "/" {
-            attr.ino = 1;
-            attr.kind = FileType::Directory;
-            attr.perm = USER_DIR;
-            reply.entry(&ttl, &attr, 0);
-        } else {
-            match self.tree.get(name) {
-                Some(value) => {
-                    println!("\t name={}, value={}", name, value);
-                    attr.kind = FileType::RegularFile;
-                    attr.perm = USER_FILE;
-                    // TODO: correct attributes!
-                    attr.ino = 2;
-                    reply.entry(&ttl, &attr, 0);
-                },
-                None => reply.error(ENOENT)
-            };
-        }
+        let inode = match self.inodes.get(name.as_str().unwrap()) {
+            Some(inode) => inode,
+            None => {
+                reply.error(ENOENT);
+                return;
+            },
+        };
+        match self.attrs.get(inode) {
+            Some(attr) => {
+                let ttl = Timespec::new(1, 0);
+                reply.entry(&ttl, attr, 0);
+            },
+            None => reply.error(ENOENT),
+        };
+
     }
 
     fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
@@ -95,7 +102,7 @@ fn main() {
         "answer": 42,
     });
     let tree = data.as_object().unwrap();
-    let fs = JsonFilesystem { tree: tree.clone() };
+    let fs = JsonFilesystem::new(tree);
     let mountpoint = match os::args().as_slice() {
         [_, ref path] => Path::new(path),
         _ => {
