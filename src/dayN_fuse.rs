@@ -96,6 +96,12 @@ fn main() {
     });
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem { tree: tree.clone() };
-    let mountpoint = Path::new(os::args()[1].as_slice());
+    let mountpoint = match os::args().as_slice() {
+        [_, ref path] => Path::new(path),
+        _ => {
+            println!("Usage: {} <MOUNTPOINT>", os::args()[0]);
+            return;
+        }
+    };
     fuse::mount(fs, &mountpoint, &[]);
 }
