@@ -1,4 +1,8 @@
+#![feature(phase)]
+
 extern crate fuse;
+#[phase(plugin)]
+extern crate json_macros;
 extern crate time;
 extern crate libc;
 extern crate serialize;
@@ -86,7 +90,10 @@ impl Filesystem for JsonFilesystem {
 
 fn main() {
     println!("24 days of Rust - fuse (day N)");
-    let data = json::from_str("{\"foo\": \"bar\", \"answer\": 42}").unwrap();
+    let data = json!({
+        "foo": "bar",
+        "answer": 42,
+    });
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem { tree: tree.clone() };
     let mountpoint = Path::new(os::args()[1].as_slice());
