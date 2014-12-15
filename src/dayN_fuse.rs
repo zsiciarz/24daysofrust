@@ -81,9 +81,9 @@ impl Filesystem for JsonFilesystem {
             if offset == 0 {
                 reply.add(1, 0, FileType::Directory, &PosixPath::new("."));
                 reply.add(1, 1, FileType::Directory, &PosixPath::new(".."));
-                for (i, key) in self.tree.keys().enumerate() {
-                    let inode: u64 = 2 + i as u64;
-                    let offset: u64 = 2 + i as u64;
+                for (key, &inode) in self.inodes.iter() {
+                    if inode == 1 { continue; }
+                    let offset = inode; // hack
                     println!("\tkey={}, inode={}, offset={}", key, inode, offset);
                     reply.add(inode, offset, FileType::RegularFile, &PosixPath::new(key));
                 }
