@@ -13,7 +13,7 @@ use std::mem;
 use std::os;
 use libc::{ENOENT};
 use time::Timespec;
-use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyEntry, ReplyDirectory};
+use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
 use serialize::json;
 
 struct JsonFilesystem {
@@ -32,11 +32,12 @@ impl JsonFilesystem {
         attr.perm = USER_DIR;
         attrs.insert(1, attr);
         inodes.insert("/".to_string(), 1);
-        for (i, key) in tree.keys().enumerate() {
+        for (i, (key, value)) in tree.iter().enumerate() {
             let mut attr: FileAttr = unsafe { mem::zeroed() };
             attr.ino = i as u64 + 2;
             attr.kind = FileType::RegularFile;
             attr.perm = USER_FILE;
+            attr.size = value.as_string().unwrap().len() as u64;
             attrs.insert(attr.ino, attr);
             inodes.insert(key.clone(), attr.ino);
         }
@@ -75,6 +76,12 @@ impl Filesystem for JsonFilesystem {
 
     }
 
+    fn read(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, size: uint, reply: ReplyData) {
+        println!("read(ino={}, fh={}, offset={}, size={})", ino, fh, offset, size);
+        let bytes = "Hello world!\n".as_bytes();
+        reply.data(bytes);
+    }
+
     fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
         println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
         if ino == 1 {
@@ -99,7 +106,7 @@ fn main() {
     println!("24 days of Rust - fuse (day N)");
     let data = json!({
         "foo": "bar",
-        "answer": 42,
+        "answer": "42",
     });
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem::new(tree);
