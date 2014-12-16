@@ -25,7 +25,7 @@ impl JsonFilesystem {
     fn new(tree: &json::Object) -> JsonFilesystem {
         let mut attrs = TreeMap::new();
         let mut inodes = TreeMap::new();
-        let ts = Timespec::new(0, 0);
+        let ts = time::now().to_timespec();
         let attr = FileAttr {
             ino: 1,
             size: 0,
@@ -47,7 +47,7 @@ impl JsonFilesystem {
         for (i, (key, value)) in tree.iter().enumerate() {
             let attr = FileAttr {
                 ino: i as u64 + 2,
-                size: value.as_string().unwrap().len() as u64,
+                size: value.to_pretty_str().len() as u64,
                 blocks: 0,
                 atime: ts,
                 mtime: ts,
@@ -129,7 +129,7 @@ fn main() {
     println!("24 days of Rust - fuse (day 15&16)");
     let data = json!({
         "foo": "bar",
-        "answer": "42",
+        "answer": 42,
     });
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem::new(tree);
