@@ -101,8 +101,14 @@ impl Filesystem for JsonFilesystem {
 
     fn read(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, size: uint, reply: ReplyData) {
         println!("read(ino={}, fh={}, offset={}, size={})", ino, fh, offset, size);
-        let bytes = "Hello world!\n".as_bytes();
-        reply.data(bytes);
+        for (key, &inode) in self.inodes.iter() {
+            if inode == ino {
+                let value = self.tree.get(key).unwrap();
+                reply.data(value.to_pretty_str().as_bytes());
+                return;
+            }
+        }
+        reply.error(ENOENT);
     }
 
     fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
