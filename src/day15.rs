@@ -103,7 +103,7 @@ impl Filesystem for JsonFilesystem {
 }
 
 fn main() {
-    println!("24 days of Rust - fuse (day N)");
+    println!("24 days of Rust - fuse (day 15&16)");
     let data = json!({
         "foo": "bar",
         "answer": "42",
