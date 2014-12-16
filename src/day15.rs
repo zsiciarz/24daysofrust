@@ -96,7 +96,6 @@ impl Filesystem for JsonFilesystem {
             },
             None => reply.error(ENOENT),
         };
-
     }
 
     fn read(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, size: uint, reply: ReplyData) {
@@ -132,7 +131,7 @@ impl Filesystem for JsonFilesystem {
 }
 
 fn main() {
-    println!("24 days of Rust - fuse (day 15&16)");
+    println!("24 days of Rust - fuse (days 15 & 16)");
     let data = json!({
         "foo": "bar",
         "answer": 42,
