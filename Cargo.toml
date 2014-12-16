@@ -40,9 +40,9 @@ path = "src/day10.rs"
 name = "day11"
 path = "src/day11.rs"
 
-#[[bin]]
-#name = "day12"
-#path = "src/day12.rs"
+[[bin]]
+name = "day12"
+path = "src/day12.rs"
 
 [[bin]]
 name = "day13"
@@ -71,8 +71,8 @@ postgres_macros = "~0.0.1"
 tau = "~1.0.0"
 uuid = "~0.1.1"
 
-#[dependencies.image]
-#git = "https://github.com/PistonDevelopers/image"
+[dependencies.image]
+git = "https://github.com/PistonDevelopers/image"
 
 #[dependencies.nalgebra]
 #git = "https://github.com/sebcrozet/nalgebra.git"
