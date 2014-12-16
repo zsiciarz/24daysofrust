@@ -9,7 +9,6 @@ extern crate serialize;
 
 use std::collections::TreeMap;
 use std::io::{FileType, USER_FILE, USER_DIR};
-use std::mem;
 use std::os;
 use libc::{ENOENT};
 use time::Timespec;
@@ -26,18 +25,42 @@ impl JsonFilesystem {
     fn new(tree: &json::Object) -> JsonFilesystem {
         let mut attrs = TreeMap::new();
         let mut inodes = TreeMap::new();
-        let mut attr: FileAttr = unsafe { mem::zeroed() };
-        attr.ino = 1;
-        attr.kind = FileType::Directory;
-        attr.perm = USER_DIR;
+        let ts = Timespec::new(0, 0);
+        let attr = FileAttr {
+            ino: 1,
+            size: 0,
+            blocks: 0,
+            atime: ts,
+            mtime: ts,
+            ctime: ts,
+            crtime: ts,
+            kind: FileType::Directory,
+            perm: USER_DIR,
+            nlink: 0,
+            uid: 0,
+            gid: 0,
+            rdev: 0,
+            flags: 0,
+        };
         attrs.insert(1, attr);
         inodes.insert("/".to_string(), 1);
         for (i, (key, value)) in tree.iter().enumerate() {
-            let mut attr: FileAttr = unsafe { mem::zeroed() };
-            attr.ino = i as u64 + 2;
-            attr.kind = FileType::RegularFile;
-            attr.perm = USER_FILE;
-            attr.size = value.as_string().unwrap().len() as u64;
+            let attr = FileAttr {
+                ino: i as u64 + 2,
+                size: value.as_string().unwrap().len() as u64,
+                blocks: 0,
+                atime: ts,
+                mtime: ts,
+                ctime: ts,
+                crtime: ts,
+                kind: FileType::RegularFile,
+                perm: USER_FILE,
+                nlink: 0,
+                uid: 0,
+                gid: 0,
+                rdev: 0,
+                flags: 0,
+            };
             attrs.insert(attr.ino, attr);
             inodes.insert(key.clone(), attr.ino);
         }
