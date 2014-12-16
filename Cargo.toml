@@ -56,6 +56,10 @@ path = "src/day13.rs"
 #name = "day15"
 #path = "src/day15.rs"
 
+[[bin]]
+name = "day17"
+path = "src/day17.rs"
+
 [dependencies]
 #anymap = "~0.9.2"
 #csv = "~0.7.3"
