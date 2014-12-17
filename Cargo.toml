@@ -8,9 +8,9 @@ authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 #name = "day2"
 #path = "src/day2.rs"
 
-#[[bin]]
-#name = "day3"
-#path = "src/day3.rs"
+[[bin]]
+name = "day3"
+path = "src/day3.rs"
 
 #[[bin]]
 #name = "day4"
@@ -62,7 +62,7 @@ path = "src/day17.rs"
 
 [dependencies]
 anymap = "~0.9.3"
-#csv = "~0.7.3"
+csv = "~0.7.5"
 #docopt = "~0.6.14"
 #docopt_macros = "~0.6.14"
 #hyper = "~0.0.13"
