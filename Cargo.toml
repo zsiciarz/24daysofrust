@@ -78,8 +78,8 @@ uuid = "~0.1.1"
 [dependencies.image]
 git = "https://github.com/PistonDevelopers/image"
 
-#[dependencies.nalgebra]
-#git = "https://github.com/sebcrozet/nalgebra.git"
+[dependencies.nalgebra]
+git = "https://github.com/sebcrozet/nalgebra.git"
 
 #[dependencies.fuse]
 #git = "https://github.com/zargony/rust-fuse.git"
