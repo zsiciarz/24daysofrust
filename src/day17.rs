@@ -15,7 +15,7 @@ fn main() {
     println!("{}", v);
     let v = Vec::from_fn(10, |_| rand::random::<uint>());
     println!("{}", v);
-    let mat = DMat::from_fn(7, 7, |i, j| if j <= i { 1 } else { 0 });
+    let mat: DMat<uint> = DMat::from_fn(7, 7, |i, j| if j <= i { 1 } else { 0 });
     println!("{}", mat);
     let buffer = image::ImageBuffer::from_fn(512, 512, |x, y| {
         Pixel::from_channels((x * y % 256) as u8, (y % 256) as u8, (x % 256) as u8, 255)
