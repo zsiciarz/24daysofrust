@@ -60,6 +60,10 @@ path = "src/day13.rs"
 name = "day17"
 path = "src/day17.rs"
 
+[[bin]]
+name = "day18"
+path = "src/day18.rs"
+
 [dependencies]
 anymap = "~0.9.3"
 csv = "~0.7.5"
@@ -71,6 +75,7 @@ json_macros = "~0.0.5"
 num = "~0.1.0"
 postgres = "~0.2.0"
 postgres_macros = "~0.0.1"
+redis = "~0.0.4"
 #slow_primes = "~0.1.4"
 tau = "~1.0.0"
 uuid = "~0.1.1"
