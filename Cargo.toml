@@ -66,7 +66,7 @@ path = "src/day18.rs"
 
 [dependencies]
 anymap = "~0.9.3"
-csv = "~0.7.5"
+csv = "~0.8.0"
 docopt = "~0.6.15"
 docopt_macros = "~0.6.15"
 #hyper = "~0.0.13"
