@@ -1,6 +1,6 @@
 #![feature(phase)]
 
-extern crate serialize;
+extern crate "rustc-serialize" as serialize;
 extern crate postgres;
 
 #[phase(plugin)]
