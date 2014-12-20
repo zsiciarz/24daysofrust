@@ -16,9 +16,14 @@ fn main() {
         let mut sock = ctx.socket(SocketType::REQ);
         let _ = sock.connect(addr);
         let payload = "Hello world!".to_string();
+        println!("-> {}", payload);
         let mut msg = box Msg::new(payload.len());
         msg.data = payload.into_bytes();
         let _ = sock.msg_send(msg);
+        if let Ok(msg) = sock.msg_recv() {
+            let contents = String::from_utf8(msg.data).ok().expect("Not a UTF-8 string");
+            println!("<- {}", contents);
+        }
     }
     else {
         println!("ZeroMQ server listening on {}", addr);
@@ -26,12 +31,9 @@ fn main() {
         let _ = sock.bind(addr);
         loop {
             if let Ok(msg) = sock.msg_recv() {
-                let contents = String::from_utf8(msg.data).ok().expect("Not a UTF-8 string");
-                println!("{}", contents);
-                let reply = "Why yes, hello!".to_string();
-                let mut msg = box Msg::new(reply.len());
-                msg.data = reply.into_bytes();
-                let _ = sock.msg_send(msg);
+                let mut reply = box Msg::new(msg.data.len());
+                reply.data = msg.data;
+                let _ = sock.msg_send(reply);
             }
         }
     }
