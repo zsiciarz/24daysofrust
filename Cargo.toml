@@ -12,9 +12,9 @@ authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 name = "day3"
 path = "src/day3.rs"
 
-[[bin]]
-name = "day4"
-path = "src/day4.rs"
+#[[bin]]
+#name = "day4"
+#path = "src/day4.rs"
 
 #[[bin]]
 #name = "day5"
@@ -60,22 +60,22 @@ path = "src/day13.rs"
 name = "day17"
 path = "src/day17.rs"
 
-[[bin]]
-name = "day18"
-path = "src/day18.rs"
+#[[bin]]
+#name = "day18"
+#path = "src/day18.rs"
 
 [dependencies]
 anymap = "~0.9.3"
 csv = "~0.9.0"
-docopt = "~0.6.15"
-docopt_macros = "~0.6.15"
+#docopt = "~0.6.15"
+#docopt_macros = "~0.6.15"
 #hyper = "~0.0.13"
 itertools = "~0.0.8"
 json_macros = "~0.0.5"
 num = "~0.1.0"
 postgres = "~0.2.0"
 postgres_macros = "~0.0.1"
-redis = "~0.0.4"
+#redis = "~0.0.4"
 #slow_primes = "~0.1.4"
 tau = "~1.0.0"
 uuid = "~0.1.1"
