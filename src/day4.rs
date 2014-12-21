@@ -15,7 +15,7 @@ Options:
     -L, --max-line-length  print the length of the longest line
     -h, --help  display this help and exit
     -v, --version  output version information and exit
-", arg_file: Option<String>)
+", arg_file: Option<String>);
 
 fn main() {
     println!("24 days of Rust - docopt (day 4)");
