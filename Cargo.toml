@@ -68,6 +68,10 @@ path = "src/day13.rs"
 name = "day20"
 path = "src/day20.rs"
 
+[[bin]]
+name = "day21"
+path = "src/day21.rs"
+
 [dependencies]
 anymap = "~0.9.3"
 csv = "~0.9.0"
@@ -80,6 +84,7 @@ json_macros = "~0.0.5"
 #postgres = "~0.2.2"
 postgres_macros = "~0.0.1"
 #redis = "~0.0.4"
+rust-crypto = "0.2.2"
 #rustc-serialize = "~0.1.2"
 #slow_primes = "~0.1.4"
 tau = "~1.0.0"
