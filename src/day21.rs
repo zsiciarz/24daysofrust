@@ -5,10 +5,13 @@ extern crate "rustc-serialize" as serialize;
 
 use crypto::aes::{mod, KeySize};
 use crypto::digest::Digest;
+use crypto::hmac::Hmac;
+use crypto::mac::Mac;
 use crypto::sha2::Sha256;
 use crypto::symmetriccipher::SynchronousStreamCipher;
 
 use serialize::base64::{STANDARD, ToBase64};
+use serialize::hex::ToHex;
 
 use std::rand::{OsRng, Rng};
 
@@ -34,4 +37,13 @@ fn main() {
     let mut output = Vec::from_elem(secret.len(), 0u8);
     //cipher.process(secret.as_bytes(), output.as_mut_slice());
     //println!("{}", output.to_base64(STANDARD));
+
+    let mut hmac_key = Vec::from_elem(32, 0u8);
+    gen.fill_bytes(hmac_key.as_mut_slice());
+    let message = "Ceterum censeo Carthaginem esse delendam";
+    println!("Message: {}", message);
+    println!("HMAC key: {}", hmac_key.to_base64(STANDARD));
+    let mut hmac = Hmac::new(Sha256::new(), hmac_key.as_slice());
+    hmac.input(message.as_bytes());
+    println!("HMAC digest: {}", hmac.result().code().to_hex());
 }
