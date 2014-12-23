@@ -35,8 +35,8 @@ fn main() {
     let mut cipher = aes::ctr(KeySize::KeySize128, key.as_slice(), nonce.as_slice());
     let secret = "I like Nickelback";
     let mut output = Vec::from_elem(secret.len(), 0u8);
-    //cipher.process(secret.as_bytes(), output.as_mut_slice());
-    //println!("{}", output.to_base64(STANDARD));
+    cipher.process(secret.as_bytes(), output.as_mut_slice());
+    println!("Ciphertext: {}", output.to_base64(STANDARD));
 
     let mut hmac_key = Vec::from_elem(32, 0u8);
     gen.fill_bytes(hmac_key.as_mut_slice());
