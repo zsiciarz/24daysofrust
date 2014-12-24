@@ -1,18 +1,18 @@
 extern crate hyper;
-extern crate serialize;
+extern crate "rustc-serialize" as rustc_serialize;
 extern crate url;
 
 use hyper::{HttpError, HttpResult, Url};
 use hyper::client::Request;
 use hyper::header::ContentLength;
-use serialize::{Encodable, json};
+use rustc_serialize::{Encodable, json};
 use std::io::IoError;
 use url::form_urlencoded;
 
 fn get_content(url: &str) -> HttpResult<String> {
     let url = match Url::parse(url) {
         Ok(url) => url,
-        Err(_) => return Err(HttpError::HttpUriError),
+        Err(err) => return Err(HttpError::HttpUriError(err)),
     };
     let fresh_request = try!(Request::get(url));
     let streaming_request = try!(fresh_request.start());
@@ -25,7 +25,7 @@ type Query<'a> = Vec<(&'a str, &'a str)>;
 fn post_query(url: &str, query: Query) -> HttpResult<String> {
     let url = match Url::parse(url) {
         Ok(url) => url,
-        Err(_) => return Err(HttpError::HttpUriError),
+        Err(err) => return Err(HttpError::HttpUriError(err)),
     };
     let body = form_urlencoded::serialize(query.into_iter());
     let mut fresh_request = try!(Request::post(url));
@@ -41,7 +41,7 @@ fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
     let body = json::encode(payload);
     let url = match Url::parse(url) {
         Ok(url) => url,
-        Err(_) => return Err(HttpError::HttpUriError),
+        Err(err) => return Err(HttpError::HttpUriError(err)),
     };
     let mut fresh_request = try!(Request::post(url));
     fresh_request.headers_mut().set(ContentLength(body.len()));
@@ -51,7 +51,7 @@ fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
     Ok(try!(response.read_to_string()))
 }
 
-#[deriving(Decodable, Encodable)]
+#[deriving(RustcDecodable, RustcEncodable)]
 struct Movie {
     title: String,
     bad_guy: String,
