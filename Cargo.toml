@@ -37,8 +37,8 @@ name = "day12"
 [[bin]]
 name = "day13"
 
-#[[bin]]
-#name = "day14"
+[[bin]]
+name = "day14"
 
 #[[bin]]
 #name = "day15"
@@ -76,8 +76,8 @@ uuid = "~0.1.2"
 [dependencies.image]
 git = "https://github.com/PistonDevelopers/image"
 
-#[dependencies.nalgebra]
-#git = "https://github.com/sebcrozet/nalgebra.git"
+[dependencies.nalgebra]
+git = "https://github.com/sebcrozet/nalgebra.git"
 
 #[dependencies.fuse]
 #git = "https://github.com/zargony/rust-fuse.git"

@@ -11,5 +11,5 @@ script:
     - cargo run --bin=day11
     - cargo run --bin=day12
     - cargo run --bin=day13
-#   - cargo run --bin=day14
+    - cargo run --bin=day14
     - cargo run --bin=day21
