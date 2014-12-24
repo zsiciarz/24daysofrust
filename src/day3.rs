@@ -1,9 +1,9 @@
 extern crate csv;
-extern crate serialize;
+extern crate "rustc-serialize" as rustc_serialize;
 
 use csv::{Reader, Writer};
 
-#[deriving(Decodable, Encodable)]
+#[deriving(RustcDecodable, RustcEncodable)]
 struct Movie {
     title: String,
     bad_guy: String,
