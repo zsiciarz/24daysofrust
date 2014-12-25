@@ -24,6 +24,6 @@ fn main() {
     let lines = log.lines();
     let rows = icompr!(line.words().collect::<Vec<_>>() for line in lines);
     let bytes = icompr!(row[2] for row in rows if row[0] != "POST");
-    let total = icompr!(from_str::<uint>(b).unwrap() for b in bytes).sum();
+    let total = icompr!(b.parse::<uint>().unwrap() for b in bytes).sum();
     println!("Total GET throughput: {} bytes", total);
 }
