@@ -5,26 +5,26 @@ extern crate fuse;
 extern crate json_macros;
 extern crate time;
 extern crate libc;
-extern crate serialize;
+extern crate "rustc-serialize" as rustc_serialize;
 
-use std::collections::TreeMap;
+use std::collections::BTreeMap;
 use std::io::{FileType, USER_FILE, USER_DIR};
 use std::os;
 use libc::{ENOENT};
 use time::Timespec;
 use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
-use serialize::json;
+use rustc_serialize::json;
 
 struct JsonFilesystem {
     tree: json::Object,
-    attrs: TreeMap<u64, FileAttr>,
-    inodes: TreeMap<String, u64>,
+    attrs: BTreeMap<u64, FileAttr>,
+    inodes: BTreeMap<String, u64>,
 }
 
 impl JsonFilesystem {
     fn new(tree: &json::Object) -> JsonFilesystem {
-        let mut attrs = TreeMap::new();
-        let mut inodes = TreeMap::new();
+        let mut attrs = BTreeMap::new();
+        let mut inodes = BTreeMap::new();
         let ts = time::now().to_timespec();
         let attr = FileAttr {
             ino: 1,
