@@ -49,8 +49,8 @@ name = "day15"
 [[bin]]
 name = "day18"
 
-[[bin]]
-name = "day20"
+#[[bin]]
+#name = "day20"
 
 [[bin]]
 name = "day21"
@@ -80,5 +80,5 @@ git = "https://github.com/PistonDevelopers/image"
 [dependencies.nalgebra]
 git = "https://github.com/sebcrozet/nalgebra.git"
 
-[dependencies.zeromq]
-git = "https://github.com/zeromq/zmq.rs.git"
+#[dependencies.zeromq]
+#git = "https://github.com/zeromq/zmq.rs.git"
