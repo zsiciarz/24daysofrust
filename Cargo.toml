@@ -46,8 +46,8 @@ name = "day15"
 #[[bin]]
 #name = "day17"
 
-[[bin]]
-name = "day18"
+#[[bin]]
+#name = "day18"
 
 #[[bin]]
 #name = "day20"
@@ -67,7 +67,7 @@ json_macros = "~0.1.2"
 num = "~0.1.6"
 postgres = "~0.4.5"
 postgres_macros = "~0.0.1"
-redis = "~0.0.5"
+#redis = "~0.0.5"
 rust-crypto = "~0.2.11"
 rustc-serialize = "~0.2.6"
 #slow_primes = "~0.1.4"
