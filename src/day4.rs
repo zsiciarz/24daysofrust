@@ -1,8 +1,8 @@
-#![feature(phase)]
+#![feature(plugin)]
 
 extern crate "rustc-serialize" as rustc_serialize;
 extern crate docopt;
-#[phase(plugin)]
+#[plugin]
 extern crate docopt_macros;
 
 docopt!(Args, "

@@ -21,7 +21,7 @@ fn main() {
     let _ = filtered.save(out, image::JPEG).ok().expect("Saving image failed");
 
     let (width, height) = img.dimensions();
-    let mut rng = rand::task_rng();
+    let mut rng = rand::thread_rng();
     let normal = Normal::new(15.0, 15.0);
     let mut noisy = img.brighten(-25);
     for x in range(0, width) {

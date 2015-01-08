@@ -1,20 +1,20 @@
-#![feature(phase)]
+#![feature(plugin)]
 
-#[phase(plugin)]
+#[plugin]
 extern crate json_macros;
 
 extern crate "rustc-serialize" as rustc_serialize;
 
 use rustc_serialize::Encodable;
-use rustc_serialize::json::{mod, PrettyEncoder};
+use rustc_serialize::json::{self, PrettyEncoder};
 
-#[deriving(RustcDecodable, RustcEncodable)]
+#[derive(RustcDecodable, RustcEncodable)]
 struct Photo {
     url: String,
     dimensions: (uint, uint),
 }
 
-#[deriving(RustcDecodable, RustcEncodable)]
+#[derive(RustcDecodable, RustcEncodable)]
 struct User {
     name: String,
     post_count: uint,

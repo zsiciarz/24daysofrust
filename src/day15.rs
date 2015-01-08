@@ -1,7 +1,7 @@
-#![feature(phase)]
+#![feature(plugin)]
 
 extern crate fuse;
-#[phase(plugin)]
+#[plugin]
 extern crate json_macros;
 extern crate time;
 extern crate libc;
@@ -10,6 +10,7 @@ extern crate "rustc-serialize" as rustc_serialize;
 use std::collections::BTreeMap;
 use std::io::{FileType, USER_FILE, USER_DIR};
 use std::os;
+use std::path::PosixPath;
 use libc::{ENOENT};
 use time::Timespec;
 use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
@@ -47,7 +48,7 @@ impl JsonFilesystem {
         for (i, (key, value)) in tree.iter().enumerate() {
             let attr = FileAttr {
                 ino: i as u64 + 2,
-                size: value.to_pretty_str().len() as u64,
+                size: value.pretty().to_string().len() as u64,
                 blocks: 0,
                 atime: ts,
                 mtime: ts,
@@ -103,7 +104,7 @@ impl Filesystem for JsonFilesystem {
         for (key, &inode) in self.inodes.iter() {
             if inode == ino {
                 let value = self.tree.get(key).unwrap();
-                reply.data(value.to_pretty_str().as_bytes());
+                reply.data(value.pretty().to_string().as_bytes());
                 return;
             }
         }
