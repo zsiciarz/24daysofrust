@@ -28,8 +28,8 @@ name = "day7"
 [[bin]]
 name = "day10"
 
-[[bin]]
-name = "day11"
+#[[bin]]
+#name = "day11"
 
 [[bin]]
 name = "day12"
@@ -65,8 +65,8 @@ fuse = "~0.2.1"
 itertools = "~0.0.16"
 json_macros = "~0.1.2"
 num = "~0.1.6"
-postgres = "~0.4.5"
-postgres_macros = "~0.0.1"
+#postgres = "~0.4.5"
+#postgres_macros = "~0.0.1"
 #redis = "~0.0.5"
 rust-crypto = "~0.2.11"
 rustc-serialize = "~0.2.6"
