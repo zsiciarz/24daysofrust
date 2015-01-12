@@ -3,6 +3,7 @@ before_install:
     - sudo apt-get install -y libfuse-dev
 script:
     - cargo build
+    - cargo run --bin=day2
     - cargo run --bin=day3
     - cargo run --bin=day4
 #   - cargo run --bin=day5

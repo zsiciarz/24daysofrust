@@ -4,8 +4,8 @@ name = "24daysofrust"
 version = "0.0.1"
 authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 
-#[[bin]]
-#name = "day2"
+[[bin]]
+name = "day2"
 
 [[bin]]
 name = "day3"
@@ -70,7 +70,7 @@ num = "~0.1.8"
 #redis = "~0.0.5"
 rust-crypto = "~0.2.12"
 rustc-serialize = "~0.2.7"
-#slow_primes = "~0.1.4"
+slow_primes = "~0.1.8"
 tau = "~1.0.1"
 uuid = "~0.1.7"
 
