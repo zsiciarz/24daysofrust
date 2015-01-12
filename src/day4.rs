@@ -21,7 +21,7 @@ Options:
 fn main() {
     println!("24 days of Rust - docopt (day 4)");
     let docopt = Args::docopt();
-    println!("{}", docopt);
+    println!("{:?}", docopt);
     let args: Args = docopt.decode().unwrap_or_else(|e| e.exit());
     println!("Counting stuff in {}", args.arg_file.unwrap_or("standard input".to_string()));
     if args.flag_bytes {

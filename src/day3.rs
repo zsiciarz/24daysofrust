@@ -32,7 +32,7 @@ fn main() {
     let mut reader = Reader::from_file(&path).has_headers(false);
     for row in reader.decode() {
         let row: (String, String, uint) = row.unwrap();
-        println!("{}", row);
+        println!("{:?}", row);
     }
     let mut reader = Reader::from_file(&path).has_headers(false);
     for row in reader.decode() {

@@ -31,12 +31,12 @@ fn main() {
     //  0, 1
     // -1, 0
     let rot = Mat2::new(0.0f64, -1.0, 1.0, 0.0);
-    println!("{}", rot * v);
+    println!("{:?}", rot * v);
     let angle = FRAC_PI_2;
     let rot = Rot2::new(Vec1::new(angle));
-    println!("{}", rot * v);
+    println!("{:?}", rot * v);
     let point = Pnt2::new(4.0f64, 4.0);
-    println!("Translate from {} to {}", point, nalgebra::translate(&v, &point));
+    println!("Translate from {:?} to {:?}", point, nalgebra::translate(&v, &point));
 
     let v1 = Vec3::new(2.0f64, 2.0, 0.0);
     let v2 = Vec3::new(2.0f64, -2.0, 0.0);
@@ -44,8 +44,8 @@ fn main() {
         println!("v1 is orthogonal to v2");
     }
 
-    println!("{}", nalgebra::cross(&v1, &v2));
-    println!("{}", nalgebra::cross(&v2, &v1));
+    println!("{:?}", nalgebra::cross(&v1, &v2));
+    println!("{:?}", nalgebra::cross(&v2, &v1));
 
     const SIZE: uint = 512;
     let sine = DVec::from_fn(SIZE, |i: uint| {
