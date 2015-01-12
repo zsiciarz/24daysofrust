@@ -21,12 +21,12 @@ fn main() {
     config.insert(HostAddress::DomainName("siciarz.net".to_string()));
     config.insert(Port(666));
     config.insert(ConnectionLimit(32));
-    println!("{}", config.get::<HostAddress>());
-    println!("{}", config.get::<Port>());
+    println!("{:?}", config.get::<HostAddress>());
+    println!("{:?}", config.get::<Port>());
     assert!(config.get::<String>().is_none());
     assert!(config.get::<u32>().is_none());
     config.insert(HostAddress::Ip(IpAddr::Ipv4Addr(127, 0, 0, 1)));
-    println!("{}", config.get::<HostAddress>());
+    println!("{:?}", config.get::<HostAddress>());
     if config.contains::<Option<f32>>() {
         println!("There's no optional float in the configuration...");
     }
