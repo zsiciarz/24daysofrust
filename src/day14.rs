@@ -11,7 +11,7 @@ fn draw(v: &DVec<f64>, path: &Path) {
     let width = v.len() as u32;
     let height = 128u32;
     let white: Rgba<u8> = Pixel::from_channels(255, 255, 255, 255);
-    let buffer = image::ImageBuffer::from_fn(width, height, box |&: _, _| white);
+    let buffer = image::ImageBuffer::from_fn(width, height, Box::new(|&: _, _| white));
     let mut img = image::DynamicImage::ImageRgba8(buffer);
     let red = Pixel::from_channels(255, 0, 0, 255);
     for i in range(0u32, width) {
