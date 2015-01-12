@@ -7,15 +7,15 @@ use csv::{Reader, Writer};
 struct Movie {
     title: String,
     bad_guy: String,
-    pub_year: uint,
+    pub_year: usize,
 }
 
 fn main() {
     println!("24 days of Rust - csv (day 3)");
     let dollar_films = vec![
-        ("A Fistful of Dollars", "Rojo", 1964u),
-        ("For a Few Dollars More", "El Indio", 1965u),
-        ("The Good, the Bad and the Ugly", "Tuco", 1966u),
+        ("A Fistful of Dollars", "Rojo", 1964),
+        ("For a Few Dollars More", "El Indio", 1965),
+        ("The Good, the Bad and the Ugly", "Tuco", 1966),
     ];
     let path = Path::new("westerns.csv");
     let mut writer = Writer::from_file(&path);
@@ -25,13 +25,13 @@ fn main() {
     let movie = Movie {
         title: "Hang 'Em High".to_string(),
         bad_guy: "Wilson".to_string(),
-        pub_year: 1968u,
+        pub_year: 1968,
     };
     writer.encode(movie).ok().expect("CSV writer error");
     writer.flush().ok().expect("Flush error");
     let mut reader = Reader::from_file(&path).has_headers(false);
     for row in reader.decode() {
-        let row: (String, String, uint) = row.unwrap();
+        let row: (String, String, usize) = row.unwrap();
         println!("{:?}", row);
     }
     let mut reader = Reader::from_file(&path).has_headers(false);

@@ -4,7 +4,7 @@ use uuid::Uuid;
 
 fn main() {
     println!("24 days of Rust - uuid (day 13)");
-    for _ in range(0, 10u) {
+    for _ in 0..10 {
         println!("{}", Uuid::new_v4().to_hyphenated_string());
     }
     println!("{:?}", Uuid::parse_str("d27cdb6e-ae6d-11cf-96b8-44455354000"));

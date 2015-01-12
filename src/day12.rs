@@ -24,8 +24,8 @@ fn main() {
     let mut rng = rand::thread_rng();
     let normal = Normal::new(15.0, 15.0);
     let mut noisy = img.brighten(-25);
-    for x in range(0, width) {
-        for y in range(0, height) {
+    for x in 0..(width) {
+        for y in 0..(height) {
             let offset = normal.ind_sample(&mut rng) as u8;
             let px = img.get_pixel(x, y).map(|v| v + offset);
             noisy.put_pixel(x, y, px);

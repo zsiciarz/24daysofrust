@@ -14,9 +14,9 @@ fn draw(v: &DVec<f64>, path: &Path) {
     let buffer = image::ImageBuffer::from_fn(width, height, Box::new(|&: _, _| white));
     let mut img = image::DynamicImage::ImageRgba8(buffer);
     let red = Pixel::from_channels(255, 0, 0, 255);
-    for i in range(0u32, width) {
+    for i in 0u32..(width) {
         let half = (height / 2) as f64;
-        let y = half * (1.0 + v[i as uint]);
+        let y = half * (1.0 + v[i as usize]);
         let y = nalgebra::clamp(y as u32, 1u32, height);
         img.put_pixel(i, height - y, red);
     }
@@ -47,14 +47,14 @@ fn main() {
     println!("{:?}", nalgebra::cross(&v1, &v2));
     println!("{:?}", nalgebra::cross(&v2, &v1));
 
-    const SIZE: uint = 512;
-    let sine = DVec::from_fn(SIZE, |i: uint| {
+    const SIZE: usize = 512;
+    let sine = DVec::from_fn(SIZE, |i: usize| {
         let t = i as f64 / 16.0f64;
         t.sin()
     });
     draw(&sine, &Path::new("out_sine.png"));
 
-    let window = DVec::from_fn(SIZE, |i: uint| {
+    let window = DVec::from_fn(SIZE, |i: usize| {
         0.54f64 - 0.46 * (PI_2 * (i as f64) / (SIZE - 1) as f64).cos()
     });
     draw(&window, &Path::new("out_window.png"));

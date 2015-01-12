@@ -8,12 +8,11 @@ fn main() {
     println!("24 days of Rust - itertools (day 7)");
     let mut words = "hello supercalifragilisticexpialidocious programmer".words();
     words.apply(|word| println!("{} is {} characters long", word, word.len()));
-    let even = range(1, 10u).map(|x| x * 2);
-    let odd = range(1, 5u).map(|x| x * 2 + 1);
+    let even = (1..10).map(|x| x * 2);
+    let odd = (1..5).map(|x| x * 2 + 1);
     println!("{:?}", even.interleave(odd).collect::<Vec<_>>());
-    let it = range(1, 10u);
-    println!("{:?}", it.intersperse(15u).collect::<Vec<_>>());
-    let numbers = range(1, 4u);
+    println!("{:?}", (1..10).intersperse(15).collect::<Vec<_>>());
+    let numbers = 1..4;
     let chars = vec!['a', 'b', 'c'];
     for (i, c) in iproduct!(numbers, chars.iter()) {
         println!("{}: {}", i, c);
