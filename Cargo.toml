@@ -16,8 +16,8 @@ name = "day4"
 #[[bin]]
 #name = "day5"
 
-[[bin]]
-name = "day6"
+#[[bin]]
+#name = "day6"
 
 [[bin]]
 name = "day7"
@@ -40,8 +40,8 @@ name = "day13"
 [[bin]]
 name = "day14"
 
-[[bin]]
-name = "day15"
+#[[bin]]
+#name = "day15"
 
 #[[bin]]
 #name = "day17"
@@ -60,10 +60,10 @@ name = "day21"
 csv = "~0.12.9"
 docopt = "~0.6.30"
 docopt_macros = "~0.6.30"
-fuse = "~0.2.1"
+#fuse = "~0.2.1"
 #hyper = "~0.0.21"
 itertools = "~0.0.17"
-json_macros = "~0.1.2"
+#json_macros = "~0.1.2"
 num = "~0.1.8"
 #postgres = "~0.4.5"
 #postgres_macros = "~0.0.1"
