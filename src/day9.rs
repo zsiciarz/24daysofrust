@@ -3,16 +3,16 @@ extern crate anymap;
 use std::io::net::ip::IpAddr;
 use anymap::AnyMap;
 
-#[deriving(Show)]
+#[derive(Show)]
 enum HostAddress {
     DomainName(String),
     Ip(IpAddr),
 }
 
-#[deriving(Show)]
+#[derive(Show)]
 struct Port(u32);
 
-#[deriving(Show)]
+#[derive(Show)]
 struct ConnectionLimit(u32);
 
 fn main() {

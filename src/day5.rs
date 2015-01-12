@@ -51,7 +51,7 @@ fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
     Ok(try!(response.read_to_string()))
 }
 
-#[deriving(RustcDecodable, RustcEncodable)]
+#[derive(RustcDecodable, RustcEncodable)]
 struct Movie {
     title: String,
     bad_guy: String,
