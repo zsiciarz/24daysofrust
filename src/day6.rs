@@ -1,6 +1,7 @@
 #![feature(plugin)]
 
 #[plugin]
+#[no_link]
 extern crate json_macros;
 
 extern crate "rustc-serialize" as rustc_serialize;
@@ -11,13 +12,13 @@ use rustc_serialize::json::{self, PrettyEncoder};
 #[derive(RustcDecodable, RustcEncodable)]
 struct Photo {
     url: String,
-    dimensions: (uint, uint),
+    dimensions: (u32, u32),
 }
 
 #[derive(RustcDecodable, RustcEncodable)]
 struct User {
     name: String,
-    post_count: uint,
+    post_count: u32,
     likes_burgers: bool,
     avatar: Option<Photo>,
 }
@@ -25,16 +26,16 @@ struct User {
 
 fn main() {
     println!("24 days of Rust - json (day 6)");
-    println!("{}", json::encode(&42i));
+    println!("{}", json::encode(&42));
     println!("{}", json::encode(&vec!["to", "be", "or", "not", "to", "be"]));
     println!("{}", json::encode(&Some(true)));
     let user = User {
         name: "Zbyszek".to_string(),
-        post_count: 100u,
+        post_count: 100u32,
         likes_burgers: true,
         avatar: Some(Photo {
             url: "http://lorempixel.com/160/160/".to_string(),
-            dimensions: (160u, 160u),
+            dimensions: (160u32, 160u32),
         }),
     };
     println!("{}", json::encode(&user));
@@ -51,7 +52,7 @@ fn main() {
         decoded.name, if decoded.likes_burgers { "love" } else { "don't like" });
     assert!(decoded.avatar.is_none());
     let new_request = "{\"id\":64,\"title\":\"24days\",\"stats\":{\"pageviews\":1500}}";
-    if let Ok(request_json) = json::from_str(new_request) {
+    if let Ok(request_json) = json::Json::from_str(new_request) {
         if let Some(ref stats) = request_json.find("stats") {
             if let Some(ref pageviews) = stats.find("pageviews") {
                 println!("Pageviews: {}", pageviews);
@@ -63,7 +64,7 @@ fn main() {
         "port": 6543,
         "allowed_methods": ["get", "post"],
         "limits": {
-            "bandwidth": (500 * 16u),
+            "bandwidth": (500 * 16),
             "rate": null
         }
     });
