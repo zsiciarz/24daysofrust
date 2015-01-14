@@ -2,6 +2,7 @@
 
 extern crate fuse;
 #[plugin]
+#[no_link]
 extern crate json_macros;
 extern crate time;
 extern crate libc;
@@ -99,7 +100,7 @@ impl Filesystem for JsonFilesystem {
         };
     }
 
-    fn read(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, size: uint, reply: ReplyData) {
+    fn read(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, size: usize, reply: ReplyData) {
         println!("read(ino={}, fh={}, offset={}, size={})", ino, fh, offset, size);
         for (key, &inode) in self.inodes.iter() {
             if inode == ino {
