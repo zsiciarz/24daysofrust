@@ -71,7 +71,9 @@ postgres = "~0.4.6"
 rust-crypto = "~0.2.12"
 rustc-serialize = "~0.2.8"
 slow_primes = "~0.1.8"
+time = "~0.1.12"
 tau = "~1.0.1"
+url = "~0.2.16"
 uuid = "~0.1.7"
 
 [dependencies.image]
