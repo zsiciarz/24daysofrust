@@ -38,7 +38,7 @@ fn main() {
             dimensions: (160u32, 160u32),
         }),
     };
-    println!("{}", json::encode(&user));
+    println!("{:?}", json::encode(&user));
     let mut buffer: Vec<u8> = Vec::new();
     {
         let mut encoder = PrettyEncoder::new(&mut buffer);

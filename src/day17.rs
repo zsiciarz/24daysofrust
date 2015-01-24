@@ -9,7 +9,7 @@ use std::rand;
 
 fn main() {
     println!("24 days of Rust - patterns (day 17)");
-    let v = (0..10).map(|x| x * 3).collect::<Vec<_>>();
+    let v = (0us..10).map(|x| x * 3).collect::<Vec<_>>();
     println!("{:?}", v);
     let v = (0..10).map(|_| rand::random::<u32>()).collect::<Vec<_>>();
     println!("{:?}", v);
