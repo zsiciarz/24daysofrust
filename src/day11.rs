@@ -1,10 +1,10 @@
-//#![feature(plugin)]
+#![feature(plugin)]
 
 extern crate "rustc-serialize" as serialize;
 extern crate postgres;
 
-//#[plugin]
-//extern crate postgres_macros;
+#[plugin]
+extern crate postgres_macros;
 
 use postgres::{Connection, Error, FromSql, SslMode};
 use postgres::Result as PgResult;
@@ -73,6 +73,6 @@ fn main() {
     let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{:?}", json);
 
-    //let query = sql!("select '{4, 5, 6}'::int[]");
-    //println!("{:?}", query);
+    let query = sql!("select '{4, 5, 6}'::int[]");
+    println!("{:?}", query);
 }
