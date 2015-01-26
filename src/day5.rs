@@ -24,7 +24,7 @@ fn post_query(url: &str, query: Query) -> HttpResult<String> {
 fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
     where T: Encodable {
     let mut client = Client::new();
-    let body = json::encode(payload);
+    let body = json::encode(payload).unwrap();
     let mut response = try!(client.post(url).body(&body[]).send());
     Ok(try!(response.read_to_string()))
 }
