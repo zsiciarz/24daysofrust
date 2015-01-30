@@ -1,4 +1,4 @@
-#![allow(unused_imports, unused_variables, unused_mut)]
+#![feature(core, rand)]
 
 extern crate crypto;
 extern crate "rustc-serialize" as serialize;

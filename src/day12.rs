@@ -1,3 +1,5 @@
+#![feature(io, path, rand)]
+
 extern crate image;
 
 use image::{FilterType, GenericImage, Pixel};

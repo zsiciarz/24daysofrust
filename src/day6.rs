@@ -1,4 +1,4 @@
-#![feature(plugin)]
+#![feature(collections, plugin)]
 
 #[plugin]
 #[no_link]

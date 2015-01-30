@@ -1,3 +1,5 @@
+#![feature(collections, path)]
+
 extern crate csv;
 extern crate "rustc-serialize" as rustc_serialize;
 

@@ -1,3 +1,5 @@
+#![feature(core, io, path)]
+
 extern crate image;
 extern crate nalgebra;
 
