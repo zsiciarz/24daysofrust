@@ -2,7 +2,7 @@ extern crate image;
 extern crate nalgebra;
 
 use std::f64::consts::{PI_2, FRAC_PI_2};
-use std::io::File;
+use std::old_io::File;
 use std::num::Float;
 use image::{GenericImage, Pixel, Rgba};
 use nalgebra::{DVec, Mat2, Pnt2, Rot2, Vec1, Vec2, Vec3};

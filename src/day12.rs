@@ -2,7 +2,7 @@ extern crate image;
 
 use image::{FilterType, GenericImage, Pixel};
 
-use std::io::File;
+use std::old_io::File;
 use std::rand;
 use std::rand::distributions::{Normal, IndependentSample};
 

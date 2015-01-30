@@ -4,7 +4,7 @@ extern crate nalgebra;
 use image::Pixel;
 use nalgebra::DMat;
 
-use std::io::File;
+use std::old_io::File;
 use std::rand;
 
 fn main() {
