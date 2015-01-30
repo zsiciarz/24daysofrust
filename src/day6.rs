@@ -7,7 +7,7 @@ extern crate json_macros;
 extern crate "rustc-serialize" as rustc_serialize;
 
 use rustc_serialize::Encodable;
-use rustc_serialize::json::{self, PrettyEncoder};
+use rustc_serialize::json::{self, Encoder};
 
 #[derive(RustcDecodable, RustcEncodable)]
 struct Photo {
@@ -41,7 +41,7 @@ fn main() {
     println!("{:?}", json::encode(&user));
     let mut buffer: Vec<u8> = Vec::new();
     {
-        let mut encoder = PrettyEncoder::new(&mut buffer);
+        let mut encoder = Encoder::new_pretty(&mut buffer);
         user.encode(&mut encoder).ok().expect("JSON encode error");
     }
     let encoded = String::from_utf8(buffer).unwrap();
