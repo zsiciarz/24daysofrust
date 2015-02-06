@@ -1,3 +1,5 @@
+#![feature(core)]
+
 extern crate uuid;
 
 use uuid::Uuid;
