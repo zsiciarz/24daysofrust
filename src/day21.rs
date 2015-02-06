@@ -1,6 +1,7 @@
-#![feature(core, rand)]
+#![feature(core)]
 
 extern crate crypto;
+extern crate rand;
 extern crate "rustc-serialize" as serialize;
 
 use crypto::aes::{self, KeySize};
@@ -14,7 +15,7 @@ use serialize::base64::{STANDARD, ToBase64};
 use serialize::hex::ToHex;
 
 use std::iter::repeat;
-use std::rand::{OsRng, Rng};
+use rand::{OsRng, Rng};
 
 fn main() {
     println!("24 days of Rust - rust-crypto (day 21)");
