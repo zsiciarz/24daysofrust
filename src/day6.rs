@@ -39,12 +39,11 @@ fn main() {
         }),
     };
     println!("{:?}", json::encode(&user));
-    let mut buffer: Vec<u8> = Vec::new();
+    let mut encoded = String::new();
     {
-        let mut encoder = Encoder::new_pretty(&mut buffer);
+        let mut encoder = Encoder::new_pretty(&mut encoded);
         user.encode(&mut encoder).ok().expect("JSON encode error");
     }
-    let encoded = String::from_utf8(buffer).unwrap();
     println!("{}", encoded);
     let incoming_request = "{\"name\":\"John\",\"post_count\":2,\"likes_burgers\":false,\"avatar\":null}";
     let decoded: User = json::decode(incoming_request).unwrap();
