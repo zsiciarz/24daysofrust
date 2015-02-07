@@ -1,4 +1,4 @@
-#![feature(plugin)]
+#![feature(core, io, libc, os, path, plugin)]
 
 extern crate fuse;
 #[plugin]
@@ -9,9 +9,9 @@ extern crate libc;
 extern crate "rustc-serialize" as rustc_serialize;
 
 use std::collections::BTreeMap;
-use std::io::{FileType, USER_FILE, USER_DIR};
+use std::old_io::{FileType, USER_FILE, USER_DIR};
 use std::os;
-use std::path::PosixPath;
+use std::old_path::PosixPath;
 use libc::{ENOENT};
 use time::Timespec;
 use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
