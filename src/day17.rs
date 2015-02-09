@@ -21,6 +21,6 @@ fn main() {
         Pixel::from_channels((x * y % 256) as u8, (y % 256) as u8, (x % 256) as u8, 255)
     }));
     let img = image::DynamicImage::ImageRgba8(buffer);
-    let out = File::create(&Path::new("out_pattern.png")).unwrap();
-    let _ = img.save(out, image::PNG);
+    let mut out = File::create(&Path::new("out_pattern.png")).unwrap();
+    let _ = img.save(&mut out, image::PNG);
 }

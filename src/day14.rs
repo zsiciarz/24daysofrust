@@ -22,8 +22,8 @@ fn draw(v: &DVec<f64>, path: &Path) {
         let y = nalgebra::clamp(y as u32, 1u32, height);
         img.put_pixel(i, height - y, red);
     }
-    let out = File::create(path).unwrap();
-    let _ = img.save(out, image::PNG);
+    let mut out = File::create(path).unwrap();
+    let _ = img.save(&mut out, image::PNG);
 }
 
 fn main() {
