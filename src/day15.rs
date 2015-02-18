@@ -1,9 +1,7 @@
 #![feature(core, io, libc, os, path, plugin)]
+#![plugin(json_macros)]
 
 extern crate fuse;
-#[plugin]
-#[no_link]
-extern crate json_macros;
 extern crate time;
 extern crate libc;
 extern crate "rustc-serialize" as rustc_serialize;

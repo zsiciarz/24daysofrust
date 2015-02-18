@@ -1,11 +1,9 @@
 #![feature(core, plugin)]
+#![plugin(postgres_macros)]
 
 extern crate "rustc-serialize" as serialize;
 extern crate postgres;
 extern crate postgres_array;
-
-#[plugin]
-extern crate postgres_macros;
 
 use postgres::{Connection, Error, FromSql, SslMode};
 use postgres::Result as PgResult;
