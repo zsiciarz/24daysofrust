@@ -28,8 +28,8 @@ name = "day9"
 [[bin]]
 name = "day10"
 
-[[bin]]
-name = "day11"
+#[[bin]]
+#name = "day11"
 
 [[bin]]
 name = "day12"
@@ -64,9 +64,9 @@ hyper = "~0.1.12"
 itertools = "~0.1.4"
 json_macros = "~0.2.0"
 num = "~0.1.12"
-postgres = "~0.6.2"
-postgres_array = "~0.2.1"
-postgres_macros = "~0.0.6"
+#postgres = "~0.6.2"
+#postgres_array = "~0.2.1"
+#postgres_macros = "~0.0.6"
 rand = "~0.1.2"
 #redis = "~0.0.5"
 rust-crypto = "~0.2.16"
