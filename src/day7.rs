@@ -1,4 +1,4 @@
-#![feature(core)]
+#![feature(core, str_words)]
 
 #[macro_use]
 extern crate itertools;
