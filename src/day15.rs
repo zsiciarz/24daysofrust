@@ -1,4 +1,4 @@
-#![feature(core, io, libc, os, path, plugin)]
+#![feature(core, env, io, libc, path, plugin)]
 #![plugin(json_macros)]
 
 extern crate fuse;
@@ -8,7 +8,7 @@ extern crate "rustc-serialize" as rustc_serialize;
 
 use std::collections::BTreeMap;
 use std::old_io::{FileType, USER_FILE, USER_DIR};
-use std::os;
+use std::env;
 use std::old_path::PosixPath;
 use libc::{ENOENT};
 use time::Timespec;
@@ -138,10 +138,11 @@ fn main() {
     });
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem::new(tree);
-    let mountpoint = match os::args().as_slice() {
+    let args = env::args().collect::<Vec<_>>();
+    let mountpoint = match &args[] {
         [_, ref path] => Path::new(path),
         _ => {
-            println!("Usage: {} <MOUNTPOINT>", os::args()[0]);
+            println!("Usage: {} <MOUNTPOINT>", args[0]);
             return;
         }
     };
