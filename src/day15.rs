@@ -1,4 +1,4 @@
-#![feature(core, env, io, libc, path, plugin)]
+#![feature(env, old_io, libc, old_path, plugin)]
 #![plugin(json_macros)]
 
 extern crate fuse;
