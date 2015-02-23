@@ -1,4 +1,4 @@
-#![feature(io)]
+#![feature(old_io)]
 
 extern crate hyper;
 extern crate "rustc-serialize" as rustc_serialize;
@@ -19,7 +19,7 @@ type Query<'a> = Vec<(&'a str, &'a str)>;
 fn post_query(url: &str, query: Query) -> HttpResult<String> {
     let mut client = Client::new();
     let body = form_urlencoded::serialize(query.into_iter());
-    let mut response = try!(client.post(url).body(&body[]).send());
+    let mut response = try!(client.post(url).body(&body[..]).send());
     Ok(try!(response.read_to_string()))
 }
 
@@ -27,7 +27,7 @@ fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
     where T: Encodable {
     let mut client = Client::new();
     let body = json::encode(payload).unwrap();
-    let mut response = try!(client.post(url).body(&body[]).send());
+    let mut response = try!(client.post(url).body(&body[..]).send());
     Ok(try!(response.read_to_string()))
 }
 
