@@ -4,8 +4,8 @@ name = "24daysofrust"
 version = "0.0.1"
 authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 
-[[bin]]
-name = "day2"
+#[[bin]]
+#name = "day2"
 
 [[bin]]
 name = "day3"
@@ -13,8 +13,8 @@ name = "day3"
 [[bin]]
 name = "day4"
 
-[[bin]]
-name = "day5"
+#[[bin]]
+#name = "day5"
 
 [[bin]]
 name = "day6"
@@ -22,8 +22,8 @@ name = "day6"
 [[bin]]
 name = "day7"
 
-[[bin]]
-name = "day9"
+#[[bin]]
+#name = "day9"
 
 [[bin]]
 name = "day10"
@@ -56,11 +56,11 @@ name = "day17"
 name = "day21"
 
 [dependencies]
-anymap = "~0.9.10"
+#anymap = "~0.9.10"
 csv = "~0.12.16"
 docopt = "~0.6.38"
 docopt_macros = "~0.6.38"
-hyper = "~0.1.13"
+#hyper = "~0.1.13"
 itertools = "~0.1.5"
 json_macros = "~0.2.0"
 num = "~0.1.13"
@@ -71,7 +71,7 @@ rand = "~0.1.2"
 #redis = "~0.0.5"
 rust-crypto = "~0.2.16"
 rustc-serialize = "~0.2.12"
-slow_primes = "~0.1.9"
+#slow_primes = "~0.1.9"
 time = "~0.1.17"
 tau = "~1.0.1"
 url = "~0.2.20"
