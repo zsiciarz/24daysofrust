@@ -10,8 +10,8 @@ fn main() {
     println!("24 days of Rust - itertools (day 7)");
     let mut words = "hello supercalifragilisticexpialidocious programmer".words();
     words.apply(|word| println!("{} is {} characters long", word, word.len()));
-    let even = (1us..10).map(|x| x * 2);
-    let odd = (1us..5).map(|x| x * 2 + 1);
+    let even = (1..10).map(|x| x * 2);
+    let odd = (1..5).map(|x| x * 2 + 1);
     println!("{:?}", even.interleave(odd).collect::<Vec<_>>());
     println!("{:?}", (1..10).intersperse(15).collect::<Vec<_>>());
     let numbers = 1..4;

@@ -139,7 +139,7 @@ fn main() {
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem::new(tree);
     let args = env::args().collect::<Vec<_>>();
-    let mountpoint = match &args[] {
+    let mountpoint = match &args[..] {
         [_, ref path] => Path::new(path),
         _ => {
             println!("Usage: {} <MOUNTPOINT>", args[0]);
