@@ -1,8 +1,8 @@
-#![feature(io)]
+#![feature(net)]
 
 extern crate anymap;
 
-use std::old_io::net::ip::IpAddr;
+use std::net::IpAddr;
 use anymap::AnyMap;
 
 #[derive(Debug)]
@@ -27,7 +27,7 @@ fn main() {
     println!("{:?}", config.get::<Port>());
     assert!(config.get::<String>().is_none());
     assert!(config.get::<u32>().is_none());
-    config.insert(HostAddress::Ip(IpAddr::Ipv4Addr(127, 0, 0, 1)));
+    config.insert(HostAddress::Ip(IpAddr::new_v4(127, 0, 0, 1)));
     println!("{:?}", config.get::<HostAddress>());
     if config.contains::<Option<f32>>() {
         println!("There's no optional float in the configuration...");
