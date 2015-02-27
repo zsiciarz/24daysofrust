@@ -9,7 +9,7 @@ script:
 #   - cargo run --bin=day5
     - cargo run --bin=day6
     - cargo run --bin=day7
-#   - cargo run --bin=day9
+    - cargo run --bin=day9
     - cargo run --bin=day10
 #   - cargo run --bin=day11
     - cargo run --bin=day12
