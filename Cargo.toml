@@ -57,9 +57,9 @@ name = "day21"
 
 [dependencies]
 anymap = "~0.9.11"
-csv = "~0.12.17"
-docopt = "~0.6.39"
-docopt_macros = "~0.6.39"
+csv = "~0.12.18"
+docopt = "~0.6.40"
+docopt_macros = "~0.6.40"
 #hyper = "~0.2.0"
 itertools = "~0.1.6"
 json_macros = "~0.2.0"
@@ -74,7 +74,7 @@ rustc-serialize = "~0.3.0"
 slow_primes = "~0.1.10"
 time = "~0.1.19"
 tau = "~1.0.1"
-url = "~0.2.21"
+url = "~0.2.23"
 uuid = "~0.1.11"
 
 [dependencies.fuse]
