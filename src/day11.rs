@@ -15,8 +15,8 @@ fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     where T: FromSql {
     println!("Executing query: {}", query);
     let stmt = try!(conn.prepare(query));
-    let mut rows = try!(stmt.query(&[]));
-    let row = try!(rows.next().ok_or(Error::BadData));
+    let rows = try!(stmt.query(&[]));
+    let row = try!(rows.iter().next().ok_or(Error::BadResponse));
     row.get_opt(0)
 }
 
@@ -54,7 +54,7 @@ fn main() {
         }
     };
     let max_id: i32 = 3;
-    let mut rows = stmt.query(&[&max_id]).ok().expect("Selecting blogposts failed");
+    let rows = stmt.query(&[&max_id]).ok().expect("Selecting blogposts failed");
     for row in rows {
         let id: i32 = row.get("id");
         let title: String = row.get("title");
@@ -63,13 +63,11 @@ fn main() {
     println!("{:?}", get_single_value::<bool>(&conn, "select 1=1"));
     println!("{:?}", get_single_value::<i32>(&conn, "select 1=1"));
 
-    /*
     type IntArray = ArrayBase<Option<i32>>;
     let arr = get_single_value::<IntArray>(&conn, "select '{4, 5, 6}'::int[]");
     println!("{:?}", arr.map(|arr| arr.values()
             .filter_map(|x| *x) // unwraps Some values and skips None
             .collect::<Vec<_>>()));
-    */
 
     let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{:?}", json);
