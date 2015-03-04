@@ -1,5 +1,3 @@
-#![feature(old_path)]
-
 extern crate csv;
 extern crate "rustc-serialize" as rustc_serialize;
 
@@ -19,8 +17,8 @@ fn main() {
         ("For a Few Dollars More", "El Indio", 1965),
         ("The Good, the Bad and the Ugly", "Tuco", 1966),
     ];
-    let path = Path::new("westerns.csv");
-    let mut writer = Writer::from_file(&path);
+    let path = "westerns.csv";
+    let mut writer = Writer::from_file(path).unwrap();
     for row in dollar_films.into_iter() {
         writer.encode(row).ok().expect("CSV writer error");
     }
@@ -31,12 +29,12 @@ fn main() {
     };
     writer.encode(movie).ok().expect("CSV writer error");
     writer.flush().ok().expect("Flush error");
-    let mut reader = Reader::from_file(&path).has_headers(false);
+    let mut reader = Reader::from_file(path).unwrap().has_headers(false);
     for row in reader.decode() {
         let row: (String, String, usize) = row.unwrap();
         println!("{:?}", row);
     }
-    let mut reader = Reader::from_file(&path).has_headers(false);
+    let mut reader = Reader::from_file(path).unwrap().has_headers(false);
     for row in reader.decode() {
         let movie: Movie = row.unwrap();
         println!("{} was a bad guy in '{}' in {}",
