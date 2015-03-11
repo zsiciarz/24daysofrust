@@ -61,6 +61,7 @@ csv = "~0.13.0"
 docopt = "~0.6.45"
 docopt_macros = "~0.6.45"
 #hyper = "~0.2.0"
+image = "~0.2.0"
 itertools = "~0.1.8"
 json_macros = "~0.2.1"
 num = "~0.1.15"
@@ -83,9 +84,6 @@ features = ["rustc-serialize"]
 
 [dependencies.fuse]
 git = "https://github.com/zargony/rust-fuse.git"
-
-[dependencies.image]
-git = "https://github.com/PistonDevelopers/image"
 
 [dependencies.nalgebra]
 git = "https://github.com/sebcrozet/nalgebra.git"
