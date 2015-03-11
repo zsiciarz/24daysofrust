@@ -10,7 +10,7 @@ use rand::distributions::{Normal, IndependentSample};
 
 fn main() {
     println!("24 days of Rust - image (day 12)");
-    let img = image::open(&Path::new("data/in.jpg")).ok().expect("Opening image failed");
+    let img = image::open(&Path::new("data/in.png")).ok().expect("Opening image failed");
     let filtered = img.fliph();
     let mut out = File::create(&Path::new("out.png")).unwrap();
     let _ = filtered.save(&mut out, image::PNG).ok().expect("Saving image failed");
@@ -19,8 +19,8 @@ fn main() {
                   -1.0, 8.0, -1.0,
                   -1.0, -1.0, -1.0];
     let filtered = img.filter3x3(&kernel);
-    let mut out = File::create(&Path::new("out.jpg")).unwrap();
-    let _ = filtered.save(&mut out, image::JPEG).ok().expect("Saving image failed");
+    let mut out = File::create(&Path::new("out_blur.png")).unwrap();
+    let _ = filtered.save(&mut out, image::PNG).ok().expect("Saving image failed");
 
     let (width, height) = img.dimensions();
     let mut rng = rand::thread_rng();
@@ -33,10 +33,10 @@ fn main() {
             noisy.put_pixel(x, y, px);
         }
     }
-    let mut out = File::create(&Path::new("out.jpg")).unwrap();
-    let _ = noisy.save(&mut out, image::JPEG).ok().expect("Saving image failed");
+    let mut out = File::create(&Path::new("out_noisy.png")).unwrap();
+    let _ = noisy.save(&mut out, image::PNG).ok().expect("Saving image failed");
 
     let thumbnail = img.resize(120, 120, FilterType::Lanczos3);
-    let mut out = File::create(&Path::new("out_thumb.jpg")).unwrap();
-    let _ = thumbnail.save(&mut out, image::JPEG).ok().expect("Saving image failed");
+    let mut out = File::create(&Path::new("out_thumb.png")).unwrap();
+    let _ = thumbnail.save(&mut out, image::PNG).ok().expect("Saving image failed");
 }
