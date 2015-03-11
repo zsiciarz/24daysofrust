@@ -29,7 +29,7 @@ fn main() {
     for x in 0..(width) {
         for y in 0..(height) {
             let offset = normal.ind_sample(&mut rng) as u8;
-            let px = img.get_pixel(x, y).map(|v| v + offset);
+            let px = img.get_pixel(x, y).map(|v| if v <= 255 - offset { v + offset } else { 255 });
             noisy.put_pixel(x, y, px);
         }
     }
