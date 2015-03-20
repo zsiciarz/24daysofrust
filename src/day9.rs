@@ -1,14 +1,12 @@
-#![feature(net)]
-
 extern crate anymap;
 
-use std::net::IpAddr;
+use std::net::Ipv4Addr;
 use anymap::AnyMap;
 
 #[derive(Debug)]
 enum HostAddress {
     DomainName(String),
-    Ip(IpAddr),
+    Ip(Ipv4Addr),
 }
 
 #[derive(Debug)]
@@ -27,7 +25,7 @@ fn main() {
     println!("{:?}", config.get::<Port>());
     assert!(config.get::<String>().is_none());
     assert!(config.get::<u32>().is_none());
-    config.insert(HostAddress::Ip(IpAddr::new_v4(127, 0, 0, 1)));
+    config.insert(HostAddress::Ip(Ipv4Addr::new(127, 0, 0, 1)));
     println!("{:?}", config.get::<HostAddress>());
     if config.contains::<Option<f32>>() {
         println!("There's no optional float in the configuration...");
