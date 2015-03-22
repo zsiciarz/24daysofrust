@@ -1,17 +1,20 @@
-#![feature(old_io)]
-
 extern crate hyper;
 extern crate "rustc-serialize" as rustc_serialize;
 extern crate url;
 
-use hyper::{Client, HttpResult};
+use std::io::Read;
+use hyper::{Client, HttpResult, HttpError};
 use rustc_serialize::{Encodable, json};
 use url::form_urlencoded;
 
 fn get_content(url: &str) -> HttpResult<String> {
     let mut client = Client::new();
     let mut response = try!(client.get(url).send());
-    Ok(try!(response.read_to_string()))
+    let mut buf = String::new();
+    match response.read_to_string(&mut buf) {
+        Ok(_) => Ok(buf),
+        Err(e) => Err(HttpError::HttpIoError(e)),
+    }
 }
 
 type Query<'a> = Vec<(&'a str, &'a str)>;
@@ -20,7 +23,11 @@ fn post_query(url: &str, query: Query) -> HttpResult<String> {
     let mut client = Client::new();
     let body = form_urlencoded::serialize(query.into_iter());
     let mut response = try!(client.post(url).body(&body[..]).send());
-    Ok(try!(response.read_to_string()))
+    let mut buf = String::new();
+    match response.read_to_string(&mut buf) {
+        Ok(_) => Ok(buf),
+        Err(e) => Err(HttpError::HttpIoError(e)),
+    }
 }
 
 fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
@@ -28,7 +35,11 @@ fn post_json<'a, T>(url: &str, payload: &T) -> HttpResult<String>
     let mut client = Client::new();
     let body = json::encode(payload).unwrap();
     let mut response = try!(client.post(url).body(&body[..]).send());
-    Ok(try!(response.read_to_string()))
+    let mut buf = String::new();
+    match response.read_to_string(&mut buf) {
+        Ok(_) => Ok(buf),
+        Err(e) => Err(HttpError::HttpIoError(e)),
+    }
 }
 
 #[derive(RustcDecodable, RustcEncodable)]
