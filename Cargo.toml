@@ -60,6 +60,7 @@ anymap = "~0.9.12"
 csv = "~0.13.4"
 docopt = "~0.6.52"
 docopt_macros = "~0.6.52"
+fuse = "~0.2.5"
 #hyper = "~0.2.0"
 image = "~0.2.3"
 itertools = "~0.1.9"
@@ -69,7 +70,7 @@ postgres_array = "~0.3.0"
 postgres_macros = "~0.1.0"
 rand = "~0.2.0"
 #redis = "~0.0.5"
-rust-crypto = "~0.2.24"
+rust-crypto = "~0.2.25"
 rustc-serialize = "~0.3.6"
 slow_primes = "~0.1.11"
 time = "~0.1.20"
@@ -81,9 +82,6 @@ uuid = "~0.1.11"
 [dependencies.postgres]
 version= "~0.7.2"
 features = ["rustc-serialize"]
-
-[dependencies.fuse]
-git = "https://github.com/zargony/rust-fuse.git"
 
 [dependencies.nalgebra]
 git = "https://github.com/sebcrozet/nalgebra.git"
