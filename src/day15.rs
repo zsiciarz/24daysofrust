@@ -1,4 +1,4 @@
-#![feature(old_io, libc, old_path, plugin)]
+#![feature(libc, plugin)]
 #![plugin(json_macros)]
 
 extern crate fuse;
@@ -7,12 +7,11 @@ extern crate libc;
 extern crate "rustc-serialize" as rustc_serialize;
 
 use std::collections::BTreeMap;
-use std::old_io::{FileType, USER_FILE, USER_DIR};
 use std::env;
-use std::old_path::PosixPath;
+use std::path::Path;
 use libc::{ENOENT};
 use time::Timespec;
-use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
+use fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
 use rustc_serialize::json;
 
 struct JsonFilesystem {
@@ -35,7 +34,7 @@ impl JsonFilesystem {
             ctime: ts,
             crtime: ts,
             kind: FileType::Directory,
-            perm: USER_DIR,
+            perm: 0o755,
             nlink: 0,
             uid: 0,
             gid: 0,
@@ -54,7 +53,7 @@ impl JsonFilesystem {
                 ctime: ts,
                 crtime: ts,
                 kind: FileType::RegularFile,
-                perm: USER_FILE,
+                perm: 0o644,
                 nlink: 0,
                 uid: 0,
                 gid: 0,
@@ -80,9 +79,9 @@ impl Filesystem for JsonFilesystem {
         };
     }
 
-    fn lookup(&mut self, _req: &Request, parent: u64, name: &PosixPath, reply: ReplyEntry) {
+    fn lookup(&mut self, _req: &Request, parent: u64, name: &Path, reply: ReplyEntry) {
         println!("lookup(parent={}, name={})", parent, name.display());
-        let inode = match self.inodes.get(name.as_str().unwrap()) {
+        let inode = match self.inodes.get(name.to_str().unwrap()) {
             Some(inode) => inode,
             None => {
                 reply.error(ENOENT);
@@ -114,13 +113,13 @@ impl Filesystem for JsonFilesystem {
         println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
         if ino == 1 {
             if offset == 0 {
-                reply.add(1, 0, FileType::Directory, &PosixPath::new("."));
-                reply.add(1, 1, FileType::Directory, &PosixPath::new(".."));
+                reply.add(1, 0, FileType::Directory, &Path::new("."));
+                reply.add(1, 1, FileType::Directory, &Path::new(".."));
                 for (key, &inode) in self.inodes.iter() {
                     if inode == 1 { continue; }
                     let offset = inode; // hack
                     println!("\tkey={}, inode={}, offset={}", key, inode, offset);
-                    reply.add(inode, offset, FileType::RegularFile, &PosixPath::new(key));
+                    reply.add(inode, offset, FileType::RegularFile, &Path::new(key));
                 }
             }
             reply.ok();
