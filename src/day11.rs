@@ -1,7 +1,7 @@
-#![feature(core, plugin)]
+#![feature(plugin)]
 #![plugin(postgres_macros)]
 
-extern crate "rustc-serialize" as serialize;
+extern crate rustc_serialize;
 extern crate postgres;
 extern crate postgres_array;
 
@@ -9,7 +9,7 @@ use postgres::{Connection, Error, FromSql, SslMode};
 use postgres::Result as PgResult;
 use postgres_array::ArrayBase;
 
-use serialize::json::Json;
+use rustc_serialize::json::Json;
 
 fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     where T: FromSql {

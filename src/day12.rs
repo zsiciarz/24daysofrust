@@ -1,12 +1,11 @@
-#![feature(old_io, old_path)]
-
 extern crate image;
 extern crate rand;
 
 use image::{FilterType, GenericImage, Pixel};
 
-use std::old_io::File;
 use rand::distributions::{Normal, IndependentSample};
+use std::fs::File;
+use std::path::Path;
 
 fn main() {
     println!("24 days of Rust - image (day 12)");

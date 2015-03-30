@@ -1,5 +1,3 @@
-#![feature(old_io, old_path)]
-
 extern crate image;
 extern crate nalgebra;
 extern crate rand;
@@ -7,7 +5,8 @@ extern crate rand;
 use image::Pixel;
 use nalgebra::DMat;
 
-use std::old_io::File;
+use std::fs::File;
+use std::path::Path;
 
 fn main() {
     println!("24 days of Rust - patterns (day 17)");

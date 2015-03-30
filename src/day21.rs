@@ -2,7 +2,7 @@
 
 extern crate crypto;
 extern crate rand;
-extern crate "rustc-serialize" as serialize;
+extern crate rustc_serialize;
 
 use crypto::aes::{self, KeySize};
 use crypto::digest::Digest;
@@ -11,8 +11,8 @@ use crypto::mac::Mac;
 use crypto::sha2::Sha256;
 use crypto::symmetriccipher::SynchronousStreamCipher;
 
-use serialize::base64::{STANDARD, ToBase64};
-use serialize::hex::ToHex;
+use rustc_serialize::base64::{STANDARD, ToBase64};
+use rustc_serialize::hex::ToHex;
 
 use std::iter::repeat;
 use rand::{OsRng, Rng};
@@ -24,24 +24,24 @@ fn main() {
     sha.input_str(input);
     println!("{}", sha.result_str());
     let mut bytes: Vec<u8> = repeat(0u8).take(sha.output_bytes()).collect();
-    sha.result(bytes.as_mut_slice());
+    sha.result(&mut bytes[..]);
     println!("{}", bytes.to_base64(STANDARD));
 
     let mut gen = OsRng::new().ok().expect("Failed to get OS random generator");
     let mut key: Vec<u8> = repeat(0u8).take(16).collect();
-    gen.fill_bytes(key.as_mut_slice());
+    gen.fill_bytes(&mut key[..]);
     let mut nonce: Vec<u8> = repeat(0u8).take(16).collect();
-    gen.fill_bytes(nonce.as_mut_slice());
+    gen.fill_bytes(&mut nonce[..]);
     println!("Key: {}", key.to_base64(STANDARD));
     println!("Nonce: {}", nonce.to_base64(STANDARD));
     let mut cipher = aes::ctr(KeySize::KeySize128, key.as_slice(), nonce.as_slice());
     let secret = "I like Nickelback";
     let mut output: Vec<u8> = repeat(0u8).take(secret.len()).collect();
-    cipher.process(secret.as_bytes(), output.as_mut_slice());
+    cipher.process(secret.as_bytes(), &mut output[..]);
     println!("Ciphertext: {}", output.to_base64(STANDARD));
 
     let mut hmac_key: Vec<u8> = repeat(0u8).take(32).collect();
-    gen.fill_bytes(hmac_key.as_mut_slice());
+    gen.fill_bytes(&mut hmac_key);
     let message = "Ceterum censeo Carthaginem esse delendam";
     println!("Message: {}", message);
     println!("HMAC key: {}", hmac_key.to_base64(STANDARD));

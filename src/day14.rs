@@ -1,11 +1,12 @@
-#![feature(core, old_io, old_path)]
+#![feature(core)]
 
 extern crate image;
 extern crate nalgebra;
 
 use std::f64::consts::{PI_2, FRAC_PI_2};
-use std::old_io::File;
+use std::fs::File;
 use std::num::Float;
+use std::path::Path;
 use image::{GenericImage, Pixel, Rgba};
 use nalgebra::{DVec, Mat2, Pnt2, Rot2, Vec1, Vec2, Vec3};
 
