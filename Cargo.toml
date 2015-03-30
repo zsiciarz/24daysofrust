@@ -4,8 +4,8 @@ name = "24daysofrust"
 version = "0.0.1"
 authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 
-[[bin]]
-name = "day2"
+#[[bin]]
+#name = "day2"
 
 [[bin]]
 name = "day3"
@@ -13,14 +13,14 @@ name = "day3"
 [[bin]]
 name = "day4"
 
-[[bin]]
-name = "day5"
+#[[bin]]
+#name = "day5"
 
-[[bin]]
-name = "day6"
+#[[bin]]
+#name = "day6"
 
-[[bin]]
-name = "day7"
+#[[bin]]
+#name = "day7"
 
 [[bin]]
 name = "day9"
@@ -40,8 +40,8 @@ name = "day13"
 [[bin]]
 name = "day14"
 
-[[bin]]
-name = "day15"
+#[[bin]]
+#name = "day15"
 
 [[bin]]
 name = "day17"
@@ -60,11 +60,11 @@ anymap = "~0.10.0"
 csv = "~0.13.6"
 docopt = "~0.6.55"
 docopt_macros = "~0.6.55"
-fuse = "~0.2.5"
-hyper = "~0.3.5"
+#fuse = "~0.2.5"
+#hyper = "~0.3.5"
 image = "~0.3.2"
-itertools = "~0.2.0"
-json_macros = "~0.2.1"
+#itertools = "~0.2.0"
+#json_macros = "~0.2.1"
 num = "~0.1.19"
 postgres_array = "~0.3.0"
 postgres_macros = "~0.1.1"
@@ -72,7 +72,7 @@ rand = "~0.3.3"
 #redis = "~0.0.5"
 rust-crypto = "~0.2.27"
 rustc-serialize = "~0.3.10"
-slow_primes = "~0.1.11"
+#slow_primes = "~0.1.11"
 time = "~0.1.22"
 tau = "~1.0.2"
 url = "~0.2.28"
