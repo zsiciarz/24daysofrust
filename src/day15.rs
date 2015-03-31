@@ -4,7 +4,7 @@
 extern crate fuse;
 extern crate time;
 extern crate libc;
-extern crate "rustc-serialize" as rustc_serialize;
+extern crate rustc_serialize;
 
 use std::collections::BTreeMap;
 use std::env;
@@ -137,11 +137,10 @@ fn main() {
     });
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem::new(tree);
-    let args = env::args().collect::<Vec<_>>();
-    let mountpoint = match &args[..] {
-        [_, ref path] => Path::new(path),
-        _ => {
-            println!("Usage: {} <MOUNTPOINT>", args[0]);
+    let mountpoint = match env::args().nth(1) {
+        Some(path) => path,
+        None => {
+            println!("Usage: {} <MOUNTPOINT>", env::args().nth(0).unwrap());
             return;
         }
     };

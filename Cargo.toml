@@ -40,8 +40,8 @@ name = "day13"
 [[bin]]
 name = "day14"
 
-#[[bin]]
-#name = "day15"
+[[bin]]
+name = "day15"
 
 [[bin]]
 name = "day17"
@@ -60,7 +60,6 @@ anymap = "~0.10.0"
 csv = "~0.13.6"
 docopt = "~0.6.56"
 docopt_macros = "~0.6.56"
-#fuse = "~0.2.5"
 #hyper = "~0.3.5"
 image = "~0.3.2"
 #itertools = "~0.2.0"
@@ -82,6 +81,9 @@ uuid = "~0.1.13"
 [dependencies.postgres]
 version= "~0.7.5"
 features = ["rustc-serialize"]
+
+[dependencies.fuse]
+git = "https://github.com/zargony/rust-fuse.git"
 
 [dependencies.nalgebra]
 git = "https://github.com/sebcrozet/nalgebra.git"
