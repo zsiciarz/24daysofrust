@@ -16,8 +16,8 @@ name = "day4"
 #[[bin]]
 #name = "day5"
 
-#[[bin]]
-#name = "day6"
+[[bin]]
+name = "day6"
 
 #[[bin]]
 #name = "day7"
@@ -64,7 +64,7 @@ docopt_macros = "~0.6.56"
 #hyper = "~0.3.5"
 image = "~0.3.2"
 #itertools = "~0.2.0"
-#json_macros = "~0.2.1"
+json_macros = "~0.2.2"
 num = "~0.1.19"
 postgres_array = "~0.3.0"
 postgres_macros = "~0.1.1"

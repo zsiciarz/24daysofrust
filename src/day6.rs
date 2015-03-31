@@ -1,7 +1,7 @@
 #![feature(plugin)]
 #![plugin(json_macros)]
 
-extern crate "rustc-serialize" as rustc_serialize;
+extern crate rustc_serialize;
 
 use rustc_serialize::Encodable;
 use rustc_serialize::json::{self, Encoder};
