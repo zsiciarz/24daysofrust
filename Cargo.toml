@@ -13,8 +13,8 @@ name = "day3"
 [[bin]]
 name = "day4"
 
-#[[bin]]
-#name = "day5"
+[[bin]]
+name = "day5"
 
 [[bin]]
 name = "day6"
@@ -60,7 +60,7 @@ anymap = "~0.10.0"
 csv = "~0.13.6"
 docopt = "~0.6.56"
 docopt_macros = "~0.6.56"
-#hyper = "~0.3.5"
+hyper = "~0.3.6"
 image = "~0.3.2"
 #itertools = "~0.2.0"
 json_macros = "~0.2.2"
