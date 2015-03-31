@@ -65,7 +65,7 @@ image = "~0.3.2"
 #itertools = "~0.2.0"
 json_macros = "~0.2.2"
 num = "~0.1.19"
-postgres_array = "~0.3.0"
+postgres_array = "~0.4.0"
 postgres_macros = "~0.1.1"
 rand = "~0.3.3"
 #redis = "~0.0.5"
@@ -79,7 +79,7 @@ uuid = "~0.1.13"
 
 
 [dependencies.postgres]
-version= "~0.7.5"
+version= "~0.8.0"
 features = ["rustc-serialize"]
 
 [dependencies.fuse]
