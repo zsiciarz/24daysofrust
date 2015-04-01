@@ -1,5 +1,3 @@
-#![feature(core)]
-
 extern crate crypto;
 extern crate rand;
 extern crate rustc_serialize;
@@ -34,7 +32,7 @@ fn main() {
     gen.fill_bytes(&mut nonce[..]);
     println!("Key: {}", key.to_base64(STANDARD));
     println!("Nonce: {}", nonce.to_base64(STANDARD));
-    let mut cipher = aes::ctr(KeySize::KeySize128, key.as_slice(), nonce.as_slice());
+    let mut cipher = aes::ctr(KeySize::KeySize128, &key, &nonce);
     let secret = "I like Nickelback";
     let mut output: Vec<u8> = repeat(0u8).take(secret.len()).collect();
     cipher.process(secret.as_bytes(), &mut output[..]);
@@ -45,7 +43,7 @@ fn main() {
     let message = "Ceterum censeo Carthaginem esse delendam";
     println!("Message: {}", message);
     println!("HMAC key: {}", hmac_key.to_base64(STANDARD));
-    let mut hmac = Hmac::new(Sha256::new(), hmac_key.as_slice());
+    let mut hmac = Hmac::new(Sha256::new(), &hmac_key);
     hmac.input(message.as_bytes());
     println!("HMAC digest: {}", hmac.result().code().to_hex());
 }
