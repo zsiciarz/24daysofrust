@@ -1,7 +1,6 @@
 extern crate num;
 extern crate tau;
 
-use std::num::Float;
 use num::complex::{Complex, Complex64};
 
 fn main() {
