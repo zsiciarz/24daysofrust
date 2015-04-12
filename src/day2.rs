@@ -1,13 +1,10 @@
-#![feature(core)]
-
 extern crate slow_primes;
 
 use slow_primes::Primes;
 
 fn num_divisors(n: usize, primes: &Primes) -> Option<usize> {
-    use std::iter::MultiplicativeIterator;
     match primes.factor(n) {
-        Ok(factors) => Some(factors.into_iter().map(|(_, x)| x + 1).product()),
+        Ok(factors) => Some(factors.into_iter().fold(1, |acc, (_, x)| acc * (x + 1))),
         Err(_) => None,
     }
 }

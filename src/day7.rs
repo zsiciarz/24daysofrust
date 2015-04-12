@@ -1,14 +1,11 @@
-#![feature(core, str_words)]
-
 #[macro_use]
 extern crate itertools;
 
-use std::iter::AdditiveIterator;
 use itertools::Itertools;
 
 fn main() {
     println!("24 days of Rust - itertools (day 7)");
-    let mut words = "hello supercalifragilisticexpialidocious programmer".words();
+    let mut words = "hello supercalifragilisticexpialidocious programmer".split(|c| c == ' ');
     words.apply(|word| println!("{} is {} characters long", word, word.len()));
     let even = (1..10).map(|x| x * 2);
     let odd = (1..5).map(|x| x * 2 + 1);
@@ -21,8 +18,8 @@ fn main() {
     }
     let log = "GET / 4096\nGET /home/ 16301\nPOST /home/ 49\nGET / 4096\n";
     let lines = log.lines();
-    let rows = icompr!(line.words().collect::<Vec<_>>(), line, lines);
+    let rows = icompr!(line.split(|c| c == ' ').collect::<Vec<_>>(), line, lines);
     let bytes = icompr!(row[2], row, rows, row[0] != "POST");
-    let total = icompr!(b.parse::<u32>().unwrap(), b, bytes).sum();
+    let total = icompr!(b.parse::<u32>().unwrap(), b, bytes).fold(0, |acc, x| acc + x);
     println!("Total GET throughput: {} bytes", total);
 }

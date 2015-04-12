@@ -1,9 +1,8 @@
-#![feature(core)]
 
 extern crate image;
 extern crate nalgebra;
 
-use std::f64::consts::{PI_2, FRAC_PI_2};
+use std::f64::consts::{PI, FRAC_PI_2};
 use std::fs::File;
 use std::path::Path;
 use image::{GenericImage, Pixel, Rgba};
@@ -57,7 +56,7 @@ fn main() {
     draw(&sine, &Path::new("out_sine.png"));
 
     let window = DVec::from_fn(SIZE, |i: usize| {
-        0.54f64 - 0.46 * (PI_2 * (i as f64) / (SIZE - 1) as f64).cos()
+        0.54f64 - 0.46 * (PI * 2.0 * (i as f64) / (SIZE - 1) as f64).cos()
     });
     draw(&window, &Path::new("out_window.png"));
 
