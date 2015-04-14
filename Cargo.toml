@@ -28,8 +28,8 @@ name = "day9"
 [[bin]]
 name = "day10"
 
-#[[bin]]
-#name = "day11"
+[[bin]]
+name = "day11"
 
 [[bin]]
 name = "day12"
@@ -65,8 +65,8 @@ image = "~0.3.7"
 itertools = "~0.2.4"
 json_macros = "~0.2.3"
 num = "~0.1.22"
-#postgres_array = "~0.4.0"
-#postgres_macros = "~0.1.2"
+postgres_array = "~0.4.1"
+postgres_macros = "~0.1.2"
 rand = "~0.3.7"
 redis = "~0.3.1"
 rust-crypto = "~0.2.31"
@@ -78,9 +78,9 @@ url = "~0.2.29"
 uuid = "~0.1.16"
 
 
-#[dependencies.postgres]
-#version= "~0.8.3"
-#features = ["rustc-serialize"]
+[dependencies.postgres]
+version= "~0.8.4"
+features = ["rustc-serialize"]
 
 #[dependencies.fuse]
 #git = "https://github.com/zargony/rust-fuse.git"
