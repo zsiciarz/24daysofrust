@@ -57,12 +57,12 @@ name = "day21"
 
 [dependencies]
 anymap = "~0.10.2"
-csv = "~0.14.1"
-docopt = "~0.6.60"
-docopt_macros = "~0.6.60"
+csv = "~0.14.2"
+docopt = "~0.6.62"
+docopt_macros = "~0.6.62"
 #hyper = "~0.3.11"
 image = "~0.3.7"
-itertools = "~0.2.5"
+itertools = "~0.2.6"
 json_macros = "~0.2.3"
 num = "~0.1.22"
 postgres_array = "~0.4.1"
@@ -79,7 +79,7 @@ uuid = "~0.1.16"
 
 
 [dependencies.postgres]
-version= "~0.8.5"
+version= "~0.8.6"
 features = ["rustc-serialize"]
 
 #[dependencies.fuse]
