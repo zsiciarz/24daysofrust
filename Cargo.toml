@@ -13,8 +13,8 @@ name = "day3"
 [[bin]]
 name = "day4"
 
-#[[bin]]
-#name = "day5"
+[[bin]]
+name = "day5"
 
 [[bin]]
 name = "day6"
@@ -60,7 +60,6 @@ anymap = "~0.10.2"
 csv = "~0.14.2"
 docopt = "~0.6.62"
 docopt_macros = "~0.6.62"
-#hyper = "~0.3.11"
 image = "~0.3.7"
 itertools = "~0.2.6"
 json_macros = "~0.2.3"
@@ -77,6 +76,9 @@ tau = "~1.0.2"
 url = "~0.2.29"
 uuid = "~0.1.16"
 
+[dependencies.hyper]
+version = "~0.3.12"
+features = ["nightly"]
 
 [dependencies.postgres]
 version= "~0.8.6"
