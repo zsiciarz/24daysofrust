@@ -4,10 +4,12 @@
 extern crate rustc_serialize;
 extern crate postgres;
 extern crate postgres_array;
+extern crate postgres_range;
 
 use postgres::{Connection, Error, FromSql, SslMode};
 use postgres::Result as PgResult;
 use postgres_array::ArrayBase;
+use postgres_range::Range;
 
 use rustc_serialize::json::Json;
 
@@ -71,6 +73,9 @@ fn main() {
 
     let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{:?}", json);
+
+    let range = get_single_value::<Range<i32>>(&conn, "select '[10, 20)'::int4range");
+    println!("{:?}", range);
 
     let query = sql!("select '{4, 5, 6}'::int[]");
     println!("{:?}", query);
