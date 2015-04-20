@@ -83,7 +83,7 @@ features = ["nightly"]
 
 [dependencies.postgres]
 version= "~0.8.6"
-features = ["rustc-serialize"]
+features = ["rustc-serialize", "time"]
 
 #[dependencies.fuse]
 #git = "https://github.com/zargony/rust-fuse.git"

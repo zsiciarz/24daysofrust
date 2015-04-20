@@ -2,6 +2,7 @@
 #![plugin(postgres_macros)]
 
 extern crate rustc_serialize;
+extern crate time;
 extern crate postgres;
 extern crate postgres_array;
 extern crate postgres_range;
@@ -12,6 +13,8 @@ use postgres_array::ArrayBase;
 use postgres_range::Range;
 
 use rustc_serialize::json::Json;
+
+use time::Timespec;
 
 fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     where T: FromSql {
@@ -76,6 +79,8 @@ fn main() {
 
     let range = get_single_value::<Range<i32>>(&conn, "select '[10, 20)'::int4range");
     println!("{:?}", range);
+    let ts_range = get_single_value::<Range<Timespec>>(&conn, "select '[2015-01-01, 2015-12-31]'::tsrange");
+    println!("{:?}", ts_range);
 
     let query = sql!("select '{4, 5, 6}'::int[]");
     println!("{:?}", query);
