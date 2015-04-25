@@ -40,8 +40,8 @@ name = "day13"
 [[bin]]
 name = "day14"
 
-#[[bin]]
-#name = "day15"
+[[bin]]
+name = "day15"
 
 [[bin]]
 name = "day17"
@@ -91,8 +91,8 @@ features = ["nightly"]
 version= "~0.8.7"
 features = ["rustc-serialize", "time"]
 
-#[dependencies.fuse]
-#git = "https://github.com/zargony/rust-fuse.git"
+[dependencies.fuse]
+git = "https://github.com/zargony/rust-fuse.git"
 
 [dependencies.nalgebra]
 git = "https://github.com/sebcrozet/nalgebra.git"
