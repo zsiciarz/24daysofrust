@@ -6,7 +6,7 @@ use itertools::Itertools;
 fn main() {
     println!("24 days of Rust - itertools (day 7)");
     let mut words = "hello supercalifragilisticexpialidocious programmer".split(|c| c == ' ');
-    words.apply(|word| println!("{} is {} characters long", word, word.len()));
+    words.foreach(|word| println!("{} is {} characters long", word, word.len()));
     let even = (1..10).map(|x| x * 2);
     let odd = (1..5).map(|x| x * 2 + 1);
     println!("{:?}", even.interleave(odd).collect::<Vec<_>>());
