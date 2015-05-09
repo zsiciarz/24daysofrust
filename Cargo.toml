@@ -37,14 +37,14 @@ name = "day12"
 [[bin]]
 name = "day13"
 
-[[bin]]
-name = "day14"
+#[[bin]]
+#name = "day14"
 
 [[bin]]
 name = "day15"
 
-[[bin]]
-name = "day17"
+#[[bin]]
+#name = "day17"
 
 [[bin]]
 name = "day18"
@@ -61,7 +61,7 @@ csv = "~0.14.2"
 docopt = "~0.6.64"
 docopt_macros = "~0.6.64"
 image = "~0.3.9"
-itertools = "~0.3.5"
+itertools = "~0.3.6"
 json_macros = "~0.2.4"
 num = "~0.1.24"
 postgres_array = "~0.4.1"
@@ -94,8 +94,8 @@ features = ["rustc-serialize", "time"]
 [dependencies.fuse]
 git = "https://github.com/zargony/rust-fuse.git"
 
-[dependencies.nalgebra]
-git = "https://github.com/sebcrozet/nalgebra.git"
+#[dependencies.nalgebra]
+#git = "https://github.com/sebcrozet/nalgebra.git"
 
 #[dependencies.zeromq]
 #git = "https://github.com/zeromq/zmq.rs.git"
