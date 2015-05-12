@@ -74,7 +74,7 @@ rustc-serialize = "~0.3.14"
 #slow_primes = "~0.1.12"
 time = "~0.1.25"
 #tau = "~1.0.2"
-url = "~0.2.33"
+url = "~0.2.34"
 uuid = "~0.1.17"
 
 [dependencies.slow_primes]
