@@ -1,0 +1,738 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 16 - FUSE filesystems, part 2 | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day17.html" />
+    
+    
+    <link rel="prev" href="../book/day15.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="16" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-16-fuse-filesystems-part-2">Day 16 - FUSE filesystems, part 2</h1>
+<p>We finished <a href="https://siciarz.net/24-days-of-rust-fuse-filesystems-part-1/" target="_blank">part 1</a> with a working FUSE filesystem representing an empty directory. Today we will continue the story and finally add some files to the mix.</p>
+<h2 id="directory-listing-revisited">Directory listing revisited</h2>
+<p>We need to add a minimal amount of JSON handling before actually presenting the data in our filesystem. The <code>JsonFilesystem</code> struct will hold a <code>json::Object</code> value (this is a typedef for a <code>TreeMap</code>) representing the root object in the input JSON.</p>
+<pre><code>:::rust
+#![feature(phase)]
+#[phase(plugin)]
+extern crate json_macros;
+extern crate serialize;
+
+use serialize::json;
+
+struct JsonFilesystem {
+    tree: json::Object,
+}
+
+fn main() {
+    let data = json!({
+        &quot;foo&quot;: &quot;bar&quot;,
+        &quot;answer&quot;: 42,
+    });
+    let tree = data.as_object().unwrap();
+    let fs = JsonFilesystem { tree: tree.clone() };
+    let mountpoint = match os::args().as_slice() {
+        [_, ref path] =&gt; Path::new(path),
+        _ =&gt; {
+            println!(&quot;Usage: {} &lt;MOUNTPOINT&gt;&quot;, os::args()[0]);
+            return;
+        }
+    };
+    fuse::mount(fs, &amp;amp;mountpoint, &amp;amp;[]);
+}
+</code></pre><p>We used the <a href="https://siciarz.net/24-days-of-rust-working-json/" target="_blank">json! macro</a> to embed JSON data directly in the source. The <code>readdir</code> method must be updated to add directory entries for each key in the JSON.</p>
+<pre><code>:::rust
+for (i, key) in self.tree.keys().enumerate() {
+    let inode: u64 = 2 + i as u64;
+    let offset: u64 = 2 + i as u64;
+    reply.add(inode, offset, FileType::RegularFile, &amp;amp;PosixPath::new(key));
+}
+</code></pre><p>Let&apos;s look at the result:</p>
+<pre><code>:::sh
+$ ls -la /tmp/rust-fuse
+total 4
+drwxr-xr-x  0 root root    0 Jan  1  1970 .
+drwxrwxrwt 10 root root 4096 Dec 10 00:38 ..
+-?????????  ? ?    ?        ?            ? answer
+-?????????  ? ?    ?        ?            ? foo
+</code></pre><p>Starting to look good! Our JSON keys are there, but what&apos;s with these question marks? Turns out FUSE calls another method called <code>lookup()</code> and since we haven&apos;t defined it yet, a default implementation will be used. But before we write our customized <code>lookup</code>, let&apos;s refactor the code a bit.</p>
+<p>Both <code>getattr</code> and <code>lookup</code> create <code>FileAttr</code> values based on inode number or filename (JSON key in our example). Since we intend our filesystem to be read-only, let&apos;s create all necessary atributes upon initialization. This will simplify the other methods a lot.</p>
+<pre><code>:::rust
+struct JsonFilesystem {
+    tree: json::Object,
+    attrs: TreeMap&lt;u64, FileAttr&gt;,
+    inodes: TreeMap&lt;String, u64&gt;,
+}
+
+impl JsonFilesystem {
+    fn new(tree: &amp;amp;json::Object) -&gt; JsonFilesystem {
+        let mut attrs = TreeMap::new();
+        let mut inodes = TreeMap::new();
+        let ts = time::now().to_timespec();
+        let attr = FileAttr {
+            ino: 1,
+            size: 0,
+            blocks: 0,
+            atime: ts,
+            mtime: ts,
+            ctime: ts,
+            crtime: ts,
+            kind: FileType::Directory,
+            perm: USER_DIR,
+            nlink: 0,
+            uid: 0,
+            gid: 0,
+            rdev: 0,
+            flags: 0,
+        };
+        attrs.insert(1, attr);
+        inodes.insert(&quot;/&quot;.to_string(), 1);
+        for (i, (key, value)) in tree.iter().enumerate() {
+            let attr = FileAttr {
+                ino: i as u64 + 2,
+                size: value.to_pretty_str().len() as u64,
+                blocks: 0,
+                atime: ts,
+                mtime: ts,
+                ctime: ts,
+                crtime: ts,
+                kind: FileType::RegularFile,
+                perm: USER_FILE,
+                nlink: 0,
+                uid: 0,
+                gid: 0,
+                rdev: 0,
+                flags: 0,
+            };
+            attrs.insert(attr.ino, attr);
+            inodes.insert(key.clone(), attr.ino);
+        }
+        JsonFilesystem { tree: tree.clone(), attrs: attrs, inodes: inodes }
+    }
+}
+</code></pre><p>We used <code>time::now()</code> to set current timestamps for creation/modification times instead of the epoch time (January 1, 1970). This time we&apos;re explicit about initializing <code>FileAttr</code> following the suggestion from <a href="http://www.reddit.com/r/rust/comments/2pdxbe/24_days_of_rust_fuse_filesystems_part_1/cmvtgi1" target="_blank">the reddit thread</a>. We also calculate the size of our &quot;files&quot; and store that in the attribute struct.</p>
+<p>With that in our toolkit, let&apos;s implement <code>lookup()</code>.</p>
+<pre><code>:::rust
+fn lookup(&amp;amp;mut self, _req: &amp;amp;Request, parent: u64, name: &amp;amp;PosixPath, reply: ReplyEntry) {
+    println!(&quot;lookup(parent={}, name={})&quot;, parent, name.display());
+    let inode = match self.inodes.get(name.as_str().unwrap()) {
+        Some(inode) =&gt; inode,
+        None =&gt; {
+            reply.error(ENOENT);
+            return;
+        },
+    };
+    match self.attrs.get(inode) {
+        Some(attr) =&gt; {
+            let ttl = Timespec::new(1, 0);
+            reply.entry(&amp;amp;ttl, attr, 0);
+        },
+        None =&gt; reply.error(ENOENT),
+    };
+}
+</code></pre><p>This method is quite straightforward since we moved attribute-related logic to <code>JsonFilesystem::new</code>. If we run <code>ls</code> now:</p>
+<pre><code>:::sh
+$ ls -la /tmp/rust-fuse
+total 4
+drwxr-xr-x  0 root root     0 Dec 16 10:17 .
+drwxrwxrwt 15 root root  4096 Dec 16 10:17 ..
+-rw-r--r--  0 root root     2 Dec 16 10:17 answer
+-rw-r--r--  0 root root     5 Dec 16 10:17 foo
+</code></pre><p>No more question marks! The <code>getattr</code> method is even simpler now:</p>
+<pre><code>:::rust
+fn getattr(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, reply: ReplyAttr) {
+    println!(&quot;getattr(ino={})&quot;, ino);
+    match self.attrs.get(&amp;amp;ino) {
+        Some(attr) =&gt; {
+            let ttl = Timespec::new(1, 0);
+            reply.attr(&amp;amp;ttl, attr);
+        },
+        None =&gt; reply.error(ENOENT),
+    };
+}
+</code></pre><h2 id="reading-files">Reading files</h2>
+<p>This is the final piece of the puzzle in our filesystem. Fortunately it is pretty simple after all we&apos;ve done so far. We need to implement the <code>read</code> method.</p>
+<pre><code>:::rust
+fn read(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, fh: u64, offset: u64, size: uint, reply: ReplyData) {
+    println!(&quot;read(ino={}, fh={}, offset={}, size={})&quot;, ino, fh, offset, size);
+    for (key, &amp;amp;inode) in self.inodes.iter() {
+        if inode == ino {
+            let value = self.tree.get(key).unwrap();
+            reply.data(value.to_pretty_str().as_bytes());
+            return;
+        }
+    }
+    reply.error(ENOENT);
+}
+</code></pre><p>Let&apos;s try reading a &quot;file&quot; now:</p>
+<pre><code>:::sh
+$ less /tmp/rust-fuse/answer
+42
+$ wc /tmp/rust-fuse/foo
+0 1 5 /tmp/rust-fuse/foo
+$ grep -rn bar /tmp/rust-fuse
+/tmp/rust-fuse/foo:1:&quot;bar&quot;
+</code></pre><p><strong>Awesome!</strong></p>
+<p>As usual, the code for yesterday and today is in the <a href="https://github.com/zsiciarz/24daysofrust" target="_blank">24daysofrust</a> repository on GitHub. Of course this is by no means a complete JSON-as-a-filesystem implementation. Here are some ideas for future expansion:</p>
+<ul>
+<li>nesting - if a key contains a JSON object, why not represent it as a subdirectory</li>
+<li>creating files, writing to them, deleting etc. - a fully writeable filesystem</li>
+<li>getting rid of linear search in <code>read</code> (that&apos;s evidently not very efficient)</li>
+</ul>
+<hr>
+<p><small>
+Code examples in this article were built with rustc 0.13.0-nightly.
+</small></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../book/day15.html" class="navigation navigation-prev " aria-label="Previous page: Day 15 - FUSE filesystems, part 1"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day17.html" class="navigation navigation-next " aria-label="Next page: Day 17 - from_fn"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

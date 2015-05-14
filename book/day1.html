@@ -1,0 +1,612 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 1 - Cargo and crates.io | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day2.html" />
+    
+    
+    <link rel="prev" href="../index.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="1" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-1-cargo-and-crates-io">Day 1 - Cargo and crates.io</h1>
+<p>Inspired by Ollie Charles and his excellent <a href="https://ocharles.org.uk/blog/pages/2013-12-01-24-days-of-hackage.html" target="_blank">24 days of Hackage</a> series, I&apos;m going to try and introduce you to a number of Rust language features, useful libraries and cool projects built with Rust. In fact this is a learning opportunity for me too - as much as I love Rust, I&apos;m just diving in. If you think I&apos;m wrong or know an interesting library you want me to write about, feel free to comment!</p>
+<p>So let&apos;s start! As in the Haskell series by Ollie, where he <a href="https://ocharles.org.uk/blog/posts/2012-12-01-24-days-of-hackage.html" target="_blank">introduced Cabal</a>, the first post will briefly cover package management. For those of you coming from Python, Ruby or Node this may be a bit familiar. C++ does not have a dedicated package manager, so hopefully this is one of the selling points of Rust for people with such background.</p>
+<h2 id="cargo">Cargo</h2>
+<p><strong>Cargo</strong> is the package manager for Rust. It comes installed along with the compiler if you use the <code>rustup.sh</code> script. Cargo builds your code and manages its dependencies. It can also generate a basic project structure for you, if you&apos;re just starting a new one:</p>
+<pre><code>:::sh
+$ cargo new myproject --bin # or --lib, if you&apos;re creating a library
+</code></pre><p>Cargo will then generate some initial sources and a <code>Cargo.toml</code> file (sometimes called a <em>manifest</em>). This is where you describe your project&apos;s metadata, such as name, version, etc. It&apos;s also the right place to declare any possible dependencies your project might have. See for example <a href="https://github.com/zsiciarz/euler.rs/blob/efb135ef9774f2c9cc64b68c881b882c983889c5/Cargo.toml" target="_blank">Cargo.toml</a> from one of my toy projects:</p>
+<pre><code>:::toml
+[package]
+name = &quot;euler&quot;
+version = &quot;0.0.1&quot;
+authors = [&quot;Zbigniew Siciarz &lt;zbigniew@siciarz.net&gt;&quot;]
+
+[[bin]]
+name = &quot;euler&quot;
+path = &quot;src/main.rs&quot;
+
+[dependencies]
+num = &quot;~0.0.4&quot;
+slow_primes = &quot;~0.1.4&quot;
+</code></pre><p>Cargo can also run a test suite, generate documentation or upload your crate to the repository, but that&apos;s the topic for later.</p>
+<h2 id="crates-and-dependencies">Crates and dependencies</h2>
+<p>If you don&apos;t know, Rust calls its compilation unit (be it a library or an executable) a <strong>crate</strong>. Your Rust program usually lives in one crate, but it can use other crates as dependencies. See the <a href="http://doc.rust-lang.org/guide.html#crates-and-modules" target="_blank">Rust Guide on crates</a> for details on the difference between crates and modules.</p>
+<p>Executing <code>cargo build</code> compiles your crate and the resulting binary can be found inside the <code>target/</code> directory. For executables there&apos;s a nice shortcut - <code>cargo run</code> - that automatically runs your program after it&apos;s compiled.</p>
+<p>You probably noticed a <code>[dependencies]</code> section in the manifest file above. You guessed it - this is where you declare which external libraries you&apos;ll use. But <code>Cargo.toml</code> is not enough - it just tells Cargo to link your project with these crates. In order to use their APIs in your code, put <code>extern crate</code> imports in your project&apos;s crate root (that is usually the <code>main.rs</code> or <code>lib.rs</code> file), so that the compiler can resolve function names, types etc.</p>
+<pre><code>:::rust
+// main.rs
+extern crate num;
+
+fn main () {
+    // ... use stuff from num library
+}
+</code></pre><p><strong>Note</strong>: At the moment Cargo supports only source dependencies; it downloads the source code for every crate your project depends on, compiles them locally on your machine and finally links with your main crate.</p>
+<p>What I personally like about Cargo is that it&apos;s very simple to build both a library and an executable using that library. It&apos;s just a matter of having two sections in the manifest. For example, this is what <a href="https://github.com/zsiciarz/rust-cpuid" target="_blank">rust-cpuid</a> does:</p>
+<pre><code>:::toml
+[lib]
+name = &quot;cpuid&quot;
+
+[[bin]]
+name = &quot;cpuid&quot;
+</code></pre><p>Then I just need to put <code>extern crate cpuid</code> in my <code>main.rs</code> file (this is the crate root for the executable) and Cargo will link it with the library it built alongside.</p>
+<p><strong>Update</strong>: As <a href="http://www.reddit.com/r/rust/comments/2nybtm/24_days_of_rust_cargo_and_cratesio/cmip7xw" target="_blank">Steve Klabnik</a> noted, these two sections are redundant as they&apos;re the defaults. If you have both <code>lib.rs</code> and <code>main.rs</code> in the source directory, Cargo will build the library and executable just the same.</p>
+<h2 id="crates-io">crates.io</h2>
+<p><a href="https://crates.io/" target="_blank">crates.io</a> is the central package repository for Cargo. (Python folks - think of PyPI.) Cargo pulls dependencies from there, although it can also install them from Git or local filesystem. Once you&apos;ve built an awesome library and want to share it with the rest of the world, crates.io is the place to go. You&apos;ll need an account on the site (currently GitHub-based social login only, but this may change). The relevant command is <code>cargo publish</code>, documented in the <a href="http://doc.crates.io/crates-io.html#publishing-crates" target="_blank">section on publishing crates</a>. Once you&apos;ve done it, congratulations, you are now a contributor to the Rust ecosystem!</p>
+<hr>
+<p><small>
+Code examples in this article were built with rustc 0.13.0-nightly.
+</small></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day2.html" class="navigation navigation-next " aria-label="Next page: Day 2 - slow_primes"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

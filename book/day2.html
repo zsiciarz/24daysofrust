@@ -1,0 +1,630 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 2 - slow_primes | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day3.html" />
+    
+    
+    <link rel="prev" href="../book/day1.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="2" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-2-slow-primes">Day 2 - slow_primes</h1>
+<p>When I start learning a new programming language, I like to code at least several solutions to <a href="https://projecteuler.net/" target="_blank">Project Euler</a> problems. These are very math-oriented and may not be the best introduction to general purpose programming, but it&apos;s a start. Anyway, it&apos;s just fun to solve them! (...and way more fun to solve them in a fast way and not by brute force.)</p>
+<p>A lot of Project Euler problems involve prime numbers in some way. These include finding <code>n</code>th prime, efficient factorization or checking whether some curious number is prime or not. You could of course write these mathematical procedures yourself, which is also an educational activity. But I&apos;m lazy. I set out to find some ready-made code and stumbled upon the <a href="https://github.com/huonw/slow_primes" target="_blank">slow_primes</a> library by <a href="http://huonw.github.io/" target="_blank">Huon Wilson</a>. Incidentally this was the first external dependency I ever used in a Rust program, long before crates.io.</p>
+<p>By the way don&apos;t let the name fool you, it&apos;s not that slow. As Huon says:</p>
+<blockquote>
+<p>Despite the name, it can sieve the primes up to 10<sup>9</sup> in about 5 seconds.</p>
+</blockquote>
+<p>So let&apos;s see what&apos;s in there, shall we?</p>
+<h2 id="prime-sieve">Prime sieve</h2>
+<p>The first thing to do is to create a <strong>sieve</strong> (see <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes" target="_blank">Wikipedia on Sieve of Eratosthenes</a> for a detailed explanation of the algorithm). We need to set an upper bound on the sieve. There&apos;s a clever way to estimate that bound (see the docs for <a href="http://huonw.github.io/slow_primes/slow_primes/fn.estimate_nth_prime.html" target="_blank">estimate_nth_prime</a>) but for simplicity I&apos;ll hardcode it now to 10000.</p>
+<p>Let&apos;s actually check some numbers for primality:</p>
+<pre><code>:::rust
+extern crate slow_primes;
+use slow_primes::Primes;
+
+fn main() {
+    let sieve = Primes::sieve(10000);
+    let suspect = 5273u;
+    println!(&quot;{} is prime: {}&quot;, suspect, sieve.is_prime(suspect)); // true
+    let not_a_prime = 1024u;
+    println!(&quot;{} is prime: {}&quot;, not_a_prime, sieve.is_prime(not_a_prime)); // guess
+}
+</code></pre><p>How about finding 1000th prime number?</p>
+<pre><code>:::rust
+let n = 1000u;
+match sieve.primes().nth(n - 1) {
+    Some(number) =&gt; println!(&quot;{}th prime is {}&quot;, n, number),
+    None =&gt; println!(&quot;I don&apos;t know anything about {}th prime.&quot;, n),
+}
+</code></pre><p>The <code>primes()</code> method returns an iterator over all prime numbers generated by this sieve (2, 3, 5, 7...). Iterators in Rust have a lot of useful methods; the <code>nth()</code> method skips over <code>n</code> initial iterations, returning the <code>n</code>th element (or <code>None</code> if we exhausted the iterator). The argument is zero-based, so to find 1000th prime we need to pass 999 to <code>nth()</code>.</p>
+<h2 id="factorization">Factorization</h2>
+<p>Factorization is a way to decompose a number into its divisors. For example, 2610 = 2 <em> 3 </em> 3 <em> 5 </em> 29. Here&apos;s how we can find it out with <code>slow_primes</code> API:</p>
+<pre><code>:::rust
+println!(&quot;{}&quot;, sieve.factor(2610));
+</code></pre><p>When we run this, we&apos;ll get:</p>
+<pre><code>:::sh
+$ cargo run
+Ok([(2, 1), (3, 2), (5, 1), (29, 1)])
+</code></pre><p>What is this? Let&apos;s have a look at the result type of <code>factor()</code>:</p>
+<pre><code>:::rust
+type Factors = Vec&lt;(uint, uint)&gt;;
+fn factor(&amp;amp;self, n: uint) -&gt; Result&lt;Factors, (uint, Factors)&gt;
+</code></pre><p>Looks a bit complicated, but remember the <a href="http://doc.rust-lang.org/std/result/enum.Result.html" target="_blank">Result</a> type. The <code>Ok</code> variant wraps a vector of pairs of numbers. Each pair contains a prime factor and its exponent (how many times it appears in the factorization).  In case of an error we&apos;ll get a pair (leftover value, partial factorization).</p>
+<p>We can use factorization to find the total number of divisors (including compound ones). This is very important in number theory (although for reasons that are outside the scope of this blog).</p>
+<p>Consider the following function:</p>
+<pre><code>:::rust
+fn num_divisors(n: uint, primes: &amp;amp;Primes) -&gt; Option&lt;uint&gt; {
+    use std::iter::MultiplicativeIterator;
+    match primes.factor(n) {
+        Ok(factors) =&gt; Some(factors.into_iter().map(|(_, x)| x + 1).product()),
+        Err(_) =&gt; None,
+    }
+}
+</code></pre><p>The trick is to multiply all prime factor exponents, incremented before multiplication. See the <a href="http://mathschallenge.net/library/number/number_of_divisors" target="_blank">explanation at Maths Challenge</a> for the curious. So when we call the function on our 2610 example, we&apos;ll get <code>Some(24)</code> as a result.</p>
+<pre><code>:::rust
+println!(&quot;{}&quot;, num_divisors(2610, &amp;amp;sieve));
+</code></pre><h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Divisor_function" target="_blank">Divisor function</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test" target="_blank">Miller-Rabin primality test</a></li>
+<li><a href="https://gmplib.org/manual/Algorithms.html#Algorithms" target="_blank">GMP algorithms page</a></li>
+<li><a href="https://projecteuler.net/problem=50" target="_blank">consecutive prime sum</a> - an interesting Project Euler problem</li>
+</ul>
+<hr>
+<p><small>
+Code examples in this article were built with rustc 0.13.0-nightly and slow_primes 0.1.4.
+</small></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../book/day1.html" class="navigation navigation-prev " aria-label="Previous page: Day 1 - Cargo and crates.io"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day3.html" class="navigation navigation-next " aria-label="Next page: Day 3 - csv"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

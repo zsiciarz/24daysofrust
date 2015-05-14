@@ -1,0 +1,672 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 23 - calling Rust from other languages | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day24.html" />
+    
+    
+    <link rel="prev" href="../book/day22.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="23" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-23-calling-rust-from-other-languages">Day 23 - calling Rust from other languages</h1>
+<p>In this penultimate episode of the <strong>24 days of Rust</strong> article series we will focus on using Rust code from other languages. Since Rust libraries can expose a C API and calling conventions, using them isn&apos;t very different from using regular C libraries. A lot of programming languages have some kind of an <a href="http://en.wikipedia.org/wiki/Foreign_function_interface" target="_blank">FFI</a> mechanism, allowing them to use libraries written in other language(s).  Let&apos;s see a few examples!</p>
+<h2 id="our-rust-library">Our Rust library</h2>
+<p>As an example we&apos;re going to build a small Rust library called <code>stringtools</code> which exposes just one function: <code>count_substrings</code>. Let&apos;s start with a manifest - here&apos;s our <code>Cargo.toml</code>:</p>
+<pre><code>:::toml
+[package]
+name = &quot;stringtools&quot;
+version = &quot;0.0.1&quot;
+authors = [&quot;Zbigniew Siciarz &lt;zbigniew@siciarz.net&gt;&quot;]
+
+[lib]
+name = &quot;stringtools&quot;
+crate-type = [&quot;dylib&quot;]
+</code></pre><p>The crate type is explicitly declared as a dynamic library. And now the actual implementation:</p>
+<pre><code>:::rust
+extern crate libc;
+
+use std::c_str::CString;
+use libc::c_char;
+
+#[no_mangle]
+pub extern &quot;C&quot; fn count_substrings(value: *const c_char, substr: *const c_char) -&gt; i32 {
+    let c_value = unsafe { CString::new(value, false) };
+    let c_substr = unsafe { CString::new(substr, false) };
+    match c_value.as_str() {
+        Some(value) =&gt; match c_substr.as_str() {
+            Some(substr) =&gt; value.match_indices(substr).count() as i32,
+            None =&gt; -1,
+        },
+        None =&gt; -1,
+    }
+}
+</code></pre><p>This doesn&apos;t look as nice as your regular Rust code, but most of it is just wrapping/unwrapping values to be consistent with a C ABI. The <code>#[no_mangle]</code> attribute keep our functions names plain and simple, while <code>pub extern &quot;C&quot;</code> exports the function to the outside world with the C calling convention (<code>cdecl</code>). See the <a href="http://doc.rust-lang.org/guide-ffi.html" target="_blank">FFI guide</a> or my blogpost about <a href="http://siciarz.net/ffi-rust-writing-bindings-libcpuid/" target="_blank">wrapping a C library</a> for more information.</p>
+<p><strong>Aside</strong>: there was <a href="http://www.wabbo.org/blog/2014/22aug_on_bananas.html" target="_blank">a funny bug regarding bananas</a> in the algorithm Rust uses for string matching.</p>
+<p>To build the library, run <code>cargo build</code> to obtain a .so file and you&apos;re good to go - time to move on to other languages.</p>
+<h2 id="python">Python</h2>
+<p>This bit was the easiest to write :-) With a little help from the <a href="https://docs.python.org/3.4/library/ctypes.html" target="_blank">ctypes</a> module our Python example consists of just two lines of code (excluding import):</p>
+<pre><code>:::python
+import ctypes
+
+stringtools = ctypes.CDLL(&quot;../target/libstringtools-261cf0fc14ce408c.so&quot;)
+print(stringtools.count_substrings(b&quot;banana&quot;, b&quot;na&quot;))
+</code></pre><p>Note that Python byte strings are mapped by <code>ctypes</code> to native C strings underneath.</p>
+<p>We can run it:</p>
+<pre><code>:::sh
+$ python3 main.py
+2
+</code></pre><p>C
+-</p>
+<p>We have to redeclare the function signature and that&apos;s it. Since we exposed from Rust a C API (and ABI), from this perspective it isn&apos;t really a foreign call.</p>
+<pre><code>:::c
+#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+
+int32_t count_substrings(const char* value, const char* substr);
+
+int main() {
+    printf(&quot;%d\n&quot;, count_substrings(&quot;banana&quot;, &quot;na&quot;));
+    return 0;
+}
+</code></pre><p>Compile and run (we need to link with the library at runtime, hence the <code>LD_LIBRARY_PATH</code> prefix):</p>
+<pre><code>:::sh
+$ gcc main.c -L ../target -lstringtools-261cf0fc14ce408c -o main
+$ LD_LIBRARY_PATH=../target ./main
+2
+</code></pre><h2 id="haskell">Haskell</h2>
+<p>The <a href="https://www.haskell.org/haskellwiki/FFI_Introduction" target="_blank">FFI introduction</a> may not be as great as the Rust guide, but after reading through it and some careful googling I&apos;ve managed to put together the example below:</p>
+<pre><code>:::haskell
+{-# LANGUAGE ForeignFunctionInterface #-}
+
+import Foreign.C.String (CString, newCString)
+
+foreign import ccall &quot;count_substrings&quot;
+    count_substrings :: CString -&gt; CString -&gt; IO Int
+
+main :: IO ()
+main = do
+    value &lt;- newCString &quot;banana&quot;
+    substr &lt;- newCString &quot;na&quot;
+    count_substrings value substr &gt;&gt;= print
+</code></pre><p>Haskell strings need to be converted to <code>CString</code> values before passing them to the foreign function. Apart from that, the code is straightforward.</p>
+<p>Compile, link and run in the same manner as C:</p>
+<pre><code>:::sh
+$ ghc --make main.hs -L../target -lstringtools-261cf0fc14ce408c -lpthread -o main
+$ LD_LIBRARY_PATH=../target ./main
+2
+</code></pre><h2 id="node-js">Node.js</h2>
+<p>This was as straightforward as with Python, thanks to the <a href="https://www.npmjs.com/package/ffi" target="_blank">ffi npm package</a>.</p>
+<pre><code>:::javascript
+var ffi = require(&apos;ffi&apos;);
+
+var stringtools = ffi.Library(&apos;../target/libstringtools-261cf0fc14ce408c.so&apos;, {
+    &apos;count_substrings&apos;: [&apos;int&apos;, [&apos;string&apos;, &apos;string&apos;]]
+});
+
+console.log(stringtools.count_substrings(&quot;banana&quot;, &quot;na&quot;));
+</code></pre><p>The first argument of the <code>Library</code> function is the location of our dynamic library. The object passed in the second argument defines a list of functions exported by the library, along with their signatures (in the form <code>[return type, [arguments]]</code>).</p>
+<pre><code>:::sh
+$ node main.js
+2
+</code></pre><p>The code for today is in a separate GitHub repository - <a href="https://github.com/zsiciarz/rust-ffi-stringtools" target="_blank">rust-ffi-stringtools</a>. On a personal note - I should probably add a Makefile...</p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="http://harkablog.com/calling-rust-from-c-and-python.html" target="_blank">Calling Rust from C (and Python!)</a></li>
+<li><a href="https://github.com/creichert/haskellrustdemo" target="_blank">Embed Rust in Haskell</a></li>
+<li><a href="https://github.com/steveklabnik/rust_example" target="_blank">A Ruby gem, implemented in Rust</a></li>
+<li><a href="http://blog.skylight.io/bending-the-curve-writing-safe-fast-native-gems-with-rust/" target="_blank">Bending the Curve: Writing Safe &amp; Fast Native Gems With Rust</a></li>
+<li><a href="http://paul.woolcock.us/posts/rust-perl-julia-ffi.html" target="_blank">Using Rust from Perl and Julia</a></li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../book/day22.html" class="navigation navigation-prev " aria-label="Previous page: Day 22 - built with Rust"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day24.html" class="navigation navigation-next " aria-label="Next page: Day 24 - conclusion"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

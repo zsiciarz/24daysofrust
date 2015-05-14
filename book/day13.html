@@ -1,0 +1,622 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 13 - uuid | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day14.html" />
+    
+    
+    <link rel="prev" href="../book/day12.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="13" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-13-uuid">Day 13 - uuid</h1>
+<p>Writing the <a href="https://siciarz.net/24-days-of-rust-postgres/" target="_blank">Postgres article</a> reminded me of one more cool thing in PostgreSQL - native support for the <a href="http://www.postgresql.org/docs/9.4/static/datatype-uuid.html" target="_blank">UUID</a> type. The popular web framework Django <a href="https://github.com/django/django/commit/ed7821231b7dbf34a6c8ca65be3b9bcbda4a0703" target="_blank">will soon get a UUID field</a>, Rails <a href="http://edgeguides.rubyonrails.org/active_record_postgresql.html#uuid" target="_blank">already support it</a>. So what&apos;s the big deal?</p>
+<p>Simply put, using UUIDs can improve distributed systems by removing the need for a centralized ID generation. Let me quote <a href="http://andrzejonsoftware.blogspot.com/2013/12/decentralise-id-generation.html" target="_blank">Andrzej Krzywda&apos;s justification</a>:</p>
+<blockquote>
+<p>For years, I have been thinking that centralised id generation is the natural way. Seems obvious. After I learnt mote about UUID, I start seeing more and more good things about it. It allows for less coupling between components/services.  You no longer need to &apos;ask&apos; for the id. In case of JavaScript frontends it solves the problem of whether to block the UI, when we create a new resource.</p>
+</blockquote>
+<p>For me, looking from the web development perspective, this is an area of experimentation as I&apos;m not using UUIDs in any of my public projects (yet). However most of the languages I use have a function or library to generate UUIDs and Rust is no exception here. The <a href="https://crates.io/crates/uuid" target="_blank">uuid</a> crate was once in the standard library, but <a href="https://github.com/rust-lang/rust/issues/8784" target="_blank">got pulled out</a> during the cleanup.</p>
+<p>As usual we&apos;ll start by adding the dependency to <code>Cargo.toml</code>:</p>
+<pre><code>:::toml
+[dependencies]
+uuid = &quot;~0.1.1&quot;
+</code></pre><p>Let&apos;s generate a few UUIDs and display them in the most familar form:</p>
+<pre><code>:::rust
+extern crate uuid;
+
+use uuid::Uuid;
+
+fn main() {
+    for _ in range(0, 10u) {
+        println!(&quot;{}&quot;, Uuid::new_v4().to_hyphenated_string());
+    }
+}
+</code></pre><p>The example output would look like:</p>
+<pre><code>:::sh
+$ cargo run
+982bb2a5-9e32-450a-9736-bb2dd00d0b4a
+9b44c913-c28f-4f5a-be56-2aec4aaa5384
+86f137e7-2d8e-4224-9f7a-1724a9503e41
+59db4c26-46f7-49b9-9942-636bdc0c1f89
+49326e6f-f9c3-40b1-8041-f7dadd503c81
+0eabbd4d-13e8-4a76-9892-119096cdab72
+6f530ac3-4605-459a-9df7-73026f15c361
+17fccb8e-f5e2-4281-ba75-82a50d7f007e
+3c7c02b2-4a50-4a56-8a21-bcde9d46aff0
+5a405806-f967-4228-a20a-2afaec18e501
+</code></pre><p>We can use the <code>parse_str()</code> method to check if a string represents a valid UUID and convert it to an <code>Uuid</code> value.</p>
+<pre><code>:::rust
+println!(&quot;{}&quot;, Uuid::parse_str(&quot;d27cdb6e-ae6d-11cf-96b8-44455354000&quot;));
+println!(&quot;{}&quot;, Uuid::parse_str(&quot;x27cdb6e-ae6d-11cf-96b8-444553540000&quot;));
+println!(&quot;{}&quot;, Uuid::parse_str(&quot;d27cdb6-eae6d-11cf-96b8-444553540000&quot;));
+println!(&quot;{}&quot;, Uuid::parse_str(&quot;d27cdb6e-ae6d-11cf-96b8-444553540000&quot;));
+</code></pre><p>(Web developers might recognize that specific value.) Here&apos;s the output:</p>
+<pre><code>:::sh
+$ cargo run
+Err(Invalid length; expecting 32, 36 or 45 chars, found 35)
+Err(Invalid character; found `x` (0x78) at offset 0)
+Err(Malformed; length of group 0 was 7, expecting 8)
+Ok(d27cdb6eae6d11cf96b8444553540000)
+</code></pre><p>The code for this and previous days is in the <a href="https://github.com/zsiciarz/24daysofrust" target="_blank">24daysofrust</a> repository on GitHub.</p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="http://blog.joevandyk.com/2013/08/14/uuids-as-keys/" target="_blank">Use UUIDs as Keys</a></li>
+<li><a href="http://rob.conery.io/2014/05/29/a-better-id-generator-for-postgresql/" target="_blank">A Better ID Generator for PostgreSQL</a></li>
+<li><a href="http://blog.arkency.com/2014/10/how-to-start-using-uuid-in-activerecord-with-postgresql/" target="_blank">How to start using UUID in ActiveRecord with PostgreSQL</a></li>
+</ul>
+<hr>
+<p><small>
+Code examples in this article were built with rustc 0.13.0-nightly and uuid 0.1.1.
+</small></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../book/day12.html" class="navigation navigation-prev " aria-label="Previous page: Day 12 - image"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day14.html" class="navigation navigation-next " aria-label="Next page: Day 14 - nalgebra"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

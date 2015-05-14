@@ -1,0 +1,666 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 6 - working with JSON | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day7.html" />
+    
+    
+    <link rel="prev" href="../book/day5.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="6" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-6-working-with-json">Day 6 - working with JSON</h1>
+<p><a href="http://en.wikipedia.org/wiki/JSON" target="_blank">JSON</a> is a workhorse data format of the modern Web. Originating from the JavaScript world, it gained a lot of traction and at the moment it&apos;s usually the first choice of a Web developer for a data interchange format. Not only Web - once JavaScript-only, JSON support is now ubiquitous. A lot of languages ship with JSON parsers in the standard libraries, and when it&apos;s not the case, surely someone has already built a third party library. In case of Rust, JSON support comes out of the box in the <a href="http://doc.rust-lang.org/serialize/json/" target="_blank">serialize::json</a> module.</p>
+<p><strong>Note</strong>: in this article I deliberately do not focus on the Web, APIs, requests and so on. I mentioned JSON in a <a href="http://siciarz.net/24-days-of-rust-hyper/" target="_blank">previous post about hyper</a> but now I don&apos;t care where did the JSON-encoded data come from or what to do with it later. Here I&apos;m just going to show you a few practical tips - Rust has already a <a href="http://doc.rust-lang.org/serialize/json/" target="_blank">quite extensive documentation</a> on the subject.</p>
+<p>Slightly offtopic: I&apos;m writing this blogpost while getting ready to coach a group of fantastic women at <a href="http://djangogirls.org/" target="_blank">Django Girls</a> in &#x141;&#xF3;d&#x17A;, Poland. If you&apos;re a woman interested in learning programming (or know such girls) check out if there&apos;s a Django Girls workshop near you! The workshops focus on basic Python, Django and web technologies, but the general idea is to get the attendees genuinely interested in programming and empowered to create.</p>
+<p>That said, now back to JSON and Rust.</p>
+<h2 id="primitives">Primitives</h2>
+<p>A lot of Rust types serialize to JSON just as you would expect. Note that <code>encode()</code> immutably borrows its argument:</p>
+<pre><code>:::rust
+extern crate serialize;
+
+use serialize::json;
+
+fn main() {
+    println!(&quot;{}&quot;, json::encode(&amp;amp;42i));
+    println!(&quot;{}&quot;, json::encode(&amp;amp;vec![&quot;to&quot;, &quot;be&quot;, &quot;or&quot;, &quot;not&quot;, &quot;to&quot;, &quot;be&quot;]));
+    println!(&quot;{}&quot;, json::encode(&amp;amp;Some(true)));
+}
+</code></pre><p><code>Option&lt;T&gt;</code> maps to the encoding of <code>value</code> itself if it is a <code>Some(value)</code> while <code>None</code> maps to <code>null</code>.</p>
+<h2 id="automatic-de-serialization">Automatic (de)serialization</h2>
+<p>In my earlier <a href="https://siciarz.net/24-days-of-rust-csv/" target="_blank">article on CSV</a> I mentioned the <code>Encodable</code> and <code>Decodable</code> traits. Here&apos;s an example with a nested struct:</p>
+<pre><code>:::rust
+use serialize::{Decodable, Encodable, json};
+
+#[deriving(Decodable, Encodable)]
+struct Photo {
+    url: String,
+    dimensions: (uint, uint),
+}
+
+#[deriving(Decodable, Encodable)]
+struct User {
+    name: String,
+    post_count: uint,
+    likes_burgers: bool,
+    avatar: Option&lt;Photo&gt;,
+}
+
+let user = User {
+    name: &quot;Zbyszek&quot;.to_string(),
+    post_count: 100u,
+    likes_burgers: true,
+    avatar: Some(Photo {
+        url: &quot;http://lorempixel.com/160/160/&quot;.to_string(),
+        dimensions: (160u, 160u),
+    }),
+};
+println!(&quot;{}&quot;, json::encode(&amp;amp;user));
+// {&quot;name&quot;:&quot;Zbyszek&quot;,&quot;post_count&quot;:100,&quot;likes_burgers&quot;:true,&quot;avatar&quot;:{&quot;url&quot;:&quot;http://lorempixel.com/160/160/&quot;,&quot;dimensions&quot;:[160,160]}}
+</code></pre><h2 id="pretty-printing">Pretty printing</h2>
+<p>The <code>json::encode()</code> doesn&apos;t care for readability of it&apos;s output. Although the JSON it emits is correct and machine-readable, there are no newlines or indents making it hard for a human to debug. Pretty-printing is a little bit more complex than just one function call, but not too complicated:</p>
+<pre><code>:::rust
+use serialize::json::PrettyEncoder;
+
+let mut buffer: Vec&lt;u8&gt; = Vec::new();
+{
+    let mut encoder = PrettyEncoder::new(&amp;amp;mut buffer);
+    user.encode(&amp;amp;mut encoder).ok().expect(&quot;JSON encode error&quot;);
+}
+let encoded = String::from_utf8(buffer).unwrap();
+println!(&quot;{}&quot;, encoded);
+</code></pre><p>You&apos;ll need a <code>PrettyEncoder</code> which requires a <a href="http://doc.rust-lang.org/std/io/trait.Writer.html" target="_blank">Writer</a>. Fortunately for us, <code>Vec&lt;u8&gt;</code> (a vector of bytes) implements this trait. Note the explicit scope in the code above. The encoder mutably borrows the buffer and if I didn&apos;t do the scope trick, compilation would fail on the <code>from_utf8</code> call. (You can&apos;t immutably borrow a value which is mutably borrowed at that time.) So in the code above mutable borrow ends when the encoder goes out of scope.</p>
+<pre><code>:::rust
+let decoded: User = json::decode(incoming_request).unwrap();
+println!(&quot;My name is {} and I {} burgers&quot;,
+    decoded.name, if decoded.likes_burgers { &quot;love&quot; } else { &quot;don&apos;t like&quot; });
+assert!(decoded.avatar.is_none());
+</code></pre><p>As you cen see, decoding is also pretty easy. But what happens if we don&apos;t know all of the fields in advance? We can use another function in the <code>json</code> module - <code>from_str()</code>. The difference between <code>from_str()</code> and <code>decode()</code> is that the latter may return some struct implementing <code>Decodable</code> while the former returns a <a href="http://doc.rust-lang.org/serialize/json/enum.Json.html" target="_blank">Json</a> value. This type has a few methods of its own, including <code>find()</code>. See the example below:</p>
+<pre><code>:::rust
+let new_request = &quot;{\&quot;id\&quot;:64,\&quot;title\&quot;:\&quot;24days\&quot;,\&quot;stats\&quot;:{\&quot;pageviews\&quot;:1500}}&quot;;
+if let Ok(request_json) = json::from_str(new_request) {
+    if let Some(ref stats) = request_json.find(&quot;stats&quot;) {
+        if let Some(ref pageviews) = stats.find(&quot;pageviews&quot;) {
+            println!(&quot;Pageviews: {}&quot;, pageviews);
+        }
+    }
+}
+</code></pre><p>We&apos;re using the <a href="https://github.com/rust-lang/rfcs/pull/160" target="_blank">if let</a> language construct which often simplifies pattern matches where we care for only one branch and do nothing if the expression doesn&apos;t match. However, at the moment it is hidden behind a feature gate, so you&apos;ll need to add a <code>#![feature(if_let)]</code> line in your crate root.</p>
+<h2 id="the-json-macro">The json! macro</h2>
+<p>There&apos;s one more thing I wanted to show you today. You can embed JSON-like literals directly in your Rust code with the help of the <a href="https://github.com/tomjakubowski/json_macros" target="_blank">json_macros</a> crate. This is a compiler extension that allows for some nice syntactic sugar like below:</p>
+<pre><code>:::rust
+#![feature(phase)]
+#[phase(plugin)]
+extern crate json_macros;
+
+let config = json!({
+    &quot;hostname&quot;: &quot;localhost&quot;,
+    &quot;port&quot;: 6543,
+    &quot;allowed_methods&quot;: [&quot;get&quot;, &quot;post&quot;],
+    &quot;limits&quot;: {
+        &quot;bandwidth&quot;: (500 * 16u),
+        &quot;rate&quot;: null
+    }
+});
+println!(&quot;Configuration: {}&quot;, config);
+println!(&quot;Bandwidth: {}&quot;, config.search(&quot;bandwidth&quot;).unwrap());
+</code></pre><h2 id="see-also">See also</h2>
+<ul>
+<li>JSON serialization in Rust, <a href="http://valve.github.io/blog/2014/08/25/json-serialization-in-rust-part-1/" target="_blank">part 1</a> and <a href="http://valve.github.io/blog/2014/08/26/json-serialization-in-rust-part-2/" target="_blank">part 2</a> - worth reading for an in-depth look on how to implement <code>Encodable</code>/<code>Decodable</code> yourself</li>
+</ul>
+<hr>
+<p><small>
+Code examples in this article were built with rustc 0.13.0-nightly and json_macros 0.0.4.
+</small></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../book/day5.html" class="navigation navigation-prev " aria-label="Previous page: Day 5 - hyper"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day7.html" class="navigation navigation-next " aria-label="Next page: Day 7 - itertools"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

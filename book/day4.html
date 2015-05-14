@@ -1,0 +1,669 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 4 - docopt | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day5.html" />
+    
+    
+    <link rel="prev" href="../book/day3.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="4" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-4-docopt">Day 4 - docopt</h1>
+<p>One of the few chores when building a commandline program is argument parsing, so that <code>myprogram --config=myfile.conf --verbose -o output.txt</code> makes sense. Some arguments come in short and long variants, some are optional and some are positional only. There are a lot of libraries for argument parsing, some are even included in the respective languages&apos; distributions. In Rust&apos;s case there&apos;s the <a href="http://doc.rust-lang.org/getopts/index.html" target="_blank">getopts crate</a>.</p>
+<p>The first thing a moderately savvy user will do is... no, not read the documentation, but run <code>myprogram -h</code> (or <code>--help</code>) to discover available options. <code>getopts</code> and other libraries can derive such help summary for you, saving your time and reducing duplication. But what if it was the other way round? You&apos;d write the usage message, listing possible options, and the tool would build an argument parser from that. Enter <a href="http://docopt.org/" target="_blank">docopt</a>.</p>
+<h2 id="what-is-docopt">What is docopt?</h2>
+<p>The <strong>docopt</strong> initiative <a href="https://www.youtube.com/watch?v=pXhcPJK5cMc" target="_blank">originated in the Python community</a> in 2012 as an attempt to standardize common conventions for commandline arguments. The main idea is that the help message describes the interface of your program. Once you follow a few rules when writing that message, docopt can understand it and build an argument parser.</p>
+<h2 id="docopt-for-rust">docopt for Rust</h2>
+<p>We&apos;ll start by declaring a dependency in <code>Cargo.toml</code>:</p>
+<pre><code>:::toml
+[dependencies]
+docopt = &quot;~0.6.11&quot;
+docopt_macros = &quot;~0.6.11&quot;
+</code></pre><p>Cargo will now pull the <a href="https://crates.io/crates/docopt" target="_blank">docopt crate</a> along with the macros which are distributed separately. This is a common pattern in Rust projects because macros introduce a runtime dependency on <code>libsyntax</code> (see <a href="https://github.com/Ogeon/rustful/issues/1" target="_blank">one explanation here</a>).</p>
+<p>In our example application we&apos;ll try to mimic the <code>wc</code> tool for counting lines, words or characters in a file. Let&apos;s start with importing required libraries and writing the usage message:</p>
+<pre><code>:::rust
+extern crate serialize;
+extern crate docopt;
+
+use docopt::Docopt;
+
+static USAGE: &amp;amp;&apos;static str = &quot;
+Usage: wc [options] [&lt;file&gt;]
+
+Options:
+    -c, --bytes  print the byte counts
+    -m, --chars  print the character counts
+    -l, --lines  print the newline counts
+    -w, --words  print the word counts
+    -L, --max-line-length  print the length of the longest line
+    -h, --help  display this help and exit
+    -v, --version  output version information and exit
+&quot;;
+</code></pre><p>Nothing fancy here, just a long string. See the <a href="http://docopt.org/" target="_blank">docopt specification</a> for the details of the format. We want to be able to decode the options into a struct, so it makes sanse for the struct to implement the <code>Decodable</code> trait.</p>
+<pre><code>:::rust
+#[deriving(Decodable)]
+struct Args {
+    arg_file: Option&lt;String&gt;,
+    flag_bytes: bool,
+    flag_chars: bool,
+    flag_lines: bool,
+    flag_words: bool,
+    flag_max_line_length: bool,
+}
+</code></pre><p>The arguments must map to field names. Flags (toggle switches such as <code>-c</code> above) map to <code>flag_</code>-prefixed boolean fields, option arguments or meta-variables map to <code>arg_</code>-prefixed fields. If the argument is optional it can be represented by an <code>Option</code> value. But how do we actually turn the commandline args into a struct?</p>
+<pre><code>:::rust
+let args: Args = Docopt::new(USAGE).and_then(|d| d.decode()).unwrap_or_else(|e| e.exit());
+</code></pre><p>Now this is a dense line of code. Let&apos;s walk through it one step at a time.</p>
+<pre><code>:::rust
+let docopt = match Docopt::new(USAGE) {
+    Ok(d) =&gt; d,
+    Err(e) =&gt; e.exit(),
+};
+println!(&quot;{}&quot;, docopt);
+let args: Args = match docopt.decode() {
+    Ok(args) =&gt; args,
+    Err(e) =&gt; e.exit(),
+};
+</code></pre><p><code>Docopt::new()</code> returns a <code>Result&lt;Docopt, Error&gt;</code> value. The errors from docopt have a handy <code>exit()</code> method that prints the error message and quits the program. Printing a <code>Docopt</code> value gives us a lot of debugging information. The <code>decode()</code> method is responsible for creating our arguments object and we extract it from the <code>Ok</code> variant. We can now use <code>args</code> as any other struct in our program.</p>
+<pre><code>:::rust
+println!(&quot;Counting stuff in {}&quot;, args.arg_file.unwrap_or(&quot;standard input&quot;.to_string()));
+if args.flag_bytes {
+    println!(&quot;Counting bytes!&quot;);
+}
+if args.flag_chars {
+    println!(&quot;Counting characters!&quot;);
+}
+// etc.
+</code></pre><h2 id="docopt-macros">docopt_macros</h2>
+<p>But hey, didn&apos;t I tell you earlier about reducing duplication? In the example above there are two sources of information, namely the usage string and the <code>Args</code> struct. It&apos;s quite clear that these two represent the same concept, but you&apos;ll need to mantain two separate code pieces instead of one and that is prone to errors.</p>
+<p><code>docopt!</code> to the rescue! This is a funny (for some value of fun, of course) macro that will generate the struct for us.</p>
+<pre><code>:::rust
+#![feature(phase)]
+extern crate serialize;
+extern crate docopt;
+#[phase(plugin)]
+extern crate docopt_macros;
+
+docopt!(Args, &quot;
+Usage: wc [options] [&lt;file&gt;]
+
+Options:
+    -c, --bytes  print the byte counts
+    -m, --chars  print the character counts
+    -l, --lines  print the newline counts
+    -w, --words  print the word counts
+    -L, --max-line-length  print the length of the longest line
+    -h, --help  display this help and exit
+    -v, --version  output version information and exit
+&quot;, arg_file: Option&lt;String&gt;)
+</code></pre><p>The macro takes the name of the type to generate, usage string and (optionally) types for the generated fields. It also validates that the usage message conforms to the docopt spec. The validation happens at compile time, when the <code>Args</code> struct is generated so there&apos;s no runtime overhead. But most importantly we have now a <strong>single</strong> piece of information to maintain instead of two.</p>
+<p>There&apos;s one more advantage of the macro - our code inside <code>main()</code> can be simplified a bit. As the struct is generated from the usage message, we can get rid of one intermediate <code>Result</code> unwrapping; the struct has a static <code>docopt()</code> method which returns a <code>Docopt</code> value.</p>
+<pre><code>:::rust
+let docopt = Args::docopt();
+println!(&quot;{}&quot;, docopt);
+let args: Args = docopt.decode().unwrap_or_else(|e| e.exit());
+// use args as before
+</code></pre><p>Docopt for Rust recently gained an ability to generate tab completion files for the shell (only bash at the moment). See the <a href="https://github.com/docopt/docopt.rs#tab-completion-support" target="_blank">readme</a> for more on that.</p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="http://kblomqvist.github.io/2013/03/21/creating-beatiful-command-line-interfaces-for-embedded-systems-part1/" target="_blank">using docopt in C</a> for embedded systems</li>
+<li>docopt implementations in various languages under the <a href="https://github.com/docopt" target="_blank">docopt organization on GitHub</a></li>
+<li><a href="https://github.com/uutils/coreutils/blob/master/src/wc/wc.rs" target="_blank">wc in Rust</a> from the coreutils rewrite project</li>
+</ul>
+<hr>
+<p><small>
+Code examples in this article were built with rustc 0.13.0-nightly and docopt 0.6.11.
+</small></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../book/day3.html" class="navigation navigation-prev " aria-label="Previous page: Day 3 - csv"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day5.html" class="navigation navigation-next " aria-label="Next page: Day 5 - hyper"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

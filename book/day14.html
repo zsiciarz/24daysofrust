@@ -1,0 +1,647 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <title>Day 14 - nalgebra | 24daysofrust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.0.1">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    <link rel="next" href="../book/day15.html" />
+    
+    
+    <link rel="prev" href="../book/day13.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+    
+
+        
+    <div class="book" data-level="14" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/day1.html">
+            
+                
+                    <a href="../book/day1.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/day2.html">
+            
+                
+                    <a href="../book/day2.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Day 2 - slow_primes
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="book/day3.html">
+            
+                
+                    <a href="../book/day3.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="book/day4.html">
+            
+                
+                    <a href="../book/day4.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="book/day5.html">
+            
+                
+                    <a href="../book/day5.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="book/day6.html">
+            
+                
+                    <a href="../book/day6.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="book/day7.html">
+            
+                
+                    <a href="../book/day7.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="book/day8.html">
+            
+                
+                    <a href="../book/day8.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="book/day9.html">
+            
+                
+                    <a href="../book/day9.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="book/day10.html">
+            
+                
+                    <a href="../book/day10.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="book/day11.html">
+            
+                
+                    <a href="../book/day11.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="book/day12.html">
+            
+                
+                    <a href="../book/day12.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Day 12 - image
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="book/day13.html">
+            
+                
+                    <a href="../book/day13.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="14" data-path="book/day14.html">
+            
+                
+                    <a href="../book/day14.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="book/day15.html">
+            
+                
+                    <a href="../book/day15.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="book/day16.html">
+            
+                
+                    <a href="../book/day16.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="book/day17.html">
+            
+                
+                    <a href="../book/day17.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="book/day18.html">
+            
+                
+                    <a href="../book/day18.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="book/day19.html">
+            
+                
+                    <a href="../book/day19.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="book/day20.html">
+            
+                
+                    <a href="../book/day20.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="book/day21.html">
+            
+                
+                    <a href="../book/day21.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="book/day22.html">
+            
+                
+                    <a href="../book/day22.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="book/day23.html">
+            
+                
+                    <a href="../book/day23.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="book/day24.html">
+            
+                
+                    <a href="../book/day24.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >24daysofrust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-14-nalgebra">Day 14 - nalgebra</h1>
+<p>The <a href="https://crates.io/crates/nalgebra" target="_blank">nalgebra</a> crate provides a wide set of mathematical primitives for linear algebra, computer physics, graphic engines etc. I&apos;m not going to dive deep into the underlying math, there are a lot of tutorials and courses, some of them specifically targeted at the programmers. My goal for today is just a brief showcase of what we can do in Rust with <code>nalgebra</code>.</p>
+<h2 id="basic-vector-and-matrix-operations">Basic vector and matrix operations</h2>
+<pre><code>:::rust
+extern crate nalgebra;
+
+use nalgebra::{Mat2, Rot2, Vec2};
+
+fn main() {
+    println!(&quot;24 days of Rust - nalgebra (day 14)&quot;);
+    let v = Vec2::new(0.0f64, 1.0);
+    // 90 degrees clockwise
+    //  0, 1
+    // -1, 0
+    let rot = Mat2::new(0.0f64, -1.0, 1.0, 0.0);
+    println!(&quot;{}&quot;, rot * v);
+}
+</code></pre><!-- -->
+<pre><code>:::sh
+$ cargo run
+Vec2 { x: 1, y: 0 }
+</code></pre><p>In <code>nalgebra</code> there are several statically sized vector and square matrix types (for dimensions up to 6). The standard mathematical operators are overloaded, so all allowed kinds of vector/matrix multiplication should just work. In the example above we defined the <a href="http://en.wikipedia.org/wiki/Rotation_matrix" target="_blank">rotation matrix</a> ourselves, but there is a nice shortcut: the <code>RotN</code> type.</p>
+<pre><code>:::rust
+use std::f64::consts::FRAC_PI_2;
+use nalgebra::{Rot2, Vec1};
+
+let angle = FRAC_PI_2;
+let rot = Rot2::new(Vec1::new(angle));
+println!(&quot;{}&quot;, rot * v);
+</code></pre><p>The output is the same but this time we tell Rust <em>what</em> to do, not <em>how</em> to do it. Note that we need to wrap the <code>angle</code> in a single-element vector.</p>
+<p>We can use vectors to translate (move) points.</p>
+<pre><code>:::rust
+let point = Pnt2::new(4.0f64, 4.0);
+println!(&quot;Translate from {} to {}&quot;, point, nalgebra::translate(&amp;amp;v, &amp;amp;point));
+</code></pre><p>A number of other operations are also exposed as top-level functions, such as <code>transform()</code>, <code>rotate()</code> along with their inverse counterparts.</p>
+<h2 id="dot-and-cross-product">Dot and cross product</h2>
+<pre><code>:::rust
+use nalgebra::Vec3;
+
+let v1 = Vec3::new(2.0f64, 2.0, 0.0);
+let v2 = Vec3::new(2.0f64, -2.0, 0.0);
+if nalgebra::approx_eq(&amp;amp;0.0f64, &amp;amp;nalgebra::dot(&amp;amp;v1, &amp;amp;v2)) {
+    println!(&quot;v1 is orthogonal to v2&quot;);
+}
+
+println!(&quot;{}&quot;, nalgebra::cross(&amp;amp;v1, &amp;amp;v2));
+println!(&quot;{}&quot;, nalgebra::cross(&amp;amp;v2, &amp;amp;v1));
+</code></pre><p>The output is:</p>
+<pre><code>:::sh
+$ cargo run
+v1 is orthogonal to v2
+Vec3 { x: 0, y: 0, z: -8 }
+Vec3 { x: 0, y: 0, z: 8 }
+</code></pre><p><a href="http://en.wikipedia.org/wiki/Dot_product" target="_blank">Dot product</a> can be used to check if two vectors are orthogonal to each other. That happens if their dot product is equal to 0. As floating point comparisons are <a href="http://www.parashift.com/c++-faq/floating-point-arith.html" target="_blank">sometimes suprising</a>, we should use the <code>approx_eq()</code> function.</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Cross_product" target="_blank">cross product</a> of two vectors is always perpendicular (sometimes we say <strong>normal</strong>) to <em>both</em> of them. As you can see from the example it is also not commutative. Normal vectors are very important in computer graphics for <a href="http://www.opengl-tutorial.org/beginners-tutorials/tutorial-8-basic-shading/" target="_blank">calculating light and shading</a> of the scene.</p>
+<h2 id="dynamic-vectors">Dynamic vectors</h2>
+<p>All of the <code>nalgebra</code> types we&apos;ve seen so far have their higher-dimensional variants up to <code>Vec6</code>/<code>Mat6</code> etc. But what if we want to go further? Very high number of dimensions is common for example in digital signal processing. In <code>nalgebra</code> there is a <code>DVec</code> type for that purpose.</p>
+<pre><code>:::rust
+const SIZE: uint = 512;
+let sine = DVec::from_fn(SIZE, |i: uint| {
+    let t = i as f64 / 16.0f64;
+    t.sin()
+});
+draw(&amp;amp;sine, &amp;amp;Path::new(&quot;out_sine.png&quot;));
+
+let window = DVec::from_fn(SIZE, |i: uint| {
+    0.54f64 - 0.46 * (PI_2 * (i as f64) / (SIZE - 1) as f64).cos()
+});
+draw(&amp;amp;window, &amp;amp;Path::new(&quot;out_window.png&quot;));
+
+draw(&amp;amp;(sine * window), &amp;amp;Path::new(&quot;out_windowed.png&quot;));
+</code></pre><p>We can use the <code>from_fn()</code> mwthod to create a vector by generating each element in a closure. The <code>window</code> variable is a <a href="http://en.wikipedia.org/wiki/Window_function#Hamming_window" target="_blank">Hamming window</a>; such window functions are a common preprocessing step in DSP.</p>
+<p>The <code>draw()</code> function borrows a <code>DVec</code> and a <code>Path</code> and plots a simple representation of the vector to a PNG file using the <a href="https://siciarz.net/24-days-of-rust-image/" target="_blank">image crate</a>. The code is <a href="https://github.com/zsiciarz/24daysofrust/blob/86aef8e34a1b7681a189ffbf0abc50a1f413da23/src/day14.rs#L10" target="_blank">on GitHub</a> for anybody interested. Here&apos;s the output of all three steps of the above code:</p>
+<p><img src="../../../../../../i.imgur.com/mQKFms3.png" alt="sine, window, windowed sine"></p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="http://linear.ups.edu/html/fcla.html" target="_blank">A First Course in Linear Algebra</a></li>
+<li><a href="http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-1/" target="_blank">Linear algebra for game developers</a></li>
+<li><a href="https://github.com/sebcrozet/kiss3d" target="_blank">kiss3d</a> - a simple 3D graphics engine for Rust</li>
+</ul>
+<hr>
+<p><small>
+Code examples in this article were built with rustc 0.13.0-nightly and nalgebra 0.1.0.
+</small></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../book/day13.html" class="navigation navigation-prev " aria-label="Previous page: Day 13 - uuid"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../book/day15.html" class="navigation navigation-next " aria-label="Next page: Day 15 - FUSE filesystems, part 1"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>
