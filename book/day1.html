@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="1" data-basepath=".." data-revision="Thu May 14 2015 21:53:58 GMT+0000 (UTC)">
+    <div class="book" data-level="1" data-basepath=".." data-revision="Fri May 15 2015 13:09:47 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -534,11 +534,10 @@
 <p>So let&apos;s start! As in the Haskell series by Ollie, where he <a href="https://ocharles.org.uk/blog/posts/2012-12-01-24-days-of-hackage.html" target="_blank">introduced Cabal</a>, the first post will briefly cover package management. For those of you coming from Python, Ruby or Node this may be a bit familiar. C++ does not have a dedicated package manager, so hopefully this is one of the selling points of Rust for people with such background.</p>
 <h2 id="cargo">Cargo</h2>
 <p><strong>Cargo</strong> is the package manager for Rust. It comes installed along with the compiler if you use the <code>rustup.sh</code> script. Cargo builds your code and manages its dependencies. It can also generate a basic project structure for you, if you&apos;re just starting a new one:</p>
-<pre><code>:::sh
-$ cargo new myproject --bin # or --lib, if you&apos;re creating a library
-</code></pre><p>Cargo will then generate some initial sources and a <code>Cargo.toml</code> file (sometimes called a <em>manifest</em>). This is where you describe your project&apos;s metadata, such as name, version, etc. It&apos;s also the right place to declare any possible dependencies your project might have. See for example <a href="https://github.com/zsiciarz/euler.rs/blob/efb135ef9774f2c9cc64b68c881b882c983889c5/Cargo.toml" target="_blank">Cargo.toml</a> from one of my toy projects:</p>
-<pre><code>:::toml
-[package]
+<pre><code class="lang-sh">$ cargo new myproject --bin <span class="hljs-comment"># or --lib, if you&apos;re creating a library</span>
+</code></pre>
+<p>Cargo will then generate some initial sources and a <code>Cargo.toml</code> file (sometimes called a <em>manifest</em>). This is where you describe your project&apos;s metadata, such as name, version, etc. It&apos;s also the right place to declare any possible dependencies your project might have. See for example <a href="https://github.com/zsiciarz/euler.rs/blob/efb135ef9774f2c9cc64b68c881b882c983889c5/Cargo.toml" target="_blank">Cargo.toml</a> from one of my toy projects:</p>
+<pre><code class="lang-ini">[package]
 name = &quot;euler&quot;
 version = &quot;0.0.1&quot;
 authors = [&quot;Zbigniew Siciarz &lt;zbigniew@siciarz.net&gt;&quot;]
@@ -550,34 +549,31 @@ path = &quot;src/main.rs&quot;
 [dependencies]
 num = &quot;~0.0.4&quot;
 slow_primes = &quot;~0.1.4&quot;
-</code></pre><p>Cargo can also run a test suite, generate documentation or upload your crate to the repository, but that&apos;s the topic for later.</p>
+</code></pre>
+<p>Cargo can also run a test suite, generate documentation or upload your crate to the repository, but that&apos;s the topic for later.</p>
 <h2 id="crates-and-dependencies">Crates and dependencies</h2>
 <p>If you don&apos;t know, Rust calls its compilation unit (be it a library or an executable) a <strong>crate</strong>. Your Rust program usually lives in one crate, but it can use other crates as dependencies. See the <a href="http://doc.rust-lang.org/guide.html#crates-and-modules" target="_blank">Rust Guide on crates</a> for details on the difference between crates and modules.</p>
 <p>Executing <code>cargo build</code> compiles your crate and the resulting binary can be found inside the <code>target/</code> directory. For executables there&apos;s a nice shortcut - <code>cargo run</code> - that automatically runs your program after it&apos;s compiled.</p>
 <p>You probably noticed a <code>[dependencies]</code> section in the manifest file above. You guessed it - this is where you declare which external libraries you&apos;ll use. But <code>Cargo.toml</code> is not enough - it just tells Cargo to link your project with these crates. In order to use their APIs in your code, put <code>extern crate</code> imports in your project&apos;s crate root (that is usually the <code>main.rs</code> or <code>lib.rs</code> file), so that the compiler can resolve function names, types etc.</p>
-<pre><code>:::rust
-// main.rs
-extern crate num;
+<pre><code class="lang-rust"><span class="hljs-comment">// main.rs</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> num;
 
-fn main () {
-    // ... use stuff from num library
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span> </span>() {
+    <span class="hljs-comment">// ... use stuff from num library</span>
 }
-</code></pre><p><strong>Note</strong>: At the moment Cargo supports only source dependencies; it downloads the source code for every crate your project depends on, compiles them locally on your machine and finally links with your main crate.</p>
+</code></pre>
+<p><strong>Note</strong>: At the moment Cargo supports only source dependencies; it downloads the source code for every crate your project depends on, compiles them locally on your machine and finally links with your main crate.</p>
 <p>What I personally like about Cargo is that it&apos;s very simple to build both a library and an executable using that library. It&apos;s just a matter of having two sections in the manifest. For example, this is what <a href="https://github.com/zsiciarz/rust-cpuid" target="_blank">rust-cpuid</a> does:</p>
-<pre><code>:::toml
-[lib]
+<pre><code class="lang-ini">[lib]
 name = &quot;cpuid&quot;
 
 [[bin]]
 name = &quot;cpuid&quot;
-</code></pre><p>Then I just need to put <code>extern crate cpuid</code> in my <code>main.rs</code> file (this is the crate root for the executable) and Cargo will link it with the library it built alongside.</p>
+</code></pre>
+<p>Then I just need to put <code>extern crate cpuid</code> in my <code>main.rs</code> file (this is the crate root for the executable) and Cargo will link it with the library it built alongside.</p>
 <p><strong>Update</strong>: As <a href="http://www.reddit.com/r/rust/comments/2nybtm/24_days_of_rust_cargo_and_cratesio/cmip7xw" target="_blank">Steve Klabnik</a> noted, these two sections are redundant as they&apos;re the defaults. If you have both <code>lib.rs</code> and <code>main.rs</code> in the source directory, Cargo will build the library and executable just the same.</p>
 <h2 id="crates-io">crates.io</h2>
 <p><a href="https://crates.io/" target="_blank">crates.io</a> is the central package repository for Cargo. (Python folks - think of PyPI.) Cargo pulls dependencies from there, although it can also install them from Git or local filesystem. Once you&apos;ve built an awesome library and want to share it with the rest of the world, crates.io is the place to go. You&apos;ll need an account on the site (currently GitHub-based social login only, but this may change). The relevant command is <code>cargo publish</code>, documented in the <a href="http://doc.crates.io/crates-io.html#publishing-crates" target="_blank">section on publishing crates</a>. Once you&apos;ve done it, congratulations, you are now a contributor to the Rust ecosystem!</p>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small></p>
 
                     
                     </section>
