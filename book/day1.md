@@ -9,24 +9,26 @@ Cargo
 
 **Cargo** is the package manager for Rust. It comes installed along with the compiler if you use the `rustup.sh` script. Cargo builds your code and manages its dependencies. It can also generate a basic project structure for you, if you're just starting a new one:
 
-    :::sh
-    $ cargo new myproject --bin # or --lib, if you're creating a library
+```sh
+$ cargo new myproject --bin # or --lib, if you're creating a library
+```
 
 Cargo will then generate some initial sources and a `Cargo.toml` file (sometimes called a *manifest*). This is where you describe your project's metadata, such as name, version, etc. It's also the right place to declare any possible dependencies your project might have. See for example [Cargo.toml](https://github.com/zsiciarz/euler.rs/blob/efb135ef9774f2c9cc64b68c881b882c983889c5/Cargo.toml) from one of my toy projects:
 
-    :::toml
-    [package]
-    name = "euler"
-    version = "0.0.1"
-    authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
+```ini
+[package]
+name = "euler"
+version = "0.0.1"
+authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 
-    [[bin]]
-    name = "euler"
-    path = "src/main.rs"
+[[bin]]
+name = "euler"
+path = "src/main.rs"
 
-    [dependencies]
-    num = "~0.0.4"
-    slow_primes = "~0.1.4"
+[dependencies]
+num = "~0.0.4"
+slow_primes = "~0.1.4"
+```
 
 Cargo can also run a test suite, generate documentation or upload your crate to the repository, but that's the topic for later.
 
@@ -39,24 +41,26 @@ Executing `cargo build` compiles your crate and the resulting binary can be foun
 
 You probably noticed a `[dependencies]` section in the manifest file above. You guessed it - this is where you declare which external libraries you'll use. But `Cargo.toml` is not enough - it just tells Cargo to link your project with these crates. In order to use their APIs in your code, put `extern crate` imports in your project's crate root (that is usually the `main.rs` or `lib.rs` file), so that the compiler can resolve function names, types etc.
 
-    :::rust
-    // main.rs
-    extern crate num;
+```rust
+// main.rs
+extern crate num;
 
-    fn main () {
-        // ... use stuff from num library
-    }
+fn main () {
+    // ... use stuff from num library
+}
+```
 
 **Note**: At the moment Cargo supports only source dependencies; it downloads the source code for every crate your project depends on, compiles them locally on your machine and finally links with your main crate.
 
 What I personally like about Cargo is that it's very simple to build both a library and an executable using that library. It's just a matter of having two sections in the manifest. For example, this is what [rust-cpuid](https://github.com/zsiciarz/rust-cpuid) does:
 
-    :::toml
-    [lib]
-    name = "cpuid"
+```ini
+[lib]
+name = "cpuid"
 
-    [[bin]]
-    name = "cpuid"
+[[bin]]
+name = "cpuid"
+```
 
 Then I just need to put `extern crate cpuid` in my `main.rs` file (this is the crate root for the executable) and Cargo will link it with the library it built alongside.
 
@@ -66,9 +70,3 @@ crates.io
 ---------
 
 [crates.io](https://crates.io/) is the central package repository for Cargo. (Python folks - think of PyPI.) Cargo pulls dependencies from there, although it can also install them from Git or local filesystem. Once you've built an awesome library and want to share it with the rest of the world, crates.io is the place to go. You'll need an account on the site (currently GitHub-based social login only, but this may change). The relevant command is `cargo publish`, documented in the [section on publishing crates](http://doc.crates.io/crates-io.html#publishing-crates). Once you've done it, congratulations, you are now a contributor to the Rust ecosystem!
-
-----
-
-<small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small>
