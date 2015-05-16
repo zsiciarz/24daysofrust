@@ -55,7 +55,7 @@ let movie = Movie {
 writer.encode(movie).ok().expect("CSV writer error");
 ```
 
-Try removing the `#[deriving(RustcEncodable)]` attribute and see what happens. Turns out the CSV writer can handle anything that implements `RustcEncodable`.
+Try removing the `#[derive(RustcEncodable)]` attribute and see what happens. Turns out the CSV writer can handle anything that implements `RustcEncodable`.
 
 CSV parsing
 -----------
@@ -97,7 +97,7 @@ $ cargo run
 There is also a nice symmetry with the `Writer`. We can serialize structs to CSV, so we should be able to read into structs directly. If the struct implements `RustcDecodable` trait (usually by deriving), we can do it!
 
 ```rust
-#[deriving(RustcDecodable)]
+#[derive(RustcDecodable)]
 struct Movie {
     // ...
 }
