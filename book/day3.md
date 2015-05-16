@@ -83,7 +83,7 @@ $ cargo run
 Wait, where's the first dollar movie (*A Fistful of Dollars*)? The `Reader` by default considers the first row in a CSV file as headers, which are not exposed in the iterator returned by `decode()`. You can use the `has_headers()` method to disable this behaviour.
 
 ```rust
-let mut reader = Reader::from_file(&amp;path).has_headers(false);
+let mut reader = Reader::from_file(&path).has_headers(false);
 ```
 
 ```sh
@@ -102,7 +102,7 @@ struct Movie {
     // ...
 }
 
-let mut reader = Reader::from_file(&amp;path).has_headers(false);
+let mut reader = Reader::from_file(&path).has_headers(false);
 for row in reader.decode() {
     let movie: Movie = row.unwrap();
     println!("{} was a bad guy in '{}' in {}",
