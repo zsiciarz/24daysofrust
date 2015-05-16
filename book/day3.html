@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="3" data-basepath=".." data-revision="Sat May 16 2015 05:31:18 GMT+0000 (UTC)">
+    <div class="book" data-level="3" data-basepath=".." data-revision="Sat May 16 2015 11:16:29 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -586,7 +586,7 @@ writer.encode(movie).ok().expect(<span class="hljs-string">&quot;CSV writer erro
 (<span class="hljs-string">&quot;Hang \&apos;Em High&quot;</span>, <span class="hljs-string">&quot;Wilson&quot;</span>, <span class="hljs-number">1968</span>)
 </code></pre>
 <p>Wait, where&apos;s the first dollar movie (<em>A Fistful of Dollars</em>)? The <code>Reader</code> by default considers the first row in a CSV file as headers, which are not exposed in the iterator returned by <code>decode()</code>. You can use the <code>has_headers()</code> method to disable this behaviour.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> reader = Reader::from_file(&amp;amp;path).has_headers(<span class="hljs-keyword">false</span>);
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> reader = Reader::from_file(&amp;path).has_headers(<span class="hljs-keyword">false</span>);
 </code></pre>
 <pre><code class="lang-sh">$ cargo run
 (<span class="hljs-string">&quot;A Fistful of Dollars&quot;</span>, <span class="hljs-string">&quot;Rojo&quot;</span>, <span class="hljs-number">1964</span>)
@@ -600,7 +600,7 @@ writer.encode(movie).ok().expect(<span class="hljs-string">&quot;CSV writer erro
     <span class="hljs-comment">// ...</span>
 }
 
-<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> reader = Reader::from_file(&amp;amp;path).has_headers(<span class="hljs-keyword">false</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> reader = Reader::from_file(&amp;path).has_headers(<span class="hljs-keyword">false</span>);
 <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> reader.decode() {
     <span class="hljs-keyword">let</span> movie: Movie = row.unwrap();
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{} was a bad guy in &apos;{}&apos; in {}&quot;</span>,
