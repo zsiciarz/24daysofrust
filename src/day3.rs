@@ -19,7 +19,7 @@ fn main() {
     ];
     let path = "westerns.csv";
     let mut writer = Writer::from_file(path).unwrap();
-    for row in dollar_films.into_iter() {
+    for row in dollar_films {
         writer.encode(row).ok().expect("CSV writer error");
     }
     let movie = Movie {
