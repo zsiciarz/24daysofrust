@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="3" data-basepath=".." data-revision="Sat May 16 2015 11:16:29 GMT+0000 (UTC)">
+    <div class="book" data-level="3" data-basepath=".." data-revision="Sat May 16 2015 17:24:30 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -569,7 +569,7 @@ For a Few Dollars More,El Indio,<span class="hljs-number">1965</span>
 };
 writer.encode(movie).ok().expect(<span class="hljs-string">&quot;CSV writer error&quot;</span>);
 </code></pre>
-<p>Try removing the <code>#[deriving(RustcEncodable)]</code> attribute and see what happens. Turns out the CSV writer can handle anything that implements <code>RustcEncodable</code>.</p>
+<p>Try removing the <code>#[derive(RustcEncodable)]</code> attribute and see what happens. Turns out the CSV writer can handle anything that implements <code>RustcEncodable</code>.</p>
 <h2 id="csv-parsing">CSV parsing</h2>
 <p>Writing CSV  is one part of the story. If you&apos;re a client of some API that exposes CSV data, you&apos;ll need to have a way to read that into some meaningful representation. But define meaningful? Let&apos;s start with plain tuples.</p>
 <pre><code class="lang-rust"><span class="hljs-keyword">let</span> path = <span class="hljs-string">&quot;westerns.csv&quot;</span>;
@@ -595,7 +595,7 @@ writer.encode(movie).ok().expect(<span class="hljs-string">&quot;CSV writer erro
 (<span class="hljs-string">&quot;Hang \&apos;Em High&quot;</span>, <span class="hljs-string">&quot;Wilson&quot;</span>, <span class="hljs-number">1968</span>)
 </code></pre>
 <p>There is also a nice symmetry with the <code>Writer</code>. We can serialize structs to CSV, so we should be able to read into structs directly. If the struct implements <code>RustcDecodable</code> trait (usually by deriving), we can do it!</p>
-<pre><code class="lang-rust"><span class="hljs-preprocessor">#[deriving(RustcDecodable)]</span>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[derive(RustcDecodable)]</span>
 <span class="hljs-keyword">struct</span> Movie {
     <span class="hljs-comment">// ...</span>
 }
