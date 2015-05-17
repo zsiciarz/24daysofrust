@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="5" data-basepath=".." data-revision="Sun May 17 2015 21:24:23 GMT+0000 (UTC)">
+    <div class="book" data-level="5" data-basepath=".." data-revision="Sun May 17 2015 21:32:38 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -599,7 +599,7 @@
 
 <span class="hljs-keyword">use</span> rustc_serialize::{Encodable, json};
 
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_json</span></span>&lt;&apos;a, T&gt;(url: &amp;<span class="hljs-keyword">str</span>, payload: &amp;T) -&gt; hyper::Result&lt;String&gt;
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_json</span></span>&lt;T&gt;(url: &amp;<span class="hljs-keyword">str</span>, payload: &amp;T) -&gt; hyper::Result&lt;String&gt;
     where T: Encodable {
     <span class="hljs-keyword">let</span> body = json::encode(payload).unwrap();
     <span class="hljs-comment">// rest of the code as before</span>
