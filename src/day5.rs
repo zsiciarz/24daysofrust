@@ -26,7 +26,7 @@ fn post_query(url: &str, query: Query) -> hyper::Result<String> {
     Ok(buf)
 }
 
-fn post_json<'a, T>(url: &str, payload: &T) -> hyper::Result<String>
+fn post_json<T>(url: &str, payload: &T) -> hyper::Result<String>
     where T: Encodable {
     let mut client = Client::new();
     let body = json::encode(payload).unwrap();

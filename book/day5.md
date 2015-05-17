@@ -93,7 +93,7 @@ extern crate rustc_serialize;
 
 use rustc_serialize::{Encodable, json};
 
-fn post_json<'a, T>(url: &str, payload: &T) -> hyper::Result<String>
+fn post_json<T>(url: &str, payload: &T) -> hyper::Result<String>
     where T: Encodable {
     let body = json::encode(payload).unwrap();
     // rest of the code as before
