@@ -7,7 +7,7 @@ use hyper::{Client};
 use rustc_serialize::{Encodable, json};
 use url::form_urlencoded;
 
-fn get_content(url: &str) -> hyper::error::Result<String> {
+fn get_content(url: &str) -> hyper::Result<String> {
     let mut client = Client::new();
     let mut response = try!(client.get(url).send());
     let mut buf = String::new();
@@ -17,7 +17,7 @@ fn get_content(url: &str) -> hyper::error::Result<String> {
 
 type Query<'a> = Vec<(&'a str, &'a str)>;
 
-fn post_query(url: &str, query: Query) -> hyper::error::Result<String> {
+fn post_query(url: &str, query: Query) -> hyper::Result<String> {
     let mut client = Client::new();
     let body = form_urlencoded::serialize(query);
     let mut response = try!(client.post(url).body(&body[..]).send());
@@ -26,7 +26,7 @@ fn post_query(url: &str, query: Query) -> hyper::error::Result<String> {
     Ok(buf)
 }
 
-fn post_json<'a, T>(url: &str, payload: &T) -> hyper::error::Result<String>
+fn post_json<'a, T>(url: &str, payload: &T) -> hyper::Result<String>
     where T: Encodable {
     let mut client = Client::new();
     let body = json::encode(payload).unwrap();
@@ -47,11 +47,11 @@ fn main() {
     println!("24 days of Rust - hyper (day 5)");
     println!("{:?}", get_content("http://httpbin.org/status/200"));
     let query = vec![("key", "value"), ("foo", "bar")];
-    println!("{:?}", post_query("http://httpbin.org/post", query).unwrap());
+    println!("{}", post_query("http://httpbin.org/post", query).unwrap());
     let movie = Movie {
         title: "You Only Live Twice".to_string(),
         bad_guy: "Blofeld".to_string(),
         pub_year: 1967,
     };
-    println!("{:?}", post_json("http://httpbin.org/post", &movie).unwrap());
+    println!("{}", post_json("http://httpbin.org/post", &movie).unwrap());
 }

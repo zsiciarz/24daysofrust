@@ -41,7 +41,7 @@ fn main() {
 That was... *verbose*. I could just use `unwrap()` everywhere, but that would be handwaving and in poor taste. Sprinkling your code with `panic!` is not a sign of good style too. However, there are so many things that can go wrong during an HTTP request/response cycle! But there seems to be a pattern. Can we do better?
 
 ```rust
-fn get_content(url: &str) -> hyper::error::Result<String> {
+fn get_content(url: &str) -> hyper::Result<String> {
     let mut client = Client::new();
     let mut response = try!(client.get(url).send());
     let mut buf = String::new();
@@ -68,7 +68,7 @@ use url::form_urlencoded;
 
 type Query<'a> = Vec<(&'a str, &'a str)>;
 
-fn post_query(url: &str, query: Query) -> hyper::error::Result<String> {
+fn post_query(url: &str, query: Query) -> hyper::Result<String> {
     let mut client = Client::new();
     let body = form_urlencoded::serialize(query);
     let mut response = try!(client.post(url).body(&body[..]).send());
@@ -93,7 +93,7 @@ extern crate rustc_serialize;
 
 use rustc_serialize::{Encodable, json};
 
-fn post_json<'a, T>(url: &str, payload: &T) -> hyper::error::Result<String>
+fn post_json<'a, T>(url: &str, payload: &T) -> hyper::Result<String>
     where T: Encodable {
     let body = json::encode(payload).unwrap();
     // rest of the code as before
