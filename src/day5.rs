@@ -11,10 +11,8 @@ fn get_content(url: &str) -> hyper::error::Result<String> {
     let mut client = Client::new();
     let mut response = try!(client.get(url).send());
     let mut buf = String::new();
-    match response.read_to_string(&mut buf) {
-        Ok(_) => Ok(buf),
-        Err(e) => Err(hyper::Error::Io(e)),
-    }
+    try!(response.read_to_string(&mut buf));
+    Ok(buf)
 }
 
 type Query<'a> = Vec<(&'a str, &'a str)>;
@@ -24,10 +22,8 @@ fn post_query(url: &str, query: Query) -> hyper::error::Result<String> {
     let body = form_urlencoded::serialize(query.into_iter());
     let mut response = try!(client.post(url).body(&body[..]).send());
     let mut buf = String::new();
-    match response.read_to_string(&mut buf) {
-        Ok(_) => Ok(buf),
-        Err(e) => Err(hyper::Error::Io(e)),
-    }
+    try!(response.read_to_string(&mut buf));
+    Ok(buf)
 }
 
 fn post_json<'a, T>(url: &str, payload: &T) -> hyper::error::Result<String>
@@ -36,10 +32,8 @@ fn post_json<'a, T>(url: &str, payload: &T) -> hyper::error::Result<String>
     let body = json::encode(payload).unwrap();
     let mut response = try!(client.post(url).body(&body[..]).send());
     let mut buf = String::new();
-    match response.read_to_string(&mut buf) {
-        Ok(_) => Ok(buf),
-        Err(e) => Err(hyper::Error::Io(e)),
-    }
+    try!(response.read_to_string(&mut buf));
+    Ok(buf)
 }
 
 #[derive(RustcDecodable, RustcEncodable)]
