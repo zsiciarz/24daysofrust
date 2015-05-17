@@ -19,7 +19,7 @@ type Query<'a> = Vec<(&'a str, &'a str)>;
 
 fn post_query(url: &str, query: Query) -> hyper::error::Result<String> {
     let mut client = Client::new();
-    let body = form_urlencoded::serialize(query.into_iter());
+    let body = form_urlencoded::serialize(query);
     let mut response = try!(client.post(url).body(&body[..]).send());
     let mut buf = String::new();
     try!(response.read_to_string(&mut buf));
@@ -47,11 +47,11 @@ fn main() {
     println!("24 days of Rust - hyper (day 5)");
     println!("{:?}", get_content("http://httpbin.org/status/200"));
     let query = vec![("key", "value"), ("foo", "bar")];
-    println!("{}", post_query("http://httpbin.org/post", query).unwrap());
+    println!("{:?}", post_query("http://httpbin.org/post", query).unwrap());
     let movie = Movie {
         title: "You Only Live Twice".to_string(),
         bad_guy: "Blofeld".to_string(),
         pub_year: 1967,
     };
-    println!("{}", post_json("http://httpbin.org/post", &movie).unwrap());
+    println!("{:?}", post_json("http://httpbin.org/post", &movie).unwrap());
 }
