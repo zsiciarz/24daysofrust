@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="18" data-basepath=".." data-revision="Sun May 17 2015 21:32:38 GMT+0000 (UTC)">
+    <div class="book" data-level="18" data-basepath=".." data-revision="Mon May 18 2015 07:10:45 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -530,6 +530,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="day-18-redis">Day 18 - redis</h1>
+<blockquote>
+<p>Relevancy: <strong>outdated</strong></p>
+</blockquote>
 <p>Today I&apos;m revisiting the topic of database access in Rust. I mentioned PostgreSQL client library <a href="https://siciarz.net/24-days-of-rust-postgres/" target="_blank">a week ago</a>. This time we&apos;ll move from SQL to NoSQL land. Our focus for today will be <a href="http://redis.io/" target="_blank">Redis</a> - a data structure server. The <a href="https://crates.io/crates/redis" target="_blank">redis crate</a> is a client library to access Redis from Rust.</p>
 <h2 id="connecting">Connecting</h2>
 <p>The <code>redis</code> crate provides a <code>Client</code> type that is used to connect to the Redis server. The <code>get_connection()</code> method returns a <code>Connection</code> object which execute Redis commands.</p>

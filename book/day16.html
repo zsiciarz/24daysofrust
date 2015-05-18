@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="16" data-basepath=".." data-revision="Sun May 17 2015 21:32:38 GMT+0000 (UTC)">
+    <div class="book" data-level="16" data-basepath=".." data-revision="Mon May 18 2015 07:10:45 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -530,6 +530,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="day-16-fuse-filesystems-part-2">Day 16 - FUSE filesystems, part 2</h1>
+<blockquote>
+<p>Relevancy: <strong>outdated</strong></p>
+</blockquote>
 <p>We finished <a href="https://siciarz.net/24-days-of-rust-fuse-filesystems-part-1/" target="_blank">part 1</a> with a working FUSE filesystem representing an empty directory. Today we will continue the story and finally add some files to the mix.</p>
 <h2 id="directory-listing-revisited">Directory listing revisited</h2>
 <p>We need to add a minimal amount of JSON handling before actually presenting the data in our filesystem. The <code>JsonFilesystem</code> struct will hold a <code>json::Object</code> value (this is a typedef for a <code>TreeMap</code>) representing the root object in the input JSON.</p>

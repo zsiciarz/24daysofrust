@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="9" data-basepath=".." data-revision="Sun May 17 2015 21:32:38 GMT+0000 (UTC)">
+    <div class="book" data-level="9" data-basepath=".." data-revision="Mon May 18 2015 07:10:45 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -530,6 +530,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="day-9-anymap">Day 9 - anymap</h1>
+<blockquote>
+<p>Relevancy: <strong>outdated</strong></p>
+</blockquote>
 <p>In this article we will focus on the <a href="https://crates.io/crates/anymap" target="_blank">anymap</a> crate by <a href="http://chrismorgan.info/" target="_blank">Chris Morgan</a> of <code>rust-http</code> and <code>teepee</code> fame. This crate provides the <code>AnyMap</code> type - a slightly peculiar, interesting container.</p>
 <p>The <code>AnyMap</code> type is different from a regular map. For example, a <code>HashMap</code> in Rust is a generic type parametrized by <code>K</code> - the type of keys and <code>V</code> - the type of values stored in map. (There&apos;s also a hasher parameter, but it&apos;s not relevant here.) Meanwhile, <code>AnyMap</code> itself is <strong>not</strong> a generic type. It uses a <code>HashMap</code> internally but we don&apos;t need to know that; conceptually, <code>AnyMap</code> maps from <em>types</em> to values. This means that for each and every type there can be at most one value contained in the mapping.</p>
 <p>You may ask - why would I ever need something that holds just one value of each type? A lot of programs use some kind of a map from (usually) strings to some arbitrary values, for example to store configuration data, process environment etc. Let me quote Chris on that:</p>

@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="15" data-basepath=".." data-revision="Sun May 17 2015 21:32:38 GMT+0000 (UTC)">
+    <div class="book" data-level="15" data-basepath=".." data-revision="Mon May 18 2015 07:10:45 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -530,6 +530,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="day-15-fuse-filesystems-part-1">Day 15 - FUSE filesystems, part 1</h1>
+<blockquote>
+<p>Relevancy: <strong>outdated</strong></p>
+</blockquote>
 <p>A traditional filesystem is typically implemented as a kernel module. However, some Unix-like operating systems (Linux, FreeBSD, Mac OS X and a few others) allow for userspace filesystems through a mechanism called <a href="http://en.wikipedia.org/wiki/Filesystem_in_Userspace" target="_blank">FUSE</a>. The <a href="http://fuse.sourceforge.net/" target="_blank">canonical FUSE library</a> is written in C and there are some bindings from other languages (<a href="https://github.com/terencehonles/fusepy" target="_blank">Python</a>, <a href="https://github.com/lwoggardner/rfusefs" target="_blank">Ruby</a> etc.)</p>
 <p>The <a href="https://github.com/zargony/rust-fuse" target="_blank">fuse crate</a> is very interesting because it&apos;s a rewrite from C to Rust, leveraging many of Rust features unavailable in C. The only binding to libfuse is related to mounting and unmounting the filesystem, the rest is pure Rust.</p>
 <p>Small disclaimer: I&apos;m not very well versed in filesystems, in fact this is my first attempt at FUSE. I&apos;m learning a lot while writing this article, hopefully for the best of all of us :-)</p>

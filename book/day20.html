@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="20" data-basepath=".." data-revision="Sun May 17 2015 21:32:38 GMT+0000 (UTC)">
+    <div class="book" data-level="20" data-basepath=".." data-revision="Mon May 18 2015 07:10:45 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -530,6 +530,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="day-20-zeromq">Day 20 - zeromq</h1>
+<blockquote>
+<p>Relevancy: <strong>outdated</strong></p>
+</blockquote>
 <p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a> crate is a native Rust implementation and while still lacking a lot of features, it is already usable today.</p>
 <h2 id="operational-patterns">Operational patterns</h2>
 <p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
