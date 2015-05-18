@@ -61,7 +61,7 @@ csv = "~0.14.2"
 docopt = "~0.6.64"
 docopt_macros = "~0.6.64"
 image = "~0.3.9"
-itertools = "~0.3.7"
+itertools = "~0.3.8"
 json_macros = "~0.2.4"
 num = "~0.1.24"
 postgres_array = "~0.4.1"
@@ -88,7 +88,7 @@ version = "~0.5.0"
 features = ["nightly"]
 
 [dependencies.postgres]
-version= "~0.8.8"
+version= "~0.8.9"
 features = ["rustc-serialize", "time"]
 
 [dependencies.fuse]
