@@ -1,5 +1,7 @@
 # Day 7 - itertools
 
+> Relevancy: **outdated**
+
 The [itertools crate](https://crates.io/crates/itertools) contains several utility functions and macros inspired by Haskell and [Python itertools](https://docs.python.org/3/library/itertools.html). As you can guess from the name, these have to do with iteration and iterators.  Rust has recently split the `Iterator` trait into `Iterator` and `IteratorExt` for so called **object safety** reasons (see [the RFC](https://github.com/rust-lang/rfcs/blob/master/text/0445-extension-trait-conventions.md) for an explanation). This is mostly irrelevant for today's episode of 24 days of Rust, but worth keeping in mind.
 
 To use `itertools`, add the following dependency declaration to `Cargo.toml`:

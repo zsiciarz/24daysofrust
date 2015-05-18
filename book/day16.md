@@ -1,5 +1,7 @@
 # Day 16 - FUSE filesystems, part 2
 
+> Relevancy: **outdated**
+
 We finished [part 1](https://siciarz.net/24-days-of-rust-fuse-filesystems-part-1/) with a working FUSE filesystem representing an empty directory. Today we will continue the story and finally add some files to the mix.
 
 Directory listing revisited

@@ -1,5 +1,7 @@
 # Day 10 - the glorious tau
 
+> Relevancy: **outdated**
+
 τ (*tau*) is one of the most important mathematical constants (if not *the* most important), relating circle's circumference to it's radius. See the [tau manifesto](http://www.tauday.com/tau-manifesto) for the long explanation if you're still an unbeliever. Can we use it in Rust? Of course, there's a [crate for that](https://crates.io/crates/tau)!
 
 Let's see this amazing number in full glory:

@@ -1,5 +1,7 @@
 # Day 11 - postgres
 
+> Relevancy: **outdated**
+
 Yes, I'm biased. [PostgreSQL](http://www.postgresql.org/) is my favorite SQL database and the [upcoming 9.4 release](http://www.postgresql.org/message-id/26295.1417708564@sss.pgh.pa.us?utm_source=postgresweekly&amp;utm_medium=email) makes me even more excited. There is already a pure Rust driver for PostgreSQL - the [postgres](https://crates.io/crates/postgres) crate which will be the subject of today's article.
 
 Connecting

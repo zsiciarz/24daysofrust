@@ -1,5 +1,7 @@
 # Day 8 - racer
 
+> Relevancy: **outdated**
+
 Welcome to the second week of 24 days of Rust! Hope you enjoy the articles so far. Today let me introduce you to [racer](https://github.com/phildawes/racer) - a code completion engine for Rust.
 
 As there is no proper Rust IDE (yet), most of us [Rustaceans](http://www.rustaceans.org/) use some code editor such as Vim, Emacs, Atom etc. However the out-of-the-box support for Rust is very limited - if you're lucky, your editor has syntax highlighting, but not much more. We'd love to have some sort of autocompletion to ease typing, and a "go to definition" command to quickly jump around the codebase.

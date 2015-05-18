@@ -1,5 +1,7 @@
 # Day 3 - csv
 
+> Relevancy: 1.0 stable
+
 Most of us programmers have encountered the [CSV format](http://en.wikipedia.org/wiki/Comma-separated_values) at some point of our career. Whether you cooperate with financial people, analyze some scientific data or simply allow the users of your web app to download a record of their activities, chances are you'll use some variation of CSV as the data format. Note that I said *some variation* - CSV itself isn't standardized and there are lots of quirks in different implementations.
 
 CSV libraries exist for lots of languages, making it a common format for interoperability (alongside XML or JSON) and sometimes preferred for data of a tabular nature. In the Rust ecosystem there is the [csv crate](https://crates.io/crates/csv) which will be the focus of this blog post.

@@ -1,5 +1,7 @@
 # Day 13 - uuid
 
+> Relevancy: **outdated**
+
 Writing the [Postgres article](https://siciarz.net/24-days-of-rust-postgres/) reminded me of one more cool thing in PostgreSQL - native support for the [UUID](http://www.postgresql.org/docs/9.4/static/datatype-uuid.html) type. The popular web framework Django [will soon get a UUID field](https://github.com/django/django/commit/ed7821231b7dbf34a6c8ca65be3b9bcbda4a0703), Rails [already support it](http://edgeguides.rubyonrails.org/active_record_postgresql.html#uuid). So what's the big deal?
 
 Simply put, using UUIDs can improve distributed systems by removing the need for a centralized ID generation. Let me quote [Andrzej Krzywda's justification](http://andrzejonsoftware.blogspot.com/2013/12/decentralise-id-generation.html):

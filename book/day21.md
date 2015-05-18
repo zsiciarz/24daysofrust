@@ -1,5 +1,7 @@
 # Day 21 - rust-crypto
 
+> Relevancy: **outdated**
+
 The [rust-crypto](https://crates.io/crates/rust-crypto) crate is a collection of a lot of cryptography primitives and algorithms. There are tools for calculating hashes, verifying data integrity, encryption  etc. One disclaimer - it hasn't had a proper security audit yet and although the algorithms are well known and researched, the library itself *might* have security bugs. But [which](http://heartbleed.com/) [one](https://www.mozilla.org/en-US/security/advisories/mfsa2014-73/) [doesn't](http://www.gnutls.org/security.html)?
 
 Cryptographic hashes

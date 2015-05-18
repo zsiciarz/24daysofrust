@@ -1,5 +1,7 @@
 # Day 4 - docopt
 
+> Relevancy: 1.0 stable (macros only on nightly)
+
 One of the few chores when building a commandline program is argument parsing, so that `myprogram --config=myfile.conf --verbose -o output.txt` makes sense. Some arguments come in short and long variants, some are optional and some are positional only. There are a lot of libraries for argument parsing, some are even included in the respective languages' distributions. In Rust's case there's the [getopts crate](https://crates.io/crates/getopts).
 
 The first thing a moderately savvy user will do is... no, not read the documentation, but run `myprogram -h` (or `--help`) to discover available options. `getopts` and other libraries can derive such help summary for you, saving your time and reducing duplication. But what if it was the other way round? You'd write the usage message, listing possible options, and the tool would build an argument parser from that. Enter [docopt](http://docopt.org/).

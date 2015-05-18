@@ -1,5 +1,7 @@
 # Day 6 - working with JSON
 
+> Relevancy: **outdated**
+
 [JSON](http://en.wikipedia.org/wiki/JSON) is a workhorse data format of the modern Web. Originating from the JavaScript world, it gained a lot of traction and at the moment it's usually the first choice of a Web developer for a data interchange format. Not only Web - once JavaScript-only, JSON support is now ubiquitous. A lot of languages ship with JSON parsers in the standard libraries, and when it's not the case, surely someone has already built a third party library. In case of Rust, JSON support comes out of the box in the [serialize::json](http://doc.rust-lang.org/serialize/json/) module.
 
 **Note**: in this article I deliberately do not focus on the Web, APIs, requests and so on. I mentioned JSON in a [previous post about hyper](http://siciarz.net/24-days-of-rust-hyper/) but now I don't care where did the JSON-encoded data come from or what to do with it later. Here I'm just going to show you a few practical tips - Rust has already a [quite extensive documentation](http://doc.rust-lang.org/serialize/json/) on the subject.

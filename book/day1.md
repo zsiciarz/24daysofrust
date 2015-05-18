@@ -1,5 +1,7 @@
 # Day 1 - Cargo and crates.io
 
+> Relevancy: 1.0 stable
+
 Inspired by Ollie Charles and his excellent [24 days of Hackage](https://ocharles.org.uk/blog/pages/2013-12-01-24-days-of-hackage.html) series, I'm going to try and introduce you to a number of Rust language features, useful libraries and cool projects built with Rust. In fact this is a learning opportunity for me too - as much as I love Rust, I'm just diving in. If you think I'm wrong or know an interesting library you want me to write about, feel free to comment!
 
 So let's start! As in the Haskell series by Ollie, where he [introduced Cabal](https://ocharles.org.uk/blog/posts/2012-12-01-24-days-of-hackage.html), the first post will briefly cover package management. For those of you coming from Python, Ruby or Node this may be a bit familiar. C++ does not have a dedicated package manager, so hopefully this is one of the selling points of Rust for people with such background.

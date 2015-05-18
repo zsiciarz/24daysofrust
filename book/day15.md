@@ -1,5 +1,7 @@
 # Day 15 - FUSE filesystems, part 1
 
+> Relevancy: **outdated**
+
 A traditional filesystem is typically implemented as a kernel module. However, some Unix-like operating systems (Linux, FreeBSD, Mac OS X and a few others) allow for userspace filesystems through a mechanism called [FUSE](http://en.wikipedia.org/wiki/Filesystem_in_Userspace). The [canonical FUSE library](http://fuse.sourceforge.net/) is written in C and there are some bindings from other languages ([Python](https://github.com/terencehonles/fusepy), [Ruby](https://github.com/lwoggardner/rfusefs) etc.)
 
 The [fuse crate](https://github.com/zargony/rust-fuse) is very interesting because it's a rewrite from C to Rust, leveraging many of Rust features unavailable in C. The only binding to libfuse is related to mounting and unmounting the filesystem, the rest is pure Rust.

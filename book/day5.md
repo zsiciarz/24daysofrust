@@ -1,5 +1,7 @@
 # Day 5 - hyper
 
+> Relevancy: 1.0 stable
+
 The state of HTTP libraries in Rust was a constant flux before 1.0. However it appears that a specific package won the hearts of Rust programmers: [hyper](https://crates.io/crates/hyper), which will be the subject of this chapter.
 
 I'm going to focus on using `hyper` only as a client, although the library contains also a server implementation. However with the advance of Rust web frameworks building on top of HTTP libraries, the programmers will focus less on developing servers and more on the clients. Consuming web APIs is a lot more common than writing new shiny servers. How can `hyper` help us?

@@ -1,5 +1,7 @@
 # Day 23 - calling Rust from other languages
 
+> Relevancy: **outdated**
+
 In this penultimate episode of the **24 days of Rust** article series we will focus on using Rust code from other languages. Since Rust libraries can expose a C API and calling conventions, using them isn't very different from using regular C libraries. A lot of programming languages have some kind of an [FFI](http://en.wikipedia.org/wiki/Foreign_function_interface) mechanism, allowing them to use libraries written in other language(s).  Let's see a few examples!
 
 Our Rust library

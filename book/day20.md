@@ -1,5 +1,7 @@
 # Day 20 - zeromq
 
+> Relevancy: **outdated**
+
 [ZeroMQ](http://zeromq.org/) is a language-independent messaging solution. It's not a full-fledged system such as for example [RabbitMQ](http://www.rabbitmq.com/), basically it's just a transport layer. From the programmer's perspective working with it doesn't differ much from ordinary sockets, but there's a lot of power hidden underneath. The [zeromq](https://github.com/zeromq/zmq.rs) crate is a native Rust implementation and while still lacking a lot of features, it is already usable today.
 
 Operational patterns

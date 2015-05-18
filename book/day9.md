@@ -1,5 +1,7 @@
 # Day 9 - anymap
 
+> Relevancy: **outdated**
+
 In this article we will focus on the [anymap](https://crates.io/crates/anymap) crate by [Chris Morgan](http://chrismorgan.info/) of `rust-http` and `teepee` fame. This crate provides the `AnyMap` type - a slightly peculiar, interesting container.
 
 The `AnyMap` type is different from a regular map. For example, a `HashMap` in Rust is a generic type parametrized by `K` - the type of keys and `V` - the type of values stored in map. (There's also a hasher parameter, but it's not relevant here.) Meanwhile, `AnyMap` itself is **not** a generic type. It uses a `HashMap` internally but we don't need to know that; conceptually, `AnyMap` maps from *types* to values. This means that for each and every type there can be at most one value contained in the mapping.

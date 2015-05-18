@@ -1,5 +1,7 @@
 # Day 2 - slow_primes
 
+> Relevancy: 1.0 stable
+
 When I start learning a new programming language, I like to code at least several solutions to [Project Euler](https://projecteuler.net/) problems. These are very math-oriented and may not be the best introduction to general purpose programming, but it's a start. Anyway, it's just fun to solve them! (...and way more fun to solve them in a fast way and not by brute force.)
 
 A lot of Project Euler problems involve prime numbers in some way. These include finding `n`th prime, efficient factorization or checking whether some curious number is prime or not. You could of course write these mathematical procedures yourself, which is also an educational activity. But I'm lazy. I set out to find some ready-made code and stumbled upon the [slow_primes](https://github.com/huonw/slow_primes) library by [Huon Wilson](http://huonw.github.io/). Incidentally this was the first external dependency I ever used in a Rust program, long before crates.io.
