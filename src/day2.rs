@@ -1,6 +1,6 @@
-extern crate slow_primes;
+extern crate primal;
 
-use slow_primes::Primes;
+use primal::Primes;
 
 fn num_divisors(n: usize, primes: &Primes) -> Option<usize> {
     match primes.factor(n) {
@@ -10,7 +10,7 @@ fn num_divisors(n: usize, primes: &Primes) -> Option<usize> {
 }
 
 fn main() {
-    println!("24 days of Rust - slow_primes (day 2)");
+    println!("24 days of Rust - primal (day 2)");
     let sieve = Primes::sieve(10000);
     let suspect = 5273;
     println!("{} is prime: {}", suspect, sieve.is_prime(suspect));

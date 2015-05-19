@@ -29,7 +29,7 @@ path = "src/main.rs"
 
 [dependencies]
 num = "~0.0.4"
-slow_primes = "~0.1.4"
+primal = "~0.1.4"
 ```
 
 Cargo can also run a test suite, generate documentation or upload your crate to the repository, but that's the topic for later.

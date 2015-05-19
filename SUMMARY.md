@@ -2,7 +2,7 @@ Summary
 =======
 
 * [Day 1 - Cargo and crates.io](book/day1.md)
-* [Day 2 - slow_primes](book/day2.md)
+* [Day 2 - primal](book/day2.md)
 * [Day 3 - csv](book/day3.md)
 * [Day 4 - docopt](book/day4.md)
 * [Day 5 - hyper](book/day5.md)
