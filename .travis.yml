@@ -1,4 +1,6 @@
 language: rust
+rust:
+    - nightly
 before_install:
     - sudo apt-get install -y libfuse-dev
 script:
