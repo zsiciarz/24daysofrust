@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="6" data-basepath=".." data-revision="Tue May 19 2015 13:13:23 GMT+0000 (UTC)">
+    <div class="book" data-level="6" data-basepath=".." data-revision="Tue May 19 2015 14:37:19 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,110 +531,90 @@
                     
                         <h1 id="day-6-working-with-json">Day 6 - working with JSON</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable (macros only on nightly)</p>
 </blockquote>
-<p><a href="http://en.wikipedia.org/wiki/JSON" target="_blank">JSON</a> is a workhorse data format of the modern Web. Originating from the JavaScript world, it gained a lot of traction and at the moment it&apos;s usually the first choice of a Web developer for a data interchange format. Not only Web - once JavaScript-only, JSON support is now ubiquitous. A lot of languages ship with JSON parsers in the standard libraries, and when it&apos;s not the case, surely someone has already built a third party library. In case of Rust, JSON support comes out of the box in the <a href="http://doc.rust-lang.org/serialize/json/" target="_blank">serialize::json</a> module.</p>
-<p><strong>Note</strong>: in this article I deliberately do not focus on the Web, APIs, requests and so on. I mentioned JSON in a <a href="http://siciarz.net/24-days-of-rust-hyper/" target="_blank">previous post about hyper</a> but now I don&apos;t care where did the JSON-encoded data come from or what to do with it later. Here I&apos;m just going to show you a few practical tips - Rust has already a <a href="http://doc.rust-lang.org/serialize/json/" target="_blank">quite extensive documentation</a> on the subject.</p>
+<p><a href="http://en.wikipedia.org/wiki/JSON" target="_blank">JSON</a> is a workhorse data format of the modern Web. Originating from the JavaScript world, it gained a lot of traction and at the moment it&apos;s usually the first choice of a Web developer for a data interchange format. Not only Web - once JavaScript-only, JSON support is now ubiquitous. A lot of languages ship with JSON parsers in the standard libraries, and when it&apos;s not the case, surely someone has already built a third party library. In case of Rust, JSON support comes out in the <a href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/index.html" target="_blank">rustc_serialize::json</a> module.</p>
+<p><strong>Note</strong>: in this article I deliberately do not focus on the Web, APIs, requests and so on. I mentioned JSON in a <a href="http://siciarz.net/24-days-of-rust-hyper/" target="_blank">previous post about hyper</a> but now I don&apos;t care where did the JSON-encoded data come from or what to do with it later. Here I&apos;m just going to show you a few practical tips.</p>
 <p>Slightly offtopic: I&apos;m writing this blogpost while getting ready to coach a group of fantastic women at <a href="http://djangogirls.org/" target="_blank">Django Girls</a> in &#x141;&#xF3;d&#x17A;, Poland. If you&apos;re a woman interested in learning programming (or know such girls) check out if there&apos;s a Django Girls workshop near you! The workshops focus on basic Python, Django and web technologies, but the general idea is to get the attendees genuinely interested in programming and empowered to create.</p>
 <p>That said, now back to JSON and Rust.</p>
 <h2 id="primitives">Primitives</h2>
 <p>A lot of Rust types serialize to JSON just as you would expect. Note that <code>encode()</code> immutably borrows its argument:</p>
-<pre><code>:::rust
-extern crate serialize;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
 
-use serialize::json;
+<span class="hljs-keyword">use</span> rustc_serialize::json;
 
-fn main() {
-    println!(&quot;{}&quot;, json::encode(&amp;amp;42i));
-    println!(&quot;{}&quot;, json::encode(&amp;amp;vec![&quot;to&quot;, &quot;be&quot;, &quot;or&quot;, &quot;not&quot;, &quot;to&quot;, &quot;be&quot;]));
-    println!(&quot;{}&quot;, json::encode(&amp;amp;Some(true)));
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-number">42</span>));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>, <span class="hljs-string">&quot;or&quot;</span>, <span class="hljs-string">&quot;not&quot;</span>, <span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>]));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;Some(<span class="hljs-keyword">true</span>)));
 }
-</code></pre><p><code>Option&lt;T&gt;</code> maps to the encoding of <code>value</code> itself if it is a <code>Some(value)</code> while <code>None</code> maps to <code>null</code>.</p>
+</code></pre>
+<p><code>Option&lt;T&gt;</code> maps to the encoding of <code>value</code> itself if it is a <code>Some(value)</code> while <code>None</code> maps to <code>null</code>.</p>
 <h2 id="automatic-de-serialization">Automatic (de)serialization</h2>
-<p>In my earlier <a href="https://siciarz.net/24-days-of-rust-csv/" target="_blank">article on CSV</a> I mentioned the <code>Encodable</code> and <code>Decodable</code> traits. Here&apos;s an example with a nested struct:</p>
-<pre><code>:::rust
-use serialize::{Decodable, Encodable, json};
+<p>In the <a href="day3.html">chapter on CSV</a> I mentioned the <code>RustcEncodable</code> and <code>RustcDecodable</code> traits. Here&apos;s an example with a nested struct:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> rustc_serialize::Encodable;
+<span class="hljs-keyword">use</span> rustc_serialize::json::{<span class="hljs-keyword">self</span>, Encoder};
 
-#[deriving(Decodable, Encodable)]
-struct Photo {
-    url: String,
-    dimensions: (uint, uint),
-}
-
-#[deriving(Decodable, Encodable)]
-struct User {
-    name: String,
-    post_count: uint,
-    likes_burgers: bool,
-    avatar: Option&lt;Photo&gt;,
-}
-
-let user = User {
-    name: &quot;Zbyszek&quot;.to_string(),
-    post_count: 100u,
-    likes_burgers: true,
+<span class="hljs-keyword">let</span> user = User {
+    name: <span class="hljs-string">&quot;Zbyszek&quot;</span>.to_string(),
+    post_count: <span class="hljs-number">100u32</span>,
+    likes_burgers: <span class="hljs-keyword">true</span>,
     avatar: Some(Photo {
-        url: &quot;http://lorempixel.com/160/160/&quot;.to_string(),
-        dimensions: (160u, 160u),
+        url: <span class="hljs-string">&quot;http://lorempixel.com/160/160/&quot;</span>.to_string(),
+        dimensions: (<span class="hljs-number">160u32</span>, <span class="hljs-number">160u32</span>),
     }),
 };
-println!(&quot;{}&quot;, json::encode(&amp;amp;user));
-// {&quot;name&quot;:&quot;Zbyszek&quot;,&quot;post_count&quot;:100,&quot;likes_burgers&quot;:true,&quot;avatar&quot;:{&quot;url&quot;:&quot;http://lorempixel.com/160/160/&quot;,&quot;dimensions&quot;:[160,160]}}
-</code></pre><h2 id="pretty-printing">Pretty printing</h2>
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;user));
+<span class="hljs-comment">// Ok(&quot;{\&quot;name\&quot;:\&quot;Zbyszek\&quot;,\&quot;post_count\&quot;:100,\&quot;likes_burgers\&quot;:true,\&quot;avatar\&quot;:{\&quot;url\&quot;:\&quot;http://lorempixel.com/160/160/\&quot;,\&quot;dimensions\&quot;:[160,160]}}&quot;)</span>
+</code></pre>
+<h2 id="pretty-printing">Pretty printing</h2>
 <p>The <code>json::encode()</code> doesn&apos;t care for readability of it&apos;s output. Although the JSON it emits is correct and machine-readable, there are no newlines or indents making it hard for a human to debug. Pretty-printing is a little bit more complex than just one function call, but not too complicated:</p>
-<pre><code>:::rust
-use serialize::json::PrettyEncoder;
-
-let mut buffer: Vec&lt;u8&gt; = Vec::new();
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> rustc_serialize::json::{<span class="hljs-keyword">self</span>, Encoder};
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> encoded = String::new();
 {
-    let mut encoder = PrettyEncoder::new(&amp;amp;mut buffer);
-    user.encode(&amp;amp;mut encoder).ok().expect(&quot;JSON encode error&quot;);
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> encoder = Encoder::new_pretty(&amp;<span class="hljs-keyword">mut</span> encoded);
+    user.encode(&amp;<span class="hljs-keyword">mut</span> encoder).ok().expect(<span class="hljs-string">&quot;JSON encode error&quot;</span>);
 }
-let encoded = String::from_utf8(buffer).unwrap();
-println!(&quot;{}&quot;, encoded);
-</code></pre><p>You&apos;ll need a <code>PrettyEncoder</code> which requires a <a href="http://doc.rust-lang.org/std/io/trait.Writer.html" target="_blank">Writer</a>. Fortunately for us, <code>Vec&lt;u8&gt;</code> (a vector of bytes) implements this trait. Note the explicit scope in the code above. The encoder mutably borrows the buffer and if I didn&apos;t do the scope trick, compilation would fail on the <code>from_utf8</code> call. (You can&apos;t immutably borrow a value which is mutably borrowed at that time.) So in the code above mutable borrow ends when the encoder goes out of scope.</p>
-<pre><code>:::rust
-let decoded: User = json::decode(incoming_request).unwrap();
-println!(&quot;My name is {} and I {} burgers&quot;,
-    decoded.name, if decoded.likes_burgers { &quot;love&quot; } else { &quot;don&apos;t like&quot; });
-assert!(decoded.avatar.is_none());
-</code></pre><p>As you cen see, decoding is also pretty easy. But what happens if we don&apos;t know all of the fields in advance? We can use another function in the <code>json</code> module - <code>from_str()</code>. The difference between <code>from_str()</code> and <code>decode()</code> is that the latter may return some struct implementing <code>Decodable</code> while the former returns a <a href="http://doc.rust-lang.org/serialize/json/enum.Json.html" target="_blank">Json</a> value. This type has a few methods of its own, including <code>find()</code>. See the example below:</p>
-<pre><code>:::rust
-let new_request = &quot;{\&quot;id\&quot;:64,\&quot;title\&quot;:\&quot;24days\&quot;,\&quot;stats\&quot;:{\&quot;pageviews\&quot;:1500}}&quot;;
-if let Ok(request_json) = json::from_str(new_request) {
-    if let Some(ref stats) = request_json.find(&quot;stats&quot;) {
-        if let Some(ref pageviews) = stats.find(&quot;pageviews&quot;) {
-            println!(&quot;Pageviews: {}&quot;, pageviews);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, encoded);
+</code></pre>
+<h2 id="decoding">Decoding</h2>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> incoming_request = <span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;John\&quot;,\&quot;post_count\&quot;:2,\&quot;likes_burgers\&quot;:false,\&quot;avatar\&quot;:null}&quot;</span>;
+<span class="hljs-keyword">let</span> decoded: User = json::decode(incoming_request).unwrap();
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;My name is {} and I {} burgers&quot;</span>,
+    decoded.name, <span class="hljs-keyword">if</span> decoded.likes_burgers { <span class="hljs-string">&quot;love&quot;</span> } <span class="hljs-keyword">else</span> { <span class="hljs-string">&quot;don&apos;t like&quot;</span> });
+<span class="hljs-built_in">assert!</span>(decoded.avatar.is_none());
+</code></pre>
+<p>As you cen see, decoding is also pretty easy. But what happens if we don&apos;t know all of the fields in advance? We can use another function in the <code>json</code> module - <code>from_str()</code>. The difference between <code>from_str()</code> and <code>decode()</code> is that the latter may return some struct implementing <code>RustcDecodable</code> while the former returns a <a href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/enum.Json.html" target="_blank">Json</a> value. This type has a few methods of its own, including <code>find()</code>. See the example below:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> new_request = <span class="hljs-string">&quot;{\&quot;id\&quot;:64,\&quot;title\&quot;:\&quot;24days\&quot;,\&quot;stats\&quot;:{\&quot;pageviews\&quot;:1500}}&quot;</span>;
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Ok(request_json) = json::Json::from_str(new_request) {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Some(<span class="hljs-keyword">ref</span> stats) = request_json.find(<span class="hljs-string">&quot;stats&quot;</span>) {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Some(<span class="hljs-keyword">ref</span> pageviews) = stats.find(<span class="hljs-string">&quot;pageviews&quot;</span>) {
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Pageviews: {}&quot;</span>, pageviews);
         }
     }
 }
-</code></pre><p>We&apos;re using the <a href="https://github.com/rust-lang/rfcs/pull/160" target="_blank">if let</a> language construct which often simplifies pattern matches where we care for only one branch and do nothing if the expression doesn&apos;t match. However, at the moment it is hidden behind a feature gate, so you&apos;ll need to add a <code>#![feature(if_let)]</code> line in your crate root.</p>
+</code></pre>
+<p>We&apos;re using the <a href="http://doc.rust-lang.org/book/if-let.html" target="_blank">if let</a> language construct which often simplifies pattern matches where we care for only one branch and do nothing if the expression doesn&apos;t match.</p>
 <h2 id="the-json-macro">The json! macro</h2>
-<p>There&apos;s one more thing I wanted to show you today. You can embed JSON-like literals directly in your Rust code with the help of the <a href="https://github.com/tomjakubowski/json_macros" target="_blank">json_macros</a> crate. This is a compiler extension that allows for some nice syntactic sugar like below:</p>
-<pre><code>:::rust
-#![feature(phase)]
-#[phase(plugin)]
-extern crate json_macros;
+<blockquote>
+<p><strong>Note:</strong> syntax extensions work only on nightly</p>
+</blockquote>
+<p>There&apos;s one more thing I wanted to show you today. You can embed JSON-like literals directly in your Rust code with the help of the <a href="https://crates.io/crates/json_macros" target="_blank">json_macros</a> crate. This is a compiler extension that allows for some nice syntactic sugar like below:</p>
+<pre><code class="lang-rust">#![feature(plugin)]
+#![plugin(json_macros)]
 
-let config = json!({
-    &quot;hostname&quot;: &quot;localhost&quot;,
-    &quot;port&quot;: 6543,
-    &quot;allowed_methods&quot;: [&quot;get&quot;, &quot;post&quot;],
-    &quot;limits&quot;: {
-        &quot;bandwidth&quot;: (500 * 16u),
-        &quot;rate&quot;: null
+<span class="hljs-keyword">let</span> config = json!({
+    <span class="hljs-string">&quot;hostname&quot;</span>: <span class="hljs-string">&quot;localhost&quot;</span>,
+    <span class="hljs-string">&quot;port&quot;</span>: <span class="hljs-number">6543</span>,
+    <span class="hljs-string">&quot;allowed_methods&quot;</span>: [<span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;post&quot;</span>],
+    <span class="hljs-string">&quot;limits&quot;</span>: {
+        <span class="hljs-string">&quot;bandwidth&quot;</span>: (<span class="hljs-number">500</span> * <span class="hljs-number">16</span>),
+        <span class="hljs-string">&quot;rate&quot;</span>: null
     }
 });
-println!(&quot;Configuration: {}&quot;, config);
-println!(&quot;Bandwidth: {}&quot;, config.search(&quot;bandwidth&quot;).unwrap());
-</code></pre><h2 id="see-also">See also</h2>
-<ul>
-<li>JSON serialization in Rust, <a href="http://valve.github.io/blog/2014/08/25/json-serialization-in-rust-part-1/" target="_blank">part 1</a> and <a href="http://valve.github.io/blog/2014/08/26/json-serialization-in-rust-part-2/" target="_blank">part 2</a> - worth reading for an in-depth look on how to implement <code>Encodable</code>/<code>Decodable</code> yourself</li>
-</ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly and json_macros 0.0.4.
-</small></p>
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Configuration: {}&quot;</span>, config);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Bandwidth: {}&quot;</span>, config.search(<span class="hljs-string">&quot;bandwidth&quot;</span>).unwrap());
+</code></pre>
 
                     
                     </section>
