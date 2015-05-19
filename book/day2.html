@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
-        <title>Day 2 - slow_primes | 24daysofrust</title>
+        <title>Day 2 - primal | 24daysofrust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.0.1">
@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="2" data-basepath=".." data-revision="Mon May 18 2015 07:10:45 GMT+0000 (UTC)">
+    <div class="book" data-level="2" data-basepath=".." data-revision="Tue May 19 2015 13:13:23 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -89,7 +89,7 @@
                         
                             <b>2.</b>
                         
-                        Day 2 - slow_primes
+                        Day 2 - primal
                     </a>
                 
             
@@ -529,22 +529,18 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-2-slow-primes">Day 2 - slow_primes</h1>
+                        <h1 id="day-2-primal">Day 2 - primal</h1>
 <blockquote>
 <p>Relevancy: 1.0 stable</p>
 </blockquote>
 <p>When I start learning a new programming language, I like to code at least several solutions to <a href="https://projecteuler.net/" target="_blank">Project Euler</a> problems. These are very math-oriented and may not be the best introduction to general purpose programming, but it&apos;s a start. Anyway, it&apos;s just fun to solve them! (...and way more fun to solve them in a fast way and not by brute force.)</p>
-<p>A lot of Project Euler problems involve prime numbers in some way. These include finding <code>n</code>th prime, efficient factorization or checking whether some curious number is prime or not. You could of course write these mathematical procedures yourself, which is also an educational activity. But I&apos;m lazy. I set out to find some ready-made code and stumbled upon the <a href="https://github.com/huonw/slow_primes" target="_blank">slow_primes</a> library by <a href="http://huonw.github.io/" target="_blank">Huon Wilson</a>. Incidentally this was the first external dependency I ever used in a Rust program, long before crates.io.</p>
-<p>By the way don&apos;t let the name fool you, it&apos;s not that slow. As Huon says:</p>
-<blockquote>
-<p>Despite the name, it can sieve the primes up to 10<sup>9</sup> in about 5 seconds.</p>
-</blockquote>
+<p>A lot of Project Euler problems involve prime numbers in some way. These include finding <code>n</code>th prime, efficient factorization or checking whether some curious number is prime or not. You could of course write these mathematical procedures yourself, which is also an educational activity. But I&apos;m lazy. I set out to find some ready-made code and stumbled upon the <a href="https://github.com/huonw/primal" target="_blank">primal</a> library by <a href="http://huonw.github.io/" target="_blank">Huon Wilson</a>. Incidentally this was the first external dependency I ever used in a Rust program, long before crates.io (back when it was called <code>slow_primes</code>).</p>
 <p>So let&apos;s see what&apos;s in there, shall we?</p>
 <h2 id="prime-sieve">Prime sieve</h2>
-<p>The first thing to do is to create a <strong>sieve</strong> (see <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes" target="_blank">Wikipedia on Sieve of Eratosthenes</a> for a detailed explanation of the algorithm). We need to set an upper bound on the sieve. There&apos;s a clever way to estimate that bound (see the docs for <a href="http://huonw.github.io/slow_primes/slow_primes/fn.estimate_nth_prime.html" target="_blank">estimate_nth_prime</a>) but for simplicity I&apos;ll hardcode it now to 10000.</p>
+<p>The first thing to do is to create a <strong>sieve</strong> (see <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes" target="_blank">Wikipedia on Sieve of Eratosthenes</a> for a detailed explanation of the algorithm). We need to set an upper bound on the sieve. There&apos;s a clever way to estimate that bound (see the docs for <a href="http://huonw.github.io/primal/primal/fn.estimate_nth_prime.html" target="_blank">estimate_nth_prime</a>) but for simplicity I&apos;ll hardcode it now to 10000.</p>
 <p>Let&apos;s actually check some numbers for primality:</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> slow_primes;
-<span class="hljs-keyword">use</span> slow_primes::Primes;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> primal;
+<span class="hljs-keyword">use</span> primal::Primes;
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
     <span class="hljs-keyword">let</span> sieve = Primes::sieve(<span class="hljs-number">10000</span>);
@@ -563,7 +559,7 @@
 </code></pre>
 <p>The <code>primes()</code> method returns an iterator over all prime numbers generated by this sieve (2, 3, 5, 7...). Iterators in Rust have a lot of useful methods; the <code>nth()</code> method skips over <code>n</code> initial iterations, returning the <code>n</code>th element (or <code>None</code> if we exhausted the iterator). The argument is zero-based, so to find 1000th prime we need to pass 999 to <code>nth()</code>.</p>
 <h2 id="factorization">Factorization</h2>
-<p>Factorization is a way to decompose a number into its divisors. For example, <code>2610 = 2 * 3 * 3 * 5 * 29</code>. Here&apos;s how we can find it out with <code>slow_primes</code> API:</p>
+<p>Factorization is a way to decompose a number into its divisors. For example, <code>2610 = 2 * 3 * 3 * 5 * 29</code>. Here&apos;s how we can find it out with <code>primal</code> API:</p>
 <pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, sieve.factor(<span class="hljs-number">2610</span>));
 </code></pre>
 <p>When we run this, we&apos;ll get:</p>
@@ -594,10 +590,6 @@ Ok([(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>), (<
 <li><a href="https://gmplib.org/manual/Algorithms.html#Algorithms" target="_blank">GMP algorithms page</a></li>
 <li><a href="https://projecteuler.net/problem=50" target="_blank">consecutive prime sum</a> - an interesting Project Euler problem</li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 1.1.0-nightly and slow_primes 0.1.12.
-</small></p>
 
                     
                     </section>
