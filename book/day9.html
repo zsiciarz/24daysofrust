@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="9" data-basepath=".." data-revision="Fri May 29 2015 19:39:38 GMT+0000 (UTC)">
+    <div class="book" data-level="9" data-basepath=".." data-revision="Fri May 29 2015 19:51:33 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,7 +531,7 @@
                     
                         <h1 id="day-9-anymap">Day 9 - anymap</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
 <p>In this article we will focus on the <a href="https://crates.io/crates/anymap" target="_blank">anymap</a> crate by <a href="http://chrismorgan.info/" target="_blank">Chris Morgan</a> of <code>rust-http</code> and <code>teepee</code> fame. This crate provides the <code>AnyMap</code> type - a slightly peculiar, interesting container.</p>
 <p>The <code>AnyMap</code> type is different from a regular map. For example, a <code>HashMap</code> in Rust is a generic type parametrized by <code>K</code> - the type of keys and <code>V</code> - the type of values stored in map. (There&apos;s also a hasher parameter, but it&apos;s not relevant here.) Meanwhile, <code>AnyMap</code> itself is <strong>not</strong> a generic type. It uses a <code>HashMap</code> internally but we don&apos;t need to know that; conceptually, <code>AnyMap</code> maps from <em>types</em> to values. This means that for each and every type there can be at most one value contained in the mapping.</p>
@@ -540,64 +540,60 @@
 <p>It&#x2019;s typically something like map[string]interface{} and is accessed with arbitrary strings which may clash and type assertions which are a little unwieldy and must be used very carefully. (Personally I would consider that it is just asking for things to blow up in your face.) In a language like Go, lacking in generics, this is the best that can be done; such a thing cannot possibly be made safe without generics.</p>
 </blockquote>
 <p>We can use <code>AnyMap</code> together with the <a href="http://aturon.github.io/features/types/newtype.html" target="_blank">newtype idiom</a> to create a strongly typed configuration holder.</p>
-<pre><code>:::rust
-extern crate anymap;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> anymap;
 
-use std::io::net::ip::IpAddr;
-use anymap::AnyMap;
+<span class="hljs-keyword">use</span> std::net::Ipv4Addr;
+<span class="hljs-keyword">use</span> anymap::AnyMap;
 
-#[deriving(Show)]
-enum HostAddress {
+<span class="hljs-preprocessor">#[derive(Debug)]</span>
+<span class="hljs-keyword">enum</span> <span class="hljs-title">HostAddress</span> {
     DomainName(String),
-    Ip(IpAddr),
+    Ip(Ipv4Addr),
 }
 
-#[deriving(Show)]
-struct Port(u32);
+<span class="hljs-preprocessor">#[derive(Debug)]</span>
+<span class="hljs-keyword">struct</span> Port(<span class="hljs-keyword">u32</span>);
 
-#[deriving(Show)]
-struct ConnectionLimit(u32);
+<span class="hljs-preprocessor">#[derive(Debug)]</span>
+<span class="hljs-keyword">struct</span> ConnectionLimit(<span class="hljs-keyword">u32</span>);
 
-fn main() {
-    println!(&quot;24 days of Rust - anymap (day 9)&quot;);
-    let mut config = AnyMap::new();
-    config.insert(HostAddress::DomainName(&quot;siciarz.net&quot;.to_string()));
-    config.insert(Port(666));
-    config.insert(ConnectionLimit(32));
-    println!(&quot;{}&quot;, config.get::&lt;HostAddress&gt;());
-    println!(&quot;{}&quot;, config.get::&lt;Port&gt;());
-    assert!(config.get::&lt;String&gt;().is_none());
-    assert!(config.get::&lt;u32&gt;().is_none());
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> config = AnyMap::new();
+    config.insert(HostAddress::DomainName(<span class="hljs-string">&quot;siciarz.net&quot;</span>.to_string()));
+    config.insert(Port(<span class="hljs-number">666</span>));
+    config.insert(ConnectionLimit(<span class="hljs-number">32</span>));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, config.get::&lt;HostAddress&gt;());
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, config.get::&lt;Port&gt;());
+    <span class="hljs-built_in">assert!</span>(config.get::&lt;String&gt;().is_none());
+    <span class="hljs-built_in">assert!</span>(config.get::&lt;<span class="hljs-keyword">u32</span>&gt;().is_none());
 }
-</code></pre><p>The output:</p>
-<pre><code>:::sh
-$ cargo run
-Some(DomainName(siciarz.net))
-Some(Port(666))
-</code></pre><p>Here the <code>Port</code> and <code>ConnectionLimit</code> types are abstractions over the underlying integer (with no overhead at runtime!). It is also impossible to mix these two - they are totally different types (not aliases to <code>u32</code>) and you can&apos;t pass a <code>Port</code> value where a <code>ConnectionLimit</code> is expected. This fact suggests that we can use these as separate entries in the <code>AnyMap</code>. And that is correct, as shown in the example above. It&apos;s also worth noting that inserting a value wrapped in a newtype does not make the original type appear in the mapping (seems obvious, I guess).</p>
+</code></pre>
+<p>The output:</p>
+<pre><code class="lang-sh">$ cargo run
+Some(DomainName(<span class="hljs-string">&quot;siciarz.net&quot;</span>))
+Some(Port(<span class="hljs-number">666</span>))
+</code></pre>
+<p>Here the <code>Port</code> and <code>ConnectionLimit</code> types are abstractions over the underlying integer (with no overhead at runtime!). It is also impossible to mix these two - they are totally different types (not aliases to <code>u32</code>) and you can&apos;t pass a <code>Port</code> value where a <code>ConnectionLimit</code> is expected. This fact suggests that we can use these as separate entries in the <code>AnyMap</code>. And that is correct, as shown in the example above. It&apos;s also worth noting that inserting a value wrapped in a newtype does not make the original type appear in the mapping (seems obvious, I guess).</p>
 <p>When we insert another value of a type that already exists in the <code>AnyMap</code>, the previous value gets overwritten. Even if this is another enum variant - as enum variants are values grouped under one type - and remember we think of <code>AnyMap</code> as mapping from <em>types</em> to values.</p>
-<pre><code>:::rust
-config.insert(HostAddress::Ip(IpAddr::Ipv4Addr(127, 0, 0, 1)));
-println!(&quot;{}&quot;, config.get::&lt;HostAddress&gt;());
-</code></pre><!-- -->
-<pre><code>:::sh
-$ cargo run
-Some(Ip(127.0.0.1))
-</code></pre><p>Generic types are considered different for every type parameter, so for example every <code>Option</code>-al type gets a separate entry in the <code>AnyMap</code>.</p>
-<pre><code>:::rust
-let dummy: Option&lt;f32&gt; = None;
+<pre><code class="lang-rust">config.insert(HostAddress::Ip(Ipv4Addr::new(<span class="hljs-number">127</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)));
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, config.get::&lt;HostAddress&gt;());
+</code></pre>
+<pre><code class="lang-sh">$ cargo run
+Some(Ip(<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>))
+</code></pre>
+<p>Generic types are considered different for every type parameter, so for example every <code>Option</code>-al type gets a separate entry in the <code>AnyMap</code>.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">if</span> !config.contains::&lt;Option&lt;<span class="hljs-keyword">f32</span>&gt;&gt;() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;There&apos;s no optional 32-bit float in the configuration...&quot;</span>);
+}
+<span class="hljs-keyword">let</span> dummy: Option&lt;<span class="hljs-keyword">f32</span>&gt; = None;
 config.insert(dummy);
-if config.contains::&lt;Option&lt;f32&gt;&gt;() {
-    println!(&quot;There&apos;s an optional 32-bit float in the configuration...&quot;);
+<span class="hljs-keyword">if</span> config.contains::&lt;Option&lt;<span class="hljs-keyword">f32</span>&gt;&gt;() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;There&apos;s an optional 32-bit float in the configuration...&quot;</span>);
 }
-if !config.contains::&lt;Option&lt;f64&gt;&gt;() {
-    println!(&quot;...but not an optional 64-bit float.&quot;);
+<span class="hljs-keyword">if</span> !config.contains::&lt;Option&lt;<span class="hljs-keyword">f64</span>&gt;&gt;() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;...but not an optional 64-bit float.&quot;</span>);
 }
-</code></pre><p><strong>PSA</strong>: Starting today all the examples are in the <a href="https://github.com/zsiciarz/24daysofrust" target="_blank">24daysofrust</a> repository on GitHub. The code is tested on Travis CI so I&apos;ll try to keep it up to date with changes in Rust and the libraries.</p>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly and anymap 0.9.2.
-</small></p>
+</code></pre>
 
                     
                     </section>

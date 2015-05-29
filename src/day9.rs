@@ -27,8 +27,8 @@ fn main() {
     assert!(config.get::<u32>().is_none());
     config.insert(HostAddress::Ip(Ipv4Addr::new(127, 0, 0, 1)));
     println!("{:?}", config.get::<HostAddress>());
-    if config.contains::<Option<f32>>() {
-        println!("There's no optional float in the configuration...");
+    if !config.contains::<Option<f32>>() {
+        println!("There's no optional 32-bit float in the configuration...");
     }
     let dummy: Option<f32> = None;
     config.insert(dummy);
