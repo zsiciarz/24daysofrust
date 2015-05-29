@@ -1,6 +1,6 @@
 # Day 9 - anymap
 
-> Relevancy: **outdated**
+> Relevancy: 1.0 stable
 
 In this article we will focus on the [anymap](https://crates.io/crates/anymap) crate by [Chris Morgan](http://chrismorgan.info/) of `rust-http` and `teepee` fame. This crate provides the `AnyMap` type - a slightly peculiar, interesting container.
 
@@ -12,74 +12,70 @@ You may ask - why would I ever need something that holds just one value of each 
 
 We can use `AnyMap` together with the [newtype idiom](http://aturon.github.io/features/types/newtype.html) to create a strongly typed configuration holder.
 
-    :::rust
-    extern crate anymap;
+```rust
+extern crate anymap;
 
-    use std::io::net::ip::IpAddr;
-    use anymap::AnyMap;
+use std::net::Ipv4Addr;
+use anymap::AnyMap;
 
-    #[deriving(Show)]
-    enum HostAddress {
-        DomainName(String),
-        Ip(IpAddr),
-    }
+#[derive(Debug)]
+enum HostAddress {
+    DomainName(String),
+    Ip(Ipv4Addr),
+}
 
-    #[deriving(Show)]
-    struct Port(u32);
+#[derive(Debug)]
+struct Port(u32);
 
-    #[deriving(Show)]
-    struct ConnectionLimit(u32);
+#[derive(Debug)]
+struct ConnectionLimit(u32);
 
-    fn main() {
-        println!("24 days of Rust - anymap (day 9)");
-        let mut config = AnyMap::new();
-        config.insert(HostAddress::DomainName("siciarz.net".to_string()));
-        config.insert(Port(666));
-        config.insert(ConnectionLimit(32));
-        println!("{}", config.get::<HostAddress>());
-        println!("{}", config.get::<Port>());
-        assert!(config.get::<String>().is_none());
-        assert!(config.get::<u32>().is_none());
-    }
+fn main() {
+    let mut config = AnyMap::new();
+    config.insert(HostAddress::DomainName("siciarz.net".to_string()));
+    config.insert(Port(666));
+    config.insert(ConnectionLimit(32));
+    println!("{:?}", config.get::<HostAddress>());
+    println!("{:?}", config.get::<Port>());
+    assert!(config.get::<String>().is_none());
+    assert!(config.get::<u32>().is_none());
+}
+```
 
 The output:
 
-    :::sh
-    $ cargo run
-    Some(DomainName(siciarz.net))
-    Some(Port(666))
+```sh
+$ cargo run
+Some(DomainName("siciarz.net"))
+Some(Port(666))
+```
 
 Here the `Port` and `ConnectionLimit` types are abstractions over the underlying integer (with no overhead at runtime!). It is also impossible to mix these two - they are totally different types (not aliases to `u32`) and you can't pass a `Port` value where a `ConnectionLimit` is expected. This fact suggests that we can use these as separate entries in the `AnyMap`. And that is correct, as shown in the example above. It's also worth noting that inserting a value wrapped in a newtype does not make the original type appear in the mapping (seems obvious, I guess).
 
 When we insert another value of a type that already exists in the `AnyMap`, the previous value gets overwritten. Even if this is another enum variant - as enum variants are values grouped under one type - and remember we think of `AnyMap` as mapping from *types* to values.
 
-    :::rust
-    config.insert(HostAddress::Ip(IpAddr::Ipv4Addr(127, 0, 0, 1)));
-    println!("{}", config.get::<HostAddress>());
+```rust
+config.insert(HostAddress::Ip(Ipv4Addr::new(127, 0, 0, 1)));
+println!("{:?}", config.get::<HostAddress>());
+```
 
-<!-- -->
-
-    :::sh
-    $ cargo run
-    Some(Ip(127.0.0.1))
+```sh
+$ cargo run
+Some(Ip(127.0.0.1))
+```
 
 Generic types are considered different for every type parameter, so for example every `Option`-al type gets a separate entry in the `AnyMap`.
 
-    :::rust
-    let dummy: Option<f32> = None;
-    config.insert(dummy);
-    if config.contains::<Option<f32>>() {
-        println!("There's an optional 32-bit float in the configuration...");
-    }
-    if !config.contains::<Option<f64>>() {
-        println!("...but not an optional 64-bit float.");
-    }
-
-**PSA**: Starting today all the examples are in the [24daysofrust](https://github.com/zsiciarz/24daysofrust) repository on GitHub. The code is tested on Travis CI so I'll try to keep it up to date with changes in Rust and the libraries.
-
-----
-
-<small>
-Code examples in this article were built with rustc 0.13.0-nightly and anymap 0.9.2.
-</small>
-
+```rust
+if config.contains::<Option<f32>>() {
+    println!("There's no optional float in the configuration...");
+}
+let dummy: Option<f32> = None;
+config.insert(dummy);
+if config.contains::<Option<f32>>() {
+    println!("There's an optional 32-bit float in the configuration...");
+}
+if !config.contains::<Option<f64>>() {
+    println!("...but not an optional 64-bit float.");
+}
+```
