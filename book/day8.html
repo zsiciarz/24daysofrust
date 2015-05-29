@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="8" data-basepath=".." data-revision="Wed May 27 2015 10:10:25 GMT+0000 (UTC)">
+    <div class="book" data-level="8" data-basepath=".." data-revision="Fri May 29 2015 19:39:38 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,32 +531,33 @@
                     
                         <h1 id="day-8-racer">Day 8 - racer</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
 <p>Welcome to the second week of 24 days of Rust! Hope you enjoy the articles so far. Today let me introduce you to <a href="https://github.com/phildawes/racer" target="_blank">racer</a> - a code completion engine for Rust.</p>
 <p>As there is no proper Rust IDE (yet), most of us <a href="http://www.rustaceans.org/" target="_blank">Rustaceans</a> use some code editor such as Vim, Emacs, Atom etc. However the out-of-the-box support for Rust is very limited - if you&apos;re lucky, your editor has syntax highlighting, but not much more. We&apos;d love to have some sort of autocompletion to ease typing, and a &quot;go to definition&quot; command to quickly jump around the codebase.</p>
 <p><code>racer</code> is a tool (still in development) to do just that. Follow the <a href="https://github.com/phildawes/racer" target="_blank">instructions in readme</a> to compile it. You&apos;ll need to have the source code for Rust compiler and standard libraries on your machine. Fortunately it&apos;s just a <code>git clone</code> away:</p>
-<pre><code>:::sh
-$ git clone https://github.com/rust-lang/rust.git $HOME/rust
-$ export RUST_SRC_PATH=$HOME/rust/src
-</code></pre><p>The second line sets an environment variable that <code>racer</code> uses to find Rust sources. You can put that line in your <code>.bashrc</code>, <code>.zshrc</code> or whatever startup file your shell uses.</p>
+<pre><code class="lang-sh">$ git <span class="hljs-built_in">clone</span> https://github.com/rust-lang/rust.git <span class="hljs-variable">$HOME</span>/rust
+$ <span class="hljs-built_in">export</span> RUST_SRC_PATH=<span class="hljs-variable">$HOME</span>/rust/src
+</code></pre>
+<p>The second line sets an environment variable that <code>racer</code> uses to find Rust sources. You can put that line in your <code>.bashrc</code>, <code>.zshrc</code> or whatever startup file your shell uses.</p>
 <p>The <code>racer</code> executable has a few subcommands (you can see the full list by running <code>racer</code> with no arguments). Let&apos;s take a look at the most important ones.</p>
 <h2 id="completion-engine">Completion engine</h2>
 <p>The <code>racer complete</code> subcommand takes a part of some (fully qualified) Rust name and tries to find completions. For example:</p>
-<pre><code>:::sh
-$ ./bin/racer complete std::option::
-MATCH Option,166,9,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Enum,pub enum Option&lt;T&gt; {
-MATCH Item,774,11,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Struct,pub struct Item&lt;A&gt; {
-MATCH None,168,4,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,EnumVariant,None,
-MATCH Some,170,4,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,EnumVariant,Some(T)
-</code></pre><p>The output is intended to be computer-readable, in fact you could possibly parse it as a comma-separated format (see my <a href="https://siciarz.net/24-days-of-rust-csv/" target="_blank">article on CSV in Rust</a>).</p>
+<pre><code class="lang-sh">$ ./target/release/racer complete std::option::
+MATCH Option,<span class="hljs-number">167</span>,<span class="hljs-number">9</span>,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Enum,pub enum Option&lt;T&gt; {
+MATCH Iter,<span class="hljs-number">815</span>,<span class="hljs-number">11</span>,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Struct,pub struct Iter&lt;<span class="hljs-string">&apos;a, A: &apos;</span>a&gt; { inner: Item&lt;&amp;<span class="hljs-string">&apos;a A&gt; }
+MATCH IterMut,845,11,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Struct,pub struct IterMut&lt;&apos;</span>a, A: <span class="hljs-string">&apos;a&gt; { inner: Item&lt;&amp;&apos;</span>a mut A&gt; }
+MATCH IntoIter,<span class="hljs-number">868</span>,<span class="hljs-number">11</span>,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Struct,pub struct IntoIter&lt;A&gt; { inner: Item&lt;A&gt; }&lt;/A&gt;&lt;/A&gt;
+&lt;/T&gt;
+</code></pre>
+<p>The output is intended to be computer-readable, in fact you could possibly parse it as a comma-separated format (see the <a href="day3.html">chapter on CSV</a>).</p>
 <p><img src="../../../../../../i.imgur.com/gE3Q7i4.png" alt="racer completion in Vim"></p>
 <h2 id="find-definition">Find definition</h2>
-<p>The second important subcommand is <code>racer find-definition</code>. It expects three extra arguments: line number, column number and a filename. The first two numbers are cursor coordinates, so from the code editor&apos;s point of view <code>racer</code> will try to find the definition of the word under cursor. For example when run on <code>racer</code>&apos;s own source (the coordinates point to a <code>File</code> import):</p>
-<pre><code>:::sh
-$ ./bin/racer find-definition 16 15 src/main.rs
-MATCH File,83,11,/home/zbyszek/Development/Rust/rust/src/libstd/io/fs.rs,Struct,pub struct File {
-</code></pre><p>The output format is the same as in the case of <code>racer complete</code>. See how that works in Vim when I press <code>gd</code> with the cursor on the <code>Option</code> word:</p>
+<p>The second important subcommand is <code>racer find-definition</code>. It expects three extra arguments: line number, column number and a filename. The first two numbers are cursor coordinates, so from the code editor&apos;s point of view <code>racer</code> will try to find the definition of the word under cursor. For example when run on <code>racer</code>&apos;s own source (the coordinates point to a <code>Vec</code> usage):</p>
+<pre><code class="lang-sh">$ ./target/release/racer find-definition <span class="hljs-number">56</span> <span class="hljs-number">15</span> src/main.rs
+MATCH Vec,<span class="hljs-number">154</span>,<span class="hljs-number">11</span>,/home/zbyszek/Development/Rust/rust/src/libcollections/vec.rs,Struct,pub struct Vec&lt;T&gt; {
+</code></pre>
+<p>The output format is the same as in the case of <code>racer complete</code>. See how that works in Vim when I press <code>gd</code> with the cursor on the <code>Option</code> word:</p>
 <p><img src="../../../../../../i.imgur.com/fyE80H5.gif" alt="find definition in Vim"></p>
 <h2 id="editor-integrations">Editor integrations</h2>
 <p><a href="https://github.com/phildawes/racer/blob/master/editors/racer.vim" target="_blank">Vim</a> and <a href="https://github.com/phildawes/racer/blob/master/editors/racer.el" target="_blank">Emacs</a> plugins are bundled with <code>racer</code>&apos;s source. For other editors there are some third-party plugins:</p>
@@ -564,10 +565,6 @@ MATCH File,83,11,/home/zbyszek/Development/Rust/rust/src/libstd/io/fs.rs,Struct,
 <li><a href="https://github.com/edubkendo/atom-racer" target="_blank">atom-racer</a> for <a href="https://atom.io/" target="_blank">Atom</a></li>
 <li><a href="https://sublime.wbond.net/packages/RustAutoComplete" target="_blank">RustAutoComplete</a> for <a href="http://www.sublimetext.com/" target="_blank">Sublime Text</a></li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small></p>
 
                     
                     </section>

@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="7" data-basepath=".." data-revision="Wed May 27 2015 10:10:25 GMT+0000 (UTC)">
+    <div class="book" data-level="7" data-basepath=".." data-revision="Fri May 29 2015 19:39:38 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,64 +531,59 @@
                     
                         <h1 id="day-7-itertools">Day 7 - itertools</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
-<p>The <a href="https://crates.io/crates/itertools" target="_blank">itertools crate</a> contains several utility functions and macros inspired by Haskell and <a href="https://docs.python.org/3/library/itertools.html" target="_blank">Python itertools</a>. As you can guess from the name, these have to do with iteration and iterators.  Rust has recently split the <code>Iterator</code> trait into <code>Iterator</code> and <code>IteratorExt</code> for so called <strong>object safety</strong> reasons (see <a href="https://github.com/rust-lang/rfcs/blob/master/text/0445-extension-trait-conventions.md" target="_blank">the RFC</a> for an explanation). This is mostly irrelevant for today&apos;s episode of 24 days of Rust, but worth keeping in mind.</p>
+<p>The <a href="https://crates.io/crates/itertools" target="_blank">itertools crate</a> contains several utility functions and macros inspired by Haskell and <a href="https://docs.python.org/3/library/itertools.html" target="_blank">Python itertools</a>. As you can guess from the name, these have to do with iteration and iterators.</p>
 <p>To use <code>itertools</code>, add the following dependency declaration to <code>Cargo.toml</code>:</p>
-<pre><code>:::toml
-[dependencies]
-itertools = &quot;~0.0.4&quot;
-</code></pre><p>We&apos;ll start from the helper functions and cover the macros later.</p>
-<h2 id="apply">apply</h2>
+<pre><code class="lang-ini"><span class="hljs-title">[dependencies]</span>
+<span class="hljs-setting">itertools = <span class="hljs-value"><span class="hljs-string">&quot;~0.0.4&quot;</span></span></span>
+</code></pre>
+<p>We&apos;ll start from the helper functions and cover the macros later.</p>
+<h2 id="foreach">foreach</h2>
 <p>This and a few other functions live in the <code>Itertools</code> trait, so we need to bring them into scope by placing <code>use itertools::Itertools</code> in our module.</p>
-<p><code>apply()</code> is very simple conceptually. It consumes the (mutable) iterator, calling a closure witch each of the elements. The return type is <code>()</code> (unit), meaning that <code>apply()</code> usually should be at the end of a call chain, like below:</p>
-<pre><code>:::rust
-let mut words = &quot;hello supercalifragilisticexpialidocious programmer&quot;.words();
-words.apply(|word| println!(&quot;{} is {} characters long&quot;, word, word.len()));
-</code></pre><p>As you can see, <code>apply()</code> is similar to the <code>map()</code> method from the standard library, however <code>map</code> returns another iterator. Therefore it&apos;s lazy and allows for further method chaining, while <code>apply</code> is eager and has the final word.</p>
+<p><code>foreach()</code> is very simple conceptually. It consumes the (mutable) iterator, calling a closure witch each of the elements. The return type is <code>()</code> (unit), meaning that <code>foreach()</code> usually should be at the end of a call chain, like below:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> words = <span class="hljs-string">&quot;hello supercalifragilisticexpialidocious programmer&quot;</span>.words();
+words.foreach(|word| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{} is {} characters long&quot;</span>, word, word.len()));
+</code></pre>
+<p>As you can see, <code>foreach()</code> is similar to the <code>map()</code> method from the standard library, however <code>map</code> returns another iterator. Therefore it&apos;s lazy and allows for further method chaining, while <code>foreach</code> is eager and has the final word.</p>
 <h2 id="interleave-and-intersperse">interleave and intersperse</h2>
 <p><code>interleave()</code> is somewhat similar to <code>zip()</code>. But when <code>zip</code> builds tuples from two iterators, <code>interleave</code> yields the values alternating between both iterators.</p>
-<pre><code>:::rust
-let even = range(1, 10u).map(|x| x * 2);
-let odd = range(1, 5u).map(|x| x * 2 + 1);
-println!(&quot;{}&quot;, even.interleave(odd).collect::&lt;Vec&lt;_&gt;&gt;());
-</code></pre><p>The result:</p>
-<pre><code>:::sh
-$ cargo run
-[2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18]
-</code></pre><p>As you can see, the iterators don&apos;t have to contain the same number of elements. In that case <code>interleave</code> continues to emit values from the other iterator, after it consumes the &quot;shorter&quot; one.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> even = (<span class="hljs-number">1</span>..<span class="hljs-number">10</span>).map(|x| x * <span class="hljs-number">2</span>);
+<span class="hljs-keyword">let</span> odd = (<span class="hljs-number">1</span>..<span class="hljs-number">5</span>).map(|x| x * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, even.interleave(odd).collect::&lt;Vec&lt;<span class="hljs-number">_</span>&gt;&gt;());
+</code></pre>
+<p>The result:</p>
+<pre><code class="lang-sh">$ cargo run
+[<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">12</span>, <span class="hljs-number">14</span>, <span class="hljs-number">16</span>, <span class="hljs-number">18</span>]
+</code></pre>
+<p>As you can see, the iterators don&apos;t have to contain the same number of elements. In that case <code>interleave</code> continues to emit values from the other iterator, after it consumes the &quot;shorter&quot; one.</p>
 <p>In a manner similar to its <a href="http://hackage.haskell.org/package/base-4.7.0.1/docs/Data-List.html#v:intersperse" target="_blank">Haskell counterpart</a>, <code>intersperse</code> takes a single value and an iterator (implicitly as the <code>self</code> argument) and emits the given value between every element of the wrapped iterator. For example:</p>
-<pre><code>:::rust
-let it = range(1, 10u);
-println!(&quot;{}&quot;, it.intersperse(15u).collect::&lt;Vec&lt;_&gt;&gt;());
-</code></pre><p>Output:</p>
-<pre><code>:::sh
-$ cargo run
-[1, 15, 2, 15, 3, 15, 4, 15, 5, 15, 6, 15, 7, 15, 8, 15, 9]
-</code></pre><h2 id="iproduct">iproduct!</h2>
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, (<span class="hljs-number">1</span>..<span class="hljs-number">10</span>).intersperse(<span class="hljs-number">15</span>).collect::&lt;Vec&lt;<span class="hljs-number">_</span>&gt;&gt;());
+</code></pre>
+<p>Output:</p>
+<pre><code class="lang-sh">$ cargo run
+[<span class="hljs-number">1</span>, <span class="hljs-number">15</span>, <span class="hljs-number">2</span>, <span class="hljs-number">15</span>, <span class="hljs-number">3</span>, <span class="hljs-number">15</span>, <span class="hljs-number">4</span>, <span class="hljs-number">15</span>, <span class="hljs-number">5</span>, <span class="hljs-number">15</span>, <span class="hljs-number">6</span>, <span class="hljs-number">15</span>, <span class="hljs-number">7</span>, <span class="hljs-number">15</span>, <span class="hljs-number">8</span>, <span class="hljs-number">15</span>, <span class="hljs-number">9</span>]
+</code></pre>
+<h2 id="iproduct">iproduct!</h2>
 <p>Let&apos;s now turn our attention to macros provided by <code>itertools</code>. Sometimes there is a need to iterate over a cartesian product of some lists/arrays/vectors. Usually it involves two nested loops; however we can use the <code>iproduct()</code> macro to simplify it to a single <code>for</code> loop.</p>
-<pre><code>:::rust
-let numbers = range(1, 4u);
-let chars = vec![&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];
-for (i, c) in iproduct!(numbers, chars.iter()) {
-    println!(&quot;{}: {}&quot;, i, c);
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> numbers = <span class="hljs-number">1</span>..<span class="hljs-number">4</span>;
+<span class="hljs-keyword">let</span> chars = <span class="hljs-built_in">vec!</span>[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>];
+<span class="hljs-keyword">for</span> (i, c) <span class="hljs-keyword">in</span> iproduct!(numbers, chars.iter()) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}: {}&quot;</span>, i, c);
 }
-</code></pre><h2 id="icompr">icompr!</h2>
-<p>This is possibly the tastiest bit in <code>itertools</code>. Those of you coming to Rust from Python will recognize it immediately. <a href="https://docs.python.org/3.4/reference/expressions.html#generator-expressions" target="_blank">Generator expressions</a> allow creating lazy iterators with a very simple, convenient syntax. The <code>icompr!()</code> (<em>iterator comprehension</em>) macro brings that syntax to Rust. The following example borrows from David Beazley&apos;s <a href="http://www.dabeaz.com/generators/" target="_blank">Generators for System Programmers</a> tutorial.</p>
-<pre><code>:::rust
-use std::iter::AdditiveIterator;
-
-let log = &quot;GET / 4096\nGET /home/ 16301\nPOST /home/ 49\nGET / 4096\n&quot;;
-let lines = log.lines();
-let rows = icompr!(line.words().collect::&lt;Vec&lt;_&gt;&gt;() for line in lines);
-let bytes = icompr!(row[2] for row in rows if row[0] != &quot;POST&quot;);
-let total = icompr!(from_str::&lt;uint&gt;(b).unwrap() for b in bytes).sum();
-println!(&quot;Total GET throughput: {} bytes&quot;, total);
-</code></pre><p>We parse a very simplified server log, counting a total number of bytes sent in response to GET requests. Just like in Python, we can use conditionals (`if row[0] != &quot;POST&quot;) to filter the values directly in the generator expression.</p>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly and itertools 0.0.4.
-</small></p>
+</code></pre>
+<h2 id="icompr">icompr!</h2>
+<p>This is possibly the tastiest bit in <code>itertools</code>. Those of you coming to Rust from Python will recognize it immediately. <a href="https://docs.python.org/3.4/reference/expressions.html#generator-expressions" target="_blank">Generator expressions</a> allow creating lazy iterators with a very simple, convenient syntax. The <code>icompr!()</code> (<em>iterator comprehension</em>) macro brings that syntax to Rust. The macro has a form of <code>icompr!(expression, value, iterator)</code> resembling a Pythonic syntax <code>(expression for value in iterable)</code>.</p>
+<p>The following example borrows from David Beazley&apos;s <a href="http://www.dabeaz.com/generators/" target="_blank">Generators for System Programmers</a> tutorial.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> log = <span class="hljs-string">&quot;GET / 4096\nGET /home/ 16301\nPOST /home/ 49\nGET / 4096\n&quot;</span>;
+<span class="hljs-keyword">let</span> lines = log.lines();
+<span class="hljs-keyword">let</span> rows = icompr!(line.split(|c| c == <span class="hljs-string">&apos; &apos;</span>).collect::&lt;Vec&lt;<span class="hljs-number">_</span>&gt;&gt;(), line, lines);
+<span class="hljs-keyword">let</span> bytes = icompr!(row[<span class="hljs-number">2</span>], row, rows, row[<span class="hljs-number">0</span>] != <span class="hljs-string">&quot;POST&quot;</span>);
+<span class="hljs-keyword">let</span> total = icompr!(b.parse::&lt;<span class="hljs-keyword">u32</span>&gt;().unwrap(), b, bytes).fold(<span class="hljs-number">0</span>, |acc, x| acc + x);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Total GET throughput: {} bytes&quot;</span>, total);
+</code></pre>
+<p>We parse a very simplified server log, counting a total number of bytes sent in response to GET requests. Just like in Python, we can use predicates (<code>row[0] != &quot;POST&quot;</code>) to filter the values directly in the generator expression.</p>
+<p><strong>Note</strong>: <code>icompr!</code> originally had a much more Python-like syntax, for example <code>icompr!(row[2] for row in rows if row[0] != &quot;POST&quot;)</code>. This unfortunately is no longer possible with Rust 1.0 stable.</p>
 
                     
                     </section>
