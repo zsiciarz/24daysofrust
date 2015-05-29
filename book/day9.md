@@ -67,8 +67,8 @@ Some(Ip(127.0.0.1))
 Generic types are considered different for every type parameter, so for example every `Option`-al type gets a separate entry in the `AnyMap`.
 
 ```rust
-if config.contains::<Option<f32>>() {
-    println!("There's no optional float in the configuration...");
+if !config.contains::<Option<f32>>() {
+    println!("There's no optional 32-bit float in the configuration...");
 }
 let dummy: Option<f32> = None;
 config.insert(dummy);
