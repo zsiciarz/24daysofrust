@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="11" data-basepath=".." data-revision="Fri May 29 2015 20:40:32 GMT+0000 (UTC)">
+    <div class="book" data-level="11" data-basepath=".." data-revision="Sat May 30 2015 16:03:03 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,115 +531,135 @@
                     
                         <h1 id="day-11-postgres">Day 11 - postgres</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable (macros only on nightly)</p>
 </blockquote>
-<p>Yes, I&apos;m biased. <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> is my favorite SQL database and the <a href="http://www.postgresql.org/message-id/26295.1417708564@sss.pgh.pa.us?utm_source=postgresweekly&amp;utm_medium=email" target="_blank">upcoming 9.4 release</a> makes me even more excited. There is already a pure Rust driver for PostgreSQL - the <a href="https://crates.io/crates/postgres" target="_blank">postgres</a> crate which will be the subject of today&apos;s article.</p>
+<p>Yes, I&apos;m biased. <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> is my favorite SQL database. There is already a pure Rust driver for PostgreSQL - the <a href="https://crates.io/crates/postgres" target="_blank">postgres</a> crate which will be the subject of today&apos;s article.</p>
 <h2 id="connecting">Connecting</h2>
 <p>In this and the following examples we will assume a Postgres user <code>rust</code> with password <code>rust</code> and an existing database named... well, <code>rust</code>.</p>
-<pre><code>:::rust
-extern crate postgres;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> postgres;
 
-use postgres::{Connection, SslMode};
+<span class="hljs-keyword">use</span> postgres::{Connection, SslMode};
 
-fn main() {
-    let dsn = &quot;postgresql://rust:rust@localhost/rust&quot;;
-    let conn = match Connection::connect(dsn, &amp;amp;SslMode::None) {
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> dsn = <span class="hljs-string">&quot;postgresql://rust:rust@localhost/rust&quot;</span>;
+    <span class="hljs-keyword">let</span> conn = <span class="hljs-keyword">match</span> Connection::connect(dsn, &amp;SslMode::None) {
         Ok(conn) =&gt; conn,
         Err(e) =&gt; {
-            println!(&quot;Connection error: {}&quot;, e);
-            return;
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Connection error: {:?}&quot;</span>, e);
+            <span class="hljs-keyword">return</span>;
         }
     };
 }
-</code></pre><p>The <code>Connection</code> type has a few methods related to making queries; perhaps the simplest one is <code>execute()</code> which immediately executes the query and returns the number of modified rows (or an error). This method can be used for example for insert/update queries but also DDL as shown below.</p>
-<pre><code>:::rust
-conn.execute(&quot;create table if not exists blog (
+</code></pre>
+<p>The <code>Connection</code> type has a few methods related to making queries; perhaps the simplest one is <code>execute()</code> which immediately executes the query and returns the number of modified rows (or an error). This method can be used for example for insert/update queries but also DDL as shown below.</p>
+<pre><code class="lang-rust">conn.execute(<span class="hljs-string">&quot;create table if not exists blog (
     id serial primary key,
     title varchar(255),
-    body text)&quot;, &amp;amp;[]).ok().expect(&quot;Table creation failed&quot;);
-</code></pre><p>The second argument looks slightly awkward, but that&apos;s the way of telling <code>execute()</code> that the query takes no parameters. Later on we will see a few examples that use query parameters.</p>
+    body text)&quot;</span>, &amp;[]).ok().expect(<span class="hljs-string">&quot;Table creation failed&quot;</span>);
+</code></pre>
+<p>The second argument looks slightly awkward, but that&apos;s the way of telling <code>execute()</code> that the query takes no parameters. Later on we will see a few examples that use query parameters.</p>
 <h2 id="prepared-queries-and-statements">Prepared queries and statements</h2>
 <p>Let&apos;s add a few rows to our table. We will use the <code>prepare()</code> method.</p>
-<pre><code>:::rust
-let stmt = match conn.prepare(&quot;insert into blog (title, body) values ($1, $2)&quot;) {
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> stmt = <span class="hljs-keyword">match</span> conn.prepare(<span class="hljs-string">&quot;insert into blog (title, body) values ($1, $2)&quot;</span>) {
     Ok(stmt) =&gt; stmt,
     Err(e) =&gt; {
-        println!(&quot;Preparing query failed: {}&quot;, e);
-        return;
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Preparing query failed: {:?}&quot;</span>, e);
+        <span class="hljs-keyword">return</span>;
     }
 };
-for i in range(1, 5u) {
-    let title = format!(&quot;Blogpost number {}&quot;, i);
-    let text = format!(&quot;Content of the blogpost #{}&quot;, i);
-    stmt.execute(&amp;amp;[&amp;amp;title, &amp;amp;text]).ok().expect(&quot;Inserting blogposts failed&quot;);
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..<span class="hljs-number">5</span> {
+    <span class="hljs-keyword">let</span> title = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Blogpost number {}&quot;</span>, i);
+    <span class="hljs-keyword">let</span> text = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Content of the blogpost #{}&quot;</span>, i);
+    stmt.execute(&amp;[&amp;title, &amp;text]).ok().expect(<span class="hljs-string">&quot;Inserting blogposts failed&quot;</span>);
 }
-</code></pre><p>The query was prepared only once and what we got (after some crude error handling) is a <code>Statement</code> value. We can use its <code>execute()</code> method to actually run the query with the supplied parameters (note the borrowing).</p>
+</code></pre>
+<p>The query was prepared only once and what we got (after some crude error handling) is a <code>Statement</code> value. We can use its <code>execute()</code> method to actually run the query with the supplied parameters (note the borrowing).</p>
 <p>To read the data from the database we will use the same <code>prepare()</code> method in conjunction with the <code>query()</code> method of a <code>Statement</code>. There&apos;s a significant difference between <code>execute()</code> and <code>query()</code>: the former returns just the number of affected rows, while the latter returns a collection of <code>Row</code> values.</p>
-<pre><code>:::rust
-let stmt = match conn.prepare(&quot;select id, title, body from blog where id &lt; $1&quot;) {
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> stmt = <span class="hljs-keyword">match</span> conn.prepare(<span class="hljs-string">&quot;select id, title, body from blog where id &lt; $1&quot;</span>) {
     Ok(stmt) =&gt; stmt,
     Err(e) =&gt; {
-        println!(&quot;Preparing query failed: {}&quot;, e);
-        return;
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Preparing query failed: {:?}&quot;</span>, e);
+        <span class="hljs-keyword">return</span>;
     }
 };
-let max_id: i32 = 3;
-let mut rows = stmt.query(&amp;amp;[&amp;amp;max_id]).ok().expect(&quot;Selecting blogposts failed&quot;);
-for row in rows {
-    let id: i32 = row.get(&quot;id&quot;);
-    let title: String = row.get(&quot;title&quot;);
-    println!(&quot;ID={}, title={}&quot;, id, title);
+<span class="hljs-keyword">let</span> max_id: <span class="hljs-keyword">i32</span> = <span class="hljs-number">3</span>;
+<span class="hljs-keyword">let</span> rows = stmt.query(&amp;[&amp;max_id]).ok().expect(<span class="hljs-string">&quot;Selecting blogposts failed&quot;</span>);
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows {
+    <span class="hljs-keyword">let</span> id: <span class="hljs-keyword">i32</span> = row.get(<span class="hljs-string">&quot;id&quot;</span>);
+    <span class="hljs-keyword">let</span> title: String = row.get(<span class="hljs-string">&quot;title&quot;</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ID={}, title={}&quot;</span>, id, title);
 }
-</code></pre><p>Keep in mind that the <code>get()</code> method will panic if it encounters incompatible types, for example if we changed <code>String</code> to <code>i32</code> above. There&apos;s also a safer <code>get_opt()</code> method returning a <code>Result</code> instead of panicking.</p>
+</code></pre>
+<p>Keep in mind that the <code>get()</code> method will panic if it encounters incompatible types, for example if we changed <code>String</code> to <code>i32</code> above. There&apos;s also a safer <code>get_opt()</code> method returning a <code>Result</code> instead of panicking.</p>
 <h2 id="advanced-postgresql-types">Advanced PostgreSQL types</h2>
 <p>All this is a bit boring so far. One of the reasons developers love PostgreSQL is its selection of interesting data types. Let&apos;s see how to use them in Rust (hint: it&apos;s kinda cool). We&apos;ll start from writing a generic helper function to read a single value from the first column of the first row.</p>
-<pre><code>:::rust
-use postgres::{Connection, Error, FromSql, SslMode};
-use postgres::Result as PgResult;
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> postgres::{Connection, Error, FromSql, SslMode};
+<span class="hljs-keyword">use</span> postgres::Result <span class="hljs-keyword">as</span> PgResult;
 
-fn get_single_value&lt;T&gt;(conn: &amp;amp;Connection, query: &amp;amp;str) -&gt; PgResult&lt;T&gt;
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_single_value</span></span>&lt;T&gt;(conn: &amp;Connection, query: &amp;<span class="hljs-keyword">str</span>) -&gt; PgResult&lt;T&gt;
     where T: FromSql {
-    println!(&quot;Executing query: {}&quot;, query);
-    let stmt = try!(conn.prepare(query));
-    let mut rows = try!(stmt.query(&amp;amp;[]));
-    let row = try!(rows.next().ok_or(Error::BadData));
-    row.get_opt(0)
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Executing query: {}&quot;</span>, query);
+    <span class="hljs-keyword">let</span> stmt = <span class="hljs-built_in">try!</span>(conn.prepare(query));
+    <span class="hljs-keyword">let</span> rows = <span class="hljs-built_in">try!</span>(stmt.query(&amp;[]));
+    <span class="hljs-keyword">let</span> row = <span class="hljs-built_in">try!</span>(rows.iter().next().ok_or(Error::BadResponse));
+    row.get_opt(<span class="hljs-number">0</span>)
 }
-</code></pre><p>We use the <code>try!</code> macro to minimize the noise from error handling. Now let&apos;s see it in action.</p>
-<pre><code>:::rust
-println!(&quot;{}&quot;, get_single_value::&lt;bool&gt;(&amp;amp;conn, &quot;select 1=1&quot;));
-println!(&quot;{}&quot;, get_single_value::&lt;i32&gt;(&amp;amp;conn, &quot;select 1=1&quot;));
-type IntArray = ArrayBase&lt;Option&lt;i32&gt;&gt;;
-let arr = get_single_value::&lt;IntArray&gt;(&amp;amp;conn, &quot;select &apos;{4, 5, 6}&apos;::int[]&quot;);
-println!(&quot;{}&quot;, arr.map(|arr| arr.values()
-        .filter_map(|x| *x) // unwraps Some values and skips None
-        .collect::&lt;Vec&lt;_&gt;&gt;()));
-let json = get_single_value::&lt;Json&gt;(&amp;amp;conn, &quot;select &apos;{\&quot;foo\&quot;: \&quot;bar\&quot;, \&quot;answer\&quot;: 42}&apos;::json&quot;);
-println!(&quot;{}&quot;, json);
-</code></pre><!-- -->
-<pre><code>:::sh
-$ cargo run
-Executing query: select 1=1
-Ok(true)
-Executing query: select 1=1
-Err(Unexpected type Bool)
-Executing query: select &apos;{4, 5, 6}&apos;::int[]
-Ok([4, 5, 6])
-Executing query: select &apos;{&quot;foo&quot;: &quot;bar&quot;, &quot;answer&quot;: 42}&apos;::json
-Ok({&quot;answer&quot;:42,&quot;foo&quot;:&quot;bar&quot;})
-</code></pre><p>Fantastic! The error handling is still there when we need it and we get values of reasonable Rust types.</p>
+</code></pre>
+<p>We use the <code>try!</code> macro to minimize the noise from error handling. Now let&apos;s see it in action. The more interesting types like arrays, ranges etc. come from a few additional crates: <a href="https://crates.io/crates/postgres_array" target="_blank">postgres_array</a> and <a href="https://crates.io/crates/postgres_range" target="_blank">postgres_range</a>.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> postgres_array;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> postgres_range;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> time;
+
+<span class="hljs-keyword">use</span> postgres_array::ArrayBase;
+<span class="hljs-keyword">use</span> postgres_range::Range;
+<span class="hljs-keyword">use</span> rustc_serialize::json::Json;
+<span class="hljs-keyword">use</span> time::Timespec;
+
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_single_value::&lt;<span class="hljs-keyword">bool</span>&gt;(&amp;conn, <span class="hljs-string">&quot;select 1=1&quot;</span>));
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_single_value::&lt;<span class="hljs-keyword">i32</span>&gt;(&amp;conn, <span class="hljs-string">&quot;select 1=1&quot;</span>));
+
+<span class="hljs-keyword">type</span> <span class="hljs-title">IntArray</span> = ArrayBase&lt;Option&lt;<span class="hljs-keyword">i32</span>&gt;&gt;;
+<span class="hljs-keyword">let</span> arr = get_single_value::&lt;IntArray&gt;(&amp;conn, <span class="hljs-string">&quot;select &apos;{4, 5, 6}&apos;::int[]&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, arr.map(|arr| arr.values()
+        .filter_map(|x| *x) <span class="hljs-comment">// unwraps Some values and skips None</span>
+        .collect::&lt;Vec&lt;<span class="hljs-number">_</span>&gt;&gt;()));
+
+<span class="hljs-keyword">let</span> json = get_single_value::&lt;Json&gt;(&amp;conn, <span class="hljs-string">&quot;select &apos;{\&quot;foo\&quot;: \&quot;bar\&quot;, \&quot;answer\&quot;: 42}&apos;::json&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json);
+
+<span class="hljs-keyword">let</span> range = get_single_value::&lt;Range&lt;<span class="hljs-keyword">i32</span>&gt;&gt;(&amp;conn, <span class="hljs-string">&quot;select &apos;[10, 20)&apos;::int4range&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, range);
+<span class="hljs-keyword">let</span> ts_range = get_single_value::&lt;Range&lt;Timespec&gt;&gt;(&amp;conn, <span class="hljs-string">&quot;select &apos;[2015-01-01, 2015-12-31]&apos;::tsrange&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, ts_range);
+</code></pre>
+<pre><code class="lang-sh">$ cargo run
+Executing query: select <span class="hljs-number">1</span>=<span class="hljs-number">1</span>
+Ok(<span class="hljs-literal">true</span>)
+Executing query: select <span class="hljs-number">1</span>=<span class="hljs-number">1</span>
+Err(WrongType(Bool))
+Executing query: select <span class="hljs-string">&apos;{4, 5, 6}&apos;</span>::int[]
+Ok([<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>])
+Executing query: select <span class="hljs-string">&apos;{&quot;foo&quot;: &quot;bar&quot;, &quot;answer&quot;: 42}&apos;</span>::json
+Ok(Object({<span class="hljs-string">&quot;answer&quot;</span>: U64(<span class="hljs-number">42</span>), <span class="hljs-string">&quot;foo&quot;</span>: String(<span class="hljs-string">&quot;bar&quot;</span>)}))
+Executing query: select <span class="hljs-string">&apos;[10, 20)&apos;</span>::int4range
+Ok([<span class="hljs-number">10</span>,<span class="hljs-number">20</span>))
+Executing query: select <span class="hljs-string">&apos;[2015-01-01, 2015-12-31]&apos;</span>::tsrange
+Ok([Timespec { sec: <span class="hljs-number">1420070400</span>, nsec: <span class="hljs-number">0</span> },Timespec { sec: <span class="hljs-number">1451520000</span>, nsec: <span class="hljs-number">0</span> }])
+</code></pre>
+<p>Fantastic! The error handling is still there when we need it and we get values of reasonable Rust types.</p>
 <h2 id="compile-time-sql-checking">Compile-time SQL checking</h2>
-<p>There is another crate worth mentioning here - <a href="https://crates.io/crates/postgres_macros" target="_blank">postgres_macros</a>. It provides the <code>sql!</code> macro that validates correctness of the SQL query given as argument. See the <a href="https://github.com/sfackler/rust-postgres-macros" target="_blank">readme</a> for an example. Unfortunately I couldn&apos;t get it to install, but it looks like an interesting experiment.</p>
+<p>There is another crate worth mentioning here - <a href="https://crates.io/crates/postgres_macros" target="_blank">postgres_macros</a>. It provides the <code>sql!</code> macro that validates correctness of the SQL query given as argument <strong>at compile time</strong>.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> query = sql!(<span class="hljs-string">&quot;select &apos;{4, 5, 6}&apos;::int[]&quot;</span>);
+<span class="hljs-keyword">let</span> this_wont_compile = sql!(<span class="hljs-string">&quot;eslect &apos;{4, 5, 6}&apos;::int[]&quot;</span>);
+</code></pre>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="https://github.com/nickel-org/nickel-postgres" target="_blank">nickel-potgres</a> - a Postgres middleware for the <a href="http://nickel.rs/" target="_blank">nickel.rs</a> web framework</li>
+<li><a href="https://github.com/deuterium-orm/deuterium-orm" target="_blank">deuterium-orm</a> - a basic ORM for Rust supporting PostgreSQL</li>
+<li><a href="https://crates.io/crates/r2d2" target="_blank">r2d2</a> - a generic connection pool with <a href="https://crates.io/crates/r2d2_postgres" target="_blank">Postgres support</a></li>
 <li><a href="http://blog.bguiz.com/2014/08/05/restful-api-in-rust-with-nickel-postgres/" target="_blank">Building RESTful API server in Rust with nickel-postgres</a></li>
 <li><a href="https://github.com/thehydroimpulse/postgres-extension.rs" target="_blank">Writing Postgres extensions in Rust</a></li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly and postgres 0.1.3.
-</small></p>
 
                     
                     </section>
