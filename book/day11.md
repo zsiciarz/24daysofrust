@@ -86,7 +86,8 @@ Advanced PostgreSQL types
 All this is a bit boring so far. One of the reasons developers love PostgreSQL is its selection of interesting data types. Let's see how to use them in Rust (hint: it's kinda cool). We'll start from writing a generic helper function to read a single value from the first column of the first row.
 
 ```rust
-use postgres::{Connection, Error, FromSql, SslMode};
+use postgres::{Connection, SslMode};
+use postgres::types::FromSql;
 use postgres::Result as PgResult;
 
 fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
@@ -94,7 +95,7 @@ fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     println!("Executing query: {}", query);
     let stmt = try!(conn.prepare(query));
     let rows = try!(stmt.query(&[]));
-    let row = try!(rows.iter().next().ok_or(Error::BadResponse));
+    let row = rows.iter().next().unwrap();
     row.get_opt(0)
 }
 ```
@@ -107,7 +108,7 @@ extern crate postgres_range;
 extern crate rustc_serialize;
 extern crate time;
 
-use postgres_array::ArrayBase;
+use postgres_array::Array;
 use postgres_range::Range;
 use rustc_serialize::json::Json;
 use time::Timespec;
@@ -115,9 +116,9 @@ use time::Timespec;
 println!("{:?}", get_single_value::<bool>(&conn, "select 1=1"));
 println!("{:?}", get_single_value::<i32>(&conn, "select 1=1"));
 
-type IntArray = ArrayBase<Option<i32>>;
+type IntArray = Array<Option<i32>>;
 let arr = get_single_value::<IntArray>(&conn, "select '{4, 5, 6}'::int[]");
-println!("{:?}", arr.map(|arr| arr.values()
+println!("{:?}", arr.map(|arr| arr.iter()
         .filter_map(|x| *x) // unwraps Some values and skips None
         .collect::<Vec<_>>()));
 
