@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="11" data-basepath=".." data-revision="Sat May 30 2015 16:03:03 GMT+0000 (UTC)">
+    <div class="book" data-level="11" data-basepath=".." data-revision="Tue Jun 02 2015 09:51:38 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -593,7 +593,8 @@
 <p>Keep in mind that the <code>get()</code> method will panic if it encounters incompatible types, for example if we changed <code>String</code> to <code>i32</code> above. There&apos;s also a safer <code>get_opt()</code> method returning a <code>Result</code> instead of panicking.</p>
 <h2 id="advanced-postgresql-types">Advanced PostgreSQL types</h2>
 <p>All this is a bit boring so far. One of the reasons developers love PostgreSQL is its selection of interesting data types. Let&apos;s see how to use them in Rust (hint: it&apos;s kinda cool). We&apos;ll start from writing a generic helper function to read a single value from the first column of the first row.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">use</span> postgres::{Connection, Error, FromSql, SslMode};
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> postgres::{Connection, SslMode};
+<span class="hljs-keyword">use</span> postgres::types::FromSql;
 <span class="hljs-keyword">use</span> postgres::Result <span class="hljs-keyword">as</span> PgResult;
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_single_value</span></span>&lt;T&gt;(conn: &amp;Connection, query: &amp;<span class="hljs-keyword">str</span>) -&gt; PgResult&lt;T&gt;
@@ -601,7 +602,7 @@
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Executing query: {}&quot;</span>, query);
     <span class="hljs-keyword">let</span> stmt = <span class="hljs-built_in">try!</span>(conn.prepare(query));
     <span class="hljs-keyword">let</span> rows = <span class="hljs-built_in">try!</span>(stmt.query(&amp;[]));
-    <span class="hljs-keyword">let</span> row = <span class="hljs-built_in">try!</span>(rows.iter().next().ok_or(Error::BadResponse));
+    <span class="hljs-keyword">let</span> row = rows.iter().next().unwrap();
     row.get_opt(<span class="hljs-number">0</span>)
 }
 </code></pre>
@@ -611,7 +612,7 @@
 <span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
 <span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> time;
 
-<span class="hljs-keyword">use</span> postgres_array::ArrayBase;
+<span class="hljs-keyword">use</span> postgres_array::Array;
 <span class="hljs-keyword">use</span> postgres_range::Range;
 <span class="hljs-keyword">use</span> rustc_serialize::json::Json;
 <span class="hljs-keyword">use</span> time::Timespec;
@@ -619,9 +620,9 @@
 <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_single_value::&lt;<span class="hljs-keyword">bool</span>&gt;(&amp;conn, <span class="hljs-string">&quot;select 1=1&quot;</span>));
 <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_single_value::&lt;<span class="hljs-keyword">i32</span>&gt;(&amp;conn, <span class="hljs-string">&quot;select 1=1&quot;</span>));
 
-<span class="hljs-keyword">type</span> <span class="hljs-title">IntArray</span> = ArrayBase&lt;Option&lt;<span class="hljs-keyword">i32</span>&gt;&gt;;
+<span class="hljs-keyword">type</span> <span class="hljs-title">IntArray</span> = Array&lt;Option&lt;<span class="hljs-keyword">i32</span>&gt;&gt;;
 <span class="hljs-keyword">let</span> arr = get_single_value::&lt;IntArray&gt;(&amp;conn, <span class="hljs-string">&quot;select &apos;{4, 5, 6}&apos;::int[]&quot;</span>);
-<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, arr.map(|arr| arr.values()
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, arr.map(|arr| arr.iter()
         .filter_map(|x| *x) <span class="hljs-comment">// unwraps Some values and skips None</span>
         .collect::&lt;Vec&lt;<span class="hljs-number">_</span>&gt;&gt;()));
 

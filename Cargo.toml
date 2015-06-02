@@ -64,9 +64,9 @@ image = "~0.3.10"
 itertools = "~0.3.11"
 json_macros = "~0.2.4"
 num = "~0.1.24"
-postgres_array = "~0.4.2"
+postgres_array = "~0.5.0"
 postgres_macros = "~0.1.2"
-postgres_range = "~0.7.1"
+postgres_range = "~0.7.2"
 primal = "~0.1.4"
 rand = "~0.3.8"
 redis = "~0.3.1"
@@ -74,18 +74,18 @@ rust-crypto = "~0.2.31"
 rustc-serialize = "~0.3.14"
 time = "~0.1.25"
 #tau = "~1.0.2"
-url = "~0.2.34"
+url = "~0.2.35"
 uuid = "~0.1.17"
 
 [dependencies.tau]
 git = "https://github.com/FranklinChen/rust-tau.git"
 
 [dependencies.hyper]
-version = "~0.5.1"
+version = "~0.5.2"
 features = ["nightly"]
 
 [dependencies.postgres]
-version= "~0.8.9"
+version= "~0.9.1"
 features = ["rustc-serialize", "time"]
 
 [dependencies.fuse]
