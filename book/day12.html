@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="12" data-basepath=".." data-revision="Tue Jun 02 2015 09:51:38 GMT+0000 (UTC)">
+    <div class="book" data-level="12" data-basepath=".." data-revision="Fri Jun 05 2015 08:15:31 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,24 +531,24 @@
                     
                         <h1 id="day-12-image">Day 12 - image</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
 <p>The <a href="https://crates.io/crates/image" target="_blank">image</a> crate is a library under development (well, not unlike the rest of the Rust ecosystem before 1.0) to read, manipulate and write images. It is part of the effort to develop an open source game engine in pure Rust - <a href="http://www.piston.rs/" target="_blank">Piston</a>, but of course the <code>image</code> crate can be used on its own.</p>
-<p>At the moment <code>image</code> supports reading and writing JPG and PNG images, while a few other formats are read-only (GIF, TIFF, WEBP).</p>
+<p>At the moment <code>image</code> supports reading and writing JPG, GIF and PNG images, while a few other formats are read-only (TIFF, WEBP).</p>
 <h2 id="basics">Basics</h2>
 <p>Let&apos;s start from something simple - read a JPEG image, flip it horizontally and save as PNG.</p>
-<pre><code>:::rust
-extern crate image;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> image;
 
-use std::io::File;
+<span class="hljs-keyword">use</span> std::fs::File;
 
-fn main() {
-    let img = image::open(&amp;amp;Path::new(&quot;in.jpg&quot;)).ok().expect(&quot;Opening image failed&quot;);
-    let filtered = img.fliph();
-    let out = File::create(&amp;amp;Path::new(&quot;out.png&quot;)).unwrap();
-    let _ = filtered.save(out, image::PNG).ok().expect(&quot;Saving image failed&quot;);
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> img = image::open(<span class="hljs-string">&quot;data/in.png&quot;</span>).ok().expect(<span class="hljs-string">&quot;Opening image failed&quot;</span>);
+    <span class="hljs-keyword">let</span> filtered = img.fliph();
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> out = File::create(<span class="hljs-string">&quot;out.png&quot;</span>).unwrap();
+    <span class="hljs-keyword">let</span> <span class="hljs-number">_</span> = filtered.save(&amp;<span class="hljs-keyword">mut</span> out, image::PNG).ok().expect(<span class="hljs-string">&quot;Saving image failed&quot;</span>);
 }
-</code></pre><p>We used the <code>open()</code> function to create the <code>img</code> variable (which is a <a href="http://www.rust-ci.org/PistonDevelopers/piston/doc/image/enum.DynamicImage.html" target="_blank">DynamicImage</a> value). This is a wrapper for the <code>load()</code> function, which can read images from arbitrary <code>Reader</code>s. However, there&apos;s no symmetrical shortcut to write an image given a <code>Path</code>, so we take advantage of the fact that <code>File</code> implements <code>Writer</code>. In between, the <code>fliph()</code> method of the image does what it says on the cover. There are other transformations available, such as:</p>
+</code></pre>
+<p>We used the <code>open()</code> function to create the <code>img</code> variable (which is a <a href="http://www.piston.rs/image/image/enum.DynamicImage.html" target="_blank">DynamicImage</a> value). This is a wrapper for the <code>load()</code> function, which can read images from anything that implements the <code>Read</code> trait. However, there&apos;s no symmetrical shortcut to write an image, so we take advantage of the fact that <code>File</code> implements <code>Write</code>. In between, the <code>fliph()</code> method of the image does what it says on the cover. There are other transformations available, such as:</p>
 <ul>
 <li><code>fliph()</code></li>
 <li><code>flipv()</code></li>
@@ -560,44 +560,40 @@ fn main() {
 <p>and a few others. All these return a new image, except <code>invert()</code>.</p>
 <h2 id="edge-detection">Edge detection</h2>
 <p>The <code>image</code> API lets us run arbitrary 3x3 <a href="http://www.roborealm.com/help/Convolution.php" target="_blank">convolution filters</a>. We can use it to create a very basic edge detection filter.</p>
-<pre><code>:::rust
-let kernel = [-1.0f32, -1.0, -1.0,
-              -1.0, 8.0, -1.0,
-              -1.0, -1.0, -1.0];
-let filtered = img.filter3x3(&amp;amp;kernel);
-</code></pre><p>To honour the image processing tradition, our input image is <a href="http://en.wikipedia.org/wiki/Lenna" target="_blank">a photo of Lena S&#xF6;derberg</a>. Here&apos;s the result:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> kernel = [-<span class="hljs-number">1.0f32</span>, -<span class="hljs-number">1.0</span>, -<span class="hljs-number">1.0</span>,
+              -<span class="hljs-number">1.0</span>, <span class="hljs-number">8.0</span>, -<span class="hljs-number">1.0</span>,
+              -<span class="hljs-number">1.0</span>, -<span class="hljs-number">1.0</span>, -<span class="hljs-number">1.0</span>];
+<span class="hljs-keyword">let</span> filtered = img.filter3x3(&amp;kernel);
+</code></pre>
+<p>To honour the image processing tradition, our input image is <a href="http://en.wikipedia.org/wiki/Lenna" target="_blank">a photo of Lena S&#xF6;derberg</a>. Here&apos;s the result:</p>
 <p><img src="../../../../../../i.imgur.com/D1mMwhK.jpg" alt="edgy Lena"></p>
 <h2 id="directly-manipulating-pixels">Directly manipulating pixels</h2>
 <p>A typical example of looping over image pixels is to add some noise to the image. The noise does not depend on surrounding pixels, so the inner loop is very simple - generate a Gaussian noise sample and add it to the current pixel.</p>
-<pre><code>:::rust
-use image::{GenericImage, Pixel};
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rand;
 
-use std::rand;
-use std::rand::distributions::{Normal, IndependentSample};
+<span class="hljs-keyword">use</span> image::{GenericImage, Pixel};
+<span class="hljs-keyword">use</span> rand::distributions::{Normal, IndependentSample};
 
-let (width, height) = img.dimensions();
-let mut rng = rand::task_rng();
-let normal = Normal::new(15.0, 15.0);
-let mut noisy = img.brighten(-25);
-for x in range(0, width) {
-    for y in range(0, height) {
-        let offset = normal.ind_sample(&amp;amp;mut rng) as u8;
-        let px = img.get_pixel(x, y).map(|v| v + offset);
+<span class="hljs-keyword">let</span> (width, height) = img.dimensions();
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> rng = rand::thread_rng();
+<span class="hljs-keyword">let</span> normal = Normal::new(<span class="hljs-number">15.0</span>, <span class="hljs-number">15.0</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> noisy = img.brighten(-<span class="hljs-number">25</span>);
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..(width) {
+    <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..(height) {
+        <span class="hljs-keyword">let</span> offset = normal.ind_sample(&amp;<span class="hljs-keyword">mut</span> rng) <span class="hljs-keyword">as</span> <span class="hljs-keyword">u8</span>;
+        <span class="hljs-keyword">let</span> px = img.get_pixel(x, y).map(|v| <span class="hljs-keyword">if</span> v &lt;= <span class="hljs-number">255</span> - offset { v + offset } <span class="hljs-keyword">else</span> { <span class="hljs-number">255</span> });
         noisy.put_pixel(x, y, px);
     }
 }
-</code></pre><p>We need to use the <code>GenericImage</code> and <code>Pixel</code> traits to introduce some extra methods we&apos;re going to use later.</p>
+</code></pre>
+<p>We need to use the <code>GenericImage</code> and <code>Pixel</code> traits to introduce some extra methods we&apos;re going to use later.</p>
 <p>Each run of the inner loop generates a sample from the normal distribution. We then pick one pixel from the original image with <code>get_pixel()</code>, add the offset to every channel (that&apos;s what the <code>map()</code> method does for types implementing <code>Pixel</code> trait) and store the pixel in the new image.</p>
 <p><img src="../../../../../../i.imgur.com/Zu7jnIK.jpg" alt="noisy Lena"></p>
 <h2 id="thumbnails">Thumbnails</h2>
 <p>To create a thumbnail from the image, use it&apos;s <code>resize()</code> method. It takes three arguments: width and height of the thumbnail (but the original aspect ratio will be preserved, so one of these dimensions might be ignored) and a variant of the <code>FilterType</code> enum. This value dictates what interpolation to use when resizing. See for example the <a href="http://docs.gimp.org/en/gimp-tools-transform.html" target="_blank">GIMP documentation</a> to learn more about various methods. I personally like Lanczos interpolation, unless the result looks really bad.</p>
-<pre><code>:::rust
-let thumbnail = img.resize(120, 120, FilterType::Lanczos3);
-</code></pre><p>One more thing - if your code using the <code>image</code> crate seems to be pretty slow, double check that you run in release mode (with compiler optimizations). For Cargo, that means <code>cargo run --release</code>. In my case the change from the default (no optimization) to release mode resulted in an 8-10x increase in speed.</p>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly and image 0.2.0.
-</small></p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> thumbnail = img.resize(<span class="hljs-number">120</span>, <span class="hljs-number">120</span>, FilterType::Lanczos3);
+</code></pre>
+<p>One more thing - if your code using the <code>image</code> crate seems to be pretty slow, double check that you run in release mode (with compiler optimizations). For Cargo, that means <code>cargo run --release</code>. In my case the change from the default (no optimization) to release mode resulted in an 8-10x increase in speed.</p>
 
                     
                     </section>

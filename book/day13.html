@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="13" data-basepath=".." data-revision="Tue Jun 02 2015 09:51:38 GMT+0000 (UTC)">
+    <div class="book" data-level="13" data-basepath=".." data-revision="Fri Jun 05 2015 08:15:31 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,66 +531,63 @@
                     
                         <h1 id="day-13-uuid">Day 13 - uuid</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
-<p>Writing the <a href="https://siciarz.net/24-days-of-rust-postgres/" target="_blank">Postgres article</a> reminded me of one more cool thing in PostgreSQL - native support for the <a href="http://www.postgresql.org/docs/9.4/static/datatype-uuid.html" target="_blank">UUID</a> type. The popular web framework Django <a href="https://github.com/django/django/commit/ed7821231b7dbf34a6c8ca65be3b9bcbda4a0703" target="_blank">will soon get a UUID field</a>, Rails <a href="http://edgeguides.rubyonrails.org/active_record_postgresql.html#uuid" target="_blank">already support it</a>. So what&apos;s the big deal?</p>
+<p>Writing the <a href="day11.html">Postgres chapter</a> reminded me of one more cool thing in PostgreSQL - native support for the <a href="http://www.postgresql.org/docs/9.4/static/datatype-uuid.html" target="_blank">UUID</a> type. The popular web framework Django <a href="https://github.com/django/django/commit/ed7821231b7dbf34a6c8ca65be3b9bcbda4a0703" target="_blank">will soon get a UUID field</a>, Rails <a href="http://edgeguides.rubyonrails.org/active_record_postgresql.html#uuid" target="_blank">already support it</a>. So what&apos;s the big deal?</p>
 <p>Simply put, using UUIDs can improve distributed systems by removing the need for a centralized ID generation. Let me quote <a href="http://andrzejonsoftware.blogspot.com/2013/12/decentralise-id-generation.html" target="_blank">Andrzej Krzywda&apos;s justification</a>:</p>
 <blockquote>
 <p>For years, I have been thinking that centralised id generation is the natural way. Seems obvious. After I learnt mote about UUID, I start seeing more and more good things about it. It allows for less coupling between components/services.  You no longer need to &apos;ask&apos; for the id. In case of JavaScript frontends it solves the problem of whether to block the UI, when we create a new resource.</p>
 </blockquote>
 <p>For me, looking from the web development perspective, this is an area of experimentation as I&apos;m not using UUIDs in any of my public projects (yet). However most of the languages I use have a function or library to generate UUIDs and Rust is no exception here. The <a href="https://crates.io/crates/uuid" target="_blank">uuid</a> crate was once in the standard library, but <a href="https://github.com/rust-lang/rust/issues/8784" target="_blank">got pulled out</a> during the cleanup.</p>
 <p>As usual we&apos;ll start by adding the dependency to <code>Cargo.toml</code>:</p>
-<pre><code>:::toml
+<pre><code class="lang-ini">:::toml
 [dependencies]
-uuid = &quot;~0.1.1&quot;
-</code></pre><p>Let&apos;s generate a few UUIDs and display them in the most familar form:</p>
-<pre><code>:::rust
-extern crate uuid;
+uuid = &quot;~0.1.17&quot;
+</code></pre>
+<p>Let&apos;s generate a few UUIDs and display them in the most familar form:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> uuid;
 
-use uuid::Uuid;
+<span class="hljs-keyword">use</span> uuid::Uuid;
 
-fn main() {
-    for _ in range(0, 10u) {
-        println!(&quot;{}&quot;, Uuid::new_v4().to_hyphenated_string());
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">for</span> <span class="hljs-number">_</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..<span class="hljs-number">10</span> {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, Uuid::new_v4().to_hyphenated_string());
     }
 }
-</code></pre><p>The example output would look like:</p>
-<pre><code>:::sh
-$ cargo run
-982bb2a5-9e32-450a-9736-bb2dd00d0b4a
-9b44c913-c28f-4f5a-be56-2aec4aaa5384
-86f137e7-2d8e-4224-9f7a-1724a9503e41
-59db4c26-46f7-49b9-9942-636bdc0c1f89
-49326e6f-f9c3-40b1-8041-f7dadd503c81
-0eabbd4d-13e8-4a76-9892-119096cdab72
-6f530ac3-4605-459a-9df7-73026f15c361
-17fccb8e-f5e2-4281-ba75-82a50d7f007e
-3c7c02b2-4a50-4a56-8a21-bcde9d46aff0
-5a405806-f967-4228-a20a-2afaec18e501
-</code></pre><p>We can use the <code>parse_str()</code> method to check if a string represents a valid UUID and convert it to an <code>Uuid</code> value.</p>
-<pre><code>:::rust
-println!(&quot;{}&quot;, Uuid::parse_str(&quot;d27cdb6e-ae6d-11cf-96b8-44455354000&quot;));
-println!(&quot;{}&quot;, Uuid::parse_str(&quot;x27cdb6e-ae6d-11cf-96b8-444553540000&quot;));
-println!(&quot;{}&quot;, Uuid::parse_str(&quot;d27cdb6-eae6d-11cf-96b8-444553540000&quot;));
-println!(&quot;{}&quot;, Uuid::parse_str(&quot;d27cdb6e-ae6d-11cf-96b8-444553540000&quot;));
-</code></pre><p>(Web developers might recognize that specific value.) Here&apos;s the output:</p>
-<pre><code>:::sh
-$ cargo run
-Err(Invalid length; expecting 32, 36 or 45 chars, found 35)
-Err(Invalid character; found `x` (0x78) at offset 0)
-Err(Malformed; length of group 0 was 7, expecting 8)
-Ok(d27cdb6eae6d11cf96b8444553540000)
-</code></pre><p>The code for this and previous days is in the <a href="https://github.com/zsiciarz/24daysofrust" target="_blank">24daysofrust</a> repository on GitHub.</p>
+</code></pre>
+<p>The example output would look like:</p>
+<pre><code class="lang-sh">$ cargo run
+<span class="hljs-number">982</span>bb2a5-<span class="hljs-number">9</span>e32-<span class="hljs-number">450</span>a-<span class="hljs-number">9736</span>-bb2dd00d0b4a
+<span class="hljs-number">9</span>b44c913-c28f-<span class="hljs-number">4</span>f5a-be56-<span class="hljs-number">2</span>aec4aaa5384
+<span class="hljs-number">86</span>f137e7-<span class="hljs-number">2</span>d8e-<span class="hljs-number">4224</span>-<span class="hljs-number">9</span>f7a-<span class="hljs-number">1724</span>a9503e41
+<span class="hljs-number">59</span>db4c26-<span class="hljs-number">46</span>f7-<span class="hljs-number">49</span>b9-<span class="hljs-number">9942</span>-<span class="hljs-number">636</span>bdc0c1f89
+<span class="hljs-number">49326</span>e6f<span class="hljs-operator">-f</span>9c3-<span class="hljs-number">40</span>b1-<span class="hljs-number">8041</span><span class="hljs-operator">-f</span>7dadd503c81
+<span class="hljs-number">0</span>eabbd4d-<span class="hljs-number">13</span>e8-<span class="hljs-number">4</span>a76-<span class="hljs-number">9892</span>-<span class="hljs-number">119096</span>cdab72
+<span class="hljs-number">6</span>f530ac3-<span class="hljs-number">4605</span>-<span class="hljs-number">459</span>a-<span class="hljs-number">9</span>df7-<span class="hljs-number">73026</span>f15c361
+<span class="hljs-number">17</span>fccb8e<span class="hljs-operator">-f</span>5e2-<span class="hljs-number">4281</span>-ba75-<span class="hljs-number">82</span>a50d7f007e
+<span class="hljs-number">3</span>c7c02b2-<span class="hljs-number">4</span>a50-<span class="hljs-number">4</span>a56-<span class="hljs-number">8</span>a21-bcde9d46aff0
+<span class="hljs-number">5</span>a405806<span class="hljs-operator">-f</span>967-<span class="hljs-number">4228</span><span class="hljs-operator">-a</span>20a-<span class="hljs-number">2</span>afaec18e501
+</code></pre>
+<p>We can use the <code>parse_str()</code> method to check if a string represents a valid UUID and convert it to an <code>Uuid</code> value.</p>
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, Uuid::parse_str(<span class="hljs-string">&quot;d27cdb6e-ae6d-11cf-96b8-44455354000&quot;</span>));
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, Uuid::parse_str(<span class="hljs-string">&quot;x27cdb6e-ae6d-11cf-96b8-444553540000&quot;</span>));
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, Uuid::parse_str(<span class="hljs-string">&quot;d27cdb6-eae6d-11cf-96b8-444553540000&quot;</span>));
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, Uuid::parse_str(<span class="hljs-string">&quot;d27cdb6e-ae6d-11cf-96b8-444553540000&quot;</span>));
+</code></pre>
+<p>(Web developers might recognize that specific value.) Here&apos;s the output:</p>
+<pre><code class="lang-sh">$ cargo run
+Err(InvalidLength(<span class="hljs-number">35</span>))
+Err(InvalidCharacter(<span class="hljs-string">&apos;x&apos;</span>, <span class="hljs-number">0</span>))
+Err(InvalidGroupLength(<span class="hljs-number">0</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>))
+Ok(Uuid { bytes: [<span class="hljs-number">210</span>, <span class="hljs-number">124</span>, <span class="hljs-number">219</span>, <span class="hljs-number">110</span>, <span class="hljs-number">174</span>, <span class="hljs-number">109</span>, <span class="hljs-number">17</span>, <span class="hljs-number">207</span>, <span class="hljs-number">150</span>, <span class="hljs-number">184</span>, <span class="hljs-number">68</span>, <span class="hljs-number">69</span>, <span class="hljs-number">83</span>, <span class="hljs-number">84</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>] })
+</code></pre>
 <h2 id="see-also">See also</h2>
 <ul>
 <li><a href="http://blog.joevandyk.com/2013/08/14/uuids-as-keys/" target="_blank">Use UUIDs as Keys</a></li>
 <li><a href="http://rob.conery.io/2014/05/29/a-better-id-generator-for-postgresql/" target="_blank">A Better ID Generator for PostgreSQL</a></li>
 <li><a href="http://blog.arkency.com/2014/10/how-to-start-using-uuid-in-activerecord-with-postgresql/" target="_blank">How to start using UUID in ActiveRecord with PostgreSQL</a></li>
+<li>The <a href="https://crates.io/crates/uuid" target="_blank">postgres</a> crate supports UUID fields</li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly and uuid 0.1.1.
-</small></p>
 
                     
                     </section>
