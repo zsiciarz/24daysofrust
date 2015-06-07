@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="14" data-basepath=".." data-revision="Fri Jun 05 2015 08:15:31 GMT+0000 (UTC)">
+    <div class="book" data-level="14" data-basepath=".." data-revision="Sun Jun 07 2015 10:59:05 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,80 +531,78 @@
                     
                         <h1 id="day-14-nalgebra">Day 14 - nalgebra</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
 <p>The <a href="https://crates.io/crates/nalgebra" target="_blank">nalgebra</a> crate provides a wide set of mathematical primitives for linear algebra, computer physics, graphic engines etc. I&apos;m not going to dive deep into the underlying math, there are a lot of tutorials and courses, some of them specifically targeted at the programmers. My goal for today is just a brief showcase of what we can do in Rust with <code>nalgebra</code>.</p>
 <h2 id="basic-vector-and-matrix-operations">Basic vector and matrix operations</h2>
-<pre><code>:::rust
-extern crate nalgebra;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> nalgebra;
 
-use nalgebra::{Mat2, Rot2, Vec2};
+<span class="hljs-keyword">use</span> nalgebra::{Mat2, Rot2, Vec2};
 
-fn main() {
-    println!(&quot;24 days of Rust - nalgebra (day 14)&quot;);
-    let v = Vec2::new(0.0f64, 1.0);
-    // 90 degrees clockwise
-    //  0, 1
-    // -1, 0
-    let rot = Mat2::new(0.0f64, -1.0, 1.0, 0.0);
-    println!(&quot;{}&quot;, rot * v);
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> v = Vec2::new(<span class="hljs-number">0.0f64</span>, <span class="hljs-number">1.0</span>);
+    <span class="hljs-comment">// 90 degrees clockwise</span>
+    <span class="hljs-comment">//  0, 1</span>
+    <span class="hljs-comment">// -1, 0</span>
+    <span class="hljs-keyword">let</span> rot = Mat2::new(<span class="hljs-number">0.0f64</span>, -<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">0.0</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, rot * v);
 }
-</code></pre><!-- -->
-<pre><code>:::sh
-$ cargo run
-Vec2 { x: 1, y: 0 }
-</code></pre><p>In <code>nalgebra</code> there are several statically sized vector and square matrix types (for dimensions up to 6). The standard mathematical operators are overloaded, so all allowed kinds of vector/matrix multiplication should just work. In the example above we defined the <a href="http://en.wikipedia.org/wiki/Rotation_matrix" target="_blank">rotation matrix</a> ourselves, but there is a nice shortcut: the <code>RotN</code> type.</p>
-<pre><code>:::rust
-use std::f64::consts::FRAC_PI_2;
-use nalgebra::{Rot2, Vec1};
+</code></pre>
+<pre><code class="lang-sh">$ cargo run
+Vec2 { x: <span class="hljs-number">1</span>, y: <span class="hljs-number">0</span> }
+</code></pre>
+<p>In <code>nalgebra</code> there are several statically sized vector and square matrix types (for dimensions up to 6). The standard mathematical operators are overloaded, so all allowed kinds of vector/matrix multiplication should just work. In the example above we defined the <a href="http://en.wikipedia.org/wiki/Rotation_matrix" target="_blank">rotation matrix</a> ourselves, but there is a nice shortcut: the <code>RotN</code> type.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> std::f64::consts::FRAC_PI_2;
+<span class="hljs-keyword">use</span> nalgebra::{Rot2, Vec1};
 
-let angle = FRAC_PI_2;
-let rot = Rot2::new(Vec1::new(angle));
-println!(&quot;{}&quot;, rot * v);
-</code></pre><p>The output is the same but this time we tell Rust <em>what</em> to do, not <em>how</em> to do it. Note that we need to wrap the <code>angle</code> in a single-element vector.</p>
+<span class="hljs-keyword">let</span> angle = FRAC_PI_2;
+<span class="hljs-keyword">let</span> rot = Rot2::new(Vec1::new(angle));
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, rot * v);
+</code></pre>
+<p>The output is the same but this time we tell Rust <em>what</em> to do, not <em>how</em> to do it. Note that we need to wrap the <code>angle</code> in a single-element vector.</p>
 <p>We can use vectors to translate (move) points.</p>
-<pre><code>:::rust
-let point = Pnt2::new(4.0f64, 4.0);
-println!(&quot;Translate from {} to {}&quot;, point, nalgebra::translate(&amp;amp;v, &amp;amp;point));
-</code></pre><p>A number of other operations are also exposed as top-level functions, such as <code>transform()</code>, <code>rotate()</code> along with their inverse counterparts.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> point = Pnt2::new(<span class="hljs-number">4.0f64</span>, <span class="hljs-number">4.0</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Translate from {:?} to {:?}&quot;</span>, point, nalgebra::translate(&amp;v, &amp;point));
+</code></pre>
+<p>A number of other operations are also exposed as top-level functions, such as <code>transform()</code>, <code>rotate()</code> along with their inverse counterparts.</p>
 <h2 id="dot-and-cross-product">Dot and cross product</h2>
-<pre><code>:::rust
-use nalgebra::Vec3;
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> nalgebra::Vec3;
 
-let v1 = Vec3::new(2.0f64, 2.0, 0.0);
-let v2 = Vec3::new(2.0f64, -2.0, 0.0);
-if nalgebra::approx_eq(&amp;amp;0.0f64, &amp;amp;nalgebra::dot(&amp;amp;v1, &amp;amp;v2)) {
-    println!(&quot;v1 is orthogonal to v2&quot;);
+<span class="hljs-keyword">let</span> v1 = Vec3::new(<span class="hljs-number">2.0f64</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">0.0</span>);
+<span class="hljs-keyword">let</span> v2 = Vec3::new(<span class="hljs-number">2.0f64</span>, -<span class="hljs-number">2.0</span>, <span class="hljs-number">0.0</span>);
+<span class="hljs-keyword">if</span> nalgebra::approx_eq(&amp;<span class="hljs-number">0.0f64</span>, &amp;nalgebra::dot(&amp;v1, &amp;v2)) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;v1 is orthogonal to v2&quot;</span>);
 }
 
-println!(&quot;{}&quot;, nalgebra::cross(&amp;amp;v1, &amp;amp;v2));
-println!(&quot;{}&quot;, nalgebra::cross(&amp;amp;v2, &amp;amp;v1));
-</code></pre><p>The output is:</p>
-<pre><code>:::sh
-$ cargo run
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, nalgebra::cross(&amp;v1, &amp;v2));
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, nalgebra::cross(&amp;v2, &amp;v1));
+</code></pre>
+<p>The output is:</p>
+<pre><code class="lang-sh">$ cargo run
 v1 is orthogonal to v2
-Vec3 { x: 0, y: 0, z: -8 }
-Vec3 { x: 0, y: 0, z: 8 }
-</code></pre><p><a href="http://en.wikipedia.org/wiki/Dot_product" target="_blank">Dot product</a> can be used to check if two vectors are orthogonal to each other. That happens if their dot product is equal to 0. As floating point comparisons are <a href="http://www.parashift.com/c++-faq/floating-point-arith.html" target="_blank">sometimes suprising</a>, we should use the <code>approx_eq()</code> function.</p>
+Vec3 { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, z: -<span class="hljs-number">8</span> }
+Vec3 { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, z: <span class="hljs-number">8</span> }
+</code></pre>
+<p><a href="http://en.wikipedia.org/wiki/Dot_product" target="_blank">Dot product</a> can be used to check if two vectors are orthogonal to each other. That happens if their dot product is equal to 0. As floating point comparisons are <a href="http://www.parashift.com/c++-faq/floating-point-arith.html" target="_blank">sometimes suprising</a>, we should use the <code>approx_eq()</code> function.</p>
 <p>The <a href="http://en.wikipedia.org/wiki/Cross_product" target="_blank">cross product</a> of two vectors is always perpendicular (sometimes we say <strong>normal</strong>) to <em>both</em> of them. As you can see from the example it is also not commutative. Normal vectors are very important in computer graphics for <a href="http://www.opengl-tutorial.org/beginners-tutorials/tutorial-8-basic-shading/" target="_blank">calculating light and shading</a> of the scene.</p>
 <h2 id="dynamic-vectors">Dynamic vectors</h2>
 <p>All of the <code>nalgebra</code> types we&apos;ve seen so far have their higher-dimensional variants up to <code>Vec6</code>/<code>Mat6</code> etc. But what if we want to go further? Very high number of dimensions is common for example in digital signal processing. In <code>nalgebra</code> there is a <code>DVec</code> type for that purpose.</p>
-<pre><code>:::rust
-const SIZE: uint = 512;
-let sine = DVec::from_fn(SIZE, |i: uint| {
-    let t = i as f64 / 16.0f64;
+<pre><code class="lang-rust"><span class="hljs-keyword">const</span> SIZE: usize = <span class="hljs-number">512</span>;
+<span class="hljs-keyword">let</span> sine = DVec::from_fn(SIZE, |i: usize| {
+    <span class="hljs-keyword">let</span> t = i <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span> / <span class="hljs-number">16.0f64</span>;
     t.sin()
 });
-draw(&amp;amp;sine, &amp;amp;Path::new(&quot;out_sine.png&quot;));
+draw(&amp;sine, &amp;Path::new(<span class="hljs-string">&quot;out_sine.png&quot;</span>));
 
-let window = DVec::from_fn(SIZE, |i: uint| {
-    0.54f64 - 0.46 * (PI_2 * (i as f64) / (SIZE - 1) as f64).cos()
+<span class="hljs-keyword">let</span> window = DVec::from_fn(SIZE, |i: usize| {
+    <span class="hljs-number">0.54f64</span> - <span class="hljs-number">0.46</span> * (PI * <span class="hljs-number">2.0</span> * (i <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span>) / (SIZE - <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span>).cos()
 });
-draw(&amp;amp;window, &amp;amp;Path::new(&quot;out_window.png&quot;));
+draw(&amp;window, &amp;Path::new(<span class="hljs-string">&quot;out_window.png&quot;</span>));
 
-draw(&amp;amp;(sine * window), &amp;amp;Path::new(&quot;out_windowed.png&quot;));
-</code></pre><p>We can use the <code>from_fn()</code> mwthod to create a vector by generating each element in a closure. The <code>window</code> variable is a <a href="http://en.wikipedia.org/wiki/Window_function#Hamming_window" target="_blank">Hamming window</a>; such window functions are a common preprocessing step in DSP.</p>
-<p>The <code>draw()</code> function borrows a <code>DVec</code> and a <code>Path</code> and plots a simple representation of the vector to a PNG file using the <a href="https://siciarz.net/24-days-of-rust-image/" target="_blank">image crate</a>. The code is <a href="https://github.com/zsiciarz/24daysofrust/blob/86aef8e34a1b7681a189ffbf0abc50a1f413da23/src/day14.rs#L10" target="_blank">on GitHub</a> for anybody interested. Here&apos;s the output of all three steps of the above code:</p>
+draw(&amp;(sine * window), &amp;Path::new(<span class="hljs-string">&quot;out_windowed.png&quot;</span>));
+</code></pre>
+<p>We can use the <code>from_fn()</code> mwthod to create a vector by generating each element in a closure. The <code>window</code> variable is a <a href="http://en.wikipedia.org/wiki/Window_function#Hamming_window" target="_blank">Hamming window</a>; such window functions are a common preprocessing step in DSP.</p>
+<p>The <code>draw()</code> function borrows a <code>DVec</code> and a <code>Path</code> and plots a simple representation of the vector to a PNG file using the <a href="https://siciarz.net/24-days-of-rust-image/" target="_blank">image crate</a>. The code is <a href="https://github.com/zsiciarz/24daysofrust/blob/9a88969f156581da8ba16ae50c87d884983b17c9/src/day14.rs#L11" target="_blank">on GitHub</a> for anybody interested. Here&apos;s the output of all three steps of the above code:</p>
 <p><img src="../../../../../../i.imgur.com/mQKFms3.png" alt="sine, window, windowed sine"></p>
 <h2 id="see-also">See also</h2>
 <ul>
@@ -612,10 +610,6 @@ draw(&amp;amp;(sine * window), &amp;amp;Path::new(&quot;out_windowed.png&quot;))
 <li><a href="http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-1/" target="_blank">Linear algebra for game developers</a></li>
 <li><a href="https://github.com/sebcrozet/kiss3d" target="_blank">kiss3d</a> - a simple 3D graphics engine for Rust</li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly and nalgebra 0.1.0.
-</small></p>
 
                     
                     </section>
