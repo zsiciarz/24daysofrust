@@ -139,58 +139,56 @@ Directory listing
 
 Now it's time to make `ls` work in our filesystem (for some definition of work...).
 
-    :::rust
-    fn readdir(&amp;mut self, _req: &amp;Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
-        println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
-        reply.error(ENOSYS);
-    }
+```rust
+fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
+    println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
+    reply.error(ENOSYS);
+}
+```
 
 We start with a dummy `readdir` method as before, let's see if it gets called when `ls`-ing:
 
-    :::sh
-    $ cargo run /tmp/rust-fuse
-    getattr(ino=1)
-    readdir(ino=1, fh=0, offset=0)
+```sh
+$ cargo run /tmp/rust-fuse
+getattr(ino=1)
+readdir(ino=1, fh=0, offset=0)
+```
 
 Yay! `ls` still displays an error, but that's because we wanted it to (remember, `ENOSYS`). Now we can actually implement the directory listing functionality.
 
-    :::rust
-    fn readdir(&amp;mut self, _req: &amp;Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
-        println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
-        if ino == 1 {
-            if offset == 0 {
-                reply.add(1, 0, FileType::Directory, &amp;PosixPath::new("."));
-                reply.add(1, 1, FileType::Directory, &amp;PosixPath::new(".."));
-            }
-            reply.ok();
-        } else {
-            reply.error(ENOENT);
+```rust
+fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
+    println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
+    if ino == 1 {
+        if offset == 0 {
+            reply.add(1, 0, FileType::Directory, &Path::new("."));
+            reply.add(1, 1, FileType::Directory, &Path::new(".."));
         }
+        reply.ok();
+    } else {
+        reply.error(ENOENT);
     }
+}
+```
 
 As with `getattr` we check only the first inode, otherwise return a `File not found` error (`ENOENT`). The `offset == 0` check is necessary, otherwise `readdir` will loop infinitely. So what happens if we run `ls` now?
 
-    :::sh
-    $ ls -la /tmp/rust-fuse
-    total 4
-    drwxr-xr-x  0 root root    0 Jan  1  1970 .
-    drwxrwxrwt 10 root root 4096 Dec 10 00:38 ..
+```sh
+$ ls -la /tmp/rust-fuse
+total 4
+drwxr-xr-x  0 root root    0 Jan  1  1970 .
+drwxrwxrwt 10 root root 4096 Dec 10 00:38 ..
+```
 
 Hooray! We've implemented an empty directory :-)
 
 To be continued...
 ------------------
 
-That was a lot for today, time to take a short break. See you tomorrow in [part 2](https://siciarz.net/24-days-of-rust-fuse-filesystems-part-2/)!
+That was a lot for today, time to take a short break. See you tomorrow in [part 2](day16.md)!
 
 See also
 --------
 
 * [A nice overview](http://www.cs.hmc.edu/~geoff/classes/hmc.cs135.201109/homework/fuse/fuse_doc.html#function-purposes) of FUSE functions
 * [FUSE "hello world" program in C](http://fuse.sourceforge.net/helloworld.html)
-
-----
-
-<small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small>
