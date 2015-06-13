@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="15" data-basepath=".." data-revision="Thu Jun 11 2015 09:42:32 GMT+0000 (UTC)">
+    <div class="book" data-level="15" data-basepath=".." data-revision="Sat Jun 13 2015 10:05:08 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,138 +531,145 @@
                     
                         <h1 id="day-15-fuse-filesystems-part-1">Day 15 - FUSE filesystems, part 1</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.2 nightly</p>
 </blockquote>
 <p>A traditional filesystem is typically implemented as a kernel module. However, some Unix-like operating systems (Linux, FreeBSD, Mac OS X and a few others) allow for userspace filesystems through a mechanism called <a href="http://en.wikipedia.org/wiki/Filesystem_in_Userspace" target="_blank">FUSE</a>. The <a href="http://fuse.sourceforge.net/" target="_blank">canonical FUSE library</a> is written in C and there are some bindings from other languages (<a href="https://github.com/terencehonles/fusepy" target="_blank">Python</a>, <a href="https://github.com/lwoggardner/rfusefs" target="_blank">Ruby</a> etc.)</p>
 <p>The <a href="https://github.com/zargony/rust-fuse" target="_blank">fuse crate</a> is very interesting because it&apos;s a rewrite from C to Rust, leveraging many of Rust features unavailable in C. The only binding to libfuse is related to mounting and unmounting the filesystem, the rest is pure Rust.</p>
 <p>Small disclaimer: I&apos;m not very well versed in filesystems, in fact this is my first attempt at FUSE. I&apos;m learning a lot while writing this article, hopefully for the best of all of us :-)</p>
 <h2 id="json-filesystem">JSON filesystem</h2>
 <p>In this and the following article we&apos;ll try to create a read-only FUSE filesystem that represents a JSON object (a key-value map). The keys will map to filenames, while file contents will represent values stored under respective keys.</p>
-<p>Let&apos;s start with a filesystem that does absolutely nothing, but can be mounted and unmounted. The following example is almost directly taken from <a href="https://github.com/zargony/rust-fuse/blob/e74c071e0e9f320d9a329c6cbc4ce5bda9345537/examples/null.rs" target="_blank">rust-fuse</a> sources. This will be our starting point:</p>
-<pre><code>:::rust
-extern crate fuse;
+<p>Let&apos;s start with a filesystem that does absolutely nothing, but can be mounted and unmounted. The following example is almost directly taken from <a href="https://github.com/zargony/rust-fuse/blob/bcfb2f9eb6679c12881a8d002e4af89e7b3482dc/examples/null.rs" target="_blank">rust-fuse</a> sources. This will be our starting point:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> fuse;
 
-use std::os;
-use fuse::Filesystem;
+<span class="hljs-keyword">use</span> std::env;
+<span class="hljs-keyword">use</span> fuse::Filesystem;
 
-struct JsonFilesystem;
+<span class="hljs-keyword">struct</span> JsonFilesystem;
 
-impl Filesystem for JsonFilesystem {
+<span class="hljs-keyword">impl</span> Filesystem <span class="hljs-keyword">for</span> JsonFilesystem {
 }
 
-fn main() {
-    let mountpoint = match os::args().as_slice() {
-        [_, ref path] =&gt; Path::new(path),
-        _ =&gt; {
-            println!(&quot;Usage: {} &lt;MOUNTPOINT&gt;&quot;, os::args()[0]);
-            return;
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> mountpoint = <span class="hljs-keyword">match</span> env::args().nth(<span class="hljs-number">1</span>) {
+        Some(path) =&gt; path,
+        None =&gt; {
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} &lt;MOUNTPOINT&gt;&quot;</span>, env::args().nth(<span class="hljs-number">0</span>).unwrap());
+            <span class="hljs-keyword">return</span>;
         }
     };
-    fuse::mount(JsonFilesystem, &amp;amp;mountpoint, &amp;amp;[]);
+    fuse::mount(JsonFilesystem, &amp;mountpoint, &amp;[]);
 }
-</code></pre><p>Create the mount point (fancy name for an empty directory) and run the program:</p>
-<pre><code>:::sh
-$ mkdir /tmp/rust-fuse
+</code></pre>
+<p>Create the mount point (fancy name for an empty directory) and run the program:</p>
+<pre><code class="lang-sh">$ mkdir /tmp/rust-fuse
 $ cargo run /tmp/rust-fuse
-</code></pre><p><strong>Note</strong>: If you get <code>fusermount: failed to open /etc/fuse.conf: Permission denied</code> errors, you need to add yourself to the <code>fuse</code> group:</p>
-<pre><code>:::sh
-$ sudo addgroup &lt;USERNAME&gt; fuse
-</code></pre><p>Log out and log in again to apply changes.</p>
-<p>Now try the following in another terminal window:</p>
-<pre><code>:::sh
-$ ls /tmp/rust-fuse
+</code></pre>
+<p><strong>Note</strong>: If you get <code>fusermount: failed to open /etc/fuse.conf: Permission denied</code> errors, you need to add yourself to the <code>fuse</code> group:</p>
+<pre><code class="lang-sh">$ sudo addgroup &lt;USERNAME&gt; fuse
+</code></pre>
+<p>Log out and log in again to apply changes.</p>
+<p>Now try the following in another terminal window, while our Rust program is still running:</p>
+<pre><code class="lang-sh">$ ls /tmp/rust-fuse
 ls: cannot access /tmp/rust-fuse: Function not implemented
-</code></pre><p>Great! This means our filesystem is mounted, but listing directory contents is not implemented. In fact no action is implemented yet, so let&apos;s get to work!</p>
+</code></pre>
+<p>Great! This means our filesystem is mounted, but listing directory contents is not implemented. In fact no action is implemented yet, so let&apos;s get to work!</p>
 <p>By the way - to unmount your filesystem, stop the Rust program and then execute <code>fusermount -u /tmp/rust-fuse</code>. If you don&apos;t unmount, you&apos;ll run into errors next time you try <code>cargo run</code>.</p>
 <h2 id="attributes">Attributes</h2>
-<p>First of all we need to add a number of imports at the top.</p>
-<pre><code>:::rust
-extern crate libc;
-extern crate time;
+<p>First of all we need to add a number of imports at the top. We&apos;ll be using the <a href="https://crates.io/crates/libc" target="_blank">libc</a> and <a href="https://crates.io/crates/time" target="_blank">time</a> crates, so make sure to add them as dependencies to <code>Cargo.toml</code>.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> libc;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> time;
 
-use std::io::{FileType, USER_FILE, USER_DIR};
-use std::mem;
-use std::os;
-use libc::{ENOENT, ENOSYS};
-use time::Timespec;
-use fuse::{FileAttr, Filesystem, Request, ReplyAttr, ReplyEntry, ReplyDirectory};
-</code></pre><p>Let&apos;s start with the <code>getattr</code> function. FUSE will call it when reading file or directory attributes, such as size, creation time, uid etc.</p>
-<pre><code>:::rust
-impl Filesystem for JsonFilesystem {
-    fn getattr(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, reply: ReplyAttr) {
-        println!(&quot;getattr(ino={})&quot;, ino);
+<span class="hljs-keyword">use</span> std::path::Path;
+<span class="hljs-keyword">use</span> libc::{ENOENT, ENOSYS};
+<span class="hljs-keyword">use</span> time::Timespec;
+<span class="hljs-keyword">use</span> fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
+</code></pre>
+<p>Let&apos;s start with the <code>getattr</code> function. FUSE will call it when reading file or directory attributes, such as size, creation time, uid etc.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">impl</span> Filesystem <span class="hljs-keyword">for</span> JsonFilesystem {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">getattr</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, reply: ReplyAttr) {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;getattr(ino={})&quot;</span>, ino);
         reply.error(ENOSYS);
     }
 }
-</code></pre><p>We still return an <code>ENOSYS</code> status code (this is what causes the <code>Function not implemented</code> error), but we will see in the program output that FUSE called <code>getattr</code> on inode number 1, which is the root directory of our filesystem. OK, now let&apos;s flesh out this method:</p>
-<pre><code>:::rust
-fn getattr(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, reply: ReplyAttr) {
-    println!(&quot;getattr(ino={})&quot;, ino);
-    let mut attr: FileAttr = unsafe { mem::zeroed() };
-    attr.ino = 1;
-    attr.kind = FileType::Directory;
-    attr.perm = USER_DIR;
-    let ttl = Timespec::new(1, 0);
-    if ino == 1 {
-        reply.attr(&amp;amp;ttl, &amp;amp;attr);
-    } else {
+</code></pre>
+<p>We still return an <code>ENOSYS</code> status code (this is what causes the <code>Function not implemented</code> error), but we will see in the program output that FUSE called <code>getattr</code> on inode number 1, which is the root directory of our filesystem. OK, now let&apos;s flesh out this method:</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">getattr</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, reply: ReplyAttr) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;getattr(ino={})&quot;</span>, ino);
+    <span class="hljs-keyword">let</span> ts = Timespec::new(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">let</span> attr = FileAttr {
+        ino: <span class="hljs-number">1</span>,
+        size: <span class="hljs-number">0</span>,
+        blocks: <span class="hljs-number">0</span>,
+        atime: ts,
+        mtime: ts,
+        ctime: ts,
+        crtime: ts,
+        kind: FileType::Directory,
+        perm: <span class="hljs-number">0</span>o755,
+        nlink: <span class="hljs-number">0</span>,
+        uid: <span class="hljs-number">0</span>,
+        gid: <span class="hljs-number">0</span>,
+        rdev: <span class="hljs-number">0</span>,
+        flags: <span class="hljs-number">0</span>,
+    };
+    <span class="hljs-keyword">let</span> ttl = Timespec::new(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span> ino == <span class="hljs-number">1</span> {
+        reply.attr(&amp;ttl, &amp;attr);
+    } <span class="hljs-keyword">else</span> {
         reply.error(ENOSYS);
     }
 }
-</code></pre><p>The <code>FileAttr</code> struct is somewhat similar to <code>struct stat</code> in C. We initialize it with zeros (just as call to <code>memset</code> in C would do) and later fill only a few selected fields. If you now run <code>stat</code> on the root directory, you&apos;ll see the permissions and familiar dates from the 70&apos;s (timestamps are 0):</p>
-<pre><code>:::sh
-$ stat /tmp/rust-fuse
-File: `/tmp/rust-fuse&apos;
+</code></pre>
+<p>The <code>FileAttr</code> struct is somewhat similar to <code>struct stat</code> in C. If you now run <code>stat</code> on the root directory, you&apos;ll see the permissions and familiar dates from the 70&apos;s (timestamps are 0):</p>
+<pre><code class="lang-sh">$ <span class="hljs-built_in">stat</span> /tmp/rust-fuse
+File: `/tmp/rust-fuse<span class="hljs-string">&apos;
 Size: 0               Blocks: 0          IO Block: 4096   directory
 Device: 27h/39d     Inode: 1           Links: 0
 Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
 Access: 1970-01-01 01:00:00.000000000 +0100
 Modify: 1970-01-01 01:00:00.000000000 +0100
 Change: 1970-01-01 01:00:00.000000000 +0100
-</code></pre><h2 id="directory-listing">Directory listing</h2>
+</span></code></pre>
+<h2 id="directory-listing">Directory listing</h2>
 <p>Now it&apos;s time to make <code>ls</code> work in our filesystem (for some definition of work...).</p>
-<pre><code>:::rust
-fn readdir(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
-    println!(&quot;readdir(ino={}, fh={}, offset={})&quot;, ino, fh, offset);
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">readdir</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, fh: <span class="hljs-keyword">u64</span>, offset: <span class="hljs-keyword">u64</span>, <span class="hljs-keyword">mut</span> reply: ReplyDirectory) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;readdir(ino={}, fh={}, offset={})&quot;</span>, ino, fh, offset);
     reply.error(ENOSYS);
 }
-</code></pre><p>We start with a dummy <code>readdir</code> method as before, let&apos;s see if it gets called when <code>ls</code>-ing:</p>
-<pre><code>:::sh
-$ cargo run /tmp/rust-fuse
-getattr(ino=1)
-readdir(ino=1, fh=0, offset=0)
-</code></pre><p>Yay! <code>ls</code> still displays an error, but that&apos;s because we wanted it to (remember, <code>ENOSYS</code>). Now we can actually implement the directory listing functionality.</p>
-<pre><code>:::rust
-fn readdir(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
-    println!(&quot;readdir(ino={}, fh={}, offset={})&quot;, ino, fh, offset);
-    if ino == 1 {
-        if offset == 0 {
-            reply.add(1, 0, FileType::Directory, &amp;amp;PosixPath::new(&quot;.&quot;));
-            reply.add(1, 1, FileType::Directory, &amp;amp;PosixPath::new(&quot;..&quot;));
+</code></pre>
+<p>We start with a dummy <code>readdir</code> method as before, let&apos;s see if it gets called when <code>ls</code>-ing:</p>
+<pre><code class="lang-sh">$ cargo run /tmp/rust-fuse
+getattr(ino=<span class="hljs-number">1</span>)
+readdir(ino=<span class="hljs-number">1</span>, fh=<span class="hljs-number">0</span>, offset=<span class="hljs-number">0</span>)
+</code></pre>
+<p>Yay! <code>ls</code> still displays an error, but that&apos;s because we wanted it to (remember, <code>ENOSYS</code>). Now we can actually implement the directory listing functionality.</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">readdir</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, fh: <span class="hljs-keyword">u64</span>, offset: <span class="hljs-keyword">u64</span>, <span class="hljs-keyword">mut</span> reply: ReplyDirectory) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;readdir(ino={}, fh={}, offset={})&quot;</span>, ino, fh, offset);
+    <span class="hljs-keyword">if</span> ino == <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">if</span> offset == <span class="hljs-number">0</span> {
+            reply.add(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, FileType::Directory, &amp;Path::new(<span class="hljs-string">&quot;.&quot;</span>));
+            reply.add(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, FileType::Directory, &amp;Path::new(<span class="hljs-string">&quot;..&quot;</span>));
         }
         reply.ok();
-    } else {
+    } <span class="hljs-keyword">else</span> {
         reply.error(ENOENT);
     }
 }
-</code></pre><p>As with <code>getattr</code> we check only the first inode, otherwise return a <code>File not found</code> error (<code>ENOENT</code>). The <code>offset == 0</code> check is necessary, otherwise <code>readdir</code> will loop infinitely. So what happens if we run <code>ls</code> now?</p>
-<pre><code>:::sh
-$ ls -la /tmp/rust-fuse
-total 4
-drwxr-xr-x  0 root root    0 Jan  1  1970 .
-drwxrwxrwt 10 root root 4096 Dec 10 00:38 ..
-</code></pre><p>Hooray! We&apos;ve implemented an empty directory :-)</p>
+</code></pre>
+<p>As with <code>getattr</code> we check only the first inode, otherwise return a <code>File not found</code> error (<code>ENOENT</code>). The <code>offset == 0</code> check is necessary, otherwise <code>readdir</code> will loop infinitely. So what happens if we run <code>ls</code> now?</p>
+<pre><code class="lang-sh">$ ls -la /tmp/rust-fuse
+total <span class="hljs-number">4</span>
+drwxr-xr-x  <span class="hljs-number">0</span> root root    <span class="hljs-number">0</span> Jan  <span class="hljs-number">1</span>  <span class="hljs-number">1970</span> .
+drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-number">4096</span> Dec <span class="hljs-number">10</span> <span class="hljs-number">00</span>:<span class="hljs-number">38</span> ..
+</code></pre>
+<p>Hooray! We&apos;ve implemented an empty directory :-)</p>
 <h2 id="to-be-continued">To be continued...</h2>
-<p>That was a lot for today, time to take a short break. See you tomorrow in <a href="https://siciarz.net/24-days-of-rust-fuse-filesystems-part-2/" target="_blank">part 2</a>!</p>
+<p>That was a lot for today, time to take a short break. See you tomorrow in <a href="day16.html">part 2</a>!</p>
 <h2 id="see-also">See also</h2>
 <ul>
 <li><a href="http://www.cs.hmc.edu/~geoff/classes/hmc.cs135.201109/homework/fuse/fuse_doc.html#function-purposes" target="_blank">A nice overview</a> of FUSE functions</li>
 <li><a href="http://fuse.sourceforge.net/helloworld.html" target="_blank">FUSE &quot;hello world&quot; program in C</a></li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small></p>
 
                     
                     </section>

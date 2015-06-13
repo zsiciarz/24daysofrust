@@ -63,6 +63,8 @@ docopt_macros = "~0.6.66"
 image = "~0.3.11"
 itertools = "~0.3.14"
 json_macros = "~0.2.4"
+libc = "~0.1.8"
+nalgebra = "~0.2.17"
 num = "~0.1.25"
 postgres_array = "~0.5.0"
 postgres_macros = "~0.1.2"
@@ -90,9 +92,6 @@ features = ["rustc-serialize", "time"]
 
 [dependencies.fuse]
 git = "https://github.com/zargony/rust-fuse.git"
-
-[dependencies.nalgebra]
-git = "https://github.com/sebcrozet/nalgebra.git"
 
 #[dependencies.zeromq]
 #git = "https://github.com/zeromq/zmq.rs.git"
