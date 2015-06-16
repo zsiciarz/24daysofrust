@@ -1,36 +1,36 @@
 language: rust
 rust:
-    - nightly
+  - nightly
 addons:
-    postgresql: "9.4"
+  postgresql: "9.4"
 services:
-    - redis-server
+  - redis-server
 before_install:
-    - sudo apt-get install -y libfuse-dev
+  - sudo apt-get install -y libfuse-dev
 before_script:
-    - psql -c "create user rust with password 'rust';" -U postgres
-    - psql -c "create database rust owner rust;" -U postgres
+  - psql -c "create user rust with password 'rust';" -U postgres
+  - psql -c "create database rust owner rust;" -U postgres
 script:
-    - cargo build
-    - cargo run --bin=day2
-    - cargo run --bin=day3
-    - cargo run --bin=day4
-    - cargo run --bin=day5
-    - cargo run --bin=day6
-    - cargo run --bin=day7
-    - cargo run --bin=day9
-    - cargo run --bin=day10
-    - cargo run --bin=day11
-    - cargo run --bin=day12
-    - cargo run --bin=day13
-    - cargo run --bin=day14
-    - cargo run --bin=day17
-    - cargo run --bin=day18
-    - cargo run --bin=day21
+  - cargo build
+  - cargo run --bin=day2
+  - cargo run --bin=day3
+  - cargo run --bin=day4
+  - cargo run --bin=day5
+  - cargo run --bin=day6
+  - cargo run --bin=day7
+  - cargo run --bin=day9
+  - cargo run --bin=day10
+  - cargo run --bin=day11
+  - cargo run --bin=day12
+  - cargo run --bin=day13
+  - cargo run --bin=day14
+  - cargo run --bin=day17
+  - cargo run --bin=day18
+  - cargo run --bin=day21
 after_success:
-    - npm install gitbook-cli
-    - gitbook build -v 2.0.1
-    - test "$TRAVIS_PULL_REQUEST" == false && test "$TRAVIS_BRANCH" == "master" && bash deploy-book.sh
+  - npm install gitbook-cli
+  - gitbook build -v 2.0.1
+  - test "$TRAVIS_PULL_REQUEST" == false && test "$TRAVIS_BRANCH" == "master" && bash deploy-book.sh
 env:
-    global:
-        - secure: "bwaHviVayREGvar1lk9CY7gZR/Ck95hY6TuKZUhrBXakg4k/uw4D6fHEbCb7NTom12mvD3UP7Spwp4nZDjkRmXIppODB+SYmkS9zxwvm154SH+09uXW4XCjbtIUWsGx79pG/FlVQ7Cz5kvY4IY+a6PV2JSsTBvJCYjeNrZ9Qeuo="
+  global:
+    - secure: "bwaHviVayREGvar1lk9CY7gZR/Ck95hY6TuKZUhrBXakg4k/uw4D6fHEbCb7NTom12mvD3UP7Spwp4nZDjkRmXIppODB+SYmkS9zxwvm154SH+09uXW4XCjbtIUWsGx79pG/FlVQ7Cz5kvY4IY+a6PV2JSsTBvJCYjeNrZ9Qeuo="
