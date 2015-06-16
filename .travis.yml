@@ -1,8 +1,15 @@
 language: rust
 rust:
     - nightly
+addons:
+    postgresql: "9.4"
+services:
+    - redis-server
 before_install:
     - sudo apt-get install -y libfuse-dev
+before_script:
+    - psql -c "create user rust with password 'rust';" -U postgres
+    - psql -c "create database rust owner rust;" -U postgres
 script:
     - cargo build
     - cargo run --bin=day2
@@ -20,8 +27,6 @@ script:
     - cargo run --bin=day17
     - cargo run --bin=day18
     - cargo run --bin=day21
-services:
-    - redis-server
 after_success:
     - npm install gitbook-cli
     - gitbook build -v 2.0.1
