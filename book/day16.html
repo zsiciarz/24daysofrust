@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="16" data-basepath=".." data-revision="Sat Jun 20 2015 12:15:14 GMT+0000 (UTC)">
+    <div class="book" data-level="16" data-basepath=".." data-revision="Sat Jun 20 2015 21:11:37 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,102 +531,103 @@
                     
                         <h1 id="day-16-fuse-filesystems-part-2">Day 16 - FUSE filesystems, part 2</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.2 nightly</p>
 </blockquote>
-<p>We finished <a href="https://siciarz.net/24-days-of-rust-fuse-filesystems-part-1/" target="_blank">part 1</a> with a working FUSE filesystem representing an empty directory. Today we will continue the story and finally add some files to the mix.</p>
+<p>We finished <a href="day15.html">part 1</a> with a working FUSE filesystem representing an empty directory. Today we will continue the story and finally add some files to the mix.</p>
 <h2 id="directory-listing-revisited">Directory listing revisited</h2>
 <p>We need to add a minimal amount of JSON handling before actually presenting the data in our filesystem. The <code>JsonFilesystem</code> struct will hold a <code>json::Object</code> value (this is a typedef for a <code>TreeMap</code>) representing the root object in the input JSON.</p>
-<pre><code>:::rust
-#![feature(phase)]
-#[phase(plugin)]
-extern crate json_macros;
-extern crate serialize;
+<pre><code class="lang-rust">#![feature(plugin)]
+#![plugin(json_macros)]
 
-use serialize::json;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
 
-struct JsonFilesystem {
-    tree: json::Object,
+<span class="hljs-keyword">use</span> rustc_serialize::json;
+
+<span class="hljs-keyword">struct</span> JsonFilesystem {
+    tree: json::Object
 }
 
-fn main() {
-    let data = json!({
-        &quot;foo&quot;: &quot;bar&quot;,
-        &quot;answer&quot;: 42,
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> data = json!({
+        <span class="hljs-string">&quot;foo&quot;</span>: <span class="hljs-string">&quot;bar&quot;</span>,
+        <span class="hljs-string">&quot;answer&quot;</span>: <span class="hljs-number">42</span>,
     });
-    let tree = data.as_object().unwrap();
-    let fs = JsonFilesystem { tree: tree.clone() };
-    let mountpoint = match os::args().as_slice() {
-        [_, ref path] =&gt; Path::new(path),
-        _ =&gt; {
-            println!(&quot;Usage: {} &lt;MOUNTPOINT&gt;&quot;, os::args()[0]);
-            return;
+    <span class="hljs-keyword">let</span> tree = data.as_object().unwrap();
+    <span class="hljs-keyword">let</span> fs = JsonFilesystem { tree: tree.clone() };
+    <span class="hljs-keyword">let</span> mountpoint = <span class="hljs-keyword">match</span> env::args().nth(<span class="hljs-number">1</span>) {
+        Some(path) =&gt; path,
+        None =&gt; {
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} &lt;MOUNTPOINT&gt;&quot;</span>, env::args().nth(<span class="hljs-number">0</span>).unwrap());
+            <span class="hljs-keyword">return</span>;
         }
     };
-    fuse::mount(fs, &amp;amp;mountpoint, &amp;amp;[]);
+    fuse::mount(fs, &amp;mountpoint, &amp;[]);
 }
-</code></pre><p>We used the <a href="https://siciarz.net/24-days-of-rust-working-json/" target="_blank">json! macro</a> to embed JSON data directly in the source. The <code>readdir</code> method must be updated to add directory entries for each key in the JSON.</p>
-<pre><code>:::rust
-for (i, key) in self.tree.keys().enumerate() {
-    let inode: u64 = 2 + i as u64;
-    let offset: u64 = 2 + i as u64;
-    reply.add(inode, offset, FileType::RegularFile, &amp;amp;PosixPath::new(key));
+</code></pre>
+<p>We used the <a href="day6.html">json! macro</a> to embed JSON data directly in the source. The <code>readdir</code> method must be updated to add directory entries for each key in the JSON.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">for</span> (i, key) <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.tree.keys().enumerate() {
+    <span class="hljs-keyword">let</span> inode: <span class="hljs-keyword">u64</span> = <span class="hljs-number">2</span> + i <span class="hljs-keyword">as</span> <span class="hljs-keyword">u64</span>;
+    <span class="hljs-keyword">let</span> offset: <span class="hljs-keyword">u64</span> = <span class="hljs-number">2</span> + i <span class="hljs-keyword">as</span> <span class="hljs-keyword">u64</span>;
+    reply.add(inode, offset, FileType::RegularFile, &amp;Path::new(key));
 }
-</code></pre><p>Let&apos;s look at the result:</p>
-<pre><code>:::sh
-$ ls -la /tmp/rust-fuse
-total 4
-drwxr-xr-x  0 root root    0 Jan  1  1970 .
-drwxrwxrwt 10 root root 4096 Dec 10 00:38 ..
+</code></pre>
+<p>Let&apos;s look at the result:</p>
+<pre><code class="lang-sh">$ ls -la /tmp/rust-fuse
+total <span class="hljs-number">4</span>
+drwxr-xr-x  <span class="hljs-number">0</span> root root    <span class="hljs-number">0</span> Jan  <span class="hljs-number">1</span>  <span class="hljs-number">1970</span> .
+drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-number">4096</span> Dec <span class="hljs-number">10</span> <span class="hljs-number">00</span>:<span class="hljs-number">38</span> ..
 -?????????  ? ?    ?        ?            ? answer
 -?????????  ? ?    ?        ?            ? foo
-</code></pre><p>Starting to look good! Our JSON keys are there, but what&apos;s with these question marks? Turns out FUSE calls another method called <code>lookup()</code> and since we haven&apos;t defined it yet, a default implementation will be used. But before we write our customized <code>lookup</code>, let&apos;s refactor the code a bit.</p>
+</code></pre>
+<p>Starting to look good! Our JSON keys are there, but what&apos;s with these question marks? Turns out FUSE calls another method called <code>lookup()</code> and since we haven&apos;t defined it yet, a default implementation will be used. But before we write our customized <code>lookup</code>, let&apos;s refactor the code a bit.</p>
 <p>Both <code>getattr</code> and <code>lookup</code> create <code>FileAttr</code> values based on inode number or filename (JSON key in our example). Since we intend our filesystem to be read-only, let&apos;s create all necessary atributes upon initialization. This will simplify the other methods a lot.</p>
-<pre><code>:::rust
-struct JsonFilesystem {
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> std::collections::BTreeMap;
+
+<span class="hljs-keyword">struct</span> JsonFilesystem {
     tree: json::Object,
-    attrs: TreeMap&lt;u64, FileAttr&gt;,
-    inodes: TreeMap&lt;String, u64&gt;,
+    attrs: BTreeMap&lt;<span class="hljs-keyword">u64</span>, FileAttr&gt;,
+    inodes: BTreeMap&lt;String, <span class="hljs-keyword">u64</span>&gt;,
 }
 
-impl JsonFilesystem {
-    fn new(tree: &amp;amp;json::Object) -&gt; JsonFilesystem {
-        let mut attrs = TreeMap::new();
-        let mut inodes = TreeMap::new();
-        let ts = time::now().to_timespec();
-        let attr = FileAttr {
-            ino: 1,
-            size: 0,
-            blocks: 0,
+<span class="hljs-keyword">impl</span> JsonFilesystem {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(tree: &amp;json::Object) -&gt; JsonFilesystem {
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> attrs = BTreeMap::new();
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> inodes = BTreeMap::new();
+        <span class="hljs-keyword">let</span> ts = time::now().to_timespec();
+        <span class="hljs-keyword">let</span> attr = FileAttr {
+            ino: <span class="hljs-number">1</span>,
+            size: <span class="hljs-number">0</span>,
+            blocks: <span class="hljs-number">0</span>,
             atime: ts,
             mtime: ts,
             ctime: ts,
             crtime: ts,
             kind: FileType::Directory,
-            perm: USER_DIR,
-            nlink: 0,
-            uid: 0,
-            gid: 0,
-            rdev: 0,
-            flags: 0,
+            perm: <span class="hljs-number">0</span>o755,
+            nlink: <span class="hljs-number">0</span>,
+            uid: <span class="hljs-number">0</span>,
+            gid: <span class="hljs-number">0</span>,
+            rdev: <span class="hljs-number">0</span>,
+            flags: <span class="hljs-number">0</span>,
         };
-        attrs.insert(1, attr);
-        inodes.insert(&quot;/&quot;.to_string(), 1);
-        for (i, (key, value)) in tree.iter().enumerate() {
-            let attr = FileAttr {
-                ino: i as u64 + 2,
-                size: value.to_pretty_str().len() as u64,
-                blocks: 0,
+        attrs.insert(<span class="hljs-number">1</span>, attr);
+        inodes.insert(<span class="hljs-string">&quot;/&quot;</span>.to_string(), <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span> (i, (key, value)) <span class="hljs-keyword">in</span> tree.iter().enumerate() {
+            <span class="hljs-keyword">let</span> attr = FileAttr {
+                ino: i <span class="hljs-keyword">as</span> <span class="hljs-keyword">u64</span> + <span class="hljs-number">2</span>,
+                size: value.pretty().to_string().len() <span class="hljs-keyword">as</span> <span class="hljs-keyword">u64</span>,
+                blocks: <span class="hljs-number">0</span>,
                 atime: ts,
                 mtime: ts,
                 ctime: ts,
                 crtime: ts,
                 kind: FileType::RegularFile,
-                perm: USER_FILE,
-                nlink: 0,
-                uid: 0,
-                gid: 0,
-                rdev: 0,
-                flags: 0,
+                perm: <span class="hljs-number">0</span>o644,
+                nlink: <span class="hljs-number">0</span>,
+                uid: <span class="hljs-number">0</span>,
+                gid: <span class="hljs-number">0</span>,
+                rdev: <span class="hljs-number">0</span>,
+                flags: <span class="hljs-number">0</span>,
             };
             attrs.insert(attr.ino, attr);
             inodes.insert(key.clone(), attr.ino);
@@ -634,27 +635,28 @@ impl JsonFilesystem {
         JsonFilesystem { tree: tree.clone(), attrs: attrs, inodes: inodes }
     }
 }
-</code></pre><p>We used <code>time::now()</code> to set current timestamps for creation/modification times instead of the epoch time (January 1, 1970). This time we&apos;re explicit about initializing <code>FileAttr</code> following the suggestion from <a href="http://www.reddit.com/r/rust/comments/2pdxbe/24_days_of_rust_fuse_filesystems_part_1/cmvtgi1" target="_blank">the reddit thread</a>. We also calculate the size of our &quot;files&quot; and store that in the attribute struct.</p>
+</code></pre>
+<p>We used <code>time::now()</code> to set current timestamps for creation/modification times instead of the epoch time (January 1, 1970). We also calculate the size of our &quot;files&quot; and store that in the attribute struct.</p>
 <p>With that in our toolkit, let&apos;s implement <code>lookup()</code>.</p>
-<pre><code>:::rust
-fn lookup(&amp;amp;mut self, _req: &amp;amp;Request, parent: u64, name: &amp;amp;PosixPath, reply: ReplyEntry) {
-    println!(&quot;lookup(parent={}, name={})&quot;, parent, name.display());
-    let inode = match self.inodes.get(name.as_str().unwrap()) {
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">lookup</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, parent: <span class="hljs-keyword">u64</span>, name: &amp;Path, reply: ReplyEntry) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;lookup(parent={}, name={})&quot;</span>, parent, name.display());
+    <span class="hljs-keyword">let</span> inode = <span class="hljs-keyword">match</span> <span class="hljs-keyword">self</span>.inodes.get(name.to_str().unwrap()) {
         Some(inode) =&gt; inode,
         None =&gt; {
             reply.error(ENOENT);
-            return;
+            <span class="hljs-keyword">return</span>;
         },
     };
-    match self.attrs.get(inode) {
+    <span class="hljs-keyword">match</span> <span class="hljs-keyword">self</span>.attrs.get(inode) {
         Some(attr) =&gt; {
-            let ttl = Timespec::new(1, 0);
-            reply.entry(&amp;amp;ttl, attr, 0);
+            <span class="hljs-keyword">let</span> ttl = Timespec::new(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+            reply.entry(&amp;ttl, attr, <span class="hljs-number">0</span>);
         },
         None =&gt; reply.error(ENOENT),
     };
 }
-</code></pre><p>This method is quite straightforward since we moved attribute-related logic to <code>JsonFilesystem::new</code>. If we run <code>ls</code> now:</p>
+</code></pre>
+<p>This method is quite straightforward since we moved attribute-related logic to <code>JsonFilesystem::new</code>. If we run <code>ls</code> now:</p>
 <pre><code>:::sh
 $ ls -la /tmp/rust-fuse
 total 4
@@ -663,50 +665,46 @@ drwxrwxrwt 15 root root  4096 Dec 16 10:17 ..
 -rw-r--r--  0 root root     2 Dec 16 10:17 answer
 -rw-r--r--  0 root root     5 Dec 16 10:17 foo
 </code></pre><p>No more question marks! The <code>getattr</code> method is even simpler now:</p>
-<pre><code>:::rust
-fn getattr(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, reply: ReplyAttr) {
-    println!(&quot;getattr(ino={})&quot;, ino);
-    match self.attrs.get(&amp;amp;ino) {
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">getattr</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, reply: ReplyAttr) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;getattr(ino={})&quot;</span>, ino);
+    <span class="hljs-keyword">match</span> <span class="hljs-keyword">self</span>.attrs.get(&amp;ino) {
         Some(attr) =&gt; {
-            let ttl = Timespec::new(1, 0);
-            reply.attr(&amp;amp;ttl, attr);
+            <span class="hljs-keyword">let</span> ttl = Timespec::new(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+            reply.attr(&amp;ttl, attr);
         },
         None =&gt; reply.error(ENOENT),
     };
 }
-</code></pre><h2 id="reading-files">Reading files</h2>
+</code></pre>
+<h2 id="reading-files">Reading files</h2>
 <p>This is the final piece of the puzzle in our filesystem. Fortunately it is pretty simple after all we&apos;ve done so far. We need to implement the <code>read</code> method.</p>
-<pre><code>:::rust
-fn read(&amp;amp;mut self, _req: &amp;amp;Request, ino: u64, fh: u64, offset: u64, size: uint, reply: ReplyData) {
-    println!(&quot;read(ino={}, fh={}, offset={}, size={})&quot;, ino, fh, offset, size);
-    for (key, &amp;amp;inode) in self.inodes.iter() {
-        if inode == ino {
-            let value = self.tree.get(key).unwrap();
-            reply.data(value.to_pretty_str().as_bytes());
-            return;
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">read</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, fh: <span class="hljs-keyword">u64</span>, offset: <span class="hljs-keyword">u64</span>, size: <span class="hljs-keyword">u32</span>, reply: ReplyData) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;read(ino={}, fh={}, offset={}, size={})&quot;</span>, ino, fh, offset, size);
+    <span class="hljs-keyword">for</span> (key, &amp;inode) <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.inodes.iter() {
+        <span class="hljs-keyword">if</span> inode == ino {
+            <span class="hljs-keyword">let</span> value = <span class="hljs-keyword">self</span>.tree.get(key).unwrap();
+            reply.data(value.pretty().to_string().as_bytes());
+            <span class="hljs-keyword">return</span>;
         }
     }
     reply.error(ENOENT);
 }
-</code></pre><p>Let&apos;s try reading a &quot;file&quot; now:</p>
-<pre><code>:::sh
-$ less /tmp/rust-fuse/answer
-42
+</code></pre>
+<p>Let&apos;s try reading a &quot;file&quot; now:</p>
+<pre><code class="lang-sh">$ less /tmp/rust-fuse/answer
+<span class="hljs-number">42</span>
 $ wc /tmp/rust-fuse/foo
-0 1 5 /tmp/rust-fuse/foo
+<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">5</span> /tmp/rust-fuse/foo
 $ grep -rn bar /tmp/rust-fuse
-/tmp/rust-fuse/foo:1:&quot;bar&quot;
-</code></pre><p><strong>Awesome!</strong></p>
+/tmp/rust-fuse/foo:<span class="hljs-number">1</span>:<span class="hljs-string">&quot;bar&quot;</span>
+</code></pre>
+<p><strong>Awesome!</strong></p>
 <p>As usual, the code for yesterday and today is in the <a href="https://github.com/zsiciarz/24daysofrust" target="_blank">24daysofrust</a> repository on GitHub. Of course this is by no means a complete JSON-as-a-filesystem implementation. Here are some ideas for future expansion:</p>
 <ul>
 <li>nesting - if a key contains a JSON object, why not represent it as a subdirectory</li>
 <li>creating files, writing to them, deleting etc. - a fully writeable filesystem</li>
 <li>getting rid of linear search in <code>read</code> (that&apos;s evidently not very efficient)</li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small></p>
 
                     
                     </section>
