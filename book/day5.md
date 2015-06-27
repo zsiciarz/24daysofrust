@@ -25,7 +25,7 @@ use std::io::Read;
 use hyper::{Client};
 
 fn main() {
-    let mut client = Client::new();
+    let client = Client::new();
     let url = "http://httpbin.org/status/201";
     let mut response = match client.get(url).send() {
         Ok(response) => response,
@@ -44,7 +44,7 @@ That was... *verbose*. I could just use `unwrap()` everywhere, but that would be
 
 ```rust
 fn get_content(url: &str) -> hyper::Result<String> {
-    let mut client = Client::new();
+    let client = Client::new();
     let mut response = try!(client.get(url).send());
     let mut buf = String::new();
     try!(response.read_to_string(&mut buf));
@@ -71,7 +71,7 @@ use url::form_urlencoded;
 type Query<'a> = Vec<(&'a str, &'a str)>;
 
 fn post_query(url: &str, query: Query) -> hyper::Result<String> {
-    let mut client = Client::new();
+    let client = Client::new();
     let body = form_urlencoded::serialize(query);
     let mut response = try!(client.post(url).body(&body[..]).send());
     let mut buf = String::new();
