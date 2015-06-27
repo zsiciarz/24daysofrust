@@ -83,7 +83,7 @@ uuid = "~0.1.17"
 #git = "https://github.com/FranklinChen/rust-tau.git"
 
 [dependencies.hyper]
-version = "~0.5.2"
+version = "~0.6.1"
 features = ["nightly"]
 
 [dependencies.postgres]
