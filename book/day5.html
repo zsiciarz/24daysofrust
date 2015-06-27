@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="5" data-basepath=".." data-revision="Thu Jun 25 2015 11:54:39 GMT+0000 (UTC)">
+    <div class="book" data-level="5" data-basepath=".." data-revision="Sat Jun 27 2015 17:44:25 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -547,7 +547,7 @@
 <span class="hljs-keyword">use</span> hyper::{Client};
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> client = Client::new();
+    <span class="hljs-keyword">let</span> client = Client::new();
     <span class="hljs-keyword">let</span> url = <span class="hljs-string">&quot;http://httpbin.org/status/201&quot;</span>;
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-keyword">match</span> client.get(url).send() {
         Ok(response) =&gt; response,
@@ -563,7 +563,7 @@
 </code></pre>
 <p>That was... <em>verbose</em>. I could just use <code>unwrap()</code> everywhere, but that would be handwaving and in poor taste. Sprinkling your code with <code>panic!</code> is not a sign of good style too. However, there are so many things that can go wrong during an HTTP request/response cycle! But there seems to be a pattern. Can we do better?</p>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_content</span></span>(url: &amp;<span class="hljs-keyword">str</span>) -&gt; hyper::Result&lt;String&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> client = Client::new();
+    <span class="hljs-keyword">let</span> client = Client::new();
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.get(url).send());
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
     <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
@@ -584,7 +584,7 @@
 <span class="hljs-keyword">type</span> <span class="hljs-title">Query</span>&lt;&apos;a&gt; = Vec&lt;(&amp;&apos;a <span class="hljs-keyword">str</span>, &amp;&apos;a <span class="hljs-keyword">str</span>)&gt;;
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_query</span></span>(url: &amp;<span class="hljs-keyword">str</span>, query: Query) -&gt; hyper::Result&lt;String&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> client = Client::new();
+    <span class="hljs-keyword">let</span> client = Client::new();
     <span class="hljs-keyword">let</span> body = form_urlencoded::serialize(query);
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.post(url).body(&amp;body[..]).send());
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
