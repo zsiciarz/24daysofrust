@@ -61,7 +61,7 @@ csv = "~0.14.2"
 docopt = "~0.6.67"
 docopt_macros = "~0.6.67"
 image = "~0.3.11"
-itertools = "~0.3.21"
+itertools = "~0.3.22"
 json_macros = "~0.2.4"
 libc = "~0.1.8"
 nalgebra = "~0.2.18"
@@ -83,11 +83,11 @@ uuid = "~0.1.17"
 #git = "https://github.com/FranklinChen/rust-tau.git"
 
 [dependencies.hyper]
-version = "~0.6.1"
+version = "~0.6.2"
 features = ["nightly"]
 
 [dependencies.postgres]
-version= "~0.9.2"
+version= "~0.9.3"
 features = ["rustc-serialize", "time"]
 
 [dependencies.fuse]
