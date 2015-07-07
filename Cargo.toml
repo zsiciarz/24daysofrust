@@ -13,8 +13,8 @@ name = "day3"
 [[bin]]
 name = "day4"
 
-[[bin]]
-name = "day5"
+#[[bin]]
+#name = "day5"
 
 [[bin]]
 name = "day6"
@@ -25,8 +25,8 @@ name = "day7"
 [[bin]]
 name = "day9"
 
-#[[bin]]
-#name = "day10"
+[[bin]]
+name = "day10"
 
 [[bin]]
 name = "day11"
@@ -61,7 +61,7 @@ csv = "~0.14.2"
 docopt = "~0.6.67"
 docopt_macros = "~0.6.67"
 image = "~0.3.11"
-itertools = "~0.3.21"
+itertools = "~0.3.22"
 json_macros = "~0.2.4"
 libc = "~0.1.8"
 nalgebra = "~0.2.18"
@@ -75,19 +75,16 @@ redis = "~0.3.1"
 rust-crypto = "~0.2.31"
 rustc-serialize = "~0.3.15"
 time = "~0.1.30"
-#tau = "~1.0.2"
+tau = "~1.0.3"
 url = "~0.2.35"
 uuid = "~0.1.17"
 
-#[dependencies.tau]
-#git = "https://github.com/FranklinChen/rust-tau.git"
-
-[dependencies.hyper]
-version = "~0.6.1"
-features = ["nightly"]
+#[dependencies.hyper]
+#version = "~0.6.2"
+#features = ["nightly"]
 
 [dependencies.postgres]
-version= "~0.9.2"
+version= "~0.9.3"
 features = ["rustc-serialize", "time"]
 
 [dependencies.fuse]
