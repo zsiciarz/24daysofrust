@@ -25,8 +25,8 @@ name = "day7"
 [[bin]]
 name = "day9"
 
-#[[bin]]
-#name = "day10"
+[[bin]]
+name = "day10"
 
 [[bin]]
 name = "day11"
@@ -75,12 +75,9 @@ redis = "~0.3.1"
 rust-crypto = "~0.2.31"
 rustc-serialize = "~0.3.15"
 time = "~0.1.30"
-#tau = "~1.0.2"
+tau = "~1.0.3"
 url = "~0.2.35"
 uuid = "~0.1.17"
-
-#[dependencies.tau]
-#git = "https://github.com/FranklinChen/rust-tau.git"
 
 #[dependencies.hyper]
 #version = "~0.6.2"
