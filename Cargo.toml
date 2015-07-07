@@ -13,8 +13,8 @@ name = "day3"
 [[bin]]
 name = "day4"
 
-[[bin]]
-name = "day5"
+#[[bin]]
+#name = "day5"
 
 [[bin]]
 name = "day6"
@@ -82,9 +82,9 @@ uuid = "~0.1.17"
 #[dependencies.tau]
 #git = "https://github.com/FranklinChen/rust-tau.git"
 
-[dependencies.hyper]
-version = "~0.6.2"
-features = ["nightly"]
+#[dependencies.hyper]
+#version = "~0.6.2"
+#features = ["nightly"]
 
 [dependencies.postgres]
 version= "~0.9.3"
