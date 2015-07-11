@@ -11,7 +11,7 @@ dependencies = [
  "itertools 0.3.22 (registry+https://github.com/rust-lang/crates.io-index)",
  "json_macros 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "nalgebra 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.2.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.25 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres_array 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -24,7 +24,7 @@ dependencies = [
  "rustc-serialize 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "tau 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.30 (registry+https://github.com/rust-lang/crates.io-index)",
- "url 0.2.35 (registry+https://github.com/rust-lang/crates.io-index)",
+ "url 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -197,7 +197,7 @@ dependencies = [
 
 [[package]]
 name = "nalgebra"
-version = "0.2.18"
+version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "num 0.1.25 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -346,7 +346,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "rustc-serialize 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "sha1 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "url 0.2.35 (registry+https://github.com/rust-lang/crates.io-index)",
+ "url 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -411,7 +411,7 @@ dependencies = [
 
 [[package]]
 name = "url"
-version = "0.2.35"
+version = "0.2.36"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "matches 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
