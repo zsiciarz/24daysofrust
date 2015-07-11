@@ -13,8 +13,8 @@ name = "day3"
 [[bin]]
 name = "day4"
 
-#[[bin]]
-#name = "day5"
+[[bin]]
+name = "day5"
 
 [[bin]]
 name = "day6"
@@ -79,9 +79,9 @@ tau = "~1.0.3"
 url = "~0.2.36"
 uuid = "~0.1.17"
 
-#[dependencies.hyper]
-#version = "~0.6.2"
-#features = ["nightly"]
+[dependencies.hyper]
+version = "~0.6.4"
+features = ["nightly"]
 
 [dependencies.postgres]
 version= "~0.9.3"
