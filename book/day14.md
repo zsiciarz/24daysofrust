@@ -1,6 +1,6 @@
 # Day 14 - nalgebra
 
-> Relevancy: 1.0 stable
+> Relevancy: 1.1 stable
 
 The [nalgebra](https://crates.io/crates/nalgebra) crate provides a wide set of mathematical primitives for linear algebra, computer physics, graphic engines etc. I'm not going to dive deep into the underlying math, there are a lot of tutorials and courses, some of them specifically targeted at the programmers. My goal for today is just a brief showcase of what we can do in Rust with `nalgebra`.
 
