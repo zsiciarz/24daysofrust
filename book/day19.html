@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="19" data-basepath=".." data-revision="Sun Jul 12 2015 21:18:10 GMT+0000 (UTC)">
+    <div class="book" data-level="19" data-basepath=".." data-revision="Sun Jul 12 2015 21:39:51 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,47 +531,33 @@
                     
                         <h1 id="day-19-rusti">Day 19 - rusti</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.3 nightly</p>
 </blockquote>
 <p>A few days ago the <a href="http://www.reddit.com/r/rust/comments/2phjon/rusti_reborn_my_unofficial_workinprogress_rust/" target="_blank">Rust subreddit</a> got excited about the rebirth of <a href="https://github.com/murarth/rusti" target="_blank">rusti</a> - an interactive shell for Rust. Such interpreters (sometimes called REPLs - <a href="http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" target="_blank">read-eval-print loop</a>) are the bread and butter of dynamic languages like Lisp, Python or Ruby. But that is not a requirement - as Haskell demonstrates with its GHCi, you can have a REPL for a statically typed, compiled language too. <code>rusti</code> is an attempt to build such an interpreter for Rust.</p>
 <p><code>rusti</code> is still under development and currently installable only from source checkout. Clone the <a href="https://github.com/murarth/rusti" target="_blank">repository</a> and start the interpreter with <code>cargo run</code>:</p>
-<pre><code>:::sh
-$ cargo run
+<pre><code class="lang-sh">$ cargo run
     Running `target/rusti`
-rusti=&gt; 1u + 4
-5
-</code></pre><p>You can use it as a calculator but remember about type annotations, just like in regular Rust code. Otherwise you&apos;ll get an error like:</p>
-<pre><code>:::sh
-rusti=&gt; 1 + 4
-&lt;anon&gt;:13:16: 13:25 error: unable to infer enough type information to locate the impl of the trait `core::fmt::Show` for the type `_`; type annotations required
-&lt;anon&gt;:13 println!(&quot;{}&quot;, { 1 + 4 });
-</code></pre><p><code>rusti</code> can evaluate most of Rust code and display results. You can use crates and modules from the standard library as shown in a few examples below.</p>
-<pre><code>:::sh
-rusti=&gt; use std::os;
-rusti=&gt; os::args()
-[target/rusti]
+rusti=&gt; <span class="hljs-number">1</span> + <span class="hljs-number">4</span>
+<span class="hljs-number">5</span>
+</code></pre>
+<p><code>rusti</code> can evaluate most of Rust code and display results. You can use crates and modules from the standard library as shown in a few examples below.</p>
+<pre><code class="lang-sh">rusti=&gt; use std::env;
+rusti=&gt; env::args().collect::&lt;Vec&lt;_&gt;&gt;()
+[<span class="hljs-string">&quot;target/debug/rusti&quot;</span>]
 rusti=&gt; use std::iter::AdditiveIterator;
-rusti=&gt; range(1, 1000u).filter(|x| *x % 19 == 3).sum()
-26341
-rusti=&gt; #![feature(phase)]
-rusti=&gt; #[phase(plugin)] extern crate regex_macros;
-rusti=&gt; extern crate regex;
-rusti=&gt; let re = regex!(r&quot;\b[a-z]{6}:[0-9]{3}\b&quot;); re.is_match(&quot;qwerty:123&quot;)
-true
-</code></pre><p>One great thing about <code>rusti</code> is the <code>.type</code> command which shows the type of an expression. (It&apos;s quite similar to <code>:type</code> in GHCi.)</p>
-<pre><code>:::sh
-rusti=&gt; .type Some(&quot;Hello world!&quot;.to_string())
-Some(&quot;Hello world!&quot;.to_string()) = core::option::Option&lt;collections::string::String&gt;
-rusti=&gt; .type vec![1u, 2, 3]
-vec![1u, 2, 3] = collections::vec::Vec&lt;uint&gt;
+rusti=&gt; (<span class="hljs-number">1</span>..<span class="hljs-number">100</span>).filter(|x| *x % <span class="hljs-number">19</span> == <span class="hljs-number">3</span>).fold(<span class="hljs-number">0</span>, |acc, x| acc + x)
+<span class="hljs-number">303</span>
+</code></pre>
+<p>One great thing about <code>rusti</code> is the <code>.type</code> command which shows the type of an expression. (It&apos;s quite similar to <code>:type</code> in GHCi.)</p>
+<pre><code class="lang-sh">rusti=&gt; .type Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_string())
+Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_string()) = core::option::Option&lt;collections::string::String&gt;
+rusti=&gt; .type vec![<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+vec![<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>] = collections::vec::Vec&lt;i32&gt;
 rusti=&gt; .type std::io::stdin
-std::io::stdin = fn() -&gt; std::io::stdio::StdinReader
-</code></pre><p>Unfortunately there is no code completion yet, but at least <code>readline</code> capabilities (such as line editing and history) are available.</p>
+std::io::stdin = fn() -&gt; std::io::stdio::Stdin {std::io::stdio::stdin}
+</code></pre>
+<p>Unfortunately there is no code completion yet, but at least <code>readline</code> capabilities (such as line editing and history) are available.</p>
 <p>There are a few other limitations, some of which are rather inconvenient at the moment (such as <code>let</code> declarations being <em>very</em> local), but the authors are aware of them. The real issue for me today is that it can&apos;t reference external crates. However <a href="https://github.com/murarth/rusti/issues/2" target="_blank">this is already being discussed</a> and I hope it will happen.</p>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small></p>
 
                     
                     </section>
