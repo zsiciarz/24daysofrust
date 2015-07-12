@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="18" data-basepath=".." data-revision="Sat Jul 11 2015 14:00:17 GMT+0000 (UTC)">
+    <div class="book" data-level="18" data-basepath=".." data-revision="Sun Jul 12 2015 21:18:10 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,110 +531,104 @@
                     
                         <h1 id="day-18-redis">Day 18 - redis</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
 <p>Today I&apos;m revisiting the topic of database access in Rust. I mentioned PostgreSQL client library <a href="https://siciarz.net/24-days-of-rust-postgres/" target="_blank">a week ago</a>. This time we&apos;ll move from SQL to NoSQL land. Our focus for today will be <a href="http://redis.io/" target="_blank">Redis</a> - a data structure server. The <a href="https://crates.io/crates/redis" target="_blank">redis crate</a> is a client library to access Redis from Rust.</p>
 <h2 id="connecting">Connecting</h2>
 <p>The <code>redis</code> crate provides a <code>Client</code> type that is used to connect to the Redis server. The <code>get_connection()</code> method returns a <code>Connection</code> object which execute Redis commands.</p>
-<pre><code>:::rust
-extern crate redis;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> redis;
 
-use redis::{Client, Commands, Connection, RedisResult};
+<span class="hljs-keyword">use</span> redis::{Client, Commands, Connection, RedisResult};
 
-fn main() {
-    let client = Client::open(&quot;redis://127.0.0.1/&quot;).unwrap();
-    let conn = client.get_connection().unwrap();
-    let _: () = conn.set(&quot;answer&quot;, 42i).unwrap();
-    let answer: int = conn.get(&quot;answer&quot;).unwrap();
-    println!(&quot;Answer: {}&quot;, answer);
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> client = Client::open(<span class="hljs-string">&quot;redis://127.0.0.1/&quot;</span>).unwrap();
+    <span class="hljs-keyword">let</span> conn = client.get_connection().unwrap();
+    <span class="hljs-keyword">let</span> <span class="hljs-number">_</span>: () = conn.set(<span class="hljs-string">&quot;answer&quot;</span>, <span class="hljs-number">42</span>).unwrap();
+    <span class="hljs-keyword">let</span> answer: <span class="hljs-keyword">i32</span> = conn.get(<span class="hljs-string">&quot;answer&quot;</span>).unwrap();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Answer: {}&quot;</span>, answer);
 }
-</code></pre><p>Most of the <a href="http://redis.io/commands" target="_blank">Redis commands</a> translate directly to <code>Connection</code> methods. But if you encounter an error similar to <code>Type ``redis::connection::Connection`` does not implement any method in scope named ``set`` </code>, you probably forgot to import the <code>Commands</code> trait.</p>
+</code></pre>
+<p>Most of the <a href="http://redis.io/commands" target="_blank">Redis commands</a> translate directly to <code>Connection</code> methods. But if you encounter an error similar to <code>Type ``redis::connection::Connection`` does not implement any method in scope named ``set`` </code>, you probably forgot to import the <code>Commands</code> trait.</p>
 <p>(I accidentally used the same example number as Armin did in the readme; not surprising since it is the <a href="http://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29" target="_blank">Answer to the Ultimate Question of Life, the Universe, and Everything</a>.)</p>
 <h2 id="friends-in-common">Friends in common</h2>
 <p>When viewing someone&apos;s profile page on most of the social networking sites, you can see the number (or even a full list) of friends that you both have in common. This is very easy to achieve in Redis using sets.</p>
 <p>In case someone accepts your friendship request, a function similar to the one below will be called.</p>
-<pre><code>:::rust
-extern crate redis;
+<pre><code>extern crate redis;
 
 use redis::{Client, Commands, Connection, RedisResult};
 use std::collections::HashSet;
 
 type UserId = u64;
 
-fn add_friend(conn: &amp;amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;()&gt; {
+fn add_friend(conn: &amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;()&gt; {
     let my_key = format!(&quot;friends:{}&quot;, my_id);
     let their_key = format!(&quot;friends:{}&quot;, their_id);
-    let _: () = try!(conn.sadd(my_key, their_id));
-    let _: () = try!(conn.sadd(their_key, my_id));
+    try!(conn.sadd(my_key, their_id));
+    try!(conn.sadd(their_key, my_id));
     Ok(())
 }
 </code></pre><p>I&apos;m assuming here that the friendship relation is mutual. That&apos;s why there are two <code>sadd</code> calls - one to add yourself to their set of friends and the other one is symmetrical. Now checking friends in common is just a matter of set intersection - expressed in Redis as the <code>SINTER</code> command.</p>
-<pre><code>:::rust
-fn friends_in_common(conn: &amp;amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;HashSet&lt;UserId&gt;&gt; {
-    let my_key = format!(&quot;friends:{}&quot;, my_id);
-    let their_key = format!(&quot;friends:{}&quot;, their_id);
-    Ok(try!(conn.sinter((my_key, their_key))))
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">friends_in_common</span></span>(conn: &amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;HashSet&lt;UserId&gt;&gt; {
+    <span class="hljs-keyword">let</span> my_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, my_id);
+    <span class="hljs-keyword">let</span> their_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, their_id);
+    Ok(<span class="hljs-built_in">try!</span>(conn.sinter((my_key, their_key))))
 }
-</code></pre><p>We can now simulate adding a few friends:</p>
-<pre><code>:::rust
-for i in range(1, 10u64) {
-    add_friend(&amp;amp;conn, i, i + 2).ok().expect(&quot;Friendship failed :(&quot;);
+</code></pre>
+<p>We can now simulate adding a few friends:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..<span class="hljs-number">10u64</span> {
+    add_friend(&amp;conn, i, i + <span class="hljs-number">2</span>).ok().expect(<span class="hljs-string">&quot;Friendship failed :(&quot;</span>);
 }
-println!(&quot;You have {} friend(s) in common.&quot;,
-         friends_in_common(&amp;amp;conn, 2, 3).map(|s| s.len()).unwrap_or(0));
-</code></pre><p>Here&apos;s the output:</p>
-<pre><code>:::sh
-$ cargo run
-You have 1 friend(s) in common.
-</code></pre><h2 id="leaderboards">Leaderboards</h2>
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;You have {} friends in common.&quot;</span>,
+         friends_in_common(&amp;conn, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>).map(|s| s.len()).unwrap_or(<span class="hljs-number">0</span>));
+</code></pre>
+<p>Here&apos;s the output:</p>
+<pre><code class="lang-sh">$ cargo run
+You have <span class="hljs-number">1</span> friend(s) <span class="hljs-keyword">in</span> common.
+</code></pre>
+<h2 id="leaderboards">Leaderboards</h2>
 <p><a href="http://redis.io/commands#sorted_set" target="_blank">Sorted sets</a> are possibly my favorite Redis data structure. They&apos;re a perfect fit to create leaderboards for example in online games. Add scores with <code>ZADD</code>, fetch the leaderboard with <code>ZREVRANGE</code> - that&apos;s the gist of it.</p>
-<pre><code>:::rust
-fn add_score(conn: &amp;amp;Connection, username: &amp;amp;str, score: uint) -&gt; RedisResult&lt;()&gt; {
-    conn.zadd(&quot;leaderboard&quot;, username, score)
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">add_score</span></span>(conn: &amp;Connection, username: &amp;<span class="hljs-keyword">str</span>, score: <span class="hljs-keyword">u32</span>) -&gt; RedisResult&lt;()&gt; {
+    conn.zadd(<span class="hljs-string">&quot;leaderboard&quot;</span>, username, score)
 }
-</code></pre><p>The <code>add_score</code> function is just a wrapper to provide a more high-level API. It will be called every time player&apos;s score changes.</p>
-<pre><code>:::rust
+</code></pre>
+<p>The <code>add_score</code> function is just a wrapper to provide a more high-level API. It will be called every time player&apos;s score changes.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">type</span> <span class="hljs-title">Leaderboard</span> = Vec&lt;(String, <span class="hljs-keyword">u32</span>)&gt;;
 
-type Leaderboard = Vec&lt;(String, uint)&gt;;
-
-fn show_leaderboard(conn: &amp;amp;Connection, n: int) {
-    let result: RedisResult&lt;Leaderboard&gt; = conn.zrevrange_withscores(&quot;leaderboard&quot;, 0, n - 1);
-    match result {
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">show_leaderboard</span></span>(conn: &amp;Connection, n: isize) {
+    <span class="hljs-keyword">let</span> result: RedisResult&lt;Leaderboard&gt; = conn.zrevrange_withscores(<span class="hljs-string">&quot;leaderboard&quot;</span>, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">match</span> result {
         Ok(board) =&gt; {
-            println!(&quot;----==== Top {} players ====----&quot;, n);
-            for (i, (username, score)) in board.into_iter().enumerate() {
-                println!(&quot;{:&lt;5} {:^20} {:&gt;4}&quot;, i + 1, username, score);
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;----==== Top {} players ====----&quot;</span>, n);
+            <span class="hljs-keyword">for</span> (i, (username, score)) <span class="hljs-keyword">in</span> board.into_iter().enumerate() {
+                <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:&lt;5} {:^20} {:&gt;4}&quot;</span>, i + <span class="hljs-number">1</span>, username, score);
             }
         },
-        Err(_) =&gt; println!(&quot;Failed to fetch leaderboard.&quot;),
+        Err(<span class="hljs-number">_</span>) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Failed to fetch leaderboard.&quot;</span>),
     }
 }
-</code></pre><p>The <code>Leaderboard</code> alias is there just to simplify the result type. We use <code>zrevrange_withscores</code> to get the leaderboard data (sorted by score descending) and display it using Rust&apos;s <a href="http://doc.rust-lang.org/std/fmt/" target="_blank">string formatting</a> syntax.</p>
+</code></pre>
+<p>The <code>Leaderboard</code> alias is there just to simplify the result type. We use <code>zrevrange_withscores</code> to get the leaderboard data (sorted by score descending) and display it using Rust&apos;s <a href="http://doc.rust-lang.org/std/fmt/" target="_blank">string formatting</a> syntax.</p>
 <p>Putting all this together:</p>
-<pre><code>:::rust
-let players = vec![&quot;raynor&quot;, &quot;kerrigan&quot;, &quot;mengsk&quot;, &quot;zasz&quot;, &quot;tassadar&quot;];
-for player in players.iter() {
-    let score = rand::random::&lt;uint&gt;() % 1000;
-    add_score(&amp;amp;conn, *player, score).ok().expect(&quot;Nuclear launch detected&quot;);
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> players = <span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;raynor&quot;</span>, <span class="hljs-string">&quot;kerrigan&quot;</span>, <span class="hljs-string">&quot;mengsk&quot;</span>, <span class="hljs-string">&quot;zasz&quot;</span>, <span class="hljs-string">&quot;tassadar&quot;</span>];
+<span class="hljs-keyword">for</span> player <span class="hljs-keyword">in</span> players.iter() {
+    <span class="hljs-keyword">let</span> score = rand::random::&lt;<span class="hljs-keyword">u32</span>&gt;() % <span class="hljs-number">1000</span>;
+    add_score(&amp;conn, *player, score).ok().expect(<span class="hljs-string">&quot;Nuclear launch detected&quot;</span>);
 }
-show_leaderboard(&amp;amp;conn, 3);
-</code></pre><p>And if we run this, we&apos;ll get something similar to the output below:</p>
-<pre><code>:::sh
-$ cargo run
-----==== Top 3 players ====----
-1            mengsk         986
-2           tassadar        879
-3           kerrigan        489
-</code></pre><h2 id="see-also">See also</h2>
+show_leaderboard(&amp;conn, <span class="hljs-number">3</span>);
+</code></pre>
+<p>And if we run this, we&apos;ll get something similar to the output below:</p>
+<pre><code class="lang-sh">$ cargo run
+----==== Top <span class="hljs-number">3</span> players ====----
+<span class="hljs-number">1</span>            mengsk         <span class="hljs-number">986</span>
+<span class="hljs-number">2</span>           tassadar        <span class="hljs-number">879</span>
+<span class="hljs-number">3</span>           kerrigan        <span class="hljs-number">489</span>
+</code></pre>
+<h2 id="see-also">See also</h2>
 <ul>
 <li><a href="http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html#example_uses_in_rails" target="_blank">User friendships</a> with Redis and Ruby on Rails</li>
 <li><a href="https://redislabs.com/blog/the-top-3-game-changing-redis-use-cases" target="_blank">The Top 3 Game Changing Redis Use Cases</a></li>
 <li><a href="http://www.agoragames.com/blog/2011/01/01/creating-high-score-tables-leaderboards-using-redis/" target="_blank">Creating high score tables (leaderboards) using Redis</a></li>
 </ul>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small></p>
 
                     
                     </section>

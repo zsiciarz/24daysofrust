@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="17" data-basepath=".." data-revision="Sat Jul 11 2015 14:00:17 GMT+0000 (UTC)">
+    <div class="book" data-level="17" data-basepath=".." data-revision="Sun Jul 12 2015 21:18:10 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,66 +531,44 @@
                     
                         <h1 id="day-17-from-fn">Day 17 - from_fn</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.0 stable</p>
 </blockquote>
 <p>In Rust there is no concept of a constructor as a language feature, like for example in C++. However there is a strong convention (and mentioned in <a href="http://aturon.github.io/ownership/constructors.html" target="_blank">the guidelines</a>) to use a static method called <code>new</code> as the constructor. This works well, but you can have only one function called <code>new</code> in the <code>impl</code> - there is no method overloading. So are we out of luck if we want to have different constructors? No! But arguably different purposes should imply different method names, so another convention is to prefix extra constructors with <code>with_</code> (such as <a href="http://doc.rust-lang.org/std/vec/struct.Vec.html#method.with_capacity" target="_blank">Vec::with_capacity</a>) or <code>from_</code>, if the constructor does some kind of a conversion.</p>
 <p>A few types in the standard library and some third-party crates provide a <code>from_fn</code> constructor. This curious method usually takes as arguments some sort of <em>dimensions</em> and a closure that will generate values.</p>
-<h2 id="vectors">Vectors</h2>
-<p>One of the typical methods to create a vector is to call <code>collect()</code> on an iterator like below:</p>
-<pre><code>:::rust
-let v = range(0, 10u).map(|x| x * 3).collect::&lt;Vec&lt;_&gt;&gt;();
-println!(&quot;{}&quot;, v);
-</code></pre><p>We can shorten that a bit with the <a href="http://doc.rust-lang.org/std/vec/struct.Vec.html#method.from_fn" target="_blank">from_fn</a> method. It takes the expected vector size and a closure that uses current index to generate vector elements.</p>
-<pre><code>:::rust
-let v = Vec::from_fn(10, |x| x * 3);
-</code></pre><p>This is roughly analogous to the following C++ code:</p>
-<pre><code>:::cpp
-vector&lt;int&gt; v;
-int x = 0;
-generate_n(back_inserter(v), 10, [&amp;amp;i] () { return (x++) * 3; });
-</code></pre><p>We can of course ignore closure&apos;s argument and do something else, like generate a vector of random elements:</p>
-<pre><code>:::rust
-use std::rand;
-
-let v = Vec::from_fn(10, |_| rand::random::&lt;uint&gt;());
-</code></pre><h2 id="matrices">Matrices</h2>
+<h2 id="matrices">Matrices</h2>
 <p>In the <a href="https://siciarz.net/24-days-of-rust-nalgebra/" target="_blank">nalgebra crate</a> there is a <code>DMat</code> type representing a matrix which dimensions are known at runtime. We can build a matrix using the <code>from_fn</code> constructor too. Let&apos;s create a triangular matrix:</p>
-<pre><code>:::rust
-extern crate nalgebra;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> nalgebra;
 
-use nalgebra::DMat;
+<span class="hljs-keyword">use</span> nalgebra::DMat;
 
-let mat: DMat&lt;uint&gt; = DMat::from_fn(7, 7, |i, j| if j &lt;= i { 1 } else { 0 });
-println!(&quot;{}&quot;, mat);
-</code></pre><p>The first two arguments to <code>from_fn</code> are numbers of rows and columns; this means the closure must take two arguments - indices of the current row and column. And here&apos;s our matrix:</p>
-<pre><code>:::sh
-$ cargo run
-1 0 0 0 0 0 0
-1 1 0 0 0 0 0
-1 1 1 0 0 0 0
-1 1 1 1 0 0 0
-1 1 1 1 1 0 0
-1 1 1 1 1 1 0
-1 1 1 1 1 1 1
-</code></pre><h2 id="images">Images</h2>
-<p>Bur we&apos;re not limited to mathematical objects. For example the <a href="https://siciarz.net/24-days-of-rust-image/" target="_blank">image crate</a> provides a buffer that can generate the image with the <code>from_fn</code> call.</p>
-<pre><code>:::rust
-extern crate image;
+<span class="hljs-keyword">let</span> mat: DMat&lt;<span class="hljs-keyword">u32</span>&gt; = DMat::from_fn(<span class="hljs-number">7</span>, <span class="hljs-number">7</span>, |i, j| <span class="hljs-keyword">if</span> j &lt;= i { <span class="hljs-number">1</span> } <span class="hljs-keyword">else</span> { <span class="hljs-number">0</span> });
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, mat);
+</code></pre>
+<p>The first two arguments to <code>from_fn</code> are numbers of rows and columns; this means the closure must take two arguments - indices of the current row and column. And here&apos;s our matrix:</p>
+<pre><code class="lang-sh">$ cargo run
+<span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>
+<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>
+<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>
+<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>
+<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>
+<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span>
+<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span>
+</code></pre>
+<h2 id="images">Images</h2>
+<p>Bur we&apos;re not limited to mathematical objects. For example the <a href="day12.html">image crate</a> provides a buffer that can generate the image with the <code>from_fn</code> call.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> image;
 
-use image::Pixel;
+<span class="hljs-keyword">use</span> image::Pixel;
 
-let buffer = image::ImageBuffer::from_fn(512, 512, |x, y| {
-    Pixel::from_channels((x * y % 256) as u8, (y % 256) as u8, (x % 256) as u8, 255)
+<span class="hljs-keyword">let</span> buffer = image::ImageBuffer::from_fn(<span class="hljs-number">512u32</span>, <span class="hljs-number">512u32</span>, |x: <span class="hljs-keyword">u32</span>, y: <span class="hljs-keyword">u32</span>| {
+    Pixel::from_channels((x * y % <span class="hljs-number">256</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">u8</span>, (y % <span class="hljs-number">256</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">u8</span>, (x % <span class="hljs-number">256</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">u8</span>, <span class="hljs-number">255</span>)
 });
-let img = image::DynamicImage::ImageRgba8(buffer);
-let out = File::create(&amp;amp;Path::new(&quot;out_pattern.png&quot;)).unwrap();
-let _ = img.save(out, image::PNG);
-</code></pre><p>We&apos;re working in two dimensions in the same manner as with the <code>DMat</code> type. And here&apos;s the generated image:</p>
+<span class="hljs-keyword">let</span> img = image::DynamicImage::ImageRgba8(buffer);
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> out = File::create(&amp;Path::new(<span class="hljs-string">&quot;out_pattern.png&quot;</span>)).unwrap();
+<span class="hljs-keyword">let</span> <span class="hljs-number">_</span> = img.save(&amp;<span class="hljs-keyword">mut</span> out, image::PNG);
+</code></pre>
+<p>We&apos;re working in two dimensions in the same manner as with the <code>DMat</code> type. And here&apos;s the generated image:</p>
 <p><img src="../../../../../../i.imgur.com/G3JuGR0.png" alt="pattern"></p>
-<hr>
-<p><small>
-Code examples in this article were built with rustc 0.13.0-nightly.
-</small></p>
 
                     
                     </section>
