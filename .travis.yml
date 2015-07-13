@@ -6,7 +6,11 @@ addons:
 services:
   - redis-server
 before_install:
-  - sudo apt-get install -y libfuse-dev libsodium-dev
+  - sudo apt-get install -y libfuse-dev
+  - wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.3.tar.gz
+  - tar xf libsodium-1.0.3.tar.gz
+  - cd libsodium-1.0.3
+  - ./configure && make && sudo make install && sudo ldconfig && cd ..
   - wget http://download.zeromq.org/zeromq-4.1.2.tar.gz
   - tar xf zeromq-4.1.2.tar.gz
   - cd zeromq-4.1.2
