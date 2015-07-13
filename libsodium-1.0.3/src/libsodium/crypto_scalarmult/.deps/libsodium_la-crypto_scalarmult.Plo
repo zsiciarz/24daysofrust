@@ -1,0 +1,12 @@
+crypto_scalarmult/libsodium_la-crypto_scalarmult.lo: \
+ crypto_scalarmult/crypto_scalarmult.c include/sodium/crypto_scalarmult.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/crypto_scalarmult_curve25519.h include/sodium/export.h
+
+include/sodium/crypto_scalarmult.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/crypto_scalarmult_curve25519.h:
+
+include/sodium/export.h:

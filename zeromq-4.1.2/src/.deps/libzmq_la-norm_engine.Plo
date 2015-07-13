@@ -1,0 +1,3 @@
+src/libzmq_la-norm_engine.lo: src/norm_engine.cpp src/platform.hpp
+
+src/platform.hpp:

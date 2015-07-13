@@ -1,0 +1,12 @@
+crypto_sign/libsodium_la-crypto_sign.lo: crypto_sign/crypto_sign.c \
+ include/sodium/crypto_sign.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/crypto_sign_ed25519.h include/sodium/export.h
+
+include/sodium/crypto_sign.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/crypto_sign_ed25519.h:
+
+include/sodium/export.h:

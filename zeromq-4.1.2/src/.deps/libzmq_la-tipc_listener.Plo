@@ -1,0 +1,6 @@
+src/libzmq_la-tipc_listener.lo: src/tipc_listener.cpp \
+ src/tipc_listener.hpp src/platform.hpp
+
+src/tipc_listener.hpp:
+
+src/platform.hpp:

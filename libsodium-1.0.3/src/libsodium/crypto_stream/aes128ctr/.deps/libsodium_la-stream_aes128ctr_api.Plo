@@ -1,0 +1,11 @@
+crypto_stream/aes128ctr/libsodium_la-stream_aes128ctr_api.lo: \
+ crypto_stream/aes128ctr/stream_aes128ctr_api.c \
+ include/sodium/crypto_stream_aes128ctr.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/export.h
+
+include/sodium/crypto_stream_aes128ctr.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/export.h:

@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libsodium
+Version: 1.0.3
+Description: A portable, cross-compilable, installable, packageable fork of NaCl, with a compatible API.
+
+Libs: -L${libdir} -lsodium
+Cflags: -I${includedir}

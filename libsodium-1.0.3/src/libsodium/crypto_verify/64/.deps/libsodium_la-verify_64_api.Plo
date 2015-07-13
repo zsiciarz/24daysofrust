@@ -1,0 +1,10 @@
+crypto_verify/64/libsodium_la-verify_64_api.lo: \
+ crypto_verify/64/verify_64_api.c include/sodium/crypto_verify_64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/export.h
+
+include/sodium/crypto_verify_64.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/export.h:

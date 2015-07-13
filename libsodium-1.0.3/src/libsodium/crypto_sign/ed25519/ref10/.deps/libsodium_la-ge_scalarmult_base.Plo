@@ -1,0 +1,40 @@
+crypto_sign/ed25519/ref10/libsodium_la-ge_scalarmult_base.lo: \
+ crypto_sign/ed25519/ref10/ge_scalarmult_base.c \
+ crypto_sign/ed25519/ref10/ge.h crypto_sign/ed25519/ref10/fe.h \
+ include/sodium/crypto_int32.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
+ /usr/include/features.h /usr/include/x86_64-linux-gnu/bits/predefs.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ include/sodium/crypto_uint32.h crypto_sign/ed25519/ref10/base.h
+
+crypto_sign/ed25519/ref10/ge.h:
+
+crypto_sign/ed25519/ref10/fe.h:
+
+include/sodium/crypto_int32.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/bits/predefs.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+include/sodium/crypto_uint32.h:
+
+crypto_sign/ed25519/ref10/base.h:

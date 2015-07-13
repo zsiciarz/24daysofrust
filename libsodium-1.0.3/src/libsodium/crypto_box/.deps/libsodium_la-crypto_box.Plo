@@ -1,0 +1,13 @@
+crypto_box/libsodium_la-crypto_box.lo: crypto_box/crypto_box.c \
+ include/sodium/crypto_box.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/crypto_box_curve25519xsalsa20poly1305.h \
+ include/sodium/export.h
+
+include/sodium/crypto_box.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/crypto_box_curve25519xsalsa20poly1305.h:
+
+include/sodium/export.h:

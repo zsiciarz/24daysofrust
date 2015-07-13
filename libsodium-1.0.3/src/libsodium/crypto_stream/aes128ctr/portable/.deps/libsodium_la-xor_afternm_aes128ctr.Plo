@@ -1,0 +1,85 @@
+crypto_stream/aes128ctr/portable/libsodium_la-xor_afternm_aes128ctr.lo: \
+ crypto_stream/aes128ctr/portable/xor_afternm_aes128ctr.c \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/x86_64-linux-gnu/bits/predefs.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ /usr/include/x86_64-linux-gnu/bits/types.h \
+ /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdarg.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio2.h \
+ crypto_stream/aes128ctr/portable/api.h \
+ include/sodium/crypto_stream_aes128ctr.h include/sodium/export.h \
+ crypto_stream/aes128ctr/portable/int128.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ crypto_stream/aes128ctr/portable/common.h \
+ crypto_stream/aes128ctr/portable/types.h include/sodium/crypto_uint32.h \
+ include/sodium/crypto_uint64.h crypto_stream/aes128ctr/portable/consts.h
+
+/usr/include/stdio.h:
+
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/bits/predefs.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdarg.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:
+
+crypto_stream/aes128ctr/portable/api.h:
+
+include/sodium/crypto_stream_aes128ctr.h:
+
+include/sodium/export.h:
+
+crypto_stream/aes128ctr/portable/int128.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+crypto_stream/aes128ctr/portable/common.h:
+
+crypto_stream/aes128ctr/portable/types.h:
+
+include/sodium/crypto_uint32.h:
+
+include/sodium/crypto_uint64.h:
+
+crypto_stream/aes128ctr/portable/consts.h:

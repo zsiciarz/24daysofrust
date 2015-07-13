@@ -1,0 +1,3 @@
+src/libzmq_la-pgm_sender.lo: src/pgm_sender.cpp src/platform.hpp
+
+src/platform.hpp:

@@ -1,0 +1,6 @@
+Name: libsodium
+Version: 1.0.3
+Description: A portable, cross-compilable, installable, packageable fork of NaCl, with a compatible API.
+
+Libs: -L${pcfiledir}/src/libsodium -lsodium
+Cflags: -I${pcfiledir}/src/libsodium/include

@@ -1,0 +1,3 @@
+src/libzmq_la-gssapi_server.lo: src/gssapi_server.cpp src/platform.hpp
+
+src/platform.hpp:

@@ -1,0 +1,4 @@
+src/libzmq_la-gssapi_mechanism_base.lo: src/gssapi_mechanism_base.cpp \
+ src/platform.hpp
+
+src/platform.hpp:

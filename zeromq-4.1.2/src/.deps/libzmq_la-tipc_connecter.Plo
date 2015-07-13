@@ -1,0 +1,6 @@
+src/libzmq_la-tipc_connecter.lo: src/tipc_connecter.cpp \
+ src/tipc_connecter.hpp src/platform.hpp
+
+src/tipc_connecter.hpp:
+
+src/platform.hpp:

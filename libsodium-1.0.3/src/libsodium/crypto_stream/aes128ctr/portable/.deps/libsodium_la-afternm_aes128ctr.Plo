@@ -1,0 +1,54 @@
+crypto_stream/aes128ctr/portable/libsodium_la-afternm_aes128ctr.lo: \
+ crypto_stream/aes128ctr/portable/afternm_aes128ctr.c \
+ crypto_stream/aes128ctr/portable/api.h \
+ include/sodium/crypto_stream_aes128ctr.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/export.h crypto_stream/aes128ctr/portable/int128.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
+ /usr/include/features.h /usr/include/x86_64-linux-gnu/bits/predefs.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ crypto_stream/aes128ctr/portable/common.h \
+ crypto_stream/aes128ctr/portable/types.h include/sodium/crypto_uint32.h \
+ include/sodium/crypto_uint64.h crypto_stream/aes128ctr/portable/consts.h
+
+crypto_stream/aes128ctr/portable/api.h:
+
+include/sodium/crypto_stream_aes128ctr.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/export.h:
+
+crypto_stream/aes128ctr/portable/int128.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/bits/predefs.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+crypto_stream/aes128ctr/portable/common.h:
+
+crypto_stream/aes128ctr/portable/types.h:
+
+include/sodium/crypto_uint32.h:
+
+include/sodium/crypto_uint64.h:
+
+crypto_stream/aes128ctr/portable/consts.h:

@@ -49,8 +49,8 @@ name = "day17"
 [[bin]]
 name = "day18"
 
-#[[bin]]
-#name = "day20"
+[[bin]]
+name = "day20"
 
 [[bin]]
 name = "day21"
@@ -78,6 +78,7 @@ time = "~0.1.30"
 tau = "~1.0.3"
 url = "~0.2.36"
 uuid = "~0.1.17"
+zmq = "~0.7.0"
 
 [dependencies.hyper]
 version = "~0.6.4"
@@ -89,6 +90,3 @@ features = ["rustc-serialize", "time"]
 
 [dependencies.fuse]
 git = "https://github.com/zargony/rust-fuse.git"
-
-#[dependencies.zeromq]
-#git = "https://github.com/zeromq/zmq.rs.git"

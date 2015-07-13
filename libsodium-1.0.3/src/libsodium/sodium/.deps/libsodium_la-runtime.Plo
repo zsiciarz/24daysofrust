@@ -1,0 +1,6 @@
+sodium/libsodium_la-runtime.lo: sodium/runtime.c include/sodium/runtime.h \
+ include/sodium/export.h
+
+include/sodium/runtime.h:
+
+include/sodium/export.h:

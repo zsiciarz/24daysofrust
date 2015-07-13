@@ -1,0 +1,14 @@
+crypto_scalarmult/curve25519/donna_c64/libsodium_la-base_curve25519_donna_c64.lo: \
+ crypto_scalarmult/curve25519/donna_c64/base_curve25519_donna_c64.c \
+ crypto_scalarmult/curve25519/donna_c64/api.h \
+ include/sodium/crypto_scalarmult_curve25519.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/export.h
+
+crypto_scalarmult/curve25519/donna_c64/api.h:
+
+include/sodium/crypto_scalarmult_curve25519.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/export.h:

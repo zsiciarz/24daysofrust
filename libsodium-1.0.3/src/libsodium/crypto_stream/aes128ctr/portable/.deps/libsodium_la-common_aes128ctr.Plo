@@ -1,0 +1,38 @@
+crypto_stream/aes128ctr/portable/libsodium_la-common_aes128ctr.lo: \
+ crypto_stream/aes128ctr/portable/common_aes128ctr.c \
+ crypto_stream/aes128ctr/portable/common.h \
+ crypto_stream/aes128ctr/portable/types.h include/sodium/crypto_uint32.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
+ /usr/include/features.h /usr/include/x86_64-linux-gnu/bits/predefs.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ include/sodium/crypto_uint64.h
+
+crypto_stream/aes128ctr/portable/common.h:
+
+crypto_stream/aes128ctr/portable/types.h:
+
+include/sodium/crypto_uint32.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/bits/predefs.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+include/sodium/crypto_uint64.h:

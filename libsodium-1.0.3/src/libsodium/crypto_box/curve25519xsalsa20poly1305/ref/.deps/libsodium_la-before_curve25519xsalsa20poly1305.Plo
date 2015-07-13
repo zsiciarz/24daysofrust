@@ -1,0 +1,19 @@
+crypto_box/curve25519xsalsa20poly1305/ref/libsodium_la-before_curve25519xsalsa20poly1305.lo: \
+ crypto_box/curve25519xsalsa20poly1305/ref/before_curve25519xsalsa20poly1305.c \
+ crypto_box/curve25519xsalsa20poly1305/ref/api.h \
+ include/sodium/crypto_box_curve25519xsalsa20poly1305.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/export.h include/sodium/crypto_core_hsalsa20.h \
+ include/sodium/crypto_scalarmult_curve25519.h
+
+crypto_box/curve25519xsalsa20poly1305/ref/api.h:
+
+include/sodium/crypto_box_curve25519xsalsa20poly1305.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/export.h:
+
+include/sodium/crypto_core_hsalsa20.h:
+
+include/sodium/crypto_scalarmult_curve25519.h:

@@ -1,0 +1,12 @@
+crypto_shorthash/libsodium_la-crypto_shorthash.lo: \
+ crypto_shorthash/crypto_shorthash.c include/sodium/crypto_shorthash.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/crypto_shorthash_siphash24.h include/sodium/export.h
+
+include/sodium/crypto_shorthash.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/crypto_shorthash_siphash24.h:
+
+include/sodium/export.h:

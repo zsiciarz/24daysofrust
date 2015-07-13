@@ -1,0 +1,13 @@
+crypto_verify/16/ref/libsodium_la-verify_16.lo: \
+ crypto_verify/16/ref/verify_16.c crypto_verify/16/ref/api.h \
+ include/sodium/crypto_verify_16.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
+ include/sodium/export.h
+
+crypto_verify/16/ref/api.h:
+
+include/sodium/crypto_verify_16.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:
+
+include/sodium/export.h:
