@@ -15,12 +15,12 @@ fn main() {
         println!("ZeroMQ client connecting to {}", addr);
         let mut sock = ctx.socket(zmq::REQ).unwrap();
         let _ = sock.connect(addr);
-        let payload = b"Hello world!";
+        let payload = "Hello world!";
         println!("-> {:?}", payload);
         let mut msg = Message::new().unwrap();
-        sock.send(payload, 0).unwrap();
+        sock.send(payload.as_bytes(), 0).unwrap();
         sock.recv(&mut msg, 0).unwrap();
-        let contents = msg.as_str();
+        let contents = msg.as_str().unwrap();
         println!("<- {:?}", contents);
     }
     else {
@@ -30,7 +30,7 @@ fn main() {
         let mut msg = Message::new().unwrap();
         loop {
             if let Ok(_) = sock.recv(&mut msg, 0) {
-                sock.send_str("hehehe", 0).unwrap();
+                sock.send_str(msg.as_str().unwrap(), 0).unwrap();
             }
         }
     }
