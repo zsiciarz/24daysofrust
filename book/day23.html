@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="23" data-basepath=".." data-revision="Tue Jul 14 2015 21:35:38 GMT+0000 (UTC)">
+    <div class="book" data-level="23" data-basepath=".." data-revision="Tue Jul 14 2015 21:50:29 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -531,110 +531,129 @@
                     
                         <h1 id="day-23-calling-rust-from-other-languages">Day 23 - calling Rust from other languages</h1>
 <blockquote>
-<p>Relevancy: <strong>outdated</strong></p>
+<p>Relevancy: 1.1 stable</p>
 </blockquote>
 <p>In this penultimate episode of the <strong>24 days of Rust</strong> article series we will focus on using Rust code from other languages. Since Rust libraries can expose a C API and calling conventions, using them isn&apos;t very different from using regular C libraries. A lot of programming languages have some kind of an <a href="http://en.wikipedia.org/wiki/Foreign_function_interface" target="_blank">FFI</a> mechanism, allowing them to use libraries written in other language(s).  Let&apos;s see a few examples!</p>
 <h2 id="our-rust-library">Our Rust library</h2>
 <p>As an example we&apos;re going to build a small Rust library called <code>stringtools</code> which exposes just one function: <code>count_substrings</code>. Let&apos;s start with a manifest - here&apos;s our <code>Cargo.toml</code>:</p>
-<pre><code>:::toml
-[package]
-name = &quot;stringtools&quot;
-version = &quot;0.0.1&quot;
-authors = [&quot;Zbigniew Siciarz &lt;zbigniew@siciarz.net&gt;&quot;]
+<pre><code class="lang-ini"><span class="hljs-title">[package]</span>
+<span class="hljs-setting">name = <span class="hljs-value"><span class="hljs-string">&quot;stringtools&quot;</span></span></span>
+<span class="hljs-setting">version = <span class="hljs-value"><span class="hljs-string">&quot;0.0.1&quot;</span></span></span>
+<span class="hljs-setting">authors = <span class="hljs-value">[<span class="hljs-string">&quot;Zbigniew Siciarz &lt;zbigniew@siciarz.net&gt;&quot;</span>]</span></span>
 
-[lib]
-name = &quot;stringtools&quot;
-crate-type = [&quot;dylib&quot;]
-</code></pre><p>The crate type is explicitly declared as a dynamic library. And now the actual implementation:</p>
-<pre><code>:::rust
-extern crate libc;
+<span class="hljs-title">[lib]</span>
+<span class="hljs-setting">name = <span class="hljs-value"><span class="hljs-string">&quot;stringtools&quot;</span></span></span>
+<span class="hljs-setting">crate-type = <span class="hljs-value">[<span class="hljs-string">&quot;dylib&quot;</span>]</span></span>
 
-use std::c_str::CString;
-use libc::c_char;
+<span class="hljs-title">[dependencies]</span>
+<span class="hljs-setting">libc = <span class="hljs-value"><span class="hljs-string">&quot;~0.1&quot;</span></span></span>
+</code></pre>
+<p>The crate type is explicitly declared as a dynamic library. And now the actual implementation:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> libc;
 
-#[no_mangle]
-pub extern &quot;C&quot; fn count_substrings(value: *const c_char, substr: *const c_char) -&gt; i32 {
-    let c_value = unsafe { CString::new(value, false) };
-    let c_substr = unsafe { CString::new(substr, false) };
-    match c_value.as_str() {
-        Some(value) =&gt; match c_substr.as_str() {
-            Some(substr) =&gt; value.match_indices(substr).count() as i32,
-            None =&gt; -1,
+<span class="hljs-keyword">use</span> std::ffi::CStr;
+<span class="hljs-keyword">use</span> std::<span class="hljs-keyword">str</span>;
+<span class="hljs-keyword">use</span> libc::c_char;
+
+<span class="hljs-preprocessor">#[no_mangle]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">count_substrings</span></span>(value: *<span class="hljs-keyword">const</span> c_char, substr: *<span class="hljs-keyword">const</span> c_char) -&gt; <span class="hljs-keyword">i32</span> {
+    <span class="hljs-keyword">let</span> c_value = <span class="hljs-keyword">unsafe</span> { CStr::from_ptr(value).to_bytes() };
+    <span class="hljs-keyword">let</span> c_substr = <span class="hljs-keyword">unsafe</span> { CStr::from_ptr(substr).to_bytes() };
+    <span class="hljs-keyword">match</span> str::from_utf8(c_value) {
+        Ok(value) =&gt; <span class="hljs-keyword">match</span> str::from_utf8(c_substr) {
+            Ok(substr) =&gt; rust_substrings(value, substr),
+            Err(<span class="hljs-number">_</span>) =&gt; -<span class="hljs-number">1</span>,
         },
-        None =&gt; -1,
+        Err(<span class="hljs-number">_</span>) =&gt; -<span class="hljs-number">1</span>,
     }
 }
-</code></pre><p>This doesn&apos;t look as nice as your regular Rust code, but most of it is just wrapping/unwrapping values to be consistent with a C ABI. The <code>#[no_mangle]</code> attribute keep our functions names plain and simple, while <code>pub extern &quot;C&quot;</code> exports the function to the outside world with the C calling convention (<code>cdecl</code>). See the <a href="http://doc.rust-lang.org/guide-ffi.html" target="_blank">FFI guide</a> or my blogpost about <a href="http://siciarz.net/ffi-rust-writing-bindings-libcpuid/" target="_blank">wrapping a C library</a> for more information.</p>
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">rust_substrings</span></span>(value: &amp;<span class="hljs-keyword">str</span>, substr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-keyword">i32</span> {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">let</span> substr_len = substr.len();
+    <span class="hljs-keyword">let</span> upper_bound = value.len() - substr_len + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..upper_bound {
+        <span class="hljs-keyword">let</span> possible_match = &amp;value[c..c+substr_len];
+        <span class="hljs-keyword">if</span> possible_match == substr {
+            count += <span class="hljs-number">1</span>;
+        }
+    }
+    count
+}
+</code></pre>
+<p>The regular Rust function <code>rust_substrings</code> is wrapped in some magical code to be consistent with a C ABI. The <code>#[no_mangle]</code> attribute keep our functions names plain and simple, while <code>pub extern &quot;C&quot;</code> exports the function to the outside world with the C calling convention (<code>cdecl</code>). See the <a href="http://doc.rust-lang.org/guide-ffi.html" target="_blank">FFI guide</a> or my blogpost about <a href="http://siciarz.net/ffi-rust-writing-bindings-libcpuid/" target="_blank">wrapping a C library</a> for more information.</p>
 <p><strong>Aside</strong>: there was <a href="http://www.wabbo.org/blog/2014/22aug_on_bananas.html" target="_blank">a funny bug regarding bananas</a> in the algorithm Rust uses for string matching.</p>
 <p>To build the library, run <code>cargo build</code> to obtain a .so file and you&apos;re good to go - time to move on to other languages.</p>
 <h2 id="python">Python</h2>
-<p>This bit was the easiest to write :-) With a little help from the <a href="https://docs.python.org/3.4/library/ctypes.html" target="_blank">ctypes</a> module our Python example consists of just two lines of code (excluding import):</p>
-<pre><code>:::python
-import ctypes
+<p>This bit was the easiest to write :-) With a little help from the <a href="https://docs.python.org/3.4/library/ctypes.html" target="_blank">ctypes</a> module our Python example consists of just three lines of code (excluding import):</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> ctypes
 
-stringtools = ctypes.CDLL(&quot;../target/libstringtools-261cf0fc14ce408c.so&quot;)
-print(stringtools.count_substrings(b&quot;banana&quot;, b&quot;na&quot;))
-</code></pre><p>Note that Python byte strings are mapped by <code>ctypes</code> to native C strings underneath.</p>
+library_name = <span class="hljs-string">&quot;../target/debug/libstringtools.so&quot;</span>
+stringtools = ctypes.CDLL(library_name)
+print(stringtools.count_substrings(<span class="hljs-string">b&quot;banana&quot;</span>, <span class="hljs-string">b&quot;na&quot;</span>))
+</code></pre>
+<p>Note that Python byte strings are mapped by <code>ctypes</code> to native C strings underneath.</p>
 <p>We can run it:</p>
-<pre><code>:::sh
-$ python3 main.py
-2
-</code></pre><p>C
--</p>
+<pre><code class="lang-sh">$ python3 main.py
+<span class="hljs-number">2</span>
+</code></pre>
+<h2 id="c">C</h2>
 <p>We have to redeclare the function signature and that&apos;s it. Since we exposed from Rust a C API (and ABI), from this perspective it isn&apos;t really a foreign call.</p>
-<pre><code>:::c
-#include &lt;stdint.h&gt;
-#include &lt;stdio.h&gt;
+<pre><code class="lang-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> &lt;stdint.h&gt;</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> &lt;stdio.h&gt;</span>
 
-int32_t count_substrings(const char* value, const char* substr);
+<span class="hljs-function"><span class="hljs-keyword">int32_t</span> <span class="hljs-title">count_substrings</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* value, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* substr)</span></span>;
 
-int main() {
-    printf(&quot;%d\n&quot;, count_substrings(&quot;banana&quot;, &quot;na&quot;));
-    return 0;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, count_substrings(<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-string">&quot;na&quot;</span>));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
-</code></pre><p>Compile and run (we need to link with the library at runtime, hence the <code>LD_LIBRARY_PATH</code> prefix):</p>
-<pre><code>:::sh
-$ gcc main.c -L ../target -lstringtools-261cf0fc14ce408c -o main
-$ LD_LIBRARY_PATH=../target ./main
-2
-</code></pre><h2 id="haskell">Haskell</h2>
+</code></pre>
+<p>Compile and run (we need to link with the library at runtime, hence the <code>LD_LIBRARY_PATH</code> prefix):</p>
+<pre><code class="lang-sh">$ gcc main.c -L ../target/debug -lstringtools -o main
+$ LD_LIBRARY_PATH=../target/debug ./main
+<span class="hljs-number">2</span>
+</code></pre>
+<h2 id="haskell">Haskell</h2>
 <p>The <a href="https://www.haskell.org/haskellwiki/FFI_Introduction" target="_blank">FFI introduction</a> may not be as great as the Rust guide, but after reading through it and some careful googling I&apos;ve managed to put together the example below:</p>
-<pre><code>:::haskell
-{-# LANGUAGE ForeignFunctionInterface #-}
+<pre><code class="lang-haskell"><span class="hljs-pragma">{-# LANGUAGE ForeignFunctionInterface #-}</span>
 
-import Foreign.C.String (CString, newCString)
+<span class="hljs-import"><span class="hljs-keyword">import</span> Foreign.C.String <span class="hljs-container">(<span class="hljs-type">CString</span>, <span class="hljs-title">newCString</span>)</span></span>
 
-foreign import ccall &quot;count_substrings&quot;
-    count_substrings :: CString -&gt; CString -&gt; IO Int
+<span class="hljs-foreign"><span class="hljs-keyword">foreign</span> <span class="hljs-keyword">import</span> <span class="hljs-keyword">ccall</span> <span class="hljs-string">&quot;count_substrings&quot;</span></span>
+    count_substrings :: <span class="hljs-type">CString</span> -&gt; <span class="hljs-type">CString</span> -&gt; <span class="hljs-type">IO</span> <span class="hljs-type">Int</span>
 
-main :: IO ()
-main = do
-    value &lt;- newCString &quot;banana&quot;
-    substr &lt;- newCString &quot;na&quot;
+<span class="hljs-title">main</span> :: <span class="hljs-type">IO</span> ()
+<span class="hljs-title">main</span> = <span class="hljs-keyword">do</span>
+    value &lt;- newCString <span class="hljs-string">&quot;banana&quot;</span>
+    substr &lt;- newCString <span class="hljs-string">&quot;na&quot;</span>
     count_substrings value substr &gt;&gt;= print
-</code></pre><p>Haskell strings need to be converted to <code>CString</code> values before passing them to the foreign function. Apart from that, the code is straightforward.</p>
+</code></pre>
+<p>Haskell strings need to be converted to <code>CString</code> values before passing them to the foreign function. Apart from that, the code is straightforward.</p>
 <p>Compile, link and run in the same manner as C:</p>
-<pre><code>:::sh
-$ ghc --make main.hs -L../target -lstringtools-261cf0fc14ce408c -lpthread -o main
-$ LD_LIBRARY_PATH=../target ./main
-2
-</code></pre><h2 id="node-js">Node.js</h2>
+<pre><code class="lang-sh">$ ghc --make main.hs -L../target/debug -lstringtools -o main
+$ LD_LIBRARY_PATH=../target/debug ./main
+<span class="hljs-number">2</span>
+</code></pre>
+<h2 id="node-js">Node.js</h2>
 <p>This was as straightforward as with Python, thanks to the <a href="https://www.npmjs.com/package/ffi" target="_blank">ffi npm package</a>.</p>
-<pre><code>:::javascript
-var ffi = require(&apos;ffi&apos;);
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> ffi = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;ffi&apos;</span>);
 
-var stringtools = ffi.Library(&apos;../target/libstringtools-261cf0fc14ce408c.so&apos;, {
-    &apos;count_substrings&apos;: [&apos;int&apos;, [&apos;string&apos;, &apos;string&apos;]]
+<span class="hljs-keyword">var</span> library_name = <span class="hljs-string">&apos;../target/debug/libstringtools.so&apos;</span>;
+<span class="hljs-keyword">var</span> stringtools = ffi.Library(library_name, {
+      <span class="hljs-string">&apos;count_substrings&apos;</span>: [<span class="hljs-string">&apos;int&apos;</span>, [<span class="hljs-string">&apos;string&apos;</span>, <span class="hljs-string">&apos;string&apos;</span>]]
 });
 
-console.log(stringtools.count_substrings(&quot;banana&quot;, &quot;na&quot;));
-</code></pre><p>The first argument of the <code>Library</code> function is the location of our dynamic library. The object passed in the second argument defines a list of functions exported by the library, along with their signatures (in the form <code>[return type, [arguments]]</code>).</p>
-<pre><code>:::sh
-$ node main.js
-2
-</code></pre><p>The code for today is in a separate GitHub repository - <a href="https://github.com/zsiciarz/rust-ffi-stringtools" target="_blank">rust-ffi-stringtools</a>. On a personal note - I should probably add a Makefile...</p>
+<span class="hljs-built_in">console</span>.log(stringtools.count_substrings(<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-string">&quot;na&quot;</span>));
+</code></pre>
+<p>The first argument of the <code>Library</code> function is the location of our dynamic library. The object passed in the second argument defines a list of functions exported by the library, along with their signatures (in the form <code>[return type, [arguments]]</code>).</p>
+<pre><code class="lang-sh">$ node main.js
+<span class="hljs-number">2</span>
+</code></pre>
+<p>The code for today is in a separate GitHub repository - <a href="https://github.com/zsiciarz/rust-ffi-stringtools" target="_blank">rust-ffi-stringtools</a>.</p>
 <h2 id="see-also">See also</h2>
 <ul>
+<li><a href="http://jakegoulding.com/rust-ffi-omnibus/" target="_blank">The Rust FFI omnibus</a></li>
 <li><a href="http://harkablog.com/calling-rust-from-c-and-python.html" target="_blank">Calling Rust from C (and Python!)</a></li>
 <li><a href="https://github.com/creichert/haskellrustdemo" target="_blank">Embed Rust in Haskell</a></li>
 <li><a href="https://github.com/steveklabnik/rust_example" target="_blank">A Ruby gem, implemented in Rust</a></li>
