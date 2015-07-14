@@ -10,7 +10,9 @@ And that positive thing is a huge **THANK YOU** to everybody who read my article
 24 days of Rust 2014 - archive
 ------------------------------
 
-Here's a complete set of links for the series, all in one place:
+See the sidebar for a complete set of links for the series.
+
+For a historical perspective you can take a look at the articles as they were originally written on my blog (note: these are pretty much **outdated** as of now):
 
 * [Day 1 - Cargo and crates.io](https://siciarz.net/24-days-rust-cargo-and-cratesio/)
 * [Day 2 - slow_primes](https://siciarz.net/24-days-rust-slow_primes/)
