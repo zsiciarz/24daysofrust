@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="18" data-basepath=".." data-revision="Mon Jul 13 2015 11:34:27 GMT+0000 (UTC)">
+    <div class="book" data-level="18" data-basepath=".." data-revision="Tue Jul 14 2015 08:52:50 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -553,21 +553,22 @@
 <h2 id="friends-in-common">Friends in common</h2>
 <p>When viewing someone&apos;s profile page on most of the social networking sites, you can see the number (or even a full list) of friends that you both have in common. This is very easy to achieve in Redis using sets.</p>
 <p>In case someone accepts your friendship request, a function similar to the one below will be called.</p>
-<pre><code>extern crate redis;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> redis;
 
-use redis::{Client, Commands, Connection, RedisResult};
-use std::collections::HashSet;
+<span class="hljs-keyword">use</span> redis::{Client, Commands, Connection, RedisResult};
+<span class="hljs-keyword">use</span> std::collections::HashSet;
 
-type UserId = u64;
+<span class="hljs-keyword">type</span> <span class="hljs-title">UserId</span> = <span class="hljs-keyword">u64</span>;
 
-fn add_friend(conn: &amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;()&gt; {
-    let my_key = format!(&quot;friends:{}&quot;, my_id);
-    let their_key = format!(&quot;friends:{}&quot;, their_id);
-    try!(conn.sadd(my_key, their_id));
-    try!(conn.sadd(their_key, my_id));
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">add_friend</span></span>(conn: &amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;()&gt; {
+    <span class="hljs-keyword">let</span> my_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, my_id);
+    <span class="hljs-keyword">let</span> their_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, their_id);
+    <span class="hljs-built_in">try!</span>(conn.sadd(my_key, their_id));
+    <span class="hljs-built_in">try!</span>(conn.sadd(their_key, my_id));
     Ok(())
 }
-</code></pre><p>I&apos;m assuming here that the friendship relation is mutual. That&apos;s why there are two <code>sadd</code> calls - one to add yourself to their set of friends and the other one is symmetrical. Now checking friends in common is just a matter of set intersection - expressed in Redis as the <code>SINTER</code> command.</p>
+</code></pre>
+<p>I&apos;m assuming here that the friendship relation is mutual. That&apos;s why there are two <code>sadd</code> calls - one to add yourself to their set of friends and the other one is symmetrical. Now checking friends in common is just a matter of set intersection - expressed in Redis as the <code>SINTER</code> command.</p>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">friends_in_common</span></span>(conn: &amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;HashSet&lt;UserId&gt;&gt; {
     <span class="hljs-keyword">let</span> my_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, my_id);
     <span class="hljs-keyword">let</span> their_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, their_id);
