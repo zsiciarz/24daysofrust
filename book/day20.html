@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="20" data-basepath=".." data-revision="Tue Jul 14 2015 12:55:22 GMT+0000 (UTC)">
+    <div class="book" data-level="20" data-basepath=".." data-revision="Tue Jul 14 2015 13:13:46 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -533,56 +533,60 @@
 <blockquote>
 <p>Relevancy: <strong>outdated</strong>, won&apos;t build anymore; for the time beeing see <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a></p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a> crate is a native Rust implementation and while still lacking a lot of features, it is already usable today.</p>
+<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
 <h2 id="operational-patterns">Operational patterns</h2>
 <p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
 <p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zeromq;
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
 
-<span class="hljs-keyword">use</span> zeromq::{Context, Msg, SocketType};
+<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::os::args();
+    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;Vec&lt;<span class="hljs-number">_</span>&gt;&gt;();
     <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
         <span class="hljs-keyword">return</span>;
     }
-    <span class="hljs-keyword">let</span> ctx = Context::new();
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
     <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
     <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        <span class="hljs-comment">// TODO</span>
+        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
     }
     <span class="hljs-keyword">else</span> {
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        <span class="hljs-comment">// TODO</span>
+        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
     }
 }
 </code></pre>
 <h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = ctx.socket(SocketType::REQ);
-<span class="hljs-keyword">let</span> <span class="hljs-number">_</span> = sock.connect(addr);
-<span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>.to_string();
-<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {}&quot;</span>, payload);
-<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-keyword">box</span> Msg::new(payload.len());
-msg.data = payload.into_bytes();
-<span class="hljs-keyword">let</span> <span class="hljs-number">_</span> = sock.msg_send(msg);
-<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Ok(msg) = sock.msg_recv() {
-    <span class="hljs-keyword">let</span> contents = String::from_utf8(msg.data).ok().expect(<span class="hljs-string">&quot;Not a UTF-8 string&quot;</span>);
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {}&quot;</span>, contents);
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; Result&lt;(), Error&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
+    <span class="hljs-built_in">try!</span>(sock.connect(addr));
+    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
+    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
+    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
+    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
+    Ok(())
 }
 </code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Msg</code> objects, so most of the client code is just encoding and storing the payload in the <code>msg.data</code> attribute (which is just a vector of bytes - <code>Vec&lt;u8&gt;</code>). You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
+<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
+<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
 <h2 id="server">Server</h2>
 <p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = ctx.socket(SocketType::REP);
-<span class="hljs-keyword">let</span> <span class="hljs-number">_</span> = sock.bind(addr);
-<span class="hljs-keyword">loop</span> {
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Ok(msg) = sock.msg_recv() {
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-keyword">box</span> Msg::new(msg.data.len());
-        response.data = msg.data;
-        <span class="hljs-keyword">let</span> <span class="hljs-number">_</span> = sock.msg_send(response);
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; Result&lt;(), Error&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
+    <span class="hljs-built_in">try!</span>(sock.bind(addr));
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
+    <span class="hljs-keyword">loop</span> {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Ok(<span class="hljs-number">_</span>) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
+            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
+        }
     }
+    Ok(())
 }
 </code></pre>
 <p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
@@ -593,8 +597,8 @@ ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span cl
 <p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
 <pre><code class="lang-sh">$ cargo run -- client
 ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; Hello world!
-&lt;- Hello world!
+-&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
+&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
 </code></pre>
 <h2 id="see-also">See also</h2>
 <ul>
