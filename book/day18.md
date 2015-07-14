@@ -34,7 +34,7 @@ When viewing someone's profile page on most of the social networking sites, you 
 
 In case someone accepts your friendship request, a function similar to the one below will be called.
 
-```
+```rust
 extern crate redis;
 
 use redis::{Client, Commands, Connection, RedisResult};
