@@ -1,6 +1,32 @@
 extern crate zmq;
 
-use zmq::{Context, Message};
+use zmq::{Context, Message, Error};
+
+fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
+    let mut sock = try!(ctx.socket(zmq::REQ));
+    try!(sock.connect(addr));
+    let payload = "Hello world!";
+    println!("-> {:?}", payload);
+    let mut msg = try!(Message::new());
+    try!(sock.send(payload.as_bytes(), 0));
+    try!(sock.recv(&mut msg, 0));
+    let contents = msg.as_str().unwrap();
+    println!("<- {:?}", contents);
+    Ok(())
+}
+
+fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
+    let mut sock = try!(ctx.socket(zmq::REP));
+    try!(sock.bind(addr));
+    let mut msg = try!(Message::new());
+    loop {
+        if let Ok(_) = sock.recv(&mut msg, 0) {
+            try!(sock.send_str(msg.as_str().unwrap(), 0));
+        }
+    }
+    Ok(())
+}
+
 
 fn main() {
     println!("24 days of Rust - zmq (day 20)");
@@ -13,25 +39,10 @@ fn main() {
     let addr = "tcp://127.0.0.1:25933";
     if args[1] == "client" {
         println!("ZeroMQ client connecting to {}", addr);
-        let mut sock = ctx.socket(zmq::REQ).unwrap();
-        let _ = sock.connect(addr);
-        let payload = "Hello world!";
-        println!("-> {:?}", payload);
-        let mut msg = Message::new().unwrap();
-        sock.send(payload.as_bytes(), 0).unwrap();
-        sock.recv(&mut msg, 0).unwrap();
-        let contents = msg.as_str().unwrap();
-        println!("<- {:?}", contents);
+        run_client(&mut ctx, addr).unwrap_or_else(|err| println!("{:?}", err));
     }
     else {
         println!("ZeroMQ server listening on {}", addr);
-        let mut sock = ctx.socket(zmq::REP).unwrap();
-        let _ = sock.bind(addr);
-        let mut msg = Message::new().unwrap();
-        loop {
-            if let Ok(_) = sock.recv(&mut msg, 0) {
-                sock.send_str(msg.as_str().unwrap(), 0).unwrap();
-            }
-        }
+        run_server(&mut ctx, addr).unwrap_or_else(|err| println!("{:?}", err));
     }
 }
