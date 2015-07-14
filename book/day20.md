@@ -1,6 +1,6 @@
 # Day 20 - zeromq
 
-> Relevancy: **outdated**, won't build anymore; for the time beeing see [rust-zmq](https://github.com/erickt/rust-zmq)
+> Relevancy: 1.1 stable
 
 [ZeroMQ](http://zeromq.org/) is a language-independent messaging solution. It's not a full-fledged system such as for example [RabbitMQ](http://www.rabbitmq.com/), basically it's just a transport layer. From the programmer's perspective working with it doesn't differ much from ordinary sockets, but there's a lot of power hidden underneath. The [rust-zmq](https://github.com/erickt/rust-zmq) crate is a Rust binding to the C library. There used to be a working native binding ([zeromq](https://github.com/zeromq/zmq.rs)), but it's now undergoing a redesign and rewrite.
 
