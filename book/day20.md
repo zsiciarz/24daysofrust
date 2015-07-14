@@ -2,7 +2,7 @@
 
 > Relevancy: **outdated**, won't build anymore; for the time beeing see [rust-zmq](https://github.com/erickt/rust-zmq)
 
-[ZeroMQ](http://zeromq.org/) is a language-independent messaging solution. It's not a full-fledged system such as for example [RabbitMQ](http://www.rabbitmq.com/), basically it's just a transport layer. From the programmer's perspective working with it doesn't differ much from ordinary sockets, but there's a lot of power hidden underneath. The [zeromq](https://github.com/zeromq/zmq.rs) crate is a native Rust implementation and while still lacking a lot of features, it is already usable today.
+[ZeroMQ](http://zeromq.org/) is a language-independent messaging solution. It's not a full-fledged system such as for example [RabbitMQ](http://www.rabbitmq.com/), basically it's just a transport layer. From the programmer's perspective working with it doesn't differ much from ordinary sockets, but there's a lot of power hidden underneath. The [rust-zmq](https://github.com/erickt/rust-zmq) crate is a Rust binding to the C library. There used to be a working native binding ([zeromq](https://github.com/zeromq/zmq.rs)), but it's now undergoing a redesign and rewrite.
 
 Operational patterns
 --------------------
@@ -12,25 +12,25 @@ The [ZeroMQ guide](http://zguide.zeromq.org/page:all#Messaging-Patterns) lists s
 Before we start implementing the client and server, let's prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.
 
 ```rust
-extern crate zeromq;
+extern crate zmq;
 
-use zeromq::{Context, Msg, SocketType};
+use zmq::{Context, Message, Error};
 
 fn main() {
-    let args = std::os::args();
+    let args = std::env::args().collect::<Vec<_>>();
     if args.len() < 2 {
         println!("Usage: {} (client|server)", args[0]);
         return;
     }
-    let ctx = Context::new();
+    let mut ctx = Context::new();
     let addr = "tcp://127.0.0.1:25933";
     if args[1] == "client" {
         println!("ZeroMQ client connecting to {}", addr);
-        // TODO
+        run_client(&mut ctx, addr).unwrap_or_else(|err| println!("{:?}", err));
     }
     else {
         println!("ZeroMQ server listening on {}", addr);
-        // TODO
+        run_server(&mut ctx, addr).unwrap_or_else(|err| println!("{:?}", err));
     }
 }
 ```
@@ -40,20 +40,23 @@ Client
 ------
 
 ```rust
-let mut sock = ctx.socket(SocketType::REQ);
-let _ = sock.connect(addr);
-let payload = "Hello world!".to_string();
-println!("-> {}", payload);
-let mut msg = box Msg::new(payload.len());
-msg.data = payload.into_bytes();
-let _ = sock.msg_send(msg);
-if let Ok(msg) = sock.msg_recv() {
-    let contents = String::from_utf8(msg.data).ok().expect("Not a UTF-8 string");
-    println!("<- {}", contents);
+fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
+    let mut sock = try!(ctx.socket(zmq::REQ));
+    try!(sock.connect(addr));
+    let payload = "Hello world!";
+    println!("-> {:?}", payload);
+    let mut msg = try!(Message::new());
+    try!(sock.send(payload.as_bytes(), 0));
+    try!(sock.recv(&mut msg, 0));
+    let contents = msg.as_str().unwrap();
+    println!("<- {:?}", contents);
+    Ok(())
 }
 ```
 
-A ZeroMQ request starts with opening a `REQ` socket. The sockets send and receive `Msg` objects, so most of the client code is just encoding and storing the payload in the `msg.data` attribute (which is just a vector of bytes - `Vec<u8>`). You can use any encoding you like, ZeroMQ doesn't enforce anything. It can be JSON, [msgpack](https://github.com/mneumann/rust-msgpack), [protobuf](https://github.com/stepancheg/rust-protobuf), whatever - as long as you push some bytes over the wire, ZeroMQ is happy.
+A ZeroMQ request starts with opening a `REQ` socket. The sockets send and receive `Message` objects. You can use any encoding you like, ZeroMQ doesn't enforce anything. It can be JSON, [msgpack](https://github.com/mneumann/rust-msgpack), [protobuf](https://github.com/stepancheg/rust-protobuf), whatever - as long as you push some bytes over the wire, ZeroMQ is happy.
+
+Note that we're using the [try! macro](http://doc.rust-lang.org/std/result/#the-try!-macro) for error handling.
 
 Server
 ------
@@ -61,14 +64,16 @@ Server
 We're going to build a simple echo server that repeats the incoming message in the response.
 
 ```rust
-let mut sock = ctx.socket(SocketType::REP);
-let _ = sock.bind(addr);
-loop {
-    if let Ok(msg) = sock.msg_recv() {
-        let mut response = box Msg::new(msg.data.len());
-        response.data = msg.data;
-        let _ = sock.msg_send(response);
+fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
+    let mut sock = try!(ctx.socket(zmq::REP));
+    try!(sock.bind(addr));
+    let mut msg = try!(Message::new());
+    loop {
+        if let Ok(_) = sock.recv(&mut msg, 0) {
+            try!(sock.send_str(msg.as_str().unwrap(), 0));
+        }
     }
+    Ok(())
 }
 ```
 
@@ -86,8 +91,8 @@ And if we fire up the client in a new tab we should see a roundtrip message:
 ```sh
 $ cargo run -- client
 ZeroMQ client connecting to tcp://127.0.0.1:25933
--> Hello world!
-<- Hello world!
+-> "Hello world!"
+<- "Hello world!"
 ```
 
 See also
