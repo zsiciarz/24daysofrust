@@ -81,7 +81,7 @@ uuid = "~0.1.17"
 zmq = "~0.7.0"
 
 [dependencies.hyper]
-version = "~0.6.4"
+version = "~0.6.5"
 features = ["nightly"]
 
 [dependencies.postgres]
