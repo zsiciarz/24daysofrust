@@ -81,11 +81,11 @@ uuid = "~0.1.17"
 zmq = "~0.7.0"
 
 [dependencies.hyper]
-version = "~0.6.6"
+version = "~0.6.8"
 features = ["nightly"]
 
 [dependencies.postgres]
-version= "~0.9.4"
+version= "~0.9.5"
 features = ["rustc-serialize", "time"]
 
 [dependencies.fuse]
