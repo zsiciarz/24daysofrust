@@ -12,7 +12,7 @@ dependencies = [
  "itertools 0.3.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "json_macros 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "nalgebra 0.2.20 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.2.21 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.25 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres 0.9.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres_array 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -288,7 +288,7 @@ dependencies = [
 
 [[package]]
 name = "nalgebra"
-version = "0.2.20"
+version = "0.2.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "num 0.1.25 (registry+https://github.com/rust-lang/crates.io-index)",
