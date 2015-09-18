@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="3" data-basepath=".." data-revision="Sun Sep 13 2015 20:57:28 GMT+0000 (UTC)">
+    <div class="book" data-level="3" data-basepath=".." data-revision="Fri Sep 18 2015 13:17:07 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -566,8 +566,8 @@ For a Few Dollars More,El Indio,<span class="hljs-number">1965</span>
 </code></pre>
 <p>We need to import the <code>rustc_serialize</code> crate so that Rust can derive for us the <code>RustcEncodable</code> trait. By the way, this also enables serializing <code>Movie</code> objects to JSON.</p>
 <pre><code class="lang-rust"><span class="hljs-keyword">let</span> movie = Movie {
-    title: <span class="hljs-string">&quot;Hang &apos;Em High&quot;</span>.to_string(),
-    bad_guy: <span class="hljs-string">&quot;Wilson&quot;</span>.to_string(),
+    title: <span class="hljs-string">&quot;Hang &apos;Em High&quot;</span>.to_owned(),
+    bad_guy: <span class="hljs-string">&quot;Wilson&quot;</span>.to_owned(),
     pub_year: <span class="hljs-number">1968</span>,
 };
 writer.encode(movie).ok().expect(<span class="hljs-string">&quot;CSV writer error&quot;</span>);

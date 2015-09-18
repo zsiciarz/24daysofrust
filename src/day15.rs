@@ -42,7 +42,7 @@ impl JsonFilesystem {
             flags: 0,
         };
         attrs.insert(1, attr);
-        inodes.insert("/".to_string(), 1);
+        inodes.insert("/".to_owned(), 1);
         for (i, (key, value)) in tree.iter().enumerate() {
             let attr = FileAttr {
                 ino: i as u64 + 2,
@@ -99,7 +99,7 @@ impl Filesystem for JsonFilesystem {
 
     fn read(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, size: u32, reply: ReplyData) {
         println!("read(ino={}, fh={}, offset={}, size={})", ino, fh, offset, size);
-        for (key, &inode) in self.inodes.iter() {
+        for (key, &inode) in &self.inodes {
             if inode == ino {
                 let value = self.tree.get(key).unwrap();
                 reply.data(value.pretty().to_string().as_bytes());
@@ -115,7 +115,7 @@ impl Filesystem for JsonFilesystem {
             if offset == 0 {
                 reply.add(1, 0, FileType::Directory, &Path::new("."));
                 reply.add(1, 1, FileType::Directory, &Path::new(".."));
-                for (key, &inode) in self.inodes.iter() {
+                for (key, &inode) in &self.inodes {
                     if inode == 1 { continue; }
                     let offset = inode; // hack
                     println!("\tkey={}, inode={}, offset={}", key, inode, offset);

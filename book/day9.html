@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="9" data-basepath=".." data-revision="Sun Sep 13 2015 20:57:28 GMT+0000 (UTC)">
+    <div class="book" data-level="9" data-basepath=".." data-revision="Fri Sep 18 2015 13:17:07 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -559,7 +559,7 @@
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> config = AnyMap::new();
-    config.insert(HostAddress::DomainName(<span class="hljs-string">&quot;siciarz.net&quot;</span>.to_string()));
+    config.insert(HostAddress::DomainName(<span class="hljs-string">&quot;siciarz.net&quot;</span>.to_owned()));
     config.insert(Port(<span class="hljs-number">666</span>));
     config.insert(ConnectionLimit(<span class="hljs-number">32</span>));
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, config.get::&lt;HostAddress&gt;());

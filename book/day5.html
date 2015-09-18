@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="5" data-basepath=".." data-revision="Sun Sep 13 2015 20:57:28 GMT+0000 (UTC)">
+    <div class="book" data-level="5" data-basepath=".." data-revision="Fri Sep 18 2015 13:17:07 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -617,8 +617,8 @@
 }
 
 <span class="hljs-keyword">let</span> movie = Movie {
-    title: <span class="hljs-string">&quot;You Only Live Twice&quot;</span>.to_string(),
-    bad_guy: <span class="hljs-string">&quot;Blofeld&quot;</span>.to_string(),
+    title: <span class="hljs-string">&quot;You Only Live Twice&quot;</span>.to_owned(),
+    bad_guy: <span class="hljs-string">&quot;Blofeld&quot;</span>.to_owned(),
     pub_year: <span class="hljs-number">1967</span>,
 };
 <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, post_json(<span class="hljs-string">&quot;http://httpbin.org/post&quot;</span>, &amp;movie).unwrap());

@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="16" data-basepath=".." data-revision="Sun Sep 13 2015 20:57:28 GMT+0000 (UTC)">
+    <div class="book" data-level="16" data-basepath=".." data-revision="Fri Sep 18 2015 13:17:07 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -611,7 +611,7 @@ drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-numbe
             flags: <span class="hljs-number">0</span>,
         };
         attrs.insert(<span class="hljs-number">1</span>, attr);
-        inodes.insert(<span class="hljs-string">&quot;/&quot;</span>.to_string(), <span class="hljs-number">1</span>);
+        inodes.insert(<span class="hljs-string">&quot;/&quot;</span>.to_owned(), <span class="hljs-number">1</span>);
         <span class="hljs-keyword">for</span> (i, (key, value)) <span class="hljs-keyword">in</span> tree.iter().enumerate() {
             <span class="hljs-keyword">let</span> attr = FileAttr {
                 ino: i <span class="hljs-keyword">as</span> <span class="hljs-keyword">u64</span> + <span class="hljs-number">2</span>,

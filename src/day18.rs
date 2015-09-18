@@ -54,7 +54,7 @@ fn main() {
              friends_in_common(&conn, 2, 3).map(|s| s.len()).unwrap_or(0));
 
     let players = vec!["raynor", "kerrigan", "mengsk", "zasz", "tassadar"];
-    for player in players.iter() {
+    for player in &players {
         let score = rand::random::<u32>() % 1000;
         add_score(&conn, *player, score).ok().expect("Nuclear launch detected");
     }

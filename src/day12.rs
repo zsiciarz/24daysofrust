@@ -11,14 +11,14 @@ fn main() {
     let img = image::open("data/in.png").ok().expect("Opening image failed");
     let filtered = img.fliph();
     let mut out = File::create("out.png").unwrap();
-    let _ = filtered.save(&mut out, image::PNG).ok().expect("Saving image failed");
+    filtered.save(&mut out, image::PNG).ok().expect("Saving image failed");
 
     let kernel = [-1.0f32, -1.0, -1.0,
                   -1.0, 8.0, -1.0,
                   -1.0, -1.0, -1.0];
     let filtered = img.filter3x3(&kernel);
     let mut out = File::create("out_blur.png").unwrap();
-    let _ = filtered.save(&mut out, image::PNG).ok().expect("Saving image failed");
+    filtered.save(&mut out, image::PNG).ok().expect("Saving image failed");
 
     let (width, height) = img.dimensions();
     let mut rng = rand::thread_rng();
@@ -32,9 +32,9 @@ fn main() {
         }
     }
     let mut out = File::create("out_noisy.png").unwrap();
-    let _ = noisy.save(&mut out, image::PNG).ok().expect("Saving image failed");
+    noisy.save(&mut out, image::PNG).ok().expect("Saving image failed");
 
     let thumbnail = img.resize(120, 120, FilterType::Lanczos3);
     let mut out = File::create("out_thumb.png").unwrap();
-    let _ = thumbnail.save(&mut out, image::PNG).ok().expect("Saving image failed");
+    thumbnail.save(&mut out, image::PNG).ok().expect("Saving image failed");
 }

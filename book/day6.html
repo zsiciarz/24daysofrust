@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="6" data-basepath=".." data-revision="Sun Sep 13 2015 20:57:28 GMT+0000 (UTC)">
+    <div class="book" data-level="6" data-basepath=".." data-revision="Fri Sep 18 2015 13:17:07 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -556,11 +556,11 @@
 <span class="hljs-keyword">use</span> rustc_serialize::json::{<span class="hljs-keyword">self</span>, Encoder};
 
 <span class="hljs-keyword">let</span> user = User {
-    name: <span class="hljs-string">&quot;Zbyszek&quot;</span>.to_string(),
+    name: <span class="hljs-string">&quot;Zbyszek&quot;</span>.to_owned(),
     post_count: <span class="hljs-number">100u32</span>,
     likes_burgers: <span class="hljs-keyword">true</span>,
     avatar: Some(Photo {
-        url: <span class="hljs-string">&quot;http://lorempixel.com/160/160/&quot;</span>.to_string(),
+        url: <span class="hljs-string">&quot;http://lorempixel.com/160/160/&quot;</span>.to_owned(),
         dimensions: (<span class="hljs-number">160u32</span>, <span class="hljs-number">160u32</span>),
     }),
 };

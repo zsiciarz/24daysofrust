@@ -22,7 +22,7 @@ fn main() {
     let docopt = Args::docopt();
     println!("{:?}", docopt);
     let args: Args = docopt.decode().unwrap_or_else(|e| e.exit());
-    println!("Counting stuff in {}", args.arg_file.unwrap_or("standard input".to_string()));
+    println!("Counting stuff in {}", args.arg_file.unwrap_or("standard input".to_owned()));
     if args.flag_bytes {
         println!("Counting bytes!");
     }

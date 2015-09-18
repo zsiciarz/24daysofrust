@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="19" data-basepath=".." data-revision="Sun Sep 13 2015 20:57:28 GMT+0000 (UTC)">
+    <div class="book" data-level="19" data-basepath=".." data-revision="Fri Sep 18 2015 13:17:07 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -549,8 +549,8 @@ rusti=&gt; (<span class="hljs-number">1</span>..<span class="hljs-number">100</s
 <span class="hljs-number">303</span>
 </code></pre>
 <p>One great thing about <code>rusti</code> is the <code>.type</code> command which shows the type of an expression. (It&apos;s quite similar to <code>:type</code> in GHCi.)</p>
-<pre><code class="lang-sh">rusti=&gt; .type Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_string())
-Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_string()) = core::option::Option&lt;collections::string::String&gt;
+<pre><code class="lang-sh">rusti=&gt; .type Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_owned())
+Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_owned()) = core::option::Option&lt;collections::string::String&gt;
 rusti=&gt; .type vec![<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
 vec![<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>] = collections::vec::Vec&lt;i32&gt;
 rusti=&gt; .type std::io::stdin

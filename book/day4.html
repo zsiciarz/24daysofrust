@@ -36,7 +36,7 @@
     
 
         
-    <div class="book" data-level="4" data-basepath=".." data-revision="Sun Sep 13 2015 20:57:28 GMT+0000 (UTC)">
+    <div class="book" data-level="4" data-basepath=".." data-revision="Fri Sep 18 2015 13:17:07 GMT+0000 (UTC)">
     
 
 <div class="book-summary">
@@ -590,7 +590,7 @@ Options:
 };
 </code></pre>
 <p><code>Docopt::new()</code> returns a <code>Result&lt;Docopt, Error&gt;</code> value. The errors from docopt have a handy <code>exit()</code> method that prints the error message and quits the program. Printing a <code>Docopt</code> value gives us a lot of debugging information. The <code>decode()</code> method is responsible for creating our arguments object and we extract it from the <code>Ok</code> variant. We can now use <code>args</code> as any other struct in our program.</p>
-<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting stuff in {}&quot;</span>, args.arg_file.unwrap_or(<span class="hljs-string">&quot;standard input&quot;</span>.to_string()));
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting stuff in {}&quot;</span>, args.arg_file.unwrap_or(<span class="hljs-string">&quot;standard input&quot;</span>.to_owned()));
 <span class="hljs-keyword">if</span> args.flag_bytes {
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting bytes!&quot;</span>);
 }

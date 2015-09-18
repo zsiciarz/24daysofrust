@@ -23,8 +23,8 @@ fn main() {
         writer.encode(row).ok().expect("CSV writer error");
     }
     let movie = Movie {
-        title: "Hang 'Em High".to_string(),
-        bad_guy: "Wilson".to_string(),
+        title: "Hang 'Em High".to_owned(),
+        bad_guy: "Wilson".to_owned(),
         pub_year: 1968,
     };
     writer.encode(movie).ok().expect("CSV writer error");
