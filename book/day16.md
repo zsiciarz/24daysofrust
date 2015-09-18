@@ -95,7 +95,7 @@ impl JsonFilesystem {
             flags: 0,
         };
         attrs.insert(1, attr);
-        inodes.insert("/".to_string(), 1);
+        inodes.insert("/".to_owned(), 1);
         for (i, (key, value)) in tree.iter().enumerate() {
             let attr = FileAttr {
                 ino: i as u64 + 2,

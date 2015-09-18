@@ -85,7 +85,7 @@ let args: Args = match docopt.decode() {
 `Docopt::new()` returns a `Result<Docopt, Error>` value. The errors from docopt have a handy `exit()` method that prints the error message and quits the program. Printing a `Docopt` value gives us a lot of debugging information. The `decode()` method is responsible for creating our arguments object and we extract it from the `Ok` variant. We can now use `args` as any other struct in our program.
 
 ```rust
-println!("Counting stuff in {}", args.arg_file.unwrap_or("standard input".to_string()));
+println!("Counting stuff in {}", args.arg_file.unwrap_or("standard input".to_owned()));
 if args.flag_bytes {
     println!("Counting bytes!");
 }

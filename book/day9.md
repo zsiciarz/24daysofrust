@@ -32,7 +32,7 @@ struct ConnectionLimit(u32);
 
 fn main() {
     let mut config = AnyMap::new();
-    config.insert(HostAddress::DomainName("siciarz.net".to_string()));
+    config.insert(HostAddress::DomainName("siciarz.net".to_owned()));
     config.insert(Port(666));
     config.insert(ConnectionLimit(32));
     println!("{:?}", config.get::<HostAddress>());
