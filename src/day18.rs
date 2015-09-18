@@ -1,3 +1,7 @@
+#![feature(plugin)]
+
+#![plugin(clippy)]
+
 extern crate rand;
 extern crate redis;
 

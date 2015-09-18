@@ -1,3 +1,7 @@
+#![feature(plugin)]
+
+#![plugin(clippy)]
+
 extern crate uuid;
 
 use uuid::Uuid;

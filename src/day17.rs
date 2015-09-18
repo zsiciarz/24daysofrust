@@ -1,3 +1,7 @@
+#![feature(plugin)]
+
+#![plugin(clippy)]
+
 extern crate image;
 extern crate nalgebra;
 extern crate rand;

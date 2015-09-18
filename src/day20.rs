@@ -1,3 +1,7 @@
+#![feature(plugin)]
+
+#![plugin(clippy)]
+
 extern crate zmq;
 
 use zmq::{Context, Message, Error};

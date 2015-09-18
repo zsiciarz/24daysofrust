@@ -1,4 +1,5 @@
 #![feature(plugin)]
+#![plugin(clippy)]
 #![plugin(json_macros)]
 
 extern crate rustc_serialize;

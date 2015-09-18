@@ -1,4 +1,5 @@
 #![feature(plugin)]
+#![plugin(clippy)]
 #![plugin(postgres_macros)]
 
 extern crate rustc_serialize;

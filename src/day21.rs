@@ -1,3 +1,7 @@
+#![feature(plugin)]
+
+#![plugin(clippy)]
+
 extern crate crypto;
 extern crate rand;
 extern crate rustc_serialize;

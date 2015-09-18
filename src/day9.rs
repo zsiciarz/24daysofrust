@@ -1,3 +1,7 @@
+#![feature(plugin)]
+
+#![plugin(clippy)]
+
 extern crate anymap;
 
 use std::net::Ipv4Addr;
