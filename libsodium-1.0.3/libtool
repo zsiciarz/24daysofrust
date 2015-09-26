@@ -1,6 +1,6 @@
 #! /bin/bash
 # Generated automatically by config.status (libsodium) 1.0.3
-# Libtool was configured on host testing-worker-linux-f25aadab-2-3289-linux-11-81363978:
+# Libtool was configured on host testing-worker-linux-027f0490-2-21320-linux-12-82338830:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 
 # Provide generalized library-building support services.
