@@ -16,10 +16,4 @@ fn main() {
     for (i, c) in iproduct!(numbers, chars.iter()) {
         println!("{}: {}", i, c);
     }
-    let log = "GET / 4096\nGET /home/ 16301\nPOST /home/ 49\nGET / 4096\n";
-    let lines = log.lines();
-    let rows = icompr!(line.split(|c| c == ' ').collect::<Vec<_>>(), line, lines);
-    let bytes = icompr!(row[2], row, rows, row[0] != "POST");
-    let total = icompr!(b.parse::<u32>().unwrap(), b, bytes).fold(0, |acc, x| acc + x);
-    println!("Total GET throughput: {} bytes", total);
 }
