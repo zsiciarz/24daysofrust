@@ -7,7 +7,7 @@ dependencies = [
  "docopt 0.6.73 (registry+https://github.com/rust-lang/crates.io-index)",
  "docopt_macros 0.6.73 (registry+https://github.com/rust-lang/crates.io-index)",
  "fuse 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
- "hyper 0.6.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hyper 0.6.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "image 0.3.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "itertools 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "json_macros 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -182,16 +182,16 @@ dependencies = [
 
 [[package]]
 name = "httparse"
-version = "0.1.6"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "hyper"
-version = "0.6.14"
+version = "0.6.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "cookie 0.1.21 (registry+https://github.com/rust-lang/crates.io-index)",
- "httparse 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "httparse 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "language-tags 0.0.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "mime 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
