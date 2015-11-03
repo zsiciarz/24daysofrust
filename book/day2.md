@@ -1,6 +1,6 @@
 # Day 2 - primal
 
-> Relevancy: 1.1 stable
+> Relevancy: 1.4 stable
 
 When I start learning a new programming language, I like to code at least several solutions to [Project Euler](https://projecteuler.net/) problems. These are very math-oriented and may not be the best introduction to general purpose programming, but it's a start. Anyway, it's just fun to solve them! (...and way more fun to solve them in a fast way and not by brute force.)
 

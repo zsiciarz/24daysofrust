@@ -1,6 +1,6 @@
 # Day 4 - docopt
 
-> Relevancy: 1.1 stable (macros only on nightly)
+> Relevancy: 1.4 stable (macros only on nightly)
 
 One of the few chores when building a commandline program is argument parsing, so that `myprogram --config=myfile.conf --verbose -o output.txt` makes sense. Some arguments come in short and long variants, some are optional and some are positional only. There are a lot of libraries for argument parsing, some are even included in the respective languages' distributions. In Rust's case there's the [getopts crate](https://crates.io/crates/getopts).
 

@@ -1,6 +1,6 @@
 # Day 5 - hyper
 
-> Relevancy: 1.1 stable
+> Relevancy: 1.4 stable
 
 The state of HTTP libraries in Rust was a constant flux before 1.0. However it appears that a specific package won the hearts of Rust programmers: [hyper](https://crates.io/crates/hyper), which will be the subject of this chapter.
 

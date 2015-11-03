@@ -1,6 +1,6 @@
 # Day 9 - anymap
 
-> Relevancy: 1.1 stable
+> Relevancy: 1.4 stable
 
 In this article we will focus on the [anymap](https://crates.io/crates/anymap) crate by [Chris Morgan](http://chrismorgan.info/) of `rust-http` and `teepee` fame. This crate provides the `AnyMap` type - a slightly peculiar, interesting container.
 

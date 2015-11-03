@@ -1,6 +1,6 @@
 # Day 12 - image
 
-> Relevancy: 1.1 stable
+> Relevancy: 1.4 stable
 
 The [image](https://crates.io/crates/image) crate is a library under development (well, not unlike the rest of the Rust ecosystem before 1.0) to read, manipulate and write images. It is part of the effort to develop an open source game engine in pure Rust - [Piston](http://www.piston.rs/), but of course the `image` crate can be used on its own.
 

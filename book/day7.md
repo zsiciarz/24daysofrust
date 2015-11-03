@@ -1,6 +1,6 @@
 # Day 7 - itertools
 
-> Relevancy: 1.1 stable
+> Relevancy: 1.4 stable
 
 The [itertools crate](https://crates.io/crates/itertools) contains several utility functions and macros inspired by Haskell and [Python itertools](https://docs.python.org/3/library/itertools.html). As you can guess from the name, these have to do with iteration and iterators.
 

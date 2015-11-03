@@ -1,6 +1,6 @@
 # Day 3 - csv
 
-> Relevancy: 1.1 stable
+> Relevancy: 1.4 stable
 
 Most of us programmers have encountered the [CSV format](http://en.wikipedia.org/wiki/Comma-separated_values) at some point of our career. Whether you cooperate with financial people, analyze some scientific data or simply allow the users of your web app to download a record of their activities, chances are you'll use some variation of CSV as the data format. Note that I said *some variation* - CSV itself isn't standardized and there are lots of quirks in different implementations.
 

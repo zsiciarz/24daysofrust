@@ -1,6 +1,6 @@
 # Day 8 - racer
 
-> Relevancy: 1.1 stable
+> Relevancy: 1.4 stable
 
 Welcome to the second week of 24 days of Rust! Hope you enjoy the articles so far. Today let me introduce you to [racer](https://github.com/phildawes/racer) - a code completion engine for Rust.
 
