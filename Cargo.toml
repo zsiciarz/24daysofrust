@@ -49,8 +49,8 @@ name = "day17"
 [[bin]]
 name = "day18"
 
-#[[bin]]
-#name = "day20"
+[[bin]]
+name = "day20"
 
 [[bin]]
 name = "day21"
@@ -87,3 +87,6 @@ version = "~0.7.2"
 [dependencies.postgres]
 version= "~0.11.0"
 features = ["rustc-serialize", "time"]
+
+[dependencies.zmq]
+git = "https://github.com/erickt/rust-zmq.git"
