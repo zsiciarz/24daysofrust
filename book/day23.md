@@ -1,6 +1,6 @@
 # Day 23 - calling Rust from other languages
 
-> Relevancy: 1.4 stable
+> Relevancy: 1.6 stable
 
 In this penultimate episode of the **24 days of Rust** article series we will focus on using Rust code from other languages. Since Rust libraries can expose a C API and calling conventions, using them isn't very different from using regular C libraries. A lot of programming languages have some kind of an [FFI](http://en.wikipedia.org/wiki/Foreign_function_interface) mechanism, allowing them to use libraries written in other language(s).  Let's see a few examples!
 
@@ -20,7 +20,7 @@ name = "stringtools"
 crate-type = ["dylib"]
 
 [dependencies]
-libc = "~0.1"
+libc = "~0.2"
 ```
 
 The crate type is explicitly declared as a dynamic library. And now the actual implementation:
@@ -46,16 +46,7 @@ pub extern "C" fn count_substrings(value: *const c_char, substr: *const c_char) 
 }
 
 fn rust_substrings(value: &str, substr: &str) -> i32 {
-    let mut count = 0;
-    let substr_len = substr.len();
-    let upper_bound = value.len() - substr_len + 1;
-    for c in 0..upper_bound {
-        let possible_match = &value[c..c+substr_len];
-        if possible_match == substr {
-            count += 1;
-        }
-    }
-    count
+    value.matches(substr).count() as i32
 }
 ```
 
