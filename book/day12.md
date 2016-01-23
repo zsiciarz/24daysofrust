@@ -17,10 +17,10 @@ extern crate image;
 use std::fs::File;
 
 fn main() {
-    let img = image::open("data/in.png").ok().expect("Opening image failed");
+    let img = image::open("data/in.png").expect("Opening image failed");
     let filtered = img.fliph();
     let mut out = File::create("out.png").unwrap();
-    let _ = filtered.save(&mut out, image::PNG).ok().expect("Saving image failed");
+    let _ = filtered.save(&mut out, image::PNG).expect("Saving image failed");
 }
 ```
 

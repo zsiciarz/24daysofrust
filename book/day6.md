@@ -61,7 +61,7 @@ use rustc_serialize::json::{self, Encoder};
 let mut encoded = String::new();
 {
     let mut encoder = Encoder::new_pretty(&mut encoded);
-    user.encode(&mut encoder).ok().expect("JSON encode error");
+    user.encode(&mut encoder).expect("JSON encode error");
 }
 println!("{}", encoded);
 ```

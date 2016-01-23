@@ -43,7 +43,6 @@ fn main() {
                   varchar(255),
         body text)",
                  &[])
-        .ok()
         .expect("Table creation failed");
     let stmt = match conn.prepare("insert into blog (title, body) values ($1, $2)") {
         Ok(stmt) => stmt,
@@ -55,7 +54,7 @@ fn main() {
     for i in 1..5 {
         let title = format!("Blogpost number {}", i);
         let text = format!("Content of the blogpost #{}", i);
-        stmt.execute(&[&title, &text]).ok().expect("Inserting blogposts failed");
+        stmt.execute(&[&title, &text]).expect("Inserting blogposts failed");
     }
     let stmt = match conn.prepare("select id, title, body from blog where id < $1") {
         Ok(stmt) => stmt,
@@ -65,7 +64,7 @@ fn main() {
         }
     };
     let max_id: i32 = 3;
-    let rows = stmt.query(&[&max_id]).ok().expect("Selecting blogposts failed");
+    let rows = stmt.query(&[&max_id]).expect("Selecting blogposts failed");
     for row in rows.iter() {
         let id: i32 = row.get("id");
         let title: String = row.get("title");

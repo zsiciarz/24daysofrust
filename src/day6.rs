@@ -39,7 +39,7 @@ fn main() {
     let mut encoded = String::new();
     {
         let mut encoder = Encoder::new_pretty(&mut encoded);
-        user.encode(&mut encoder).ok().expect("JSON encode error");
+        user.encode(&mut encoder).expect("JSON encode error");
     }
     println!("{}", encoded);
     let incoming_request = "{\"name\":\"John\",\"post_count\":2,\"likes_burgers\":false,\"avatar\":null}";

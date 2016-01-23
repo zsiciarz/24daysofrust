@@ -65,7 +65,7 @@ We can now simulate adding a few friends:
 
 ```rust
 for i in 1..10u64 {
-    add_friend(&conn, i, i + 2).ok().expect("Friendship failed :(");
+    add_friend(&conn, i, i + 2).expect("Friendship failed :(");
 }
 println!("You have {} friends in common.",
          friends_in_common(&conn, 2, 3).map(|s| s.len()).unwrap_or(0));
@@ -116,7 +116,7 @@ Putting all this together:
 let players = vec!["raynor", "kerrigan", "mengsk", "zasz", "tassadar"];
 for player in players.iter() {
     let score = rand::random::<u32>() % 1000;
-    add_score(&conn, *player, score).ok().expect("Nuclear launch detected");
+    add_score(&conn, *player, score).expect("Nuclear launch detected");
 }
 show_leaderboard(&conn, 3);
 ```

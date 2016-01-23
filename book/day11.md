@@ -32,7 +32,7 @@ The `Connection` type has a few methods related to making queries; perhaps the s
 conn.execute("create table if not exists blog (
     id serial primary key,
     title varchar(255),
-    body text)", &[]).ok().expect("Table creation failed");
+    body text)", &[]).expect("Table creation failed");
 ```
 
 The second argument looks slightly awkward, but that's the way of telling `execute()` that the query takes no parameters. Later on we will see a few examples that use query parameters.
@@ -53,7 +53,7 @@ let stmt = match conn.prepare("insert into blog (title, body) values ($1, $2)") 
 for i in 1..5 {
     let title = format!("Blogpost number {}", i);
     let text = format!("Content of the blogpost #{}", i);
-    stmt.execute(&[&title, &text]).ok().expect("Inserting blogposts failed");
+    stmt.execute(&[&title, &text]).expect("Inserting blogposts failed");
 }
 ```
 
@@ -70,7 +70,7 @@ let stmt = match conn.prepare("select id, title, body from blog where id < $1") 
     }
 };
 let max_id: i32 = 3;
-let rows = stmt.query(&[&max_id]).ok().expect("Selecting blogposts failed");
+let rows = stmt.query(&[&max_id]).expect("Selecting blogposts failed");
 for row in rows.iter() {
     let id: i32 = row.get("id");
     let title: String = row.get("title");

@@ -20,7 +20,7 @@ let dollar_films = vec![
 let path = "westerns.csv";
 let mut writer = Writer::from_file(path).unwrap();
 for row in dollar_films {
-    writer.encode(row).ok().expect("CSV writer error");
+    writer.encode(row).expect("CSV writer error");
 }
 ```
 
@@ -54,7 +54,7 @@ let movie = Movie {
     bad_guy: "Wilson".to_owned(),
     pub_year: 1968,
 };
-writer.encode(movie).ok().expect("CSV writer error");
+writer.encode(movie).expect("CSV writer error");
 ```
 
 Try removing the `#[derive(RustcEncodable)]` attribute and see what happens. Turns out the CSV writer can handle anything that implements `RustcEncodable`.
