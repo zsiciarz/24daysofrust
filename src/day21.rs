@@ -25,7 +25,7 @@ fn main() {
     sha.result(&mut bytes[..]);
     println!("{}", bytes.to_base64(STANDARD));
 
-    let mut gen = OsRng::new().ok().expect("Failed to get OS random generator");
+    let mut gen = OsRng::new().expect("Failed to get OS random generator");
     let mut key: Vec<u8> = repeat(0u8).take(16).collect();
     gen.fill_bytes(&mut key[..]);
     let mut nonce: Vec<u8> = repeat(0u8).take(16).collect();

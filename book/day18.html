@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 18 - redis | 24daysofrust</title>
+        <title>Day 18 - redis | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 18 - redis"
         data-filepath="book/day18.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-18--redis">Day 18 - redis</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable</p>
+<p>Relevancy: 1.6 stable</p>
 </blockquote>
 <p>Today I&apos;m revisiting the topic of database access in Rust. I mentioned PostgreSQL client library <a href="https://siciarz.net/24-days-of-rust-postgres/" target="_blank">a week ago</a>. This time we&apos;ll move from SQL to NoSQL land. Our focus for today will be <a href="http://redis.io/" target="_blank">Redis</a> - a data structure server. The <a href="https://crates.io/crates/redis" target="_blank">redis crate</a> is a client library to access Redis from Rust.</p>
 <h2 id="connecting">Connecting</h2>
@@ -523,7 +523,7 @@
 </code></pre>
 <p>We can now simulate adding a few friends:</p>
 <pre><code class="lang-rust"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..<span class="hljs-number">10u64</span> {
-    add_friend(&amp;conn, i, i + <span class="hljs-number">2</span>).ok().expect(<span class="hljs-string">&quot;Friendship failed :(&quot;</span>);
+    add_friend(&amp;conn, i, i + <span class="hljs-number">2</span>).expect(<span class="hljs-string">&quot;Friendship failed :(&quot;</span>);
 }
 <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;You have {} friends in common.&quot;</span>,
          friends_in_common(&amp;conn, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>).map(|s| s.len()).unwrap_or(<span class="hljs-number">0</span>));
@@ -559,7 +559,7 @@ You have <span class="hljs-number">1</span> friend(s) <span class="hljs-keyword"
 <pre><code class="lang-rust"><span class="hljs-keyword">let</span> players = <span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;raynor&quot;</span>, <span class="hljs-string">&quot;kerrigan&quot;</span>, <span class="hljs-string">&quot;mengsk&quot;</span>, <span class="hljs-string">&quot;zasz&quot;</span>, <span class="hljs-string">&quot;tassadar&quot;</span>];
 <span class="hljs-keyword">for</span> player <span class="hljs-keyword">in</span> players.iter() {
     <span class="hljs-keyword">let</span> score = rand::random::&lt;<span class="hljs-keyword">u32</span>&gt;() % <span class="hljs-number">1000</span>;
-    add_score(&amp;conn, *player, score).ok().expect(<span class="hljs-string">&quot;Nuclear launch detected&quot;</span>);
+    add_score(&amp;conn, *player, score).expect(<span class="hljs-string">&quot;Nuclear launch detected&quot;</span>);
 }
 show_leaderboard(&amp;conn, <span class="hljs-number">3</span>);
 </code></pre>

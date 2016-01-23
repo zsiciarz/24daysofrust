@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 3 - csv | 24daysofrust</title>
+        <title>Day 3 - csv | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 3 - csv"
         data-filepath="book/day3.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-3--csv">Day 3 - csv</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable</p>
+<p>Relevancy: 1.6 stable</p>
 </blockquote>
 <p>Most of us programmers have encountered the <a href="http://en.wikipedia.org/wiki/Comma-separated_values" target="_blank">CSV format</a> at some point of our career. Whether you cooperate with financial people, analyze some scientific data or simply allow the users of your web app to download a record of their activities, chances are you&apos;ll use some variation of CSV as the data format. Note that I said <em>some variation</em> - CSV itself isn&apos;t standardized and there are lots of quirks in different implementations.</p>
 <p>CSV libraries exist for lots of languages, making it a common format for interoperability (alongside XML or JSON) and sometimes preferred for data of a tabular nature. In the Rust ecosystem there is the <a href="https://crates.io/crates/csv" target="_blank">csv crate</a> which will be the focus of this blog post.</p>
@@ -491,7 +491,7 @@
 <span class="hljs-keyword">let</span> path = <span class="hljs-string">&quot;westerns.csv&quot;</span>;
 <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> writer = Writer::from_file(path).unwrap();
 <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> dollar_films {
-    writer.encode(row).ok().expect(<span class="hljs-string">&quot;CSV writer error&quot;</span>);
+    writer.encode(row).expect(<span class="hljs-string">&quot;CSV writer error&quot;</span>);
 }
 </code></pre>
 <p>Now let&apos;s check the output if the <code>Writer</code> handled comma in the last title correctly:</p>
@@ -516,7 +516,7 @@ For a Few Dollars More,El Indio,<span class="hljs-number">1965</span>
     bad_guy: <span class="hljs-string">&quot;Wilson&quot;</span>.to_owned(),
     pub_year: <span class="hljs-number">1968</span>,
 };
-writer.encode(movie).ok().expect(<span class="hljs-string">&quot;CSV writer error&quot;</span>);
+writer.encode(movie).expect(<span class="hljs-string">&quot;CSV writer error&quot;</span>);
 </code></pre>
 <p>Try removing the <code>#[derive(RustcEncodable)]</code> attribute and see what happens. Turns out the CSV writer can handle anything that implements <code>RustcEncodable</code>.</p>
 <h2 id="csv-parsing">CSV parsing</h2>

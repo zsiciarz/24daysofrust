@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 15 - FUSE filesystems, part 1 | 24daysofrust</title>
+        <title>Day 15 - FUSE filesystems, part 1 | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 15 - FUSE filesystems, part 1"
         data-filepath="book/day15.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-15--fuse-filesystems-part-1">Day 15 - FUSE filesystems, part 1</h1>
 <blockquote>
-<p>Relevancy: 1.2 nightly</p>
+<p>Relevancy: 1.8 nightly</p>
 </blockquote>
 <p>A traditional filesystem is typically implemented as a kernel module. However, some Unix-like operating systems (Linux, FreeBSD, Mac OS X and a few others) allow for userspace filesystems through a mechanism called <a href="http://en.wikipedia.org/wiki/Filesystem_in_Userspace" target="_blank">FUSE</a>. The <a href="http://fuse.sourceforge.net/" target="_blank">canonical FUSE library</a> is written in C and there are some bindings from other languages (<a href="https://github.com/terencehonles/fusepy" target="_blank">Python</a>, <a href="https://github.com/lwoggardner/rfusefs" target="_blank">Ruby</a> etc.)</p>
 <p>The <a href="https://github.com/zargony/rust-fuse" target="_blank">fuse crate</a> is very interesting because it&apos;s a rewrite from C to Rust, leveraging many of Rust features unavailable in C. The only binding to libfuse is related to mounting and unmounting the filesystem, the rest is pure Rust.</p>

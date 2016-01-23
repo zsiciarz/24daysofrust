@@ -20,15 +20,15 @@ fn main() {
     let path = "westerns.csv";
     let mut writer = Writer::from_file(path).unwrap();
     for row in dollar_films {
-        writer.encode(row).ok().expect("CSV writer error");
+        writer.encode(row).expect("CSV writer error");
     }
     let movie = Movie {
         title: "Hang 'Em High".to_owned(),
         bad_guy: "Wilson".to_owned(),
         pub_year: 1968,
     };
-    writer.encode(movie).ok().expect("CSV writer error");
-    writer.flush().ok().expect("Flush error");
+    writer.encode(movie).expect("CSV writer error");
+    writer.flush().expect("Flush error");
     let mut reader = Reader::from_file(path).unwrap().has_headers(false);
     for row in reader.decode() {
         let row: (String, String, usize) = row.unwrap();

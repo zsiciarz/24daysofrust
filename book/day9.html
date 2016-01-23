@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 9 - anymap | 24daysofrust</title>
+        <title>Day 9 - anymap | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 9 - anymap"
         data-filepath="book/day9.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-9--anymap">Day 9 - anymap</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable</p>
+<p>Relevancy: 1.6 stable</p>
 </blockquote>
 <p>In this article we will focus on the <a href="https://crates.io/crates/anymap" target="_blank">anymap</a> crate by <a href="http://chrismorgan.info/" target="_blank">Chris Morgan</a> of <code>rust-http</code> and <code>teepee</code> fame. This crate provides the <code>AnyMap</code> type - a slightly peculiar, interesting container.</p>
 <p>The <code>AnyMap</code> type is different from a regular map. For example, a <code>HashMap</code> in Rust is a generic type parametrized by <code>K</code> - the type of keys and <code>V</code> - the type of values stored in map. (There&apos;s also a hasher parameter, but it&apos;s not relevant here.) Meanwhile, <code>AnyMap</code> itself is <strong>not</strong> a generic type. It uses a <code>HashMap</code> internally but we don&apos;t need to know that; conceptually, <code>AnyMap</code> maps from <em>types</em> to values. This means that for each and every type there can be at most one value contained in the mapping.</p>

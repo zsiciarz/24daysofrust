@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 12 - image | 24daysofrust</title>
+        <title>Day 12 - image | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 12 - image"
         data-filepath="book/day12.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-12--image">Day 12 - image</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable</p>
+<p>Relevancy: 1.6 stable</p>
 </blockquote>
 <p>The <a href="https://crates.io/crates/image" target="_blank">image</a> crate is a library under development (well, not unlike the rest of the Rust ecosystem before 1.0) to read, manipulate and write images. It is part of the effort to develop an open source game engine in pure Rust - <a href="http://www.piston.rs/" target="_blank">Piston</a>, but of course the <code>image</code> crate can be used on its own.</p>
 <p>At the moment <code>image</code> supports reading and writing JPG, GIF and PNG images, while a few other formats are read-only (TIFF, WEBP).</p>
@@ -488,10 +488,10 @@
 <span class="hljs-keyword">use</span> std::fs::File;
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> img = image::open(<span class="hljs-string">&quot;data/in.png&quot;</span>).ok().expect(<span class="hljs-string">&quot;Opening image failed&quot;</span>);
+    <span class="hljs-keyword">let</span> img = image::open(<span class="hljs-string">&quot;data/in.png&quot;</span>).expect(<span class="hljs-string">&quot;Opening image failed&quot;</span>);
     <span class="hljs-keyword">let</span> filtered = img.fliph();
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> out = File::create(<span class="hljs-string">&quot;out.png&quot;</span>).unwrap();
-    <span class="hljs-keyword">let</span> _ = filtered.save(&amp;<span class="hljs-keyword">mut</span> out, image::PNG).ok().expect(<span class="hljs-string">&quot;Saving image failed&quot;</span>);
+    <span class="hljs-keyword">let</span> _ = filtered.save(&amp;<span class="hljs-keyword">mut</span> out, image::PNG).expect(<span class="hljs-string">&quot;Saving image failed&quot;</span>);
 }
 </code></pre>
 <p>We used the <code>open()</code> function to create the <code>img</code> variable (which is a <a href="http://www.piston.rs/image/image/enum.DynamicImage.html" target="_blank">DynamicImage</a> value). This is a wrapper for the <code>load()</code> function, which can read images from anything that implements the <code>Read</code> trait. However, there&apos;s no symmetrical shortcut to write an image, so we take advantage of the fact that <code>File</code> implements <code>Write</code>. In between, the <code>fliph()</code> method of the image does what it says on the cover. There are other transformations available, such as:</p>

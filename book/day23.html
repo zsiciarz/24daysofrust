@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 23 - calling Rust from other languages | 24daysofrust</title>
+        <title>Day 23 - calling Rust from other languages | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 23 - calling Rust from other languages"
         data-filepath="book/day23.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-23--calling-rust-from-other-languages">Day 23 - calling Rust from other languages</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable</p>
+<p>Relevancy: 1.6 stable</p>
 </blockquote>
 <p>In this penultimate episode of the <strong>24 days of Rust</strong> article series we will focus on using Rust code from other languages. Since Rust libraries can expose a C API and calling conventions, using them isn&apos;t very different from using regular C libraries. A lot of programming languages have some kind of an <a href="http://en.wikipedia.org/wiki/Foreign_function_interface" target="_blank">FFI</a> mechanism, allowing them to use libraries written in other language(s).  Let&apos;s see a few examples!</p>
 <h2 id="our-rust-library">Our Rust library</h2>
@@ -492,7 +492,7 @@
 <span class="hljs-setting">crate-type = <span class="hljs-value">[<span class="hljs-string">&quot;dylib&quot;</span>]</span></span>
 <span class="hljs-title">
 [dependencies]</span>
-<span class="hljs-setting">libc = <span class="hljs-value"><span class="hljs-string">&quot;~0.1&quot;</span></span></span>
+<span class="hljs-setting">libc = <span class="hljs-value"><span class="hljs-string">&quot;~0.2&quot;</span></span></span>
 </code></pre>
 <p>The crate type is explicitly declared as a dynamic library. And now the actual implementation:</p>
 <pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> libc;
@@ -515,16 +515,7 @@
 }
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">rust_substrings</span></span>(value: &amp;<span class="hljs-keyword">str</span>, substr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-keyword">i32</span> {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> count = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">let</span> substr_len = substr.len();
-    <span class="hljs-keyword">let</span> upper_bound = value.len() - substr_len + <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..upper_bound {
-        <span class="hljs-keyword">let</span> possible_match = &amp;value[c..c+substr_len];
-        <span class="hljs-keyword">if</span> possible_match == substr {
-            count += <span class="hljs-number">1</span>;
-        }
-    }
-    count
+    value.matches(substr).count() <span class="hljs-keyword">as</span> <span class="hljs-keyword">i32</span>
 }
 </code></pre>
 <p>The regular Rust function <code>rust_substrings</code> is wrapped in some magical code to be consistent with a C ABI. The <code>#[no_mangle]</code> attribute keep our functions names plain and simple, while <code>pub extern &quot;C&quot;</code> exports the function to the outside world with the C calling convention (<code>cdecl</code>). See the <a href="http://doc.rust-lang.org/guide-ffi.html" target="_blank">FFI guide</a> or my blogpost about <a href="http://siciarz.net/ffi-rust-writing-bindings-libcpuid/" target="_blank">wrapping a C library</a> for more information.</p>

@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 21 - rust-crypto | 24daysofrust</title>
+        <title>Day 21 - rust-crypto | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 21 - rust-crypto"
         data-filepath="book/day21.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-21--rustcrypto">Day 21 - rust-crypto</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable</p>
+<p>Relevancy: 1.6 stable</p>
 </blockquote>
 <p>The <a href="https://crates.io/crates/rust-crypto" target="_blank">rust-crypto</a> crate is a collection of a lot of cryptography primitives and algorithms. There are tools for calculating hashes, verifying data integrity, encryption  etc. One disclaimer - it hasn&apos;t had a proper security audit yet and although the algorithms are well known and researched, the library itself <em>might</em> have security bugs. But <a href="http://heartbleed.com/" target="_blank">which</a> <a href="https://www.mozilla.org/en-US/security/advisories/mfsa2014-73/" target="_blank">one</a> <a href="http://www.gnutls.org/security.html" target="_blank">doesn&apos;t</a>?</p>
 <h2 id="cryptographic-hashes">Cryptographic hashes</h2>
@@ -516,7 +516,7 @@ wFNeS+K3n/<span class="hljs-number">2</span>TKRMFQ2v4iTFOSj+uwF7P/Lt98xrZ5Ro=
 
 <span class="hljs-keyword">use</span> rand::{OsRng, Rng};
 
-<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> gen = OsRng::new().ok().expect(<span class="hljs-string">&quot;Failed to get OS random generator&quot;</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> gen = OsRng::new().expect(<span class="hljs-string">&quot;Failed to get OS random generator&quot;</span>);
 <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> key: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-keyword">u8</span>&gt; = repeat(<span class="hljs-number">0u8</span>).take(<span class="hljs-number">16</span>).collect();
 gen.fill_bytes(&amp;<span class="hljs-keyword">mut</span> key[..]);
 <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> nonce: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-keyword">u8</span>&gt; = repeat(<span class="hljs-number">0u8</span>).take(<span class="hljs-number">16</span>).collect();

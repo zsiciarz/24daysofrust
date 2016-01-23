@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 11 - postgres | 24daysofrust</title>
+        <title>Day 11 - postgres | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 11 - postgres"
         data-filepath="book/day11.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-11--postgres">Day 11 - postgres</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable (macros only on nightly)</p>
+<p>Relevancy: 1.6 stable (macros only on nightly)</p>
 </blockquote>
 <p>Yes, I&apos;m biased. <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> is my favorite SQL database. There is already a pure Rust driver for PostgreSQL - the <a href="https://crates.io/crates/postgres" target="_blank">postgres</a> crate which will be the subject of today&apos;s article.</p>
 <h2 id="connecting">Connecting</h2>
@@ -501,7 +501,7 @@
 <pre><code class="lang-rust">conn.execute(<span class="hljs-string">&quot;create table if not exists blog (
     id serial primary key,
     title varchar(255),
-    body text)&quot;</span>, &amp;[]).ok().expect(<span class="hljs-string">&quot;Table creation failed&quot;</span>);
+    body text)&quot;</span>, &amp;[]).expect(<span class="hljs-string">&quot;Table creation failed&quot;</span>);
 </code></pre>
 <p>The second argument looks slightly awkward, but that&apos;s the way of telling <code>execute()</code> that the query takes no parameters. Later on we will see a few examples that use query parameters.</p>
 <h2 id="prepared-queries-and-statements">Prepared queries and statements</h2>
@@ -516,7 +516,7 @@
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..<span class="hljs-number">5</span> {
     <span class="hljs-keyword">let</span> title = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Blogpost number {}&quot;</span>, i);
     <span class="hljs-keyword">let</span> text = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Content of the blogpost #{}&quot;</span>, i);
-    stmt.execute(&amp;[&amp;title, &amp;text]).ok().expect(<span class="hljs-string">&quot;Inserting blogposts failed&quot;</span>);
+    stmt.execute(&amp;[&amp;title, &amp;text]).expect(<span class="hljs-string">&quot;Inserting blogposts failed&quot;</span>);
 }
 </code></pre>
 <p>The query was prepared only once and what we got (after some crude error handling) is a <code>Statement</code> value. We can use its <code>execute()</code> method to actually run the query with the supplied parameters (note the borrowing).</p>
@@ -529,7 +529,7 @@
     }
 };
 <span class="hljs-keyword">let</span> max_id: <span class="hljs-keyword">i32</span> = <span class="hljs-number">3</span>;
-<span class="hljs-keyword">let</span> rows = stmt.query(&amp;[&amp;max_id]).ok().expect(<span class="hljs-string">&quot;Selecting blogposts failed&quot;</span>);
+<span class="hljs-keyword">let</span> rows = stmt.query(&amp;[&amp;max_id]).expect(<span class="hljs-string">&quot;Selecting blogposts failed&quot;</span>);
 <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows.iter() {
     <span class="hljs-keyword">let</span> id: <span class="hljs-keyword">i32</span> = row.get(<span class="hljs-string">&quot;id&quot;</span>);
     <span class="hljs-keyword">let</span> title: <span class="hljs-built_in">String</span> = row.get(<span class="hljs-string">&quot;title&quot;</span>);

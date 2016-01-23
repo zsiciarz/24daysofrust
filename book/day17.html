@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 17 - from_fn | 24daysofrust</title>
+        <title>Day 17 - from_fn | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -53,7 +53,7 @@
         data-chapter-title="Day 17 - from_fn"
         data-filepath="book/day17.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -465,7 +465,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../" >24daysofrust</a>
+        <a href="../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-17--fromfn">Day 17 - from_fn</h1>
 <blockquote>
-<p>Relevancy: 1.4 stable</p>
+<p>Relevancy: 1.6 stable</p>
 </blockquote>
 <p>In Rust there is no concept of a constructor as a language feature, like for example in C++. However there is a strong convention (and mentioned in <a href="http://aturon.github.io/ownership/constructors.html" target="_blank">the guidelines</a>) to use a static method called <code>new</code> as the constructor. This works well, but you can have only one function called <code>new</code> in the <code>impl</code> - there is no method overloading. So are we out of luck if we want to have different constructors? No! But arguably different purposes should imply different method names, so another convention is to prefix extra constructors with <code>with_</code> (such as <a href="http://doc.rust-lang.org/std/vec/struct.Vec.html#method.with_capacity" target="_blank">Vec::with_capacity</a>) or <code>from_</code>, if the constructor does some kind of a conversion.</p>
 <p>A few types in the standard library and some third-party crates provide a <code>from_fn</code> constructor. This curious method usually takes as arguments some sort of <em>dimensions</em> and a closure that will generate values.</p>
