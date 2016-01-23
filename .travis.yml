@@ -32,7 +32,7 @@ script:
   - cargo run --bin=day21
 after_success:
   - npm install gitbook-cli
-  - gitbook build -v 2.0.1
+  - gitbook build -v 2.6.7
   - test "$TRAVIS_PULL_REQUEST" == false && test "$TRAVIS_BRANCH" == "master" && bash deploy-book.sh
 env:
   global:
