@@ -1,6 +1,6 @@
 # Day 16 - FUSE filesystems, part 2
 
-> Relevancy: 1.2 nightly
+> Relevancy: 1.8 nightly
 
 We finished [part 1](day15.md) with a working FUSE filesystem representing an empty directory. Today we will continue the story and finally add some files to the mix.
 

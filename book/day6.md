@@ -1,6 +1,6 @@
 # Day 6 - working with JSON
 
-> Relevancy: 1.4 stable (macros only on nightly)
+> Relevancy: 1.6 stable (macros only on nightly)
 
 [JSON](http://en.wikipedia.org/wiki/JSON) is a workhorse data format of the modern Web. Originating from the JavaScript world, it gained a lot of traction and at the moment it's usually the first choice of a Web developer for a data interchange format. Not only Web - once JavaScript-only, JSON support is now ubiquitous. A lot of languages ship with JSON parsers in the standard libraries, and when it's not the case, surely someone has already built a third party library. In case of Rust, JSON support comes out in the [rustc_serialize::json](http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/index.html) module.
 

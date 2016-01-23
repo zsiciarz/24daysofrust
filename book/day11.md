@@ -1,6 +1,6 @@
 # Day 11 - postgres
 
-> Relevancy: 1.4 stable (macros only on nightly)
+> Relevancy: 1.6 stable (macros only on nightly)
 
 Yes, I'm biased. [PostgreSQL](http://www.postgresql.org/) is my favorite SQL database. There is already a pure Rust driver for PostgreSQL - the [postgres](https://crates.io/crates/postgres) crate which will be the subject of today's article.
 

@@ -1,6 +1,6 @@
 # Day 19 - rusti
 
-> Relevancy: 1.3 nightly
+> Relevancy: 1.8 nightly
 
 A few days ago the [Rust subreddit](http://www.reddit.com/r/rust/comments/2phjon/rusti_reborn_my_unofficial_workinprogress_rust/) got excited about the rebirth of [rusti](https://github.com/murarth/rusti) - an interactive shell for Rust. Such interpreters (sometimes called REPLs - [read-eval-print loop](http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)) are the bread and butter of dynamic languages like Lisp, Python or Ruby. But that is not a requirement - as Haskell demonstrates with its GHCi, you can have a REPL for a statically typed, compiled language too. `rusti` is an attempt to build such an interpreter for Rust.
 

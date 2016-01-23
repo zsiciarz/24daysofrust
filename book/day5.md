@@ -1,6 +1,6 @@
 # Day 5 - hyper
 
-> Relevancy: 1.4 stable
+> Relevancy: 1.6 stable
 
 The state of HTTP libraries in Rust was a constant flux before 1.0. However it appears that a specific package won the hearts of Rust programmers: [hyper](https://crates.io/crates/hyper), which will be the subject of this chapter.
 
@@ -13,7 +13,7 @@ Let's start from the usual dependency definition in `Cargo.toml`.
 
 ```ini
 [dependencies]
-hyper = "~0.5"
+hyper = "~0.7"
 ```
 
 When you run `cargo build`, Cargo will download a few other required crates (for URL handling, mimetype support, OpenSSL bindings etc.) and hopefully compile `hyper` afterwards. Time for our first request!

@@ -1,6 +1,6 @@
 # Day 15 - FUSE filesystems, part 1
 
-> Relevancy: 1.2 nightly
+> Relevancy: 1.8 nightly
 
 A traditional filesystem is typically implemented as a kernel module. However, some Unix-like operating systems (Linux, FreeBSD, Mac OS X and a few others) allow for userspace filesystems through a mechanism called [FUSE](http://en.wikipedia.org/wiki/Filesystem_in_Userspace). The [canonical FUSE library](http://fuse.sourceforge.net/) is written in C and there are some bindings from other languages ([Python](https://github.com/terencehonles/fusepy), [Ruby](https://github.com/lwoggardner/rfusefs) etc.)
 

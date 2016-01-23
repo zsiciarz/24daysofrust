@@ -1,6 +1,6 @@
 # Day 18 - redis
 
-> Relevancy: 1.4 stable
+> Relevancy: 1.6 stable
 
 Today I'm revisiting the topic of database access in Rust. I mentioned PostgreSQL client library [a week ago](https://siciarz.net/24-days-of-rust-postgres/). This time we'll move from SQL to NoSQL land. Our focus for today will be [Redis](http://redis.io/) - a data structure server. The [redis crate](https://crates.io/crates/redis) is a client library to access Redis from Rust.
 
