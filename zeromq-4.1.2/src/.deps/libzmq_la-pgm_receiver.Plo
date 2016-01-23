@@ -1,3 +1,0 @@
-src/libzmq_la-pgm_receiver.lo: src/pgm_receiver.cpp src/platform.hpp
-
-src/platform.hpp:

@@ -6,15 +6,10 @@ addons:
 services:
   - redis-server
 before_install:
-  - sudo apt-get install -y libfuse-dev
-  - wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.3.tar.gz
-  - tar xf libsodium-1.0.3.tar.gz
-  - cd libsodium-1.0.3
-  - ./configure && make && sudo make install && sudo ldconfig && cd ..
-  - wget http://download.zeromq.org/zeromq-4.1.2.tar.gz
-  - tar xf zeromq-4.1.2.tar.gz
-  - cd zeromq-4.1.2
-  - ./configure && make && sudo make install && sudo ldconfig && cd ..
+  - sudo add-apt-repository ppa:chris-lea/libsodium -y
+  - sudo add-apt-repository ppa:chris-lea/zeromq -y
+  - sudo apt-get update
+  - sudo apt-get install libfuse-dev libsodium-dev libzmq5-dev -y
 before_script:
   - psql -c "create user rust with password 'rust';" -U postgres
   - psql -c "create database rust owner rust;" -U postgres
@@ -37,7 +32,7 @@ script:
   - cargo run --bin=day21
 after_success:
   - npm install gitbook-cli
-  - gitbook build -v 2.0.1
+  - gitbook build -v 2.6.7
   - test "$TRAVIS_PULL_REQUEST" == false && test "$TRAVIS_BRANCH" == "master" && bash deploy-book.sh
 env:
   global:

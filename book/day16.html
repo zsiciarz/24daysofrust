@@ -4,11 +4,11 @@
     <head>
         
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>Day 16 - FUSE filesystems, part 2 | 24daysofrust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 2.0.1">
+        <meta name="generator" content="GitBook 2.6.7">
         
         
         <meta name="HandheldFriendly" content="true"/>
@@ -17,6 +17,23 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
         <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
         
     
     
@@ -31,37 +48,36 @@
     <body>
         
         
-    <link rel="stylesheet" href="../gitbook/style.css">
-    
-    
-
-        
-    <div class="book" data-level="16" data-basepath=".." data-revision="Fri Dec 11 2015 16:20:08 GMT+0000 (UTC)">
+    <div class="book"
+        data-level="16"
+        data-chapter-title="Day 16 - FUSE filesystems, part 2"
+        data-filepath="book/day16.md"
+        data-basepath=".."
+        data-revision="Sat Jan 23 2016 16:01:45 GMT+0000 (UTC)"
+        data-innerlanguage="">
     
 
 <div class="book-summary">
-    <div class="book-search">
-        <input type="text" placeholder="Type to search" class="form-control" />
-    </div>
-    <ul class="summary">
-        
-        
-        
-        
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
 
-        
+            
 
-        
+            
     
         <li class="chapter " data-level="0" data-path="index.html">
             
                 
                     <a href="../index.html">
+                
                         <i class="fa fa-check"></i>
                         
                         Introduction
                     </a>
-                
             
             
         </li>
@@ -70,13 +86,13 @@
             
                 
                     <a href="../book/day1.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>1.</b>
                         
                         Day 1 - Cargo and crates.io
                     </a>
-                
             
             
         </li>
@@ -85,13 +101,13 @@
             
                 
                     <a href="../book/day2.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>2.</b>
                         
                         Day 2 - primal
                     </a>
-                
             
             
         </li>
@@ -100,13 +116,13 @@
             
                 
                     <a href="../book/day3.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>3.</b>
                         
                         Day 3 - csv
                     </a>
-                
             
             
         </li>
@@ -115,13 +131,13 @@
             
                 
                     <a href="../book/day4.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>4.</b>
                         
                         Day 4 - docopt
                     </a>
-                
             
             
         </li>
@@ -130,13 +146,13 @@
             
                 
                     <a href="../book/day5.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>5.</b>
                         
                         Day 5 - hyper
                     </a>
-                
             
             
         </li>
@@ -145,13 +161,13 @@
             
                 
                     <a href="../book/day6.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>6.</b>
                         
                         Day 6 - working with JSON
                     </a>
-                
             
             
         </li>
@@ -160,13 +176,13 @@
             
                 
                     <a href="../book/day7.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>7.</b>
                         
                         Day 7 - itertools
                     </a>
-                
             
             
         </li>
@@ -175,13 +191,13 @@
             
                 
                     <a href="../book/day8.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>8.</b>
                         
                         Day 8 - racer
                     </a>
-                
             
             
         </li>
@@ -190,13 +206,13 @@
             
                 
                     <a href="../book/day9.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>9.</b>
                         
                         Day 9 - anymap
                     </a>
-                
             
             
         </li>
@@ -205,13 +221,13 @@
             
                 
                     <a href="../book/day10.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>10.</b>
                         
                         Day 10 - the glorious tau
                     </a>
-                
             
             
         </li>
@@ -220,13 +236,13 @@
             
                 
                     <a href="../book/day11.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>11.</b>
                         
                         Day 11 - postgres
                     </a>
-                
             
             
         </li>
@@ -235,13 +251,13 @@
             
                 
                     <a href="../book/day12.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>12.</b>
                         
                         Day 12 - image
                     </a>
-                
             
             
         </li>
@@ -250,13 +266,13 @@
             
                 
                     <a href="../book/day13.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>13.</b>
                         
                         Day 13 - uuid
                     </a>
-                
             
             
         </li>
@@ -265,13 +281,13 @@
             
                 
                     <a href="../book/day14.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>14.</b>
                         
                         Day 14 - nalgebra
                     </a>
-                
             
             
         </li>
@@ -280,13 +296,13 @@
             
                 
                     <a href="../book/day15.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>15.</b>
                         
                         Day 15 - FUSE filesystems, part 1
                     </a>
-                
             
             
         </li>
@@ -295,13 +311,13 @@
             
                 
                     <a href="../book/day16.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>16.</b>
                         
                         Day 16 - FUSE filesystems, part 2
                     </a>
-                
             
             
         </li>
@@ -310,13 +326,13 @@
             
                 
                     <a href="../book/day17.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>17.</b>
                         
                         Day 17 - from_fn
                     </a>
-                
             
             
         </li>
@@ -325,13 +341,13 @@
             
                 
                     <a href="../book/day18.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>18.</b>
                         
                         Day 18 - redis
                     </a>
-                
             
             
         </li>
@@ -340,13 +356,13 @@
             
                 
                     <a href="../book/day19.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>19.</b>
                         
                         Day 19 - rusti
                     </a>
-                
             
             
         </li>
@@ -355,13 +371,13 @@
             
                 
                     <a href="../book/day20.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>20.</b>
                         
                         Day 20 - zeromq
                     </a>
-                
             
             
         </li>
@@ -370,13 +386,13 @@
             
                 
                     <a href="../book/day21.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>21.</b>
                         
                         Day 21 - rust-crypto
                     </a>
-                
             
             
         </li>
@@ -385,13 +401,13 @@
             
                 
                     <a href="../book/day22.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>22.</b>
                         
                         Day 22 - built with Rust
                     </a>
-                
             
             
         </li>
@@ -400,13 +416,13 @@
             
                 
                     <a href="../book/day23.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>23.</b>
                         
                         Day 23 - calling Rust from other languages
                     </a>
-                
             
             
         </li>
@@ -415,105 +431,35 @@
             
                 
                     <a href="../book/day24.html">
+                
                         <i class="fa fa-check"></i>
                         
                             <b>24.</b>
                         
                         Day 24 - conclusion
                     </a>
-                
             
             
         </li>
     
 
 
-        
-        <li class="divider"></li>
-        <li>
-            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-                Published with GitBook
-            </a>
-        </li>
-        
-    </ul>
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
 </div>
 
     <div class="book-body">
         <div class="body-inner">
-            <div class="book-header">
+            <div class="book-header" role="navigation">
     <!-- Actions Left -->
-    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
-    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
-    
-    <div id="font-settings-wrapper" class="dropdown pull-left">
-        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
-        </a>
-        <div class="dropdown-menu font-settings">
-    <div class="dropdown-caret">
-        <span class="caret-outer"></span>
-        <span class="caret-inner"></span>
-    </div>
-
-    <div class="buttons">
-        <button type="button" id="reduce-font-size" class="button size-2">A</button>
-        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
-    </div>
-
-    <div class="buttons font-family-list">
-        <button type="button" data-font="0" class="button">Serif</button>
-        <button type="button" data-font="1" class="button">Sans</button>
-    </div>
-
-    <div class="buttons color-theme-list">
-        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
-        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
-        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
-    </div>
-</div>
-
-    </div>
-
-    <!-- Actions Right -->
-    
-    <div class="dropdown pull-right">
-        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
-        </a>
-        <div class="dropdown-menu font-settings dropdown-left">
-            <div class="dropdown-caret">
-                <span class="caret-outer"></span>
-                <span class="caret-inner"></span>
-            </div>
-            <div class="buttons">
-                <button type="button" data-sharing="twitter" class="button">
-                    Share on Twitter
-                </button>
-                <button type="button" data-sharing="google-plus" class="button">
-                    Share on Google
-                </button>
-                <button type="button" data-sharing="facebook" class="button">
-                    Share on Facebook
-                </button>
-                <button type="button" data-sharing="weibo" class="button">
-                    Share on Weibo
-                </button>
-                <button type="button" data-sharing="instapaper" class="button">
-                    Share on Instapaper
-                </button>
-            </div>
-        </div>
-    </div>
-    
-
-    
-    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
-    
-    
-    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
-    
-    
-    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
-    
     
 
     <!-- Title -->
@@ -523,21 +469,21 @@
     </h1>
 </div>
 
-            <div class="page-wrapper" tabindex="-1">
+            <div class="page-wrapper" tabindex="-1" role="main">
                 <div class="page-inner">
                 
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-16-fuse-filesystems-part-2">Day 16 - FUSE filesystems, part 2</h1>
+                        <h1 id="day-16--fuse-filesystems-part-2">Day 16 - FUSE filesystems, part 2</h1>
 <blockquote>
 <p>Relevancy: 1.2 nightly</p>
 </blockquote>
 <p>We finished <a href="day15.html">part 1</a> with a working FUSE filesystem representing an empty directory. Today we will continue the story and finally add some files to the mix.</p>
 <h2 id="directory-listing-revisited">Directory listing revisited</h2>
 <p>We need to add a minimal amount of JSON handling before actually presenting the data in our filesystem. The <code>JsonFilesystem</code> struct will hold a <code>json::Object</code> value (this is a typedef for a <code>TreeMap</code>) representing the root object in the input JSON.</p>
-<pre><code class="lang-rust">#![feature(plugin)]
-#![plugin(json_macros)]
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#![feature(plugin)]</span>
+<span class="hljs-preprocessor">#![plugin(json_macros)]</span>
 
 <span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
 
@@ -555,8 +501,8 @@
     <span class="hljs-keyword">let</span> tree = data.as_object().unwrap();
     <span class="hljs-keyword">let</span> fs = JsonFilesystem { tree: tree.clone() };
     <span class="hljs-keyword">let</span> mountpoint = <span class="hljs-keyword">match</span> env::args().nth(<span class="hljs-number">1</span>) {
-        Some(path) =&gt; path,
-        None =&gt; {
+        <span class="hljs-built_in">Some</span>(path) =&gt; path,
+        <span class="hljs-built_in">None</span> =&gt; {
             <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} &lt;MOUNTPOINT&gt;&quot;</span>, env::args().nth(<span class="hljs-number">0</span>).unwrap());
             <span class="hljs-keyword">return</span>;
         }
@@ -586,7 +532,7 @@ drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-numbe
 <span class="hljs-keyword">struct</span> JsonFilesystem {
     tree: json::Object,
     attrs: BTreeMap&lt;<span class="hljs-keyword">u64</span>, FileAttr&gt;,
-    inodes: BTreeMap&lt;String, <span class="hljs-keyword">u64</span>&gt;,
+    inodes: BTreeMap&lt;<span class="hljs-built_in">String</span>, <span class="hljs-keyword">u64</span>&gt;,
 }
 
 <span class="hljs-keyword">impl</span> JsonFilesystem {
@@ -603,7 +549,7 @@ drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-numbe
             ctime: ts,
             crtime: ts,
             kind: FileType::Directory,
-            perm: <span class="hljs-number">0</span>o755,
+            perm: <span class="hljs-number">0o755</span>,
             nlink: <span class="hljs-number">0</span>,
             uid: <span class="hljs-number">0</span>,
             gid: <span class="hljs-number">0</span>,
@@ -622,7 +568,7 @@ drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-numbe
                 ctime: ts,
                 crtime: ts,
                 kind: FileType::RegularFile,
-                perm: <span class="hljs-number">0</span>o644,
+                perm: <span class="hljs-number">0o644</span>,
                 nlink: <span class="hljs-number">0</span>,
                 uid: <span class="hljs-number">0</span>,
                 gid: <span class="hljs-number">0</span>,
@@ -638,21 +584,21 @@ drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-numbe
 </code></pre>
 <p>We used <code>time::now()</code> to set current timestamps for creation/modification times instead of the epoch time (January 1, 1970). We also calculate the size of our &quot;files&quot; and store that in the attribute struct.</p>
 <p>With that in our toolkit, let&apos;s implement <code>lookup()</code>.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">lookup</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, parent: <span class="hljs-keyword">u64</span>, name: &amp;Path, reply: ReplyEntry) {
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">lookup</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, _req: &amp;Request, parent: <span class="hljs-keyword">u64</span>, name: &amp;Path, reply: ReplyEntry) {
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;lookup(parent={}, name={})&quot;</span>, parent, name.display());
     <span class="hljs-keyword">let</span> inode = <span class="hljs-keyword">match</span> <span class="hljs-keyword">self</span>.inodes.get(name.to_str().unwrap()) {
-        Some(inode) =&gt; inode,
-        None =&gt; {
+        <span class="hljs-built_in">Some</span>(inode) =&gt; inode,
+        <span class="hljs-built_in">None</span> =&gt; {
             reply.error(ENOENT);
             <span class="hljs-keyword">return</span>;
         },
     };
     <span class="hljs-keyword">match</span> <span class="hljs-keyword">self</span>.attrs.get(inode) {
-        Some(attr) =&gt; {
+        <span class="hljs-built_in">Some</span>(attr) =&gt; {
             <span class="hljs-keyword">let</span> ttl = Timespec::new(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
             reply.entry(&amp;ttl, attr, <span class="hljs-number">0</span>);
         },
-        None =&gt; reply.error(ENOENT),
+        <span class="hljs-built_in">None</span> =&gt; reply.error(ENOENT),
     };
 }
 </code></pre>
@@ -665,20 +611,20 @@ drwxrwxrwt 15 root root  4096 Dec 16 10:17 ..
 -rw-r--r--  0 root root     2 Dec 16 10:17 answer
 -rw-r--r--  0 root root     5 Dec 16 10:17 foo
 </code></pre><p>No more question marks! The <code>getattr</code> method is even simpler now:</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">getattr</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, reply: ReplyAttr) {
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">getattr</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, _req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, reply: ReplyAttr) {
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;getattr(ino={})&quot;</span>, ino);
     <span class="hljs-keyword">match</span> <span class="hljs-keyword">self</span>.attrs.get(&amp;ino) {
-        Some(attr) =&gt; {
+        <span class="hljs-built_in">Some</span>(attr) =&gt; {
             <span class="hljs-keyword">let</span> ttl = Timespec::new(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
             reply.attr(&amp;ttl, attr);
         },
-        None =&gt; reply.error(ENOENT),
+        <span class="hljs-built_in">None</span> =&gt; reply.error(ENOENT),
     };
 }
 </code></pre>
 <h2 id="reading-files">Reading files</h2>
 <p>This is the final piece of the puzzle in our filesystem. Fortunately it is pretty simple after all we&apos;ve done so far. We need to implement the <code>read</code> method.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">read</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, <span class="hljs-number">_</span>req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, fh: <span class="hljs-keyword">u64</span>, offset: <span class="hljs-keyword">u64</span>, size: <span class="hljs-keyword">u32</span>, reply: ReplyData) {
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">read</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, _req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, fh: <span class="hljs-keyword">u64</span>, offset: <span class="hljs-keyword">u64</span>, size: <span class="hljs-keyword">u32</span>, reply: ReplyData) {
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;read(ino={}, fh={}, offset={}, size={})&quot;</span>, ino, fh, offset, size);
     <span class="hljs-keyword">for</span> (key, &amp;inode) <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.inodes.iter() {
         <span class="hljs-keyword">if</span> inode == ino {
@@ -726,9 +672,25 @@ $ grep -rn bar /tmp/rust-fuse
         
 <script src="../gitbook/app.js"></script>
 
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
 <script>
 require(["gitbook"], function(gitbook) {
-    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    var config = {"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
     gitbook.start(config);
 });
 </script>

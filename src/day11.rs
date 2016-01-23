@@ -18,18 +18,19 @@ use rustc_serialize::json::Json;
 use time::Timespec;
 
 fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
-    where T: FromSql {
+    where T: FromSql
+{
     println!("Executing query: {}", query);
     let stmt = try!(conn.prepare(query));
     let rows = try!(stmt.query(&[]));
     let row = rows.iter().next().unwrap();
-    row.get_opt(0)
+    row.get_opt(0).unwrap()
 }
 
 fn main() {
     println!("24 days of Rust - postgres (day 11)");
     let dsn = "postgresql://rust:rust@localhost/rust";
-    let conn = match Connection::connect(dsn, &SslMode::None) {
+    let conn = match Connection::connect(dsn, SslMode::None) {
         Ok(conn) => conn,
         Err(e) => {
             println!("Connection error: {:?}", e);
@@ -38,8 +39,12 @@ fn main() {
     };
     conn.execute("create table if not exists blog (
         id serial primary key,
-        title varchar(255),
-        body text)", &[]).ok().expect("Table creation failed");
+        title \
+                  varchar(255),
+        body text)",
+                 &[])
+        .ok()
+        .expect("Table creation failed");
     let stmt = match conn.prepare("insert into blog (title, body) values ($1, $2)") {
         Ok(stmt) => stmt,
         Err(e) => {
@@ -61,7 +66,7 @@ fn main() {
     };
     let max_id: i32 = 3;
     let rows = stmt.query(&[&max_id]).ok().expect("Selecting blogposts failed");
-    for row in rows {
+    for row in rows.iter() {
         let id: i32 = row.get("id");
         let title: String = row.get("title");
         println!("ID={}, title={}", id, title);
@@ -71,16 +76,21 @@ fn main() {
 
     type IntArray = Array<Option<i32>>;
     let arr = get_single_value::<IntArray>(&conn, "select '{4, 5, 6}'::int[]");
-    println!("{:?}", arr.map(|arr| arr.iter()
-            .filter_map(|x| *x) // unwraps Some values and skips None
-            .collect::<Vec<_>>()));
+    println!("{:?}",
+             arr.map(|arr| {
+                 arr.iter()
+                    .filter_map(|x| *x)
+                    .collect::<Vec<_>>()
+             }));
 
     let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{:?}", json);
 
     let range = get_single_value::<Range<i32>>(&conn, "select '[10, 20)'::int4range");
     println!("{:?}", range);
-    let ts_range = get_single_value::<Range<Timespec>>(&conn, "select '[2015-01-01, 2015-12-31]'::tsrange");
+    let ts_range = get_single_value::<Range<Timespec>>(&conn,
+                                                       "select '[2015-01-01, \
+                                                        2015-12-31]'::tsrange");
     println!("{:?}", ts_range);
 
     let query = sql!("select '{4, 5, 6}'::int[]");
