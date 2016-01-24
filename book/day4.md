@@ -84,16 +84,7 @@ let args: Args = match docopt.decode() {
 
 `Docopt::new()` returns a `Result<Docopt, Error>` value. The errors from docopt have a handy `exit()` method that prints the error message and quits the program. Printing a `Docopt` value gives us a lot of debugging information. The `decode()` method is responsible for creating our arguments object and we extract it from the `Ok` variant. We can now use `args` as any other struct in our program.
 
-```rust
-println!("Counting stuff in {}", args.arg_file.unwrap_or("standard input".to_owned()));
-if args.flag_bytes {
-    println!("Counting bytes!");
-}
-if args.flag_chars {
-    println!("Counting characters!");
-}
-// etc.
-```
+[include:25-31](../src/day4.rs)
 
 docopt_macros
 -------------
@@ -102,37 +93,13 @@ But hey, didn't I tell you earlier about reducing duplication? In the example ab
 
 `docopt!` to the rescue! This is a funny (for some value of fun, of course) macro that will generate the struct for us.
 
-```rust
-#![feature(plugin)]
-#![plugin(docopt_macros)]
-
-extern crate rustc_serialize;
-extern crate docopt;
-
-docopt!(Args, "
-Usage: wc [options] [<file>]
-
-Options:
-    -c, --bytes  print the byte counts
-    -m, --chars  print the character counts
-    -l, --lines  print the newline counts
-    -w, --words  print the word counts
-    -L, --max-line-length  print the length of the longest line
-    -h, --help  display this help and exit
-    -v, --version  output version information and exit
-", arg_file: Option<String>)
-```
+[include:1-18](../src/day4.rs)
 
 The macro takes the name of the type to generate, usage string and (optionally) types for the generated fields. It also validates that the usage message conforms to the docopt spec. The validation happens at compile time when the `Args` struct is generated so there's no runtime overhead. But most importantly we now have a **single** piece of information to maintain instead of two.
 
 There's one more advantage of the macro - our code inside `main()` can be simplified a bit. As the struct is generated from the usage message, we can get rid of one intermediate `Result` unwrapping; the struct has a static `docopt()` method which returns a `Docopt` value.
 
-```rust
-let docopt = Args::docopt();
-println!("{:?}", docopt);
-let args: Args = docopt.decode().unwrap_or_else(|e| e.exit());
-// use args as before
-```
+[include:22-24](../src/day4.rs)
 
 Docopt for Rust recently gained an ability to generate tab completion files for the shell (only bash at the moment). See the [readme](https://github.com/docopt/docopt.rs#tab-completion-support) for more on that.
 

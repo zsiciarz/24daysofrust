@@ -12,35 +12,8 @@ You may ask - why would I ever need something that holds just one value of each 
 
 We can use `AnyMap` together with the [newtype idiom](http://aturon.github.io/features/types/newtype.html) to create a strongly typed configuration holder.
 
-```rust
-extern crate anymap;
-
-use std::net::Ipv4Addr;
-use anymap::AnyMap;
-
-#[derive(Debug)]
-enum HostAddress {
-    DomainName(String),
-    Ip(Ipv4Addr),
-}
-
-#[derive(Debug)]
-struct Port(u32);
-
-#[derive(Debug)]
-struct ConnectionLimit(u32);
-
-fn main() {
-    let mut config = AnyMap::new();
-    config.insert(HostAddress::DomainName("siciarz.net".to_owned()));
-    config.insert(Port(666));
-    config.insert(ConnectionLimit(32));
-    println!("{:?}", config.get::<HostAddress>());
-    println!("{:?}", config.get::<Port>());
-    assert!(config.get::<String>().is_none());
-    assert!(config.get::<u32>().is_none());
-}
-```
+[include:1-16](../src/day9.rs)
+[include:20-27](../src/day9.rs)
 
 The output:
 
@@ -54,10 +27,7 @@ Here the `Port` and `ConnectionLimit` types are abstractions over the underlying
 
 When we insert another value of a type that already exists in the `AnyMap`, the previous value gets overwritten. Even if this is another enum variant - as enum variants are values grouped under one type - and remember we think of `AnyMap` as mapping from *types* to values.
 
-```rust
-config.insert(HostAddress::Ip(Ipv4Addr::new(127, 0, 0, 1)));
-println!("{:?}", config.get::<HostAddress>());
-```
+[include:28-29](../src/day9.rs)
 
 ```sh
 $ cargo run
@@ -66,16 +36,4 @@ Some(Ip(127.0.0.1))
 
 Generic types are considered different for every type parameter, so for example every `Option`-al type gets a separate entry in the `AnyMap`.
 
-```rust
-if !config.contains::<Option<f32>>() {
-    println!("There's no optional 32-bit float in the configuration...");
-}
-let dummy: Option<f32> = None;
-config.insert(dummy);
-if config.contains::<Option<f32>>() {
-    println!("There's an optional 32-bit float in the configuration...");
-}
-if !config.contains::<Option<f64>>() {
-    println!("...but not an optional 64-bit float.");
-}
-```
+[include:30-40](../src/day9.rs)

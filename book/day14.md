@@ -7,20 +7,7 @@ The [nalgebra](https://crates.io/crates/nalgebra) crate provides a wide set of m
 Basic vector and matrix operations
 ----------------------------------
 
-```rust
-extern crate nalgebra;
-
-use nalgebra::{Mat2, Rot2, Vec2};
-
-fn main() {
-    let v = Vec2::new(0.0f64, 1.0);
-    // 90 degrees clockwise
-    //  0, 1
-    // -1, 0
-    let rot = Mat2::new(0.0f64, -1.0, 1.0, 0.0);
-    println!("{:?}", rot * v);
-}
-```
+[include:29-34](../src/day14.rs)
 
 ```sh
 $ cargo run
@@ -29,41 +16,20 @@ Vec2 { x: 1, y: 0 }
 
 In `nalgebra` there are several statically sized vector and square matrix types (for dimensions up to 6). The standard mathematical operators are overloaded, so all allowed kinds of vector/matrix multiplication should just work. In the example above we defined the [rotation matrix](http://en.wikipedia.org/wiki/Rotation_matrix) ourselves, but there is a nice shortcut: the `RotN` type.
 
-```rust
-use std::f64::consts::FRAC_PI_2;
-use nalgebra::{Rot2, Vec1};
-
-let angle = FRAC_PI_2;
-let rot = Rot2::new(Vec1::new(angle));
-println!("{:?}", rot * v);
-```
+[include:35-37](../src/day14.rs)
 
 The output is the same but this time we tell Rust *what* to do, not *how* to do it. Note that we need to wrap the `angle` in a single-element vector.
 
 We can use vectors to translate (move) points.
 
-```rust
-let point = Pnt2::new(4.0f64, 4.0);
-println!("Translate from {:?} to {:?}", point, nalgebra::translate(&v, &point));
-```
+[include:38-39](../src/day14.rs)
 
 A number of other operations are also exposed as top-level functions, such as `transform()`, `rotate()` along with their inverse counterparts.
 
 Dot and cross product
 ---------------------
 
-```rust
-use nalgebra::Vec3;
-
-let v1 = Vec3::new(2.0f64, 2.0, 0.0);
-let v2 = Vec3::new(2.0f64, -2.0, 0.0);
-if nalgebra::approx_eq(&0.0f64, &nalgebra::dot(&v1, &v2)) {
-    println!("v1 is orthogonal to v2");
-}
-
-println!("{:?}", nalgebra::cross(&v1, &v2));
-println!("{:?}", nalgebra::cross(&v2, &v1));
-```
+[include:41-48](../src/day14.rs)
 
 The output is:
 
@@ -83,21 +49,7 @@ Dynamic vectors
 
 All of the `nalgebra` types we've seen so far have their higher-dimensional variants up to `Vec6`/`Mat6` etc. But what if we want to go further? Very high number of dimensions is common for example in digital signal processing. In `nalgebra` there is a `DVec` type for that purpose.
 
-```rust
-const SIZE: usize = 512;
-let sine = DVec::from_fn(SIZE, |i: usize| {
-    let t = i as f64 / 16.0f64;
-    t.sin()
-});
-draw(&sine, &Path::new("out_sine.png"));
-
-let window = DVec::from_fn(SIZE, |i: usize| {
-    0.54f64 - 0.46 * (PI * 2.0 * (i as f64) / (SIZE - 1) as f64).cos()
-});
-draw(&window, &Path::new("out_window.png"));
-
-draw(&(sine * window), &Path::new("out_windowed.png"));
-```
+[include:50-62](../src/day14.rs)
 
 We can use the `from_fn()` mwthod to create a vector by generating each element in a closure. The `window` variable is a [Hamming window](http://en.wikipedia.org/wiki/Window_function#Hamming_window); such window functions are a common preprocessing step in DSP.
 

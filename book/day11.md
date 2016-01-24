@@ -9,31 +9,13 @@ Connecting
 
 In this and the following examples we will assume a Postgres user `rust` with password `rust` and an existing database named... well, `rust`.
 
-```rust
-extern crate postgres;
-
-use postgres::{Connection, SslMode};
-
-fn main() {
-    let dsn = "postgresql://rust:rust@localhost/rust";
-    let conn = match Connection::connect(dsn, SslMode::None) {
-        Ok(conn) => conn,
-        Err(e) => {
-            println!("Connection error: {:?}", e);
-            return;
-        }
-    };
-}
-```
+[include:6-6](../src/day11.rs)
+[include:10-10](../src/day11.rs)
+[include:32-39](../src/day11.rs)
 
 The `Connection` type has a few methods related to making queries; perhaps the simplest one is `execute()` which immediately executes the query and returns the number of modified rows (or an error). This method can be used for example for insert/update queries but also DDL as shown below.
 
-```rust
-conn.execute("create table if not exists blog (
-    id serial primary key,
-    title varchar(255),
-    body text)", &[]).expect("Table creation failed");
-```
+[include:40-46](../src/day11.rs)
 
 The second argument looks slightly awkward, but that's the way of telling `execute()` that the query takes no parameters. Later on we will see a few examples that use query parameters.
 
@@ -42,41 +24,13 @@ Prepared queries and statements
 
 Let's add a few rows to our table. We will use the `prepare()` method.
 
-```rust
-let stmt = match conn.prepare("insert into blog (title, body) values ($1, $2)") {
-    Ok(stmt) => stmt,
-    Err(e) => {
-        println!("Preparing query failed: {:?}", e);
-        return;
-    }
-};
-for i in 1..5 {
-    let title = format!("Blogpost number {}", i);
-    let text = format!("Content of the blogpost #{}", i);
-    stmt.execute(&[&title, &text]).expect("Inserting blogposts failed");
-}
-```
+[include:47-58](../src/day11.rs)
 
 The query was prepared only once and what we got (after some crude error handling) is a `Statement` value. We can use its `execute()` method to actually run the query with the supplied parameters (note the borrowing).
 
 To read the data from the database we will use the same `prepare()` method in conjunction with the `query()` method of a `Statement`. There's a significant difference between `execute()` and `query()`: the former returns just the number of affected rows, while the latter returns a collection of `Row` values.
 
-```rust
-let stmt = match conn.prepare("select id, title, body from blog where id < $1") {
-    Ok(stmt) => stmt,
-    Err(e) => {
-        println!("Preparing query failed: {:?}", e);
-        return;
-    }
-};
-let max_id: i32 = 3;
-let rows = stmt.query(&[&max_id]).expect("Selecting blogposts failed");
-for row in rows.iter() {
-    let id: i32 = row.get("id");
-    let title: String = row.get("title");
-    println!("ID={}, title={}", id, title);
-}
-```
+[include:59-72](../src/day11.rs)
 
 Keep in mind that the `get()` method will panic if it encounters incompatible types, for example if we changed `String` to `i32` above. There's also a safer `get_opt()` method returning a `Result` instead of panicking.
 
@@ -85,51 +39,14 @@ Advanced PostgreSQL types
 
 All this is a bit boring so far. One of the reasons developers love PostgreSQL is its selection of interesting data types. Let's see how to use them in Rust (hint: it's kinda cool). We'll start from writing a generic helper function to read a single value from the first column of the first row.
 
-```rust
-use postgres::{Connection, SslMode};
-use postgres::types::FromSql;
-use postgres::Result as PgResult;
-
-fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
-    where T: FromSql {
-    println!("Executing query: {}", query);
-    let stmt = try!(conn.prepare(query));
-    let rows = try!(stmt.query(&[]));
-    let row = rows.iter().next().unwrap();
-    row.get_opt(0).unwrap()
-}
-```
+[include:10-12](../src/day11.rs)
+[include:20-28](../src/day11.rs)
 
 We use the `try!` macro to minimize the noise from error handling. Now let's see it in action. The more interesting types like arrays, ranges etc. come from a few additional crates: [postgres_array](https://crates.io/crates/postgres_array) and [postgres_range](https://crates.io/crates/postgres_range).
 
-```rust
-extern crate postgres_array;
-extern crate postgres_range;
-extern crate rustc_serialize;
-extern crate time;
-
-use postgres_array::Array;
-use postgres_range::Range;
-use rustc_serialize::json::Json;
-use time::Timespec;
-
-println!("{:?}", get_single_value::<bool>(&conn, "select 1=1"));
-println!("{:?}", get_single_value::<i32>(&conn, "select 1=1"));
-
-type IntArray = Array<Option<i32>>;
-let arr = get_single_value::<IntArray>(&conn, "select '{4, 5, 6}'::int[]");
-println!("{:?}", arr.map(|arr| arr.iter()
-        .filter_map(|x| *x) // unwraps Some values and skips None
-        .collect::<Vec<_>>()));
-
-let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
-println!("{:?}", json);
-
-let range = get_single_value::<Range<i32>>(&conn, "select '[10, 20)'::int4range");
-println!("{:?}", range);
-let ts_range = get_single_value::<Range<Timespec>>(&conn, "select '[2015-01-01, 2015-12-31]'::tsrange");
-println!("{:?}", ts_range);
-```
+[include:4-8](../src/day11.rs)
+[include:13-18](../src/day11.rs)
+[include:73-93](../src/day11.rs)
 
 ```sh
 $ cargo run

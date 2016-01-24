@@ -15,17 +15,8 @@ Primitives
 
 A lot of Rust types serialize to JSON just as you would expect. Note that `encode()` immutably borrows its argument:
 
-```rust
-extern crate rustc_serialize;
-
-use rustc_serialize::json;
-
-fn main() {
-    println!("{:?}", json::encode(&42));
-    println!("{:?}", json::encode(&vec!["to", "be", "or", "not", "to", "be"]));
-    println!("{:?}", json::encode(&Some(true)));
-}
-```
+[include:4-7](../src/day6.rs)
+[include:26-28](../src/day6.rs)
 
 `Option<T>` maps to the encoding of `value` itself if it is a `Some(value)` while `None` maps to `null`.
 
@@ -34,21 +25,11 @@ Automatic (de)serialization
 
 In the [chapter on CSV](day3.md) I mentioned the `RustcEncodable` and `RustcDecodable` traits. Here's an example with a nested struct:
 
-```rust
-use rustc_serialize::Encodable;
-use rustc_serialize::json::{self, Encoder};
+[include:29-38](../src/day6.rs)
 
-let user = User {
-    name: "Zbyszek".to_owned(),
-    post_count: 100u32,
-    likes_burgers: true,
-    avatar: Some(Photo {
-        url: "http://lorempixel.com/160/160/".to_owned(),
-        dimensions: (160u32, 160u32),
-    }),
-};
-println!("{:?}", json::encode(&user));
-// Ok("{\"name\":\"Zbyszek\",\"post_count\":100,\"likes_burgers\":true,\"avatar\":{\"url\":\"http://lorempixel.com/160/160/\",\"dimensions\":[160,160]}}")
+```sh
+$ cargo run
+Ok("{\"name\":\"Zbyszek\",\"post_count\":100,\"likes_burgers\":true,\"avatar\":{\"url\":\"http://lorempixel.com/160/160/\",\"dimensions\":[160,160]}}")
 ```
 
 Pretty printing
@@ -56,39 +37,16 @@ Pretty printing
 
 The `json::encode()` doesn't care for readability of it's output. Although the JSON it emits is correct and machine-readable, there are no newlines or indents making it hard for a human to debug. Pretty-printing is a little bit more complex than just one function call, but not too complicated:
 
-```rust
-use rustc_serialize::json::{self, Encoder};
-let mut encoded = String::new();
-{
-    let mut encoder = Encoder::new_pretty(&mut encoded);
-    user.encode(&mut encoder).expect("JSON encode error");
-}
-println!("{}", encoded);
-```
+[include:39-44](../src/day6.rs)
 
 Decoding
 --------
 
-```rust
-let incoming_request = "{\"name\":\"John\",\"post_count\":2,\"likes_burgers\":false,\"avatar\":null}";
-let decoded: User = json::decode(incoming_request).unwrap();
-println!("My name is {} and I {} burgers",
-    decoded.name, if decoded.likes_burgers { "love" } else { "don't like" });
-assert!(decoded.avatar.is_none());
-```
+[include:45-49](../src/day6.rs)
 
 As you cen see, decoding is also pretty easy. But what happens if we don't know all of the fields in advance? We can use another function in the `json` module - `from_str()`. The difference between `from_str()` and `decode()` is that the latter may return some struct implementing `RustcDecodable` while the former returns a [Json](http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/enum.Json.html) value. This type has a few methods of its own, including `find()`. See the example below:
 
-```rust
-let new_request = "{\"id\":64,\"title\":\"24days\",\"stats\":{\"pageviews\":1500}}";
-if let Ok(request_json) = json::Json::from_str(new_request) {
-    if let Some(ref stats) = request_json.find("stats") {
-        if let Some(ref pageviews) = stats.find("pageviews") {
-            println!("Pageviews: {}", pageviews);
-        }
-    }
-}
-```
+[include:50-57](../src/day6.rs)
 
 We're using the [if let](http://doc.rust-lang.org/book/if-let.html) language construct which often simplifies pattern matches where we care for only one branch and do nothing if the expression doesn't match.
 
@@ -99,19 +57,5 @@ The json! macro
 
 There's one more thing I wanted to show you today. You can embed JSON-like literals directly in your Rust code with the help of the [json_macros](https://crates.io/crates/json_macros) crate. This is a compiler extension that allows for some nice syntactic sugar like below:
 
-```rust
-#![feature(plugin)]
-#![plugin(json_macros)]
-
-let config = json!({
-    "hostname": "localhost",
-    "port": 6543,
-    "allowed_methods": ["get", "post"],
-    "limits": {
-        "bandwidth": (500 * 16),
-        "rate": null
-    }
-});
-println!("Configuration: {}", config);
-println!("Bandwidth: {}", config.search("bandwidth").unwrap());
-```
+[include:1-2](../src/day6.rs)
+[include:58-68](../src/day6.rs)

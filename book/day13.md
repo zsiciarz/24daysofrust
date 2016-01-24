@@ -13,7 +13,6 @@ For me, looking from the web development perspective, this is an area of experim
 As usual we'll start by adding the dependency to `Cargo.toml`:
 
 ```ini
-:::toml
 [dependencies.uuid]
 version = "~0.2.0"
 features = ["v4"]
@@ -21,17 +20,8 @@ features = ["v4"]
 
 Let's generate a few UUIDs and display them in the most familar form:
 
-```rust
-extern crate uuid;
-
-use uuid::Uuid;
-
-fn main() {
-    for _ in 0..10 {
-        println!("{}", Uuid::new_v4().hyphenated().to_string());
-    }
-}
-```
+[include:1-3](../src/day13.rs)
+[include:7-9](../src/day13.rs)
 
 The example output would look like:
 
@@ -51,12 +41,7 @@ $ cargo run
 
 We can use the `parse_str()` method to check if a string represents a valid UUID and convert it to an `Uuid` value.
 
-```rust
-println!("{:?}", Uuid::parse_str("d27cdb6e-ae6d-11cf-96b8-44455354000"));
-println!("{:?}", Uuid::parse_str("x27cdb6e-ae6d-11cf-96b8-444553540000"));
-println!("{:?}", Uuid::parse_str("d27cdb6-eae6d-11cf-96b8-444553540000"));
-println!("{:?}", Uuid::parse_str("d27cdb6e-ae6d-11cf-96b8-444553540000"));
-```
+[include:10-13](../src/day13.rs)
 
 (Web developers might recognize that specific value.) Here's the output:
 

@@ -9,32 +9,17 @@ Cryptographic hashes
 
 Let's start with a simple task of computing a [cryptographic hash](http://en.wikipedia.org/wiki/Cryptographic_hash_function) of some value. We'll use the SHA-256 algorithm to demonstrate.
 
-```rust
-extern crate crypto;
-
-use crypto::digest::Digest;
-use crypto::sha2::Sha256;
-
-fn main() {
-    let input = "Hello world!";
-    let mut sha = Sha256::new();
-    sha.input_str(input);
-    println!("{}", sha.result_str());
-}
-```
+[include:1-1](../src/day21.rs)
+[include:6-6](../src/day21.rs)
+[include:9-9](../src/day21.rs)
+[include:20-23](../src/day21.rs)
 
 All hash algorithms in rust-crypto implement the `Digest` trait, which defines the low level methods such as `input()` and `result()` operating on bytes, but also convenience string-based methods as shown above. We can use those low level methods for example to represent our hash as a base64-encoded string:
 
-```rust
-extern crate rustc_serialize;
-
-use rustc_serialize::base64::{STANDARD, ToBase64};
-use std::iter::repeat;
-
-let mut bytes: Vec<u8> = repeat(0u8).take(sha.output_bytes()).collect();
-sha.result(&mut bytes[..]);
-println!("{}", bytes.to_base64(STANDARD));
-```
+[include:3-3](../src/day21.rs)
+[include:10-10](../src/day21.rs)
+[include:15-15](../src/day21.rs)
+[include:24-26](../src/day21.rs)
 
 Here's the output:
 
@@ -49,25 +34,10 @@ Ciphers
 
 To actually encrypt some data in a way that we can decrypt it back later, we need a **cipher**. A few of these are provided by the `rust-crypto` crate, here's an example of [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption in CTR mode:
 
-```rust
-use crypto::aes::{self, KeySize};
-use crypto::symmetriccipher::SynchronousStreamCipher;
-
-use rand::{OsRng, Rng};
-
-let mut gen = OsRng::new().expect("Failed to get OS random generator");
-let mut key: Vec<u8> = repeat(0u8).take(16).collect();
-gen.fill_bytes(&mut key[..]);
-let mut nonce: Vec<u8> = repeat(0u8).take(16).collect();
-gen.fill_bytes(&mut nonce[..]);
-println!("Key: {}", key.to_base64(STANDARD));
-println!("Nonce: {}", nonce.to_base64(STANDARD));
-let mut cipher = aes::ctr(KeySize::KeySize128, &key, &nonce);
-let secret = "I like Nickelback";
-let mut output: Vec<u8> = repeat(0u8).take(secret.len()).collect();
-cipher.process(secret.as_bytes(), &mut output[..]);
-println!("Ciphertext: {}", output.to_base64(STANDARD));
-```
+[include:5-5](../src/day21.rs)
+[include:10-10](../src/day21.rs)
+[include:16-16](../src/day21.rs)
+[include:28-39](../src/day21.rs)
 
 We generate the secret key and a nonce value with a secure random generator - `OsRng`. Then we need to call the `ctr()` function which returns a *best possible* implementation of AES-CTR cipher (taking into consideration CPU architecture etc.). What we get back is a trait object - a `SynchronousStreamCipher` value in a `Box`. Calling `process()` should encrypt our secret message and store the result bytes in the `output` vector.
 
@@ -106,20 +76,9 @@ HMAC
 
 Message authentication algorithms such as [HMAC](http://en.wikipedia.org/wiki/Hash-based_message_authentication_code) verify **both** data integrity and authenticity. Let's see how to generate a MAC for a given message:
 
-```rust
-use crypto::hmac::Hmac;
-use crypto::mac::Mac;
-use rustc_serialize::hex::ToHex;
-
-let mut hmac_key: Vec<u8> = repeat(0u8).take(32).collect();
-gen.fill_bytes(&mut hmac_key);
-let message = "Ceterum censeo Carthaginem esse delendam";
-println!("Message: {}", message);
-println!("HMAC key: {}", hmac_key.to_base64(STANDARD));
-let mut hmac = Hmac::new(Sha256::new(), &hmac_key);
-hmac.input(message.as_bytes());
-println!("HMAC digest: {}", hmac.result().code().to_hex());
-```
+[include:7-8](../src/day21.rs)
+[include:13-13](../src/day21.rs)
+[include:41-48](../src/day21.rs)
 
 As with the AES cipher example, we generate a random secret key. Then we create the `Hmac` value, passing a cryptographic hash function object (anything that implements `Digest`). Since `Hmac` doesn't have these convenience methods for working with strings, we manually feed the bytes and encode the digest to hexadecimal string. The program outputs a key (we should give it to the recipient of the message through some other secure channel) and an HMAC digest.
 

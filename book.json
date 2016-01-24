@@ -1,4 +1,7 @@
 {
     "gitbook": "2.x.x",
-    "title": "24 days of Rust"
+    "title": "24 days of Rust",
+    "plugins": [
+        "include-codeblock@1.9.0"
+    ]
 }

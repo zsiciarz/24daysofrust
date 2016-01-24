@@ -11,14 +11,9 @@ Matrices
 
 In the [nalgebra crate](https://siciarz.net/24-days-of-rust-nalgebra/) there is a `DMat` type representing a matrix which dimensions are known at runtime. We can build a matrix using the `from_fn` constructor too. Let's create a triangular matrix:
 
-```rust
-extern crate nalgebra;
-
-use nalgebra::DMat;
-
-let mat: DMat<u32> = DMat::from_fn(7, 7, |i, j| if j <= i { 1 } else { 0 });
-println!("{:?}", mat);
-```
+[include:2-2](../src/day17.rs)
+[include:6-6](../src/day17.rs)
+[include:17-18](../src/day17.rs)
 
 The first two arguments to `from_fn` are numbers of rows and columns; this means the closure must take two arguments - indices of the current row and column. And here's our matrix:
 
@@ -38,18 +33,9 @@ Images
 
 Bur we're not limited to mathematical objects. For example the [image crate](day12.md) provides a buffer that can generate the image with the `from_fn` call.
 
-```rust
-extern crate image;
-
-use image::Pixel;
-
-let buffer = image::ImageBuffer::from_fn(512u32, 512u32, |x: u32, y: u32| {
-    Pixel::from_channels((x * y % 256) as u8, (y % 256) as u8, (x % 256) as u8, 255)
-});
-let img = image::DynamicImage::ImageRgba8(buffer);
-let mut out = File::create(&Path::new("out_pattern.png")).unwrap();
-let _ = img.save(&mut out, image::PNG);
-```
+[include:1-1](../src/day17.rs)
+[include:5-5](../src/day17.rs)
+[include:19-24](../src/day17.rs)
 
 We're working in two dimensions in the same manner as with the `DMat` type. And here's the generated image:
 

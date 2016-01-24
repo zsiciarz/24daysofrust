@@ -42,19 +42,8 @@ fn main() {
 
 That was... *verbose*. I could just use `unwrap()` everywhere, but that would be handwaving and in poor taste. Sprinkling your code with `panic!` is not a sign of good style too. However, there are so many things that can go wrong during an HTTP request/response cycle! But there seems to be a pattern. Can we do better?
 
-```rust
-fn get_content(url: &str) -> hyper::Result<String> {
-    let client = Client::new();
-    let mut response = try!(client.get(url).send());
-    let mut buf = String::new();
-    try!(response.read_to_string(&mut buf));
-    Ok(buf)
-}
-
-fn main() {
-    println!("{}", get_content("http://httpbin.org/status/200"));
-}
-```
+[include:10-16](../src/day5.rs)
+[include:48-48](../src/day5.rs)
 
 We refactored the request cycle into a separate function. But look how the code got simpler, thanks to the [try! macro](http://doc.rust-lang.org/std/result/#the-try!-macro). There's no explicit matching on the `Result` variants and the first `try!` that fails will return from the function with some kind of an HTTP error.
 
@@ -63,25 +52,8 @@ POST and query parameters
 
 Sending POST requests with hyper is only a little bit more complicated. We'll write a wrapper function again, this time taking an additional argument of type `Query`.
 
-```rust
-extern crate url;
-
-use url::form_urlencoded;
-
-type Query<'a> = Vec<(&'a str, &'a str)>;
-
-fn post_query(url: &str, query: Query) -> hyper::Result<String> {
-    let client = Client::new();
-    let body = form_urlencoded::serialize(query);
-    let mut response = try!(client.post(url).body(&body[..]).send());
-    let mut buf = String::new();
-    try!(response.read_to_string(&mut buf));
-    Ok(buf)
-}
-
-let query = vec![("key", "value"), ("foo", "bar")];
-println!("{}", post_query("http://httpbin.org/post", query).unwrap());
-```
+[include:18-27](../src/day5.rs)
+[include:49-50](../src/day5.rs)
 
 The main difference from `get_content()` is the serialization machinery coming from the [url](https://crates.io/crates/url) crate. Once we've built a raw request body (like `key=value&foo=bar`), we pass it to the `body()` method and the rest is identical to the GET example above.
 
@@ -90,35 +62,12 @@ Sending JSON
 
 Our `post_query` function can be easily changed to borrow a struct, serialize it to JSON and send it over the wire.
 
-```rust
-extern crate rustc_serialize;
-
-use rustc_serialize::{Encodable, json};
-
-fn post_json<T>(url: &str, payload: &T) -> hyper::Result<String>
-    where T: Encodable {
-    let body = json::encode(payload).unwrap();
-    // rest of the code as before
-}
-```
+[include:29-37](../src/day5.rs)
 
 This function is generic in its `payload` argument, accepting anything that implements the `Encodable` trait. We can use the function as follows:
 
-```rust
-#[derive(RustcDecodable, RustcEncodable)]
-struct Movie {
-    title: String,
-    bad_guy: String,
-    pub_year: usize,
-}
-
-let movie = Movie {
-    title: "You Only Live Twice".to_owned(),
-    bad_guy: "Blofeld".to_owned(),
-    pub_year: 1967,
-};
-println!("{:?}", post_json("http://httpbin.org/post", &movie).unwrap());
-```
+[include:39-44](../src/day5.rs)
+[include:51-56](../src/day5.rs)
 
 See also
 --------

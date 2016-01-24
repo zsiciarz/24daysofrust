@@ -11,18 +11,7 @@ Writing to CSV
 
 One would think that there's nothing simpler than writing a CSV file. Join the stringified values with commas and that's it, right? Unfortunately it's not that simple, what if the values contain commas, quotes, new line characters etc.? At this point you need a CSV library which knows how to handle all these edge cases. Fortunately the `csv` crate provides a `Writer` type that takes care of all that.
 
-```rust
-let dollar_films = vec![
-    ("A Fistful of Dollars", "Rojo", 1964),
-    ("For a Few Dollars More", "El Indio", 1965),
-    ("The Good, the Bad and the Ugly", "Tuco", 1966),
-];
-let path = "westerns.csv";
-let mut writer = Writer::from_file(path).unwrap();
-for row in dollar_films {
-    writer.encode(row).expect("CSV writer error");
-}
-```
+[include:15-24](../src/day3.rs)
 
 Now let's check the output if the `Writer` handled comma in the last title correctly:
 
@@ -35,27 +24,12 @@ For a Few Dollars More,El Indio,1965
 
 Yes! So we can write vectors of things as CSV rows, fine. But what if our application represents the data as some custom type, do we have to build a vector from that? Imagine this is an online movie catalog of some sorts. Having a `Movie` struct with `title`, `bad_guy` fields etc. is a better API design than relying on the order of items in a tuple or vector.
 
-```rust
-extern crate rustc_serialize;
-
-#[derive(RustcEncodable)]
-struct Movie {
-    title: String,
-    bad_guy: String,
-    pub_year: usize,
-}
-```
+[include:2-2](../src/day3.rs)
+[include:6-12](../src/day3.rs)
 
 We need to import the `rustc_serialize` crate so that Rust can derive for us the `RustcEncodable` trait. By the way, this also enables serializing `Movie` objects to JSON.
 
-```rust
-let movie = Movie {
-    title: "Hang 'Em High".to_owned(),
-    bad_guy: "Wilson".to_owned(),
-    pub_year: 1968,
-};
-writer.encode(movie).expect("CSV writer error");
-```
+[include:25-31](../src/day3.rs)
 
 Try removing the `#[derive(RustcEncodable)]` attribute and see what happens. Turns out the CSV writer can handle anything that implements `RustcEncodable`.
 
@@ -64,14 +38,7 @@ CSV parsing
 
 Writing CSV  is one part of the story. If you're a client of some API that exposes CSV data, you'll need to have a way to read that into some meaningful representation. But define meaningful? Let's start with plain tuples.
 
-```rust
-let path = "westerns.csv";
-let mut reader = Reader::from_file(path).unwrap();
-for row in reader.decode() {
-    let row: (String, String, usize) = row.unwrap();
-    println!("{:?}", row);
-}
-```
+[include:32-36](../src/day3.rs)
 
 We need to give the reader a hint regarding field types. If we changed it for example to `(String, i32, usize)`, `unwrap` would panic with a CSV decode error. However changing `usize` to `String` would work, although we would have to explicitly parse the field as integer.
 
@@ -84,9 +51,7 @@ $ cargo run
 
 Wait, where's the first dollar movie (*A Fistful of Dollars*)? The `Reader` by default considers the first row in a CSV file as headers, which are not exposed in the iterator returned by `decode()`. You can use the `has_headers()` method to disable this behaviour.
 
-```rust
-let mut reader = Reader::from_file(&path).has_headers(false);
-```
+[include:32-32](../src/day3.rs)
 
 ```sh
 $ cargo run
@@ -98,19 +63,7 @@ $ cargo run
 
 There is also a nice symmetry with the `Writer`. We can serialize structs to CSV, so we should be able to read into structs directly. If the struct implements `RustcDecodable` trait (usually by deriving), we can do it!
 
-```rust
-#[derive(RustcDecodable)]
-struct Movie {
-    // ...
-}
-
-let mut reader = Reader::from_file(&path).has_headers(false);
-for row in reader.decode() {
-    let movie: Movie = row.unwrap();
-    println!("{} was a bad guy in '{}' in {}",
-        movie.bad_guy, movie.title, movie.pub_year);
-}
-```
+[include:37-42](../src/day3.rs)
 
 You can find a few more examples in the [csv crate docs](http://burntsushi.net/rustdoc/csv/). It's also possible to change the delimiter (for example if you have TSV data - tab separated values), quote characters and row separators. I think it would be fantastic if the library allowed for different CSV *dialects*, as does the [Python standard library](https://docs.python.org/3.4/library/csv.html#csv-fmt-params). Other than that, the `csv` crate is definitely usable and quite performant. There are also ways to improve performance even more by giving up on convenient struct manipulation and using low-level field API directly.
 

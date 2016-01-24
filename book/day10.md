@@ -6,13 +6,8 @@
 
 Let's see this amazing number in full glory:
 
-```rust
-extern crate tau;
-
-fn main() {
-    println!("τ = {}", tau::TAU);
-}
-```
+[include:2-2](../src/day10.rs)
+[include:8-8](../src/day10.rs)
 
 ```sh
 $ cargo run
@@ -21,23 +16,11 @@ $ cargo run
 
 We can do all sorts of important calculations with τ, just look:
 
-```rust
-extern crate num;
-
-use num::complex::{Complex, Complex64};
-
-let radius: f64 = 15.0;
-println!("circle circumference = τ * r = {}", tau::TAU * radius);
-let c: Complex64 = Complex::from_polar(&1.0, &tau::TAU);
-println!("Euler's identity: exp(i * τ) = {}", c);
-println!("Trigonometry: sin(τ) = {}, cos(τ) = {}", tau::TAU.sin(), tau::TAU.cos());
-```
+[include:9-13](../src/day10.rs)
 
 And if someone really, I mean *really* needs to refer to that other mathematical constant, it is (regrettably) possible as well.
 
-```rust
-println!("That other constant = {}", tau::TAU / 2.0);
-```
+[include:14-14](../src/day10.rs)
 
 Here's the output:
 

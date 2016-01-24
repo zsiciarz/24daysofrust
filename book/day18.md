@@ -9,19 +9,9 @@ Connecting
 
 The `redis` crate provides a `Client` type that is used to connect to the Redis server. The `get_connection()` method returns a `Connection` object which execute Redis commands.
 
-```rust
-extern crate redis;
-
-use redis::{Client, Commands, Connection, RedisResult};
-
-fn main() {
-    let client = Client::open("redis://127.0.0.1/").unwrap();
-    let conn = client.get_connection().unwrap();
-    let _: () = conn.set("answer", 42).unwrap();
-    let answer: i32 = conn.get("answer").unwrap();
-    println!("Answer: {}", answer);
-}
-```
+[include:2-2](../src/day18.rs)
+[include:4-4](../src/day18.rs)
+[include:44-48](../src/day18.rs)
 
 Most of the [Redis commands](http://redis.io/commands) translate directly to `Connection` methods. But if you encounter an error similar to `Type ``redis::connection::Connection`` does not implement any method in scope named ``set`` `, you probably forgot to import the `Commands` trait.
 
@@ -34,42 +24,16 @@ When viewing someone's profile page on most of the social networking sites, you 
 
 In case someone accepts your friendship request, a function similar to the one below will be called.
 
-```rust
-extern crate redis;
-
-use redis::{Client, Commands, Connection, RedisResult};
-use std::collections::HashSet;
-
-type UserId = u64;
-
-fn add_friend(conn: &Connection, my_id: UserId, their_id: UserId) -> RedisResult<()> {
-    let my_key = format!("friends:{}", my_id);
-    let their_key = format!("friends:{}", their_id);
-    try!(conn.sadd(my_key, their_id));
-    try!(conn.sadd(their_key, my_id));
-    Ok(())
-}
-```
+[include:5-5](../src/day18.rs)
+[include:7-15](../src/day18.rs)
 
 I'm assuming here that the friendship relation is mutual. That's why there are two `sadd` calls - one to add yourself to their set of friends and the other one is symmetrical. Now checking friends in common is just a matter of set intersection - expressed in Redis as the `SINTER` command.
 
-```rust
-fn friends_in_common(conn: &Connection, my_id: UserId, their_id: UserId) -> RedisResult<HashSet<UserId>> {
-    let my_key = format!("friends:{}", my_id);
-    let their_key = format!("friends:{}", their_id);
-    Ok(try!(conn.sinter((my_key, their_key))))
-}
-```
+[include:17-21](../src/day18.rs)
 
 We can now simulate adding a few friends:
 
-```rust
-for i in 1..10u64 {
-    add_friend(&conn, i, i + 2).expect("Friendship failed :(");
-}
-println!("You have {} friends in common.",
-         friends_in_common(&conn, 2, 3).map(|s| s.len()).unwrap_or(0));
-```
+[include:50-54](../src/day18.rs)
 
 Here's the output:
 
@@ -83,43 +47,17 @@ Leaderboards
 
 [Sorted sets](http://redis.io/commands#sorted_set) are possibly my favorite Redis data structure. They're a perfect fit to create leaderboards for example in online games. Add scores with `ZADD`, fetch the leaderboard with `ZREVRANGE` - that's the gist of it.
 
-```rust
-fn add_score(conn: &Connection, username: &str, score: u32) -> RedisResult<()> {
-    conn.zadd("leaderboard", username, score)
-}
-```
+[include:23-25](../src/day18.rs)
 
 The `add_score` function is just a wrapper to provide a more high-level API. It will be called every time player's score changes.
 
-```rust
-type Leaderboard = Vec<(String, u32)>;
-
-fn show_leaderboard(conn: &Connection, n: isize) {
-    let result: RedisResult<Leaderboard> = conn.zrevrange_withscores("leaderboard", 0, n - 1);
-    match result {
-        Ok(board) => {
-            println!("----==== Top {} players ====----", n);
-            for (i, (username, score)) in board.into_iter().enumerate() {
-                println!("{:<5} {:^20} {:>4}", i + 1, username, score);
-            }
-        },
-        Err(_) => println!("Failed to fetch leaderboard."),
-    }
-}
-```
+[include:27-40](../src/day18.rs)
 
 The `Leaderboard` alias is there just to simplify the result type. We use `zrevrange_withscores` to get the leaderboard data (sorted by score descending) and display it using Rust's [string formatting](http://doc.rust-lang.org/std/fmt/) syntax.
 
 Putting all this together:
 
-```rust
-let players = vec!["raynor", "kerrigan", "mengsk", "zasz", "tassadar"];
-for player in players.iter() {
-    let score = rand::random::<u32>() % 1000;
-    add_score(&conn, *player, score).expect("Nuclear launch detected");
-}
-show_leaderboard(&conn, 3);
-```
+[include:56-61](../src/day18.rs)
 
 And if we run this, we'll get something similar to the output below:
 
