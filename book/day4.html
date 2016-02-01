@@ -53,7 +53,7 @@
         data-chapter-title="Day 4 - docopt"
         data-filepath="book/day4.md"
         data-basepath=".."
-        data-revision="Sat Jan 23 2016 18:00:21 GMT+0000 (UTC)"
+        data-revision="Mon Feb 01 2016 08:57:37 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -510,7 +510,7 @@ Options:
     -v, --version  output version information and exit
 &quot;</span>;
 </code></pre>
-<p>Nothing fancy here, just a long string. See the <a href="http://docopt.org/" target="_blank">docopt specification</a> for the details of the format. We want to be able to decode the options into a struct, so it makes sanse for the struct to implement the <code>Decodable</code> trait.</p>
+<p>Nothing fancy here, just a long string. See the <a href="http://docopt.org/" target="_blank">docopt specification</a> for the details of the format. We want to be able to decode the options into a struct, so it makes sense for the struct to implement the <code>Decodable</code> trait.</p>
 <pre><code class="lang-rust"><span class="hljs-preprocessor">#[derive(RustcDecodable)]</span>
 <span class="hljs-keyword">struct</span> Args {
     arg_file: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">String</span>&gt;,
