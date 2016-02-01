@@ -48,7 +48,7 @@ Options:
 ";
 ```
 
-Nothing fancy here, just a long string. See the [docopt specification](http://docopt.org/) for the details of the format. We want to be able to decode the options into a struct, so it makes sanse for the struct to implement the `Decodable` trait.
+Nothing fancy here, just a long string. See the [docopt specification](http://docopt.org/) for the details of the format. We want to be able to decode the options into a struct, so it makes sense for the struct to implement the `Decodable` trait.
 
 ```rust
 #[derive(RustcDecodable)]
