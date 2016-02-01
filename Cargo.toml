@@ -88,5 +88,5 @@ version = "~0.7.2"
 version= "~0.11.3"
 features = ["rustc-serialize", "time"]
 
-[dependencies.zmq]
-git = "https://github.com/erickt/rust-zmq.git"
+#[dependencies.zmq]
+#git = "https://github.com/erickt/rust-zmq.git"
