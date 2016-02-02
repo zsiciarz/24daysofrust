@@ -1,5 +1,6 @@
 #![feature(plugin)]
-#![plugin(postgres_macros)]
+
+#![cfg_attr(target_family="unix", plugin(postgres_macros))]
 
 extern crate rustc_serialize;
 extern crate time;
@@ -92,6 +93,6 @@ fn main() {
                                                         2015-12-31]'::tsrange");
     println!("{:?}", ts_range);
 
-    let query = sql!("select '{4, 5, 6}'::int[]");
-    println!("{:?}", query);
+    //let query = sql!("select '{4, 5, 6}'::int[]");
+    //println!("{:?}", query);
 }
