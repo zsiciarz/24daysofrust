@@ -1,6 +1,7 @@
 #![feature(plugin)]
 #![plugin(json_macros)]
 
+#[cfg(target_family="unix")]
 extern crate fuse;
 extern crate time;
 extern crate libc;
@@ -11,15 +12,18 @@ use std::env;
 use std::path::Path;
 use libc::{ENOENT};
 use time::Timespec;
+#[cfg(target_family="unix")]
 use fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
 use rustc_serialize::json;
 
+#[cfg(target_family="unix")]
 struct JsonFilesystem {
     tree: json::Object,
     attrs: BTreeMap<u64, FileAttr>,
     inodes: BTreeMap<String, u64>,
 }
 
+#[cfg(target_family="unix")]
 impl JsonFilesystem {
     fn new(tree: &json::Object) -> JsonFilesystem {
         let mut attrs = BTreeMap::new();
@@ -67,6 +71,7 @@ impl JsonFilesystem {
     }
 }
 
+#[cfg(target_family="unix")]
 impl Filesystem for JsonFilesystem {
     fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
         println!("getattr(ino={})", ino);
@@ -129,6 +134,13 @@ impl Filesystem for JsonFilesystem {
     }
 }
 
+#[cfg(target_family="windows")]
+fn main() {
+    println!("24 days of Rust - fuse (days 15 & 16)");
+    println!("This example does not work on Windows :(");
+}
+
+#[cfg(target_family="unix")]
 fn main() {
     println!("24 days of Rust - fuse (days 15 & 16)");
     let data = json!({
