@@ -49,8 +49,8 @@ name = "day17"
 [[bin]]
 name = "day18"
 
-#[[bin]]
-#name = "day20"
+[[bin]]
+name = "day20"
 
 [[bin]]
 name = "day21"
@@ -93,6 +93,12 @@ features = ["rustc-serialize", "time"]
 fuse = "~0.2.7"
 postgres_macros = "~0.1.11"
 
+[target.i686-uknown-linux-gnu.dependencies.zmq]
+git = "https://github.com/erickt/rust-zmq.git"
+
 [target.x86_64-unknown-linux-gnu.dependencies]
 fuse = "~0.2.7"
 postgres_macros = "~0.1.11"
+
+[target.x86_64-uknown-linux-gnu.dependencies.zmq]
+git = "https://github.com/erickt/rust-zmq.git"
