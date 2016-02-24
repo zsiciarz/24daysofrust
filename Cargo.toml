@@ -49,8 +49,8 @@ name = "day17"
 [[bin]]
 name = "day18"
 
-[[bin]]
-name = "day20"
+#[[bin]]
+#name = "day20"
 
 [[bin]]
 name = "day21"
@@ -60,7 +60,6 @@ anymap = "~0.11.2"
 csv = "~0.14.3"
 docopt = "~0.6.78"
 docopt_macros = "~0.6.81"
-fuse = "~0.2.7"
 image = "~0.6.1"
 itertools = "~0.4.10"
 json_macros = "~0.3.0"
@@ -68,7 +67,6 @@ libc = "~0.2.5"
 nalgebra = "~0.5.1"
 num = "~0.1.31"
 postgres_array = "~0.6.1"
-postgres_macros = "~0.1.11"
 postgres_range = "~0.8.1"
 primal = "~0.2.3"
 rand = "~0.3.13"
@@ -88,5 +86,19 @@ version = "~0.7.2"
 version= "~0.11.3"
 features = ["rustc-serialize", "time"]
 
-[dependencies.zmq]
+#[dependencies.zmq]
+#git = "https://github.com/erickt/rust-zmq.git"
+
+[target.i686-uknown-linux-gnu.dependencies]
+fuse = "~0.2.7"
+postgres_macros = "~0.1.11"
+
+[target.i686-uknown-linux-gnu.dependencies.zmq]
+git = "https://github.com/erickt/rust-zmq.git"
+
+[target.x86_64-unknown-linux-gnu.dependencies]
+fuse = "~0.2.7"
+postgres_macros = "~0.1.11"
+
+[target.x86_64-uknown-linux-gnu.dependencies.zmq]
 git = "https://github.com/erickt/rust-zmq.git"
