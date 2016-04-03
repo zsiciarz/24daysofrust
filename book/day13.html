@@ -53,7 +53,7 @@
         data-chapter-title="Day 13 - uuid"
         data-filepath="book/day13.md"
         data-basepath=".."
-        data-revision="Tue Mar 22 2016 22:13:42 GMT+0000 (UTC)"
+        data-revision="Sun Apr 03 2016 17:10:55 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -487,8 +487,9 @@
 <p>For me, looking from the web development perspective, this is an area of experimentation as I&apos;m not using UUIDs in any of my public projects (yet). However most of the languages I use have a function or library to generate UUIDs and Rust is no exception here. The <a href="https://crates.io/crates/uuid" target="_blank">uuid</a> crate was once in the standard library, but <a href="https://github.com/rust-lang/rust/issues/8784" target="_blank">got pulled out</a> during the cleanup.</p>
 <p>As usual we&apos;ll start by adding the dependency to <code>Cargo.toml</code>:</p>
 <pre><code class="lang-ini">:::toml
-[dependencies]
-uuid = &quot;~0.1.17&quot;
+[dependencies.uuid]
+version = &quot;~0.2.0&quot;
+features = [&quot;v4&quot;]
 </code></pre>
 <p>Let&apos;s generate a few UUIDs and display them in the most familar form:</p>
 <pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> uuid;
@@ -497,7 +498,7 @@ uuid = &quot;~0.1.17&quot;
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
     <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..<span class="hljs-number">10</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, Uuid::new_v4().to_hyphenated_string());
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, Uuid::new_v4().hyphenated().to_string());
     }
 }
 </code></pre>
