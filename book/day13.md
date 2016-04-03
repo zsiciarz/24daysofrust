@@ -14,8 +14,9 @@ As usual we'll start by adding the dependency to `Cargo.toml`:
 
 ```ini
 :::toml
-[dependencies]
-uuid = "~0.1.17"
+[dependencies.uuid]
+version = "~0.2.0"
+features = ["v4"]
 ```
 
 Let's generate a few UUIDs and display them in the most familar form:
@@ -27,7 +28,7 @@ use uuid::Uuid;
 
 fn main() {
     for _ in 0..10 {
-        println!("{}", Uuid::new_v4().to_hyphenated_string());
+        println!("{}", Uuid::new_v4().hyphenated().to_string());
     }
 }
 ```
