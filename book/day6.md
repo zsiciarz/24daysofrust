@@ -4,7 +4,7 @@
 
 [JSON](http://en.wikipedia.org/wiki/JSON) is a workhorse data format of the modern Web. Originating from the JavaScript world, it gained a lot of traction and at the moment it's usually the first choice of a Web developer for a data interchange format. Not only Web - once JavaScript-only, JSON support is now ubiquitous. A lot of languages ship with JSON parsers in the standard libraries, and when it's not the case, surely someone has already built a third party library. In case of Rust, JSON support comes out in the [rustc_serialize::json](http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/index.html) module.
 
-**Note**: in this article I deliberately do not focus on the Web, APIs, requests and so on. I mentioned JSON in a [previous post about hyper](http://siciarz.net/24-days-of-rust-hyper/) but now I don't care where did the JSON-encoded data come from or what to do with it later. Here I'm just going to show you a few practical tips.
+**Note**: in this article I deliberately do not focus on the Web, APIs, requests and so on. I mentioned JSON in a [previous post about hyper](http://siciarz.net/24-days-of-rust-hyper/) but now I don't care where the JSON-encoded data comes from or what to do with it later. Here I'm just going to show you a few practical tips.
 
 Slightly offtopic: I'm writing this blogpost while getting ready to coach a group of fantastic women at [Django Girls](http://djangogirls.org/) in Łódź, Poland. If you're a woman interested in learning programming (or know such girls) check out if there's a Django Girls workshop near you! The workshops focus on basic Python, Django and web technologies, but the general idea is to get the attendees genuinely interested in programming and empowered to create.
 
