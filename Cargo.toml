@@ -61,7 +61,7 @@ csv = "~0.14.4"
 docopt = "~0.6.80"
 docopt_macros = "~0.6.84"
 image = "~0.10.0"
-itertools = "~0.4.13"
+itertools = "~0.4.15"
 json_macros = "~0.3.0"
 libc = "~0.2.10"
 nalgebra = "~0.8.2"
@@ -71,18 +71,18 @@ postgres_range = "~0.8.2"
 primal = "~0.2.3"
 rand = "~0.3.14"
 redis = "~0.5.3"
-rust-crypto = "~0.2.35"
+rust-crypto = "~0.2.36"
 rustc-serialize = "~0.3.18"
 time = "~0.1.35"
 tau = "~1.0.4"
-url = "~1.1.0"
+url = "~1.1.1"
 #zmq = "~0.7.0"
 
 [dependencies.hyper]
-version = "~0.9.3"
+version = "~0.9.6"
 
 [dependencies.postgres]
-version= "~0.11.7"
+version= "~0.11.8"
 features = ["rustc-serialize", "time"]
 
 [dependencies.uuid]
