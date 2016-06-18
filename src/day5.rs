@@ -19,7 +19,9 @@ type Query<'a> = Vec<(&'a str, &'a str)>;
 
 fn post_query(url: &str, query: Query) -> hyper::Result<String> {
     let client = Client::new();
-    let body = form_urlencoded::serialize(query);
+    let body = form_urlencoded::Serializer::new(String::new())
+        .extend_pairs(query.iter())
+        .finish();
     let mut response = try!(client.post(url).body(&body[..]).send());
     let mut buf = String::new();
     try!(response.read_to_string(&mut buf));
