@@ -62,7 +62,7 @@ docopt = "~0.6.80"
 docopt_macros = "~0.6.84"
 image = "~0.10.0"
 itertools = "~0.4.15"
-json_macros = "~0.3.0"
+json_macros = "~0.3.1"
 libc = "~0.2.10"
 nalgebra = "~0.8.2"
 num = "~0.1.32"
@@ -91,6 +91,14 @@ features = ["v4"]
 
 #[dependencies.zmq]
 #git = "https://github.com/erickt/rust-zmq.git"
+
+[target.x86_64-apple-darwin.dependencies]
+# `brew cask install osxfuse` first
+fuse = "~0.2.7"
+postgres_macros = "~0.1.11"
+
+[target.x86_64-apple-darwin.dependencies.zmq]
+git = "https://github.com/erickt/rust-zmq.git"
 
 [target.i686-uknown-linux-gnu.dependencies]
 fuse = "~0.2.7"
