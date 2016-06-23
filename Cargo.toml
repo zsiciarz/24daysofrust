@@ -58,9 +58,9 @@ name = "day21"
 [dependencies]
 anymap = "~0.12.0"
 csv = "~0.14.4"
-docopt = "~0.6.80"
+docopt = "~0.6.81"
 docopt_macros = "~0.6.84"
-image = "~0.10.0"
+image = "~0.10.1"
 itertools = "~0.4.16"
 json_macros = "~0.3.1"
 libc = "~0.2.12"
@@ -79,7 +79,7 @@ url = "~1.1.1"
 #zmq = "~0.7.0"
 
 [dependencies.hyper]
-version = "~0.9.8"
+version = "~0.9.9"
 
 [dependencies.postgres]
 version= "~0.11.9"
