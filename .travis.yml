@@ -10,6 +10,7 @@ before_install:
   - sudo add-apt-repository ppa:chris-lea/zeromq -y
   - sudo apt-get update
   - sudo apt-get install libfuse-dev libsodium-dev libzmq5-dev -y
+  - nvm install v6
 before_script:
   - psql -c "create user rust with password 'rust';" -U postgres
   - psql -c "create database rust owner rust;" -U postgres
