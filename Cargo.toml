@@ -49,8 +49,8 @@ name = "day17"
 [[bin]]
 name = "day18"
 
-#[[bin]]
-#name = "day20"
+[[bin]]
+name = "day20"
 
 [[bin]]
 name = "day21"
@@ -89,8 +89,8 @@ features = ["rustc-serialize", "time"]
 version = "~0.2.2"
 features = ["v4"]
 
-#[dependencies.zmq]
-#git = "https://github.com/erickt/rust-zmq.git"
+[dependencies.zmq]
+git = "https://github.com/erickt/rust-zmq.git"
 
 [target.x86_64-apple-darwin.dependencies]
 # `brew cask install osxfuse` first
