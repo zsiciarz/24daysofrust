@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 20 - zeromq | 24 days of Rust</title>
+        <title>Day 23 - calling Rust from other languages | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../book/day21.html" />
+    <link rel="next" href="../book/day24.html" />
     
     
-    <link rel="prev" href="../book/day19.html" />
+    <link rel="prev" href="../book/day22.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="20"
-        data-chapter-title="Day 20 - zeromq"
-        data-filepath="book/day20.md"
+        data-level="23"
+        data-chapter-title="Day 23 - calling Rust from other languages"
+        data-filepath="book/day23.md"
         data-basepath=".."
         data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -367,7 +367,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="20" data-path="book/day20.html">
+        <li class="chapter " data-level="20" data-path="book/day20.html">
             
                 
                     <a href="../book/day20.html">
@@ -412,7 +412,7 @@
             
         </li>
     
-        <li class="chapter " data-level="23" data-path="book/day23.html">
+        <li class="chapter active" data-level="23" data-path="book/day23.html">
             
                 
                     <a href="../book/day23.html">
@@ -475,82 +475,127 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
+                        <h1 id="day-23--calling-rust-from-other-languages">Day 23 - calling Rust from other languages</h1>
 <blockquote>
 <p>Relevancy: 1.6 stable</p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
-<h2 id="operational-patterns">Operational patterns</h2>
-<p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
-<p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
+<p>In this penultimate episode of the <strong>24 days of Rust</strong> article series we will focus on using Rust code from other languages. Since Rust libraries can expose a C API and calling conventions, using them isn&apos;t very different from using regular C libraries. A lot of programming languages have some kind of an <a href="http://en.wikipedia.org/wiki/Foreign_function_interface" target="_blank">FFI</a> mechanism, allowing them to use libraries written in other language(s).  Let&apos;s see a few examples!</p>
+<h2 id="our-rust-library">Our Rust library</h2>
+<p>As an example we&apos;re going to build a small Rust library called <code>stringtools</code> which exposes just one function: <code>count_substrings</code>. Let&apos;s start with a manifest - here&apos;s our <code>Cargo.toml</code>:</p>
+<pre><code class="lang-ini"><span class="hljs-title">[package]</span>
+<span class="hljs-setting">name = <span class="hljs-value"><span class="hljs-string">&quot;stringtools&quot;</span></span></span>
+<span class="hljs-setting">version = <span class="hljs-value"><span class="hljs-string">&quot;0.0.1&quot;</span></span></span>
+<span class="hljs-setting">authors = <span class="hljs-value">[<span class="hljs-string">&quot;Zbigniew Siciarz &lt;zbigniew@siciarz.net&gt;&quot;</span>]</span></span>
+<span class="hljs-title">
+[lib]</span>
+<span class="hljs-setting">name = <span class="hljs-value"><span class="hljs-string">&quot;stringtools&quot;</span></span></span>
+<span class="hljs-setting">crate-type = <span class="hljs-value">[<span class="hljs-string">&quot;dylib&quot;</span>]</span></span>
+<span class="hljs-title">
+[dependencies]</span>
+<span class="hljs-setting">libc = <span class="hljs-value"><span class="hljs-string">&quot;~0.2&quot;</span></span></span>
+</code></pre>
+<p>The crate type is explicitly declared as a dynamic library. And now the actual implementation:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> libc;
 
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
+<span class="hljs-keyword">use</span> std::ffi::CStr;
+<span class="hljs-keyword">use</span> std::<span class="hljs-keyword">str</span>;
+<span class="hljs-keyword">use</span> libc::c_char;
 
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
-    <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
-    <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
+<span class="hljs-preprocessor">#[no_mangle]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">count_substrings</span></span>(value: *<span class="hljs-keyword">const</span> c_char, substr: *<span class="hljs-keyword">const</span> c_char) -&gt; <span class="hljs-keyword">i32</span> {
+    <span class="hljs-keyword">let</span> c_value = <span class="hljs-keyword">unsafe</span> { CStr::from_ptr(value).to_bytes() };
+    <span class="hljs-keyword">let</span> c_substr = <span class="hljs-keyword">unsafe</span> { CStr::from_ptr(substr).to_bytes() };
+    <span class="hljs-keyword">match</span> str::from_utf8(c_value) {
+        <span class="hljs-built_in">Ok</span>(value) =&gt; <span class="hljs-keyword">match</span> str::from_utf8(c_substr) {
+            <span class="hljs-built_in">Ok</span>(substr) =&gt; rust_substrings(value, substr),
+            <span class="hljs-built_in">Err</span>(_) =&gt; -<span class="hljs-number">1</span>,
+        },
+        <span class="hljs-built_in">Err</span>(_) =&gt; -<span class="hljs-number">1</span>,
     }
 }
-</code></pre>
-<h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
-    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
-    <span class="hljs-built_in">Ok</span>(())
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">rust_substrings</span></span>(value: &amp;<span class="hljs-keyword">str</span>, substr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-keyword">i32</span> {
+    value.matches(substr).count() <span class="hljs-keyword">as</span> <span class="hljs-keyword">i32</span>
 }
 </code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
-<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
-<h2 id="server">Server</h2>
-<p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
-        }
-    }
-    <span class="hljs-built_in">Ok</span>(())
+<p>The regular Rust function <code>rust_substrings</code> is wrapped in some magical code to be consistent with a C ABI. The <code>#[no_mangle]</code> attribute keep our functions names plain and simple, while <code>pub extern &quot;C&quot;</code> exports the function to the outside world with the C calling convention (<code>cdecl</code>). See the <a href="http://doc.rust-lang.org/guide-ffi.html" target="_blank">FFI guide</a> or my blogpost about <a href="http://siciarz.net/ffi-rust-writing-bindings-libcpuid/" target="_blank">wrapping a C library</a> for more information.</p>
+<p><strong>Aside</strong>: there was <a href="http://www.wabbo.org/blog/2014/22aug_on_bananas.html" target="_blank">a funny bug regarding bananas</a> in the algorithm Rust uses for string matching.</p>
+<p>To build the library, run <code>cargo build</code> to obtain a .so file and you&apos;re good to go - time to move on to other languages.</p>
+<h2 id="python">Python</h2>
+<p>This bit was the easiest to write :-) With a little help from the <a href="https://docs.python.org/3.4/library/ctypes.html" target="_blank">ctypes</a> module our Python example consists of just three lines of code (excluding import):</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> ctypes
+
+library_name = <span class="hljs-string">&quot;../target/debug/libstringtools.so&quot;</span>
+stringtools = ctypes.CDLL(library_name)
+print(stringtools.count_substrings(<span class="hljs-string">b&quot;banana&quot;</span>, <span class="hljs-string">b&quot;na&quot;</span>))
+</code></pre>
+<p>Note that Python byte strings are mapped by <code>ctypes</code> to native C strings underneath.</p>
+<p>We can run it:</p>
+<pre><code class="lang-sh">$ python3 main.py
+<span class="hljs-number">2</span>
+</code></pre>
+<h2 id="c">C</h2>
+<p>We have to redeclare the function signature and that&apos;s it. Since we exposed from Rust a C API (and ABI), from this perspective it isn&apos;t really a foreign call.</p>
+<pre><code class="lang-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-keyword">int32_t</span> count_substrings(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* value, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* substr);
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, count_substrings(<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-string">&quot;na&quot;</span>));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
-<p>Let&apos;s start the server now:</p>
-<pre><code class="lang-sh">$ cargo run -- server
-ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
+<p>Compile and run (we need to link with the library at runtime, hence the <code>LD_LIBRARY_PATH</code> prefix):</p>
+<pre><code class="lang-sh">$ gcc main.c -L ../target/debug -lstringtools -o main
+$ LD_LIBRARY_PATH=../target/debug ./main
+<span class="hljs-number">2</span>
 </code></pre>
-<p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
-<pre><code class="lang-sh">$ cargo run -- client
-ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
-&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
+<h2 id="haskell">Haskell</h2>
+<p>The <a href="https://www.haskell.org/haskellwiki/FFI_Introduction" target="_blank">FFI introduction</a> may not be as great as the Rust guide, but after reading through it and some careful googling I&apos;ve managed to put together the example below:</p>
+<pre><code class="lang-haskell"><span class="hljs-pragma">{-# LANGUAGE ForeignFunctionInterface #-}</span>
+
+<span class="hljs-import"><span class="hljs-keyword">import</span> Foreign.C.String <span class="hljs-container">(<span class="hljs-type">CString</span>, <span class="hljs-title">newCString</span>)</span></span>
+
+<span class="hljs-foreign"><span class="hljs-keyword">foreign</span> <span class="hljs-keyword">import</span> <span class="hljs-keyword">ccall</span> <span class="hljs-string">&quot;count_substrings&quot;</span></span>
+    count_substrings :: <span class="hljs-type">CString</span> -&gt; <span class="hljs-type">CString</span> -&gt; <span class="hljs-type">IO</span> <span class="hljs-type">Int</span>
+
+<span class="hljs-title">main</span> :: <span class="hljs-type">IO</span> ()
+<span class="hljs-title">main</span> = <span class="hljs-keyword">do</span>
+    value &lt;- newCString <span class="hljs-string">&quot;banana&quot;</span>
+    substr &lt;- newCString <span class="hljs-string">&quot;na&quot;</span>
+    count_substrings value substr &gt;&gt;= print
 </code></pre>
+<p>Haskell strings need to be converted to <code>CString</code> values before passing them to the foreign function. Apart from that, the code is straightforward.</p>
+<p>Compile, link and run in the same manner as C:</p>
+<pre><code class="lang-sh">$ ghc --make main.hs -L../target/debug -lstringtools -o main
+$ LD_LIBRARY_PATH=../target/debug ./main
+<span class="hljs-number">2</span>
+</code></pre>
+<h2 id="nodejs">Node.js</h2>
+<p>This was as straightforward as with Python, thanks to the <a href="https://www.npmjs.com/package/ffi" target="_blank">ffi npm package</a>.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> ffi = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;ffi&apos;</span>);
+
+<span class="hljs-keyword">var</span> library_name = <span class="hljs-string">&apos;../target/debug/libstringtools.so&apos;</span>;
+<span class="hljs-keyword">var</span> stringtools = ffi.Library(library_name, {
+      <span class="hljs-string">&apos;count_substrings&apos;</span>: [<span class="hljs-string">&apos;int&apos;</span>, [<span class="hljs-string">&apos;string&apos;</span>, <span class="hljs-string">&apos;string&apos;</span>]]
+});
+
+<span class="hljs-built_in">console</span>.log(stringtools.count_substrings(<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-string">&quot;na&quot;</span>));
+</code></pre>
+<p>The first argument of the <code>Library</code> function is the location of our dynamic library. The object passed in the second argument defines a list of functions exported by the library, along with their signatures (in the form <code>[return type, [arguments]]</code>).</p>
+<pre><code class="lang-sh">$ node main.js
+<span class="hljs-number">2</span>
+</code></pre>
+<p>The code for today is in a separate GitHub repository - <a href="https://github.com/zsiciarz/rust-ffi-stringtools" target="_blank">rust-ffi-stringtools</a>.</p>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="http://nichol.as/zeromq-an-introduction" target="_blank">ZeroMQ an introduction</a></li>
-<li><a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> - Rust bindings to the C ZeroMQ library</li>
-<li><a href="http://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html" target="_blank">&#xD8;MQ Messaging Patterns</a></li>
+<li><a href="http://jakegoulding.com/rust-ffi-omnibus/" target="_blank">The Rust FFI omnibus</a></li>
+<li><a href="http://harkablog.com/calling-rust-from-c-and-python.html" target="_blank">Calling Rust from C (and Python!)</a></li>
+<li><a href="https://github.com/creichert/haskellrustdemo" target="_blank">Embed Rust in Haskell</a></li>
+<li><a href="https://github.com/steveklabnik/rust_example" target="_blank">A Ruby gem, implemented in Rust</a></li>
+<li><a href="http://blog.skylight.io/bending-the-curve-writing-safe-fast-native-gems-with-rust/" target="_blank">Bending the Curve: Writing Safe &amp; Fast Native Gems With Rust</a></li>
+<li><a href="http://paul.woolcock.us/posts/rust-perl-julia-ffi.html" target="_blank">Using Rust from Perl and Julia</a></li>
 </ul>
 
                     
@@ -562,10 +607,10 @@ ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span c
         </div>
 
         
-        <a href="../book/day19.html" class="navigation navigation-prev " aria-label="Previous page: Day 19 - rusti"><i class="fa fa-angle-left"></i></a>
+        <a href="../book/day22.html" class="navigation navigation-prev " aria-label="Previous page: Day 22 - built with Rust"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../book/day21.html" class="navigation navigation-next " aria-label="Next page: Day 21 - rust-crypto"><i class="fa fa-angle-right"></i></a>
+        <a href="../book/day24.html" class="navigation navigation-next " aria-label="Next page: Day 24 - conclusion"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 20 - zeromq | 24 days of Rust</title>
+        <title>Day 8 - racer | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../book/day21.html" />
+    <link rel="next" href="../book/day9.html" />
     
     
-    <link rel="prev" href="../book/day19.html" />
+    <link rel="prev" href="../book/day7.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="20"
-        data-chapter-title="Day 20 - zeromq"
-        data-filepath="book/day20.md"
+        data-level="8"
+        data-chapter-title="Day 8 - racer"
+        data-filepath="book/day8.md"
         data-basepath=".."
         data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -187,7 +187,7 @@
             
         </li>
     
-        <li class="chapter " data-level="8" data-path="book/day8.html">
+        <li class="chapter active" data-level="8" data-path="book/day8.html">
             
                 
                     <a href="../book/day8.html">
@@ -367,7 +367,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="20" data-path="book/day20.html">
+        <li class="chapter " data-level="20" data-path="book/day20.html">
             
                 
                     <a href="../book/day20.html">
@@ -475,82 +475,42 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
+                        <h1 id="day-8--racer">Day 8 - racer</h1>
 <blockquote>
 <p>Relevancy: 1.6 stable</p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
-<h2 id="operational-patterns">Operational patterns</h2>
-<p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
-<p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
-
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
-
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
-    <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
-    <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-}
+<p>Welcome to the second week of 24 days of Rust! Hope you enjoy the articles so far. Today let me introduce you to <a href="https://github.com/phildawes/racer" target="_blank">racer</a> - a code completion engine for Rust.</p>
+<p>As there is no proper Rust IDE (yet), most of us <a href="http://www.rustaceans.org/" target="_blank">Rustaceans</a> use some code editor such as Vim, Emacs, Atom etc. However the out-of-the-box support for Rust is very limited - if you&apos;re lucky, your editor has syntax highlighting, but not much more. We&apos;d love to have some sort of autocompletion to ease typing, and a &quot;go to definition&quot; command to quickly jump around the codebase.</p>
+<p><code>racer</code> is a tool (still in development) to do just that. Follow the <a href="https://github.com/phildawes/racer" target="_blank">instructions in readme</a> to compile it. You&apos;ll need to have the source code for Rust compiler and standard libraries on your machine. Fortunately it&apos;s just a <code>git clone</code> away:</p>
+<pre><code class="lang-sh">$ git <span class="hljs-built_in">clone</span> https://github.com/rust-lang/rust.git <span class="hljs-variable">$HOME</span>/rust
+$ <span class="hljs-built_in">export</span> RUST_SRC_PATH=<span class="hljs-variable">$HOME</span>/rust/src
 </code></pre>
-<h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
-    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
-    <span class="hljs-built_in">Ok</span>(())
-}
+<p>The second line sets an environment variable that <code>racer</code> uses to find Rust sources. You can put that line in your <code>.bashrc</code>, <code>.zshrc</code> or whatever startup file your shell uses.</p>
+<p>The <code>racer</code> executable has a few subcommands (you can see the full list by running <code>racer</code> with no arguments). Let&apos;s take a look at the most important ones.</p>
+<h2 id="completion-engine">Completion engine</h2>
+<p>The <code>racer complete</code> subcommand takes a part of some (fully qualified) Rust name and tries to find completions. For example:</p>
+<pre><code class="lang-sh">$ ./target/release/racer complete std::option::
+MATCH Option,<span class="hljs-number">167</span>,<span class="hljs-number">9</span>,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Enum,pub enum Option&lt;T&gt; {
+MATCH Iter,<span class="hljs-number">815</span>,<span class="hljs-number">11</span>,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Struct,pub struct Iter&lt;<span class="hljs-string">&apos;a, A: &apos;</span>a&gt; { inner: Item&lt;&amp;<span class="hljs-string">&apos;a A&gt; }
+MATCH IterMut,845,11,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Struct,pub struct IterMut&lt;&apos;</span>a, A: <span class="hljs-string">&apos;a&gt; { inner: Item&lt;&amp;&apos;</span>a mut A&gt; }
+MATCH IntoIter,<span class="hljs-number">868</span>,<span class="hljs-number">11</span>,/home/zbyszek/Development/Rust/rust/src/libcore/option.rs,Struct,pub struct IntoIter&lt;A&gt; { inner: Item&lt;A&gt; }&lt;/A&gt;&lt;/A&gt;
+&lt;/T&gt;
 </code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
-<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
-<h2 id="server">Server</h2>
-<p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
-        }
-    }
-    <span class="hljs-built_in">Ok</span>(())
-}
+<p>The output is intended to be computer-readable, in fact you could possibly parse it as a comma-separated format (see the <a href="day3.html">chapter on CSV</a>).</p>
+<p><img src="../../../../../../i.imgur.com/gE3Q7i4.png" alt="racer completion in Vim"></p>
+<h2 id="find-definition">Find definition</h2>
+<p>The second important subcommand is <code>racer find-definition</code>. It expects three extra arguments: line number, column number and a filename. The first two numbers are cursor coordinates, so from the code editor&apos;s point of view <code>racer</code> will try to find the definition of the word under cursor. For example when run on <code>racer</code>&apos;s own source (the coordinates point to a <code>Vec</code> usage):</p>
+<pre><code class="lang-sh">$ ./target/release/racer find-definition <span class="hljs-number">56</span> <span class="hljs-number">15</span> src/main.rs
+MATCH Vec,<span class="hljs-number">154</span>,<span class="hljs-number">11</span>,/home/zbyszek/Development/Rust/rust/src/libcollections/vec.rs,Struct,pub struct Vec&lt;T&gt; {
 </code></pre>
-<p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
-<p>Let&apos;s start the server now:</p>
-<pre><code class="lang-sh">$ cargo run -- server
-ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
-</code></pre>
-<p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
-<pre><code class="lang-sh">$ cargo run -- client
-ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
-&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
-</code></pre>
-<h2 id="see-also">See also</h2>
+<p>The output format is the same as in the case of <code>racer complete</code>. See how that works in Vim when I press <code>gd</code> with the cursor on the <code>Option</code> word:</p>
+<p><img src="../../../../../../i.imgur.com/fyE80H5.gif" alt="find definition in Vim"></p>
+<h2 id="editor-integrations">Editor integrations</h2>
+<p>TODO: write about YouCompleteMe</p>
+<p><a href="https://github.com/phildawes/racer/blob/master/editors/racer.vim" target="_blank">Vim</a> and <a href="https://github.com/phildawes/racer/blob/master/editors/racer.el" target="_blank">Emacs</a> plugins are bundled with <code>racer</code>&apos;s source. For other editors there are some third-party plugins:</p>
 <ul>
-<li><a href="http://nichol.as/zeromq-an-introduction" target="_blank">ZeroMQ an introduction</a></li>
-<li><a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> - Rust bindings to the C ZeroMQ library</li>
-<li><a href="http://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html" target="_blank">&#xD8;MQ Messaging Patterns</a></li>
+<li><a href="https://github.com/edubkendo/atom-racer" target="_blank">atom-racer</a> for <a href="https://atom.io/" target="_blank">Atom</a></li>
+<li><a href="https://sublime.wbond.net/packages/RustAutoComplete" target="_blank">RustAutoComplete</a> for <a href="http://www.sublimetext.com/" target="_blank">Sublime Text</a></li>
 </ul>
 
                     
@@ -562,10 +522,10 @@ ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span c
         </div>
 
         
-        <a href="../book/day19.html" class="navigation navigation-prev " aria-label="Previous page: Day 19 - rusti"><i class="fa fa-angle-left"></i></a>
+        <a href="../book/day7.html" class="navigation navigation-prev " aria-label="Previous page: Day 7 - itertools"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../book/day21.html" class="navigation navigation-next " aria-label="Next page: Day 21 - rust-crypto"><i class="fa fa-angle-right"></i></a>
+        <a href="../book/day9.html" class="navigation navigation-next " aria-label="Next page: Day 9 - anymap"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

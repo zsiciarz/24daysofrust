@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 20 - zeromq | 24 days of Rust</title>
+        <title>Day 14 - nalgebra | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../book/day21.html" />
+    <link rel="next" href="../book/day15.html" />
     
     
-    <link rel="prev" href="../book/day19.html" />
+    <link rel="prev" href="../book/day13.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="20"
-        data-chapter-title="Day 20 - zeromq"
-        data-filepath="book/day20.md"
+        data-level="14"
+        data-chapter-title="Day 14 - nalgebra"
+        data-filepath="book/day14.md"
         data-basepath=".."
         data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -277,7 +277,7 @@
             
         </li>
     
-        <li class="chapter " data-level="14" data-path="book/day14.html">
+        <li class="chapter active" data-level="14" data-path="book/day14.html">
             
                 
                     <a href="../book/day14.html">
@@ -367,7 +367,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="20" data-path="book/day20.html">
+        <li class="chapter " data-level="20" data-path="book/day20.html">
             
                 
                     <a href="../book/day20.html">
@@ -475,82 +475,90 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
+                        <h1 id="day-14--nalgebra">Day 14 - nalgebra</h1>
 <blockquote>
 <p>Relevancy: 1.6 stable</p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
-<h2 id="operational-patterns">Operational patterns</h2>
-<p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
-<p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
+<p>The <a href="https://crates.io/crates/nalgebra" target="_blank">nalgebra</a> crate provides a wide set of mathematical primitives for linear algebra, computer physics, graphic engines etc. I&apos;m not going to dive deep into the underlying math, there are a lot of tutorials and courses, some of them specifically targeted at the programmers. My goal for today is just a brief showcase of what we can do in Rust with <code>nalgebra</code>.</p>
+<h2 id="basic-vector-and-matrix-operations">Basic vector and matrix operations</h2>
+<blockquote>
+<p><a id="day14.rs" href="../src/day14.rs">day14.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> v = Vector2::new(<span class="hljs-number">0.0f64</span>, <span class="hljs-number">1.0</span>);
+    <span class="hljs-comment">// 90 degrees clockwise</span>
+    <span class="hljs-comment">//  0, 1</span>
+    <span class="hljs-comment">// -1, 0</span>
+    <span class="hljs-keyword">let</span> rot = Matrix2::new(<span class="hljs-number">0.0f64</span>, -<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">0.0</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, rot * v);
+</code></pre>
+<pre><code class="lang-sh">$ cargo run
+Vec2 { x: <span class="hljs-number">1</span>, y: <span class="hljs-number">0</span> }
+</code></pre>
+<p>In <code>nalgebra</code> there are several statically sized vector and square matrix types (for dimensions up to 6). The standard mathematical operators are overloaded, so all allowed kinds of vector/matrix multiplication should just work. In the example above we defined the <a href="http://en.wikipedia.org/wiki/Rotation_matrix" target="_blank">rotation matrix</a> ourselves, but there is a nice shortcut: the <code>RotN</code> type.</p>
+<blockquote>
+<p><a id="day14.rs" href="../src/day14.rs">day14.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> angle = FRAC_PI_2;
+    <span class="hljs-keyword">let</span> rot = Rotation2::new(Vector1::new(angle));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, rot * v);
+</code></pre>
+<p>The output is the same but this time we tell Rust <em>what</em> to do, not <em>how</em> to do it. Note that we need to wrap the <code>angle</code> in a single-element vector.</p>
+<p>We can use vectors to translate (move) points.</p>
+<blockquote>
+<p><a id="day14.rs" href="../src/day14.rs">day14.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> point = Point2::new(<span class="hljs-number">4.0f64</span>, <span class="hljs-number">4.0</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Translate from {:?} to {:?}&quot;</span>, point, nalgebra::translate(&amp;v, &amp;point));
+</code></pre>
+<p>A number of other operations are also exposed as top-level functions, such as <code>transform()</code>, <code>rotate()</code> along with their inverse counterparts.</p>
+<h2 id="dot-and-cross-product">Dot and cross product</h2>
+<blockquote>
+<p><a id="day14.rs" href="../src/day14.rs">day14.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> v1 = Vector3::new(<span class="hljs-number">2.0f64</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">0.0</span>);
+    <span class="hljs-keyword">let</span> v2 = Vector3::new(<span class="hljs-number">2.0f64</span>, -<span class="hljs-number">2.0</span>, <span class="hljs-number">0.0</span>);
+    <span class="hljs-keyword">if</span> nalgebra::approx_eq(&amp;<span class="hljs-number">0.0f64</span>, &amp;nalgebra::dot(&amp;v1, &amp;v2)) {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;v1 is orthogonal to v2&quot;</span>);
+    }
 
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, nalgebra::cross(&amp;v1, &amp;v2));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, nalgebra::cross(&amp;v2, &amp;v1));
+</code></pre>
+<p>The output is:</p>
+<pre><code class="lang-sh">$ cargo run
+v1 is orthogonal to v2
+Vec3 { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, z: -<span class="hljs-number">8</span> }
+Vec3 { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, z: <span class="hljs-number">8</span> }
+</code></pre>
+<p><a href="http://en.wikipedia.org/wiki/Dot_product" target="_blank">Dot product</a> can be used to check if two vectors are orthogonal to each other. That happens if their dot product is equal to 0. As floating point comparisons are <a href="http://www.parashift.com/c++-faq/floating-point-arith.html" target="_blank">sometimes suprising</a>, we should use the <code>approx_eq()</code> function.</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Cross_product" target="_blank">cross product</a> of two vectors is always perpendicular (sometimes we say <strong>normal</strong>) to <em>both</em> of them. As you can see from the example it is also not commutative. Normal vectors are very important in computer graphics for <a href="http://www.opengl-tutorial.org/beginners-tutorials/tutorial-8-basic-shading/" target="_blank">calculating light and shading</a> of the scene.</p>
+<h2 id="dynamic-vectors">Dynamic vectors</h2>
+<p>All of the <code>nalgebra</code> types we&apos;ve seen so far have their higher-dimensional variants up to <code>Vec6</code>/<code>Mat6</code> etc. But what if we want to go further? Very high number of dimensions is common for example in digital signal processing. In <code>nalgebra</code> there is a <code>DVec</code> type for that purpose.</p>
+<blockquote>
+<p><a id="day14.rs" href="../src/day14.rs">day14.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">const</span> SIZE: usize = <span class="hljs-number">512</span>;
+    <span class="hljs-keyword">let</span> sine = DVector::from_fn(SIZE, |i: usize| {
+        <span class="hljs-keyword">let</span> t = i <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span> / <span class="hljs-number">16.0f64</span>;
+        t.sin()
+    });
+    draw(&amp;sine, &amp;Path::new(<span class="hljs-string">&quot;out_sine.png&quot;</span>));
 
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
-    <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
-    <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-}
+    <span class="hljs-keyword">let</span> window = DVector::from_fn(SIZE, |i: usize| {
+        <span class="hljs-number">0.54f64</span> - <span class="hljs-number">0.46</span> * (PI * <span class="hljs-number">2.0</span> * (i <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span>) / (SIZE - <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span>).cos()
+    });
+    draw(&amp;window, &amp;Path::new(<span class="hljs-string">&quot;out_window.png&quot;</span>));
+
+    draw(&amp;(sine * window), &amp;Path::new(<span class="hljs-string">&quot;out_windowed.png&quot;</span>));
 </code></pre>
-<h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
-    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
-    <span class="hljs-built_in">Ok</span>(())
-}
-</code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
-<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
-<h2 id="server">Server</h2>
-<p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
-        }
-    }
-    <span class="hljs-built_in">Ok</span>(())
-}
-</code></pre>
-<p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
-<p>Let&apos;s start the server now:</p>
-<pre><code class="lang-sh">$ cargo run -- server
-ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
-</code></pre>
-<p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
-<pre><code class="lang-sh">$ cargo run -- client
-ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
-&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
-</code></pre>
+<p>We can use the <code>from_fn()</code> mwthod to create a vector by generating each element in a closure. The <code>window</code> variable is a <a href="http://en.wikipedia.org/wiki/Window_function#Hamming_window" target="_blank">Hamming window</a>; such window functions are a common preprocessing step in DSP.</p>
+<p>The <code>draw()</code> function borrows a <code>DVec</code> and a <code>Path</code> and plots a simple representation of the vector to a PNG file using the <a href="https://siciarz.net/24-days-of-rust-image/" target="_blank">image crate</a>. The code is <a href="https://github.com/zsiciarz/24daysofrust/blob/9a88969f156581da8ba16ae50c87d884983b17c9/src/day14.rs#L11" target="_blank">on GitHub</a> for anybody interested. Here&apos;s the output of all three steps of the above code:</p>
+<p><img src="../../../../../../i.imgur.com/mQKFms3.png" alt="sine, window, windowed sine"></p>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="http://nichol.as/zeromq-an-introduction" target="_blank">ZeroMQ an introduction</a></li>
-<li><a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> - Rust bindings to the C ZeroMQ library</li>
-<li><a href="http://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html" target="_blank">&#xD8;MQ Messaging Patterns</a></li>
+<li><a href="http://linear.ups.edu/html/fcla.html" target="_blank">A First Course in Linear Algebra</a></li>
+<li><a href="http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-1/" target="_blank">Linear algebra for game developers</a></li>
+<li><a href="https://github.com/sebcrozet/kiss3d" target="_blank">kiss3d</a> - a simple 3D graphics engine for Rust</li>
 </ul>
 
                     
@@ -562,10 +570,10 @@ ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span c
         </div>
 
         
-        <a href="../book/day19.html" class="navigation navigation-prev " aria-label="Previous page: Day 19 - rusti"><i class="fa fa-angle-left"></i></a>
+        <a href="../book/day13.html" class="navigation navigation-prev " aria-label="Previous page: Day 13 - uuid"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../book/day21.html" class="navigation navigation-next " aria-label="Next page: Day 21 - rust-crypto"><i class="fa fa-angle-right"></i></a>
+        <a href="../book/day15.html" class="navigation navigation-next " aria-label="Next page: Day 15 - FUSE filesystems, part 1"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

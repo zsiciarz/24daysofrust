@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 20 - zeromq | 24 days of Rust</title>
+        <title>Day 19 - rusti | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../book/day21.html" />
+    <link rel="next" href="../book/day20.html" />
     
     
-    <link rel="prev" href="../book/day19.html" />
+    <link rel="prev" href="../book/day18.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="20"
-        data-chapter-title="Day 20 - zeromq"
-        data-filepath="book/day20.md"
+        data-level="19"
+        data-chapter-title="Day 19 - rusti"
+        data-filepath="book/day19.md"
         data-basepath=".."
         data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -352,7 +352,7 @@
             
         </li>
     
-        <li class="chapter " data-level="19" data-path="book/day19.html">
+        <li class="chapter active" data-level="19" data-path="book/day19.html">
             
                 
                     <a href="../book/day19.html">
@@ -367,7 +367,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="20" data-path="book/day20.html">
+        <li class="chapter " data-level="20" data-path="book/day20.html">
             
                 
                     <a href="../book/day20.html">
@@ -475,83 +475,35 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
+                        <h1 id="day-19--rusti">Day 19 - rusti</h1>
 <blockquote>
-<p>Relevancy: 1.6 stable</p>
+<p>Relevancy: 1.8 nightly</p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
-<h2 id="operational-patterns">Operational patterns</h2>
-<p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
-<p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
-
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
-
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
-    <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
-    <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-}
+<p>A few days ago the <a href="http://www.reddit.com/r/rust/comments/2phjon/rusti_reborn_my_unofficial_workinprogress_rust/" target="_blank">Rust subreddit</a> got excited about the rebirth of <a href="https://github.com/murarth/rusti" target="_blank">rusti</a> - an interactive shell for Rust. Such interpreters (sometimes called REPLs - <a href="http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" target="_blank">read-eval-print loop</a>) are the bread and butter of dynamic languages like Lisp, Python or Ruby. But that is not a requirement - as Haskell demonstrates with its GHCi, you can have a REPL for a statically typed, compiled language too. <code>rusti</code> is an attempt to build such an interpreter for Rust.</p>
+<p><code>rusti</code> is still under development and currently installable only from source checkout. Clone the <a href="https://github.com/murarth/rusti" target="_blank">repository</a> and start the interpreter with <code>cargo run</code>:</p>
+<pre><code class="lang-sh">$ cargo run
+    Running `target/rusti`
+rusti=&gt; <span class="hljs-number">1</span> + <span class="hljs-number">4</span>
+<span class="hljs-number">5</span>
 </code></pre>
-<h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
-    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
-    <span class="hljs-built_in">Ok</span>(())
-}
+<p><code>rusti</code> can evaluate most of Rust code and display results. You can use crates and modules from the standard library as shown in a few examples below.</p>
+<pre><code class="lang-sh">rusti=&gt; use std::env;
+rusti=&gt; env::args().collect::&lt;Vec&lt;_&gt;&gt;()
+[<span class="hljs-string">&quot;target/debug/rusti&quot;</span>]
+rusti=&gt; use std::iter::AdditiveIterator;
+rusti=&gt; (<span class="hljs-number">1</span>..<span class="hljs-number">100</span>).filter(|x| *x % <span class="hljs-number">19</span> == <span class="hljs-number">3</span>).fold(<span class="hljs-number">0</span>, |acc, x| acc + x)
+<span class="hljs-number">303</span>
 </code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
-<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
-<h2 id="server">Server</h2>
-<p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
-        }
-    }
-    <span class="hljs-built_in">Ok</span>(())
-}
+<p>One great thing about <code>rusti</code> is the <code>.type</code> command which shows the type of an expression. (It&apos;s quite similar to <code>:type</code> in GHCi.)</p>
+<pre><code class="lang-sh">rusti=&gt; .type Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_owned())
+Some(<span class="hljs-string">&quot;Hello world!&quot;</span>.to_owned()) = core::option::Option&lt;collections::string::String&gt;
+rusti=&gt; .type vec![<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+vec![<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>] = collections::vec::Vec&lt;i32&gt;
+rusti=&gt; .type std::io::stdin
+std::io::stdin = fn() -&gt; std::io::stdio::Stdin {std::io::stdio::stdin}
 </code></pre>
-<p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
-<p>Let&apos;s start the server now:</p>
-<pre><code class="lang-sh">$ cargo run -- server
-ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
-</code></pre>
-<p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
-<pre><code class="lang-sh">$ cargo run -- client
-ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
-&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
-</code></pre>
-<h2 id="see-also">See also</h2>
-<ul>
-<li><a href="http://nichol.as/zeromq-an-introduction" target="_blank">ZeroMQ an introduction</a></li>
-<li><a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> - Rust bindings to the C ZeroMQ library</li>
-<li><a href="http://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html" target="_blank">&#xD8;MQ Messaging Patterns</a></li>
-</ul>
+<p>Unfortunately there is no code completion yet, but at least <code>readline</code> capabilities (such as line editing and history) are available.</p>
+<p>There are a few other limitations, some of which are rather inconvenient at the moment (such as <code>let</code> declarations being <em>very</em> local), but the authors are aware of them. The real issue for me today is that it can&apos;t reference external crates. However <a href="https://github.com/murarth/rusti/issues/2" target="_blank">this is already being discussed</a> and I hope it will happen.</p>
 
                     
                     </section>
@@ -562,10 +514,10 @@ ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span c
         </div>
 
         
-        <a href="../book/day19.html" class="navigation navigation-prev " aria-label="Previous page: Day 19 - rusti"><i class="fa fa-angle-left"></i></a>
+        <a href="../book/day18.html" class="navigation navigation-prev " aria-label="Previous page: Day 18 - redis"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../book/day21.html" class="navigation navigation-next " aria-label="Next page: Day 21 - rust-crypto"><i class="fa fa-angle-right"></i></a>
+        <a href="../book/day20.html" class="navigation navigation-next " aria-label="Next page: Day 20 - zeromq"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

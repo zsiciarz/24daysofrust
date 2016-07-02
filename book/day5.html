@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 20 - zeromq | 24 days of Rust</title>
+        <title>Day 5 - hyper | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../book/day21.html" />
+    <link rel="next" href="../book/day6.html" />
     
     
-    <link rel="prev" href="../book/day19.html" />
+    <link rel="prev" href="../book/day4.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="20"
-        data-chapter-title="Day 20 - zeromq"
-        data-filepath="book/day20.md"
+        data-level="5"
+        data-chapter-title="Day 5 - hyper"
+        data-filepath="book/day5.md"
         data-basepath=".."
         data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -142,7 +142,7 @@
             
         </li>
     
-        <li class="chapter " data-level="5" data-path="book/day5.html">
+        <li class="chapter active" data-level="5" data-path="book/day5.html">
             
                 
                     <a href="../book/day5.html">
@@ -367,7 +367,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="20" data-path="book/day20.html">
+        <li class="chapter " data-level="20" data-path="book/day20.html">
             
                 
                     <a href="../book/day20.html">
@@ -475,82 +475,121 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
+                        <h1 id="day-5--hyper">Day 5 - hyper</h1>
 <blockquote>
 <p>Relevancy: 1.6 stable</p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
-<h2 id="operational-patterns">Operational patterns</h2>
-<p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
-<p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
+<p>The state of HTTP libraries in Rust was a constant flux before 1.0. However it appears that a specific package won the hearts of Rust programmers: <a href="https://crates.io/crates/hyper" target="_blank">hyper</a>, which will be the subject of this chapter.</p>
+<p>I&apos;m going to focus on using <code>hyper</code> only as a client, although the library contains also a server implementation. However with the advance of Rust web frameworks building on top of HTTP libraries, the programmers will focus less on developing servers and more on the clients. Consuming web APIs is a lot more common than writing new shiny servers. How can <code>hyper</code> help us?</p>
+<h2 id="basic-requests">Basic requests</h2>
+<p>Let&apos;s start from the usual dependency definition in <code>Cargo.toml</code>.</p>
+<pre><code class="lang-ini"><span class="hljs-title">[dependencies]</span>
+<span class="hljs-setting">hyper = <span class="hljs-value"><span class="hljs-string">&quot;~0.7&quot;</span></span></span>
+</code></pre>
+<p>When you run <code>cargo build</code>, Cargo will download a few other required crates (for URL handling, mimetype support, OpenSSL bindings etc.) and hopefully compile <code>hyper</code> afterwards. Time for our first request!</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> hyper;
 
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
+<span class="hljs-keyword">use</span> std::io::Read;
+<span class="hljs-keyword">use</span> hyper::{Client};
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
-    <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
-    <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
+    <span class="hljs-keyword">let</span> client = Client::new();
+    <span class="hljs-keyword">let</span> url = <span class="hljs-string">&quot;http://httpbin.org/status/201&quot;</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-keyword">match</span> client.get(url).send() {
+        <span class="hljs-built_in">Ok</span>(response) =&gt; response,
+        <span class="hljs-built_in">Err</span>(_) =&gt; <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;Whoops.&quot;</span>),
+    };
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
+    <span class="hljs-keyword">match</span> response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf) {
+        <span class="hljs-built_in">Ok</span>(_) =&gt; (),
+        <span class="hljs-built_in">Err</span>(_) =&gt; <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;I give up.&quot;</span>),
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;buf: {}&quot;</span>, buf);
 }
 </code></pre>
-<h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
-    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
-    <span class="hljs-built_in">Ok</span>(())
+<p>That was... <em>verbose</em>. I could just use <code>unwrap()</code> everywhere, but that would be handwaving and in poor taste. Sprinkling your code with <code>panic!</code> is not a sign of good style too. However, there are so many things that can go wrong during an HTTP request/response cycle! But there seems to be a pattern. Can we do better?</p>
+<blockquote>
+<p><a id="day5.rs" href="../src/day5.rs">day5.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_content</span></span>(url: &amp;<span class="hljs-keyword">str</span>) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt; {
+    <span class="hljs-keyword">let</span> client = Client::new();
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.get(url).send());
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
+    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
+    <span class="hljs-built_in">Ok</span>(buf)
 }
 </code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
-<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
-<h2 id="server">Server</h2>
-<p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
-        }
-    }
-    <span class="hljs-built_in">Ok</span>(())
-}
+<blockquote>
+<p><a id="day5.rs" href="../src/day5.rs">day5.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
 </code></pre>
-<p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
-<p>Let&apos;s start the server now:</p>
-<pre><code class="lang-sh">$ cargo run -- server
-ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
+<p>We refactored the request cycle into a separate function. But look how the code got simpler, thanks to the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a>. There&apos;s no explicit matching on the <code>Result</code> variants and the first <code>try!</code> that fails will return from the function with some kind of an HTTP error.</p>
+<h2 id="post-and-query-parameters">POST and query parameters</h2>
+<p>Sending POST requests with hyper is only a little bit more complicated. We&apos;ll write a wrapper function again, this time taking an additional argument of type <code>Query</code>.</p>
+<blockquote>
+<p><a id="day5.rs" href="../src/day5.rs">day5.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">type</span> <span class="hljs-title">Query</span>&lt;<span class="hljs-string">&apos;a</span>&gt; = <span class="hljs-built_in">Vec</span>&lt;(&amp;<span class="hljs-string">&apos;a</span> <span class="hljs-keyword">str</span>, &amp;<span class="hljs-string">&apos;a</span> <span class="hljs-keyword">str</span>)&gt;;
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_query</span></span>(url: &amp;<span class="hljs-keyword">str</span>, query: Query) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt; {
+    <span class="hljs-keyword">let</span> client = Client::new();
+    <span class="hljs-keyword">let</span> body = form_urlencoded::Serializer::new(String::new())
+        .extend_pairs(query.iter())
+        .finish();
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.post(url).body(&amp;body[..]).send());
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
+    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
 </code></pre>
-<p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
-<pre><code class="lang-sh">$ cargo run -- client
-ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
-&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
+<blockquote>
+<p><a id="day5.rs" href="../src/day5.rs">day5.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;24 days of Rust - hyper (day 5)&quot;</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_content(<span class="hljs-string">&quot;http://httpbin.org/status/200&quot;</span>));
+</code></pre>
+<p>The main difference from <code>get_content()</code> is the serialization machinery coming from the <a href="https://crates.io/crates/url" target="_blank">url</a> crate. Once we&apos;ve built a raw request body (like <code>key=value&amp;foo=bar</code>), we pass it to the <code>body()</code> method and the rest is identical to the GET example above.</p>
+<h2 id="sending-json">Sending JSON</h2>
+<p>Our <code>post_query</code> function can be easily changed to borrow a struct, serialize it to JSON and send it over the wire.</p>
+<blockquote>
+<p><a id="day5.rs" href="../src/day5.rs">day5.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust">}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_json</span></span>&lt;T&gt;(url: &amp;<span class="hljs-keyword">str</span>, payload: &amp;T) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt;
+    <span class="hljs-keyword">where</span> T: Encodable {
+    <span class="hljs-keyword">let</span> client = Client::new();
+    <span class="hljs-keyword">let</span> body = json::encode(payload).unwrap();
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.post(url).body(&amp;body[..]).send());
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
+    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
+</code></pre>
+<p>This function is generic in its <code>payload</code> argument, accepting anything that implements the <code>Encodable</code> trait. We can use the function as follows:</p>
+<blockquote>
+<p><a id="day5.rs" href="../src/day5.rs">day5.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust">}
+
+<span class="hljs-preprocessor">#[derive(RustcDecodable, RustcEncodable)]</span>
+<span class="hljs-keyword">struct</span> Movie {
+    title: <span class="hljs-built_in">String</span>,
+    bad_guy: <span class="hljs-built_in">String</span>,
+</code></pre>
+<blockquote>
+<p><a id="day5.rs" href="../src/day5.rs">day5.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> query = <span class="hljs-built_in">vec!</span>[(<span class="hljs-string">&quot;key&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>), (<span class="hljs-string">&quot;foo&quot;</span>, <span class="hljs-string">&quot;bar&quot;</span>)];
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, post_query(<span class="hljs-string">&quot;http://httpbin.org/post&quot;</span>, query).unwrap());
+    <span class="hljs-keyword">let</span> movie = Movie {
+        title: <span class="hljs-string">&quot;You Only Live Twice&quot;</span>.to_owned(),
+        bad_guy: <span class="hljs-string">&quot;Blofeld&quot;</span>.to_owned(),
+        pub_year: <span class="hljs-number">1967</span>,
 </code></pre>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="http://nichol.as/zeromq-an-introduction" target="_blank">ZeroMQ an introduction</a></li>
-<li><a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> - Rust bindings to the C ZeroMQ library</li>
-<li><a href="http://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html" target="_blank">&#xD8;MQ Messaging Patterns</a></li>
+<li><a href="https://github.com/servo/servo/wiki/HTTP-library-requirements" target="_blank">HTTP library requirements</a> from the Servo project</li>
+<li><a href="https://github.com/jgillich/rust-request" target="_blank">rust-request</a> - a HTTP client library written on top of hyper</li>
+<li><a href="https://github.com/gtolle/rest_client" target="_blank">rest_client</a> - another HTTP client built with hyper</li>
+<li><a href="http://lucumr.pocoo.org/2014/11/6/error-handling-in-rust/" target="_blank">Improved error handling in Rust</a> by Armin Ronacher</li>
 </ul>
 
                     
@@ -562,10 +601,10 @@ ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span c
         </div>
 
         
-        <a href="../book/day19.html" class="navigation navigation-prev " aria-label="Previous page: Day 19 - rusti"><i class="fa fa-angle-left"></i></a>
+        <a href="../book/day4.html" class="navigation navigation-prev " aria-label="Previous page: Day 4 - docopt"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../book/day21.html" class="navigation navigation-next " aria-label="Next page: Day 21 - rust-crypto"><i class="fa fa-angle-right"></i></a>
+        <a href="../book/day6.html" class="navigation navigation-next " aria-label="Next page: Day 6 - working with JSON"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

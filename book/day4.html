@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 20 - zeromq | 24 days of Rust</title>
+        <title>Day 4 - docopt | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../book/day21.html" />
+    <link rel="next" href="../book/day5.html" />
     
     
-    <link rel="prev" href="../book/day19.html" />
+    <link rel="prev" href="../book/day3.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="20"
-        data-chapter-title="Day 20 - zeromq"
-        data-filepath="book/day20.md"
+        data-level="4"
+        data-chapter-title="Day 4 - docopt"
+        data-filepath="book/day4.md"
         data-basepath=".."
         data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -127,7 +127,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4" data-path="book/day4.html">
+        <li class="chapter active" data-level="4" data-path="book/day4.html">
             
                 
                     <a href="../book/day4.html">
@@ -367,7 +367,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="20" data-path="book/day20.html">
+        <li class="chapter " data-level="20" data-path="book/day20.html">
             
                 
                     <a href="../book/day20.html">
@@ -475,82 +475,118 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
+                        <h1 id="day-4--docopt">Day 4 - docopt</h1>
 <blockquote>
-<p>Relevancy: 1.6 stable</p>
+<p>Relevancy: 1.6 stable (macros only on nightly)</p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
-<h2 id="operational-patterns">Operational patterns</h2>
-<p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
-<p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
+<p>One of the few chores when building a commandline program is argument parsing, so that <code>myprogram --config=myfile.conf --verbose -o output.txt</code> makes sense. Some arguments come in short and long variants, some are optional and some are positional only. There are a lot of libraries for argument parsing, some are even included in the respective languages&apos; distributions. In Rust&apos;s case there&apos;s the <a href="https://crates.io/crates/getopts" target="_blank">getopts crate</a>.</p>
+<p>The first thing a moderately savvy user will do is... no, not read the documentation, but run <code>myprogram -h</code> (or <code>--help</code>) to discover available options. <code>getopts</code> and other libraries can derive such help summary for you, saving your time and reducing duplication. But what if it was the other way round? You&apos;d write the usage message, listing possible options, and the tool would build an argument parser from that. Enter <a href="http://docopt.org/" target="_blank">docopt</a>.</p>
+<h2 id="what-is-docopt">What is docopt?</h2>
+<p>The <strong>docopt</strong> initiative <a href="https://www.youtube.com/watch?v=pXhcPJK5cMc" target="_blank">originated in the Python community</a> in 2012 as an attempt to standardize common conventions for commandline arguments. The main idea is that the help message describes the interface of your program. Once you follow a few rules when writing that message, docopt can understand it and build an argument parser.</p>
+<h2 id="docopt-for-rust">docopt for Rust</h2>
+<p>We&apos;ll start by declaring a dependency in <code>Cargo.toml</code>:</p>
+<pre><code class="lang-ini"><span class="hljs-title">[dependencies]</span>
+<span class="hljs-setting">docopt = <span class="hljs-value"><span class="hljs-string">&quot;~0.6.78&quot;</span></span></span>
+<span class="hljs-setting">docopt_macros = <span class="hljs-value"><span class="hljs-string">&quot;~0.6.80&quot;</span></span></span>
+</code></pre>
+<p>Cargo will now pull the <a href="https://crates.io/crates/docopt" target="_blank">docopt crate</a> along with the macros which are distributed separately.</p>
+<p><strong>Note:</strong> The macros use a language feature (syntax extensions) that didn&apos;t stabilize in time before 1.0 release. Therefore at present the <code>docopt!</code> macro can be used only with the nightly versions of the compiler.</p>
+<p>In our example application we&apos;ll try to mimic the <code>wc</code> tool for counting lines, words or characters in a file. Let&apos;s start with importing required libraries and writing the usage message:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> docopt;
 
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
+<span class="hljs-keyword">use</span> docopt::Docopt;
 
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
-    <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
-    <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
+<span class="hljs-keyword">static</span> USAGE: &amp;<span class="hljs-string">&apos;static</span> <span class="hljs-keyword">str</span> = <span class="hljs-string">&quot;
+Usage: wc [options] [&lt;file&gt;]
+
+Options:
+    -c, --bytes  print the byte counts
+    -m, --chars  print the character counts
+    -l, --lines  print the newline counts
+    -w, --words  print the word counts
+    -L, --max-line-length  print the length of the longest line
+    -h, --help  display this help and exit
+    -v, --version  output version information and exit
+&quot;</span>;
+</code></pre>
+<p>Nothing fancy here, just a long string. See the <a href="http://docopt.org/" target="_blank">docopt specification</a> for the details of the format. We want to be able to decode the options into a struct, so it makes sense for the struct to implement the <code>Decodable</code> trait.</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[derive(RustcDecodable)]</span>
+<span class="hljs-keyword">struct</span> Args {
+    arg_file: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">String</span>&gt;,
+    flag_bytes: <span class="hljs-keyword">bool</span>,
+    flag_chars: <span class="hljs-keyword">bool</span>,
+    flag_lines: <span class="hljs-keyword">bool</span>,
+    flag_words: <span class="hljs-keyword">bool</span>,
+    flag_max_line_length: <span class="hljs-keyword">bool</span>,
 }
 </code></pre>
-<h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
-    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
-    <span class="hljs-built_in">Ok</span>(())
-}
+<p>The arguments must map to field names. Flags (toggle switches such as <code>-c</code> above) map to <code>flag_</code>-prefixed boolean fields, option arguments or meta-variables map to <code>arg_</code>-prefixed fields. If the argument is optional it can be represented by an <code>Option</code> value. But how do we actually turn the commandline args into a struct?</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> args: Args = Docopt::new(USAGE).and_then(|d| d.decode()).unwrap_or_else(|e| e.exit());
 </code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
-<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
-<h2 id="server">Server</h2>
-<p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
-        }
+<p>Now this is a dense line of code. Let&apos;s walk through it one step at a time.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> docopt = <span class="hljs-keyword">match</span> Docopt::new(USAGE) {
+    <span class="hljs-built_in">Ok</span>(d) =&gt; d,
+    <span class="hljs-built_in">Err</span>(e) =&gt; e.exit(),
+};
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, docopt);
+<span class="hljs-keyword">let</span> args: Args = <span class="hljs-keyword">match</span> docopt.decode() {
+    <span class="hljs-built_in">Ok</span>(args) =&gt; args,
+    <span class="hljs-built_in">Err</span>(e) =&gt; e.exit(),
+};
+</code></pre>
+<p><code>Docopt::new()</code> returns a <code>Result&lt;Docopt, Error&gt;</code> value. The errors from docopt have a handy <code>exit()</code> method that prints the error message and quits the program. Printing a <code>Docopt</code> value gives us a lot of debugging information. The <code>decode()</code> method is responsible for creating our arguments object and we extract it from the <code>Ok</code> variant. We can now use <code>args</code> as any other struct in our program.</p>
+<blockquote>
+<p><a id="day4.rs" href="../src/day4.rs">day4.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting stuff in {}&quot;</span>, args.arg_file.unwrap_or(<span class="hljs-string">&quot;standard input&quot;</span>.to_owned()));
+    <span class="hljs-keyword">if</span> args.flag_bytes {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting bytes!&quot;</span>);
     }
-    <span class="hljs-built_in">Ok</span>(())
-}
+    <span class="hljs-keyword">if</span> args.flag_chars {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting characters!&quot;</span>);
+    }
 </code></pre>
-<p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
-<p>Let&apos;s start the server now:</p>
-<pre><code class="lang-sh">$ cargo run -- server
-ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
+<h2 id="docoptmacros">docopt_macros</h2>
+<p>But hey, didn&apos;t I tell you earlier about reducing duplication? In the example above there are two sources of information, namely the usage string and the <code>Args</code> struct. It&apos;s quite clear that these two represent the same concept, but you&apos;ll need to mantain two separate code pieces instead of one and that is prone to errors.</p>
+<p><code>docopt!</code> to the rescue! This is a funny (for some value of fun, of course) macro that will generate the struct for us.</p>
+<blockquote>
+<p><a id="day4.rs" href="../src/day4.rs">day4.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#![feature(plugin)]</span>
+<span class="hljs-preprocessor">#![plugin(docopt_macros)]</span>
+
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> docopt;
+
+docopt!(Args, <span class="hljs-string">&quot;
+Usage: wc [options] [&lt;file&gt;]
+
+Options:
+    -c, --bytes  print the byte counts
+    -m, --chars  print the character counts
+    -l, --lines  print the newline counts
+    -w, --words  print the word counts
+    -L, --max-line-length  print the length of the longest line
+    -h, --help  display this help and exit
+    -v, --version  output version information and exit
+&quot;</span>, arg_file: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">String</span>&gt;);
 </code></pre>
-<p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
-<pre><code class="lang-sh">$ cargo run -- client
-ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
-&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
+<p>The macro takes the name of the type to generate, usage string and (optionally) types for the generated fields. It also validates that the usage message conforms to the docopt spec. The validation happens at compile time when the <code>Args</code> struct is generated so there&apos;s no runtime overhead. But most importantly we now have a <strong>single</strong> piece of information to maintain instead of two.</p>
+<p>There&apos;s one more advantage of the macro - our code inside <code>main()</code> can be simplified a bit. As the struct is generated from the usage message, we can get rid of one intermediate <code>Result</code> unwrapping; the struct has a static <code>docopt()</code> method which returns a <code>Docopt</code> value.</p>
+<blockquote>
+<p><a id="day4.rs" href="../src/day4.rs">day4.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> docopt = Args::docopt();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, docopt);
+    <span class="hljs-keyword">let</span> args: Args = docopt.decode().unwrap_or_else(|e| e.exit());
 </code></pre>
+<p>Docopt for Rust recently gained an ability to generate tab completion files for the shell (only bash at the moment). See the <a href="https://github.com/docopt/docopt.rs#tab-completion-support" target="_blank">readme</a> for more on that.</p>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="http://nichol.as/zeromq-an-introduction" target="_blank">ZeroMQ an introduction</a></li>
-<li><a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> - Rust bindings to the C ZeroMQ library</li>
-<li><a href="http://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html" target="_blank">&#xD8;MQ Messaging Patterns</a></li>
+<li><a href="http://kblomqvist.github.io/2013/03/21/creating-beatiful-command-line-interfaces-for-embedded-systems-part1/" target="_blank">using docopt in C</a> for embedded systems</li>
+<li>docopt implementations in various languages under the <a href="https://github.com/docopt" target="_blank">docopt organization on GitHub</a></li>
+<li><a href="https://github.com/uutils/coreutils/blob/master/src/wc/wc.rs" target="_blank">wc in Rust</a> from the coreutils rewrite project</li>
 </ul>
 
                     
@@ -562,10 +598,10 @@ ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span c
         </div>
 
         
-        <a href="../book/day19.html" class="navigation navigation-prev " aria-label="Previous page: Day 19 - rusti"><i class="fa fa-angle-left"></i></a>
+        <a href="../book/day3.html" class="navigation navigation-prev " aria-label="Previous page: Day 3 - csv"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../book/day21.html" class="navigation navigation-next " aria-label="Next page: Day 21 - rust-crypto"><i class="fa fa-angle-right"></i></a>
+        <a href="../book/day5.html" class="navigation navigation-next " aria-label="Next page: Day 5 - hyper"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

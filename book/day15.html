@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 20 - zeromq | 24 days of Rust</title>
+        <title>Day 15 - FUSE filesystems, part 1 | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../book/day21.html" />
+    <link rel="next" href="../book/day16.html" />
     
     
-    <link rel="prev" href="../book/day19.html" />
+    <link rel="prev" href="../book/day14.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="20"
-        data-chapter-title="Day 20 - zeromq"
-        data-filepath="book/day20.md"
+        data-level="15"
+        data-chapter-title="Day 15 - FUSE filesystems, part 1"
+        data-filepath="book/day15.md"
         data-basepath=".."
         data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -292,7 +292,7 @@
             
         </li>
     
-        <li class="chapter " data-level="15" data-path="book/day15.html">
+        <li class="chapter active" data-level="15" data-path="book/day15.html">
             
                 
                     <a href="../book/day15.html">
@@ -367,7 +367,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="20" data-path="book/day20.html">
+        <li class="chapter " data-level="20" data-path="book/day20.html">
             
                 
                     <a href="../book/day20.html">
@@ -475,82 +475,146 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
+                        <h1 id="day-15--fuse-filesystems-part-1">Day 15 - FUSE filesystems, part 1</h1>
 <blockquote>
-<p>Relevancy: 1.6 stable</p>
+<p>Relevancy: 1.8 nightly</p>
 </blockquote>
-<p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
-<h2 id="operational-patterns">Operational patterns</h2>
-<p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
-<p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
+<p>A traditional filesystem is typically implemented as a kernel module. However, some Unix-like operating systems (Linux, FreeBSD, Mac OS X and a few others) allow for userspace filesystems through a mechanism called <a href="http://en.wikipedia.org/wiki/Filesystem_in_Userspace" target="_blank">FUSE</a>. The <a href="http://fuse.sourceforge.net/" target="_blank">canonical FUSE library</a> is written in C and there are some bindings from other languages (<a href="https://github.com/terencehonles/fusepy" target="_blank">Python</a>, <a href="https://github.com/lwoggardner/rfusefs" target="_blank">Ruby</a> etc.)</p>
+<p>The <a href="https://github.com/zargony/rust-fuse" target="_blank">fuse crate</a> is very interesting because it&apos;s a rewrite from C to Rust, leveraging many of Rust features unavailable in C. The only binding to libfuse is related to mounting and unmounting the filesystem, the rest is pure Rust.</p>
+<p>Small disclaimer: I&apos;m not very well versed in filesystems, in fact this is my first attempt at FUSE. I&apos;m learning a lot while writing this article, hopefully for the best of all of us :-)</p>
+<h2 id="json-filesystem">JSON filesystem</h2>
+<p>In this and the following article we&apos;ll try to create a read-only FUSE filesystem that represents a JSON object (a key-value map). The keys will map to filenames, while file contents will represent values stored under respective keys.</p>
+<p>Let&apos;s start with a filesystem that does absolutely nothing, but can be mounted and unmounted. The following example is almost directly taken from <a href="https://github.com/zargony/rust-fuse/blob/bcfb2f9eb6679c12881a8d002e4af89e7b3482dc/examples/null.rs" target="_blank">rust-fuse</a> sources. This will be our starting point:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> fuse;
 
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
+<span class="hljs-keyword">use</span> std::env;
+<span class="hljs-keyword">use</span> fuse::Filesystem;
+
+<span class="hljs-keyword">struct</span> JsonFilesystem;
+
+<span class="hljs-keyword">impl</span> Filesystem <span class="hljs-keyword">for</span> JsonFilesystem {
+}
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
-    <span class="hljs-keyword">let</span> addr = <span class="hljs-string">&quot;tcp://127.0.0.1:25933&quot;</span>;
-    <span class="hljs-keyword">if</span> args[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;client&quot;</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ client connecting to {}&quot;</span>, addr);
-        run_client(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
-        run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
-    }
-}
-</code></pre>
-<h2 id="client">Client</h2>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
-    <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
-    <span class="hljs-built_in">Ok</span>(())
-}
-</code></pre>
-<p>A ZeroMQ request starts with opening a <code>REQ</code> socket. The sockets send and receive <code>Message</code> objects. You can use any encoding you like, ZeroMQ doesn&apos;t enforce anything. It can be JSON, <a href="https://github.com/mneumann/rust-msgpack" target="_blank">msgpack</a>, <a href="https://github.com/stepancheg/rust-protobuf" target="_blank">protobuf</a>, whatever - as long as you push some bytes over the wire, ZeroMQ is happy.</p>
-<p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
-<h2 id="server">Server</h2>
-<p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = <span class="hljs-built_in">try!</span>(Message::new());
-    <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
+    <span class="hljs-keyword">let</span> mountpoint = <span class="hljs-keyword">match</span> env::args().nth(<span class="hljs-number">1</span>) {
+        <span class="hljs-built_in">Some</span>(path) =&gt; path,
+        <span class="hljs-built_in">None</span> =&gt; {
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} &lt;MOUNTPOINT&gt;&quot;</span>, env::args().nth(<span class="hljs-number">0</span>).unwrap());
+            <span class="hljs-keyword">return</span>;
         }
-    }
-    <span class="hljs-built_in">Ok</span>(())
+    };
+    fuse::mount(JsonFilesystem, &amp;mountpoint, &amp;[]);
 }
 </code></pre>
-<p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>
-<p>Let&apos;s start the server now:</p>
-<pre><code class="lang-sh">$ cargo run -- server
-ZeroMQ server listening on tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
+<p>Create the mount point (fancy name for an empty directory) and run the program:</p>
+<pre><code class="lang-sh">$ mkdir /tmp/rust-fuse
+$ cargo run /tmp/rust-fuse
 </code></pre>
-<p>And if we fire up the client in a new tab we should see a roundtrip message:</p>
-<pre><code class="lang-sh">$ cargo run -- client
-ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">25933</span>
--&gt; <span class="hljs-string">&quot;Hello world!&quot;</span>
-&lt;- <span class="hljs-string">&quot;Hello world!&quot;</span>
+<p><strong>Note</strong>: If you get <code>fusermount: failed to open /etc/fuse.conf: Permission denied</code> errors, you need to add yourself to the <code>fuse</code> group:</p>
+<pre><code class="lang-sh">$ sudo addgroup &lt;USERNAME&gt; fuse
 </code></pre>
+<p>Log out and log in again to apply changes.</p>
+<p>Now try the following in another terminal window, while our Rust program is still running:</p>
+<pre><code class="lang-sh">$ ls /tmp/rust-fuse
+ls: cannot access /tmp/rust-fuse: Function not implemented
+</code></pre>
+<p>Great! This means our filesystem is mounted, but listing directory contents is not implemented. In fact no action is implemented yet, so let&apos;s get to work!</p>
+<p>By the way - to unmount your filesystem, stop the Rust program and then execute <code>fusermount -u /tmp/rust-fuse</code>. If you don&apos;t unmount, you&apos;ll run into errors next time you try <code>cargo run</code>.</p>
+<h2 id="attributes">Attributes</h2>
+<p>First of all we need to add a number of imports at the top. We&apos;ll be using the <a href="https://crates.io/crates/libc" target="_blank">libc</a> and <a href="https://crates.io/crates/time" target="_blank">time</a> crates, so make sure to add them as dependencies to <code>Cargo.toml</code>.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> libc;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> time;
+
+<span class="hljs-keyword">use</span> std::path::Path;
+<span class="hljs-keyword">use</span> libc::{ENOENT, ENOSYS};
+<span class="hljs-keyword">use</span> time::Timespec;
+<span class="hljs-keyword">use</span> fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
+</code></pre>
+<p>Let&apos;s start with the <code>getattr</code> function. FUSE will call it when reading file or directory attributes, such as size, creation time, uid etc.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">impl</span> Filesystem <span class="hljs-keyword">for</span> JsonFilesystem {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">getattr</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, _req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, reply: ReplyAttr) {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;getattr(ino={})&quot;</span>, ino);
+        reply.error(ENOSYS);
+    }
+}
+</code></pre>
+<p>We still return an <code>ENOSYS</code> status code (this is what causes the <code>Function not implemented</code> error), but we will see in the program output that FUSE called <code>getattr</code> on inode number 1, which is the root directory of our filesystem. OK, now let&apos;s flesh out this method:</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">getattr</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, _req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, reply: ReplyAttr) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;getattr(ino={})&quot;</span>, ino);
+    <span class="hljs-keyword">let</span> ts = Timespec::new(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">let</span> attr = FileAttr {
+        ino: <span class="hljs-number">1</span>,
+        size: <span class="hljs-number">0</span>,
+        blocks: <span class="hljs-number">0</span>,
+        atime: ts,
+        mtime: ts,
+        ctime: ts,
+        crtime: ts,
+        kind: FileType::Directory,
+        perm: <span class="hljs-number">0o755</span>,
+        nlink: <span class="hljs-number">0</span>,
+        uid: <span class="hljs-number">0</span>,
+        gid: <span class="hljs-number">0</span>,
+        rdev: <span class="hljs-number">0</span>,
+        flags: <span class="hljs-number">0</span>,
+    };
+    <span class="hljs-keyword">let</span> ttl = Timespec::new(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span> ino == <span class="hljs-number">1</span> {
+        reply.attr(&amp;ttl, &amp;attr);
+    } <span class="hljs-keyword">else</span> {
+        reply.error(ENOSYS);
+    }
+}
+</code></pre>
+<p>The <code>FileAttr</code> struct is somewhat similar to <code>struct stat</code> in C. If you now run <code>stat</code> on the root directory, you&apos;ll see the permissions and familiar dates from the 70&apos;s (timestamps are 0):</p>
+<pre><code class="lang-sh">$ <span class="hljs-built_in">stat</span> /tmp/rust-fuse
+File: `/tmp/rust-fuse<span class="hljs-string">&apos;
+Size: 0               Blocks: 0          IO Block: 4096   directory
+Device: 27h/39d     Inode: 1           Links: 0
+Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 1970-01-01 01:00:00.000000000 +0100
+Modify: 1970-01-01 01:00:00.000000000 +0100
+Change: 1970-01-01 01:00:00.000000000 +0100
+</span></code></pre>
+<h2 id="directory-listing">Directory listing</h2>
+<p>Now it&apos;s time to make <code>ls</code> work in our filesystem (for some definition of work...).</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">readdir</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, _req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, fh: <span class="hljs-keyword">u64</span>, offset: <span class="hljs-keyword">u64</span>, <span class="hljs-keyword">mut</span> reply: ReplyDirectory) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;readdir(ino={}, fh={}, offset={})&quot;</span>, ino, fh, offset);
+    reply.error(ENOSYS);
+}
+</code></pre>
+<p>We start with a dummy <code>readdir</code> method as before, let&apos;s see if it gets called when <code>ls</code>-ing:</p>
+<pre><code class="lang-sh">$ cargo run /tmp/rust-fuse
+getattr(ino=<span class="hljs-number">1</span>)
+readdir(ino=<span class="hljs-number">1</span>, fh=<span class="hljs-number">0</span>, offset=<span class="hljs-number">0</span>)
+</code></pre>
+<p>Yay! <code>ls</code> still displays an error, but that&apos;s because we wanted it to (remember, <code>ENOSYS</code>). Now we can actually implement the directory listing functionality.</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">readdir</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, _req: &amp;Request, ino: <span class="hljs-keyword">u64</span>, fh: <span class="hljs-keyword">u64</span>, offset: <span class="hljs-keyword">u64</span>, <span class="hljs-keyword">mut</span> reply: ReplyDirectory) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;readdir(ino={}, fh={}, offset={})&quot;</span>, ino, fh, offset);
+    <span class="hljs-keyword">if</span> ino == <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">if</span> offset == <span class="hljs-number">0</span> {
+            reply.add(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, FileType::Directory, &amp;Path::new(<span class="hljs-string">&quot;.&quot;</span>));
+            reply.add(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, FileType::Directory, &amp;Path::new(<span class="hljs-string">&quot;..&quot;</span>));
+        }
+        reply.ok();
+    } <span class="hljs-keyword">else</span> {
+        reply.error(ENOENT);
+    }
+}
+</code></pre>
+<p>As with <code>getattr</code> we check only the first inode, otherwise return a <code>File not found</code> error (<code>ENOENT</code>). The <code>offset == 0</code> check is necessary, otherwise <code>readdir</code> will loop infinitely. So what happens if we run <code>ls</code> now?</p>
+<pre><code class="lang-sh">$ ls -la /tmp/rust-fuse
+total <span class="hljs-number">4</span>
+drwxr-xr-x  <span class="hljs-number">0</span> root root    <span class="hljs-number">0</span> Jan  <span class="hljs-number">1</span>  <span class="hljs-number">1970</span> .
+drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-number">4096</span> Dec <span class="hljs-number">10</span> <span class="hljs-number">00</span>:<span class="hljs-number">38</span> ..
+</code></pre>
+<p>Hooray! We&apos;ve implemented an empty directory :-)</p>
+<h2 id="to-be-continued">To be continued...</h2>
+<p>That was a lot for today, time to take a short break. See you tomorrow in <a href="day16.html">part 2</a>!</p>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="http://nichol.as/zeromq-an-introduction" target="_blank">ZeroMQ an introduction</a></li>
-<li><a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> - Rust bindings to the C ZeroMQ library</li>
-<li><a href="http://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html" target="_blank">&#xD8;MQ Messaging Patterns</a></li>
+<li><a href="http://www.cs.hmc.edu/~geoff/classes/hmc.cs135.201109/homework/fuse/fuse_doc.html#function-purposes" target="_blank">A nice overview</a> of FUSE functions</li>
+<li><a href="http://fuse.sourceforge.net/helloworld.html" target="_blank">FUSE &quot;hello world&quot; program in C</a></li>
 </ul>
 
                     
@@ -562,10 +626,10 @@ ZeroMQ client connecting to tcp://<span class="hljs-number">127.0</span>.<span c
         </div>
 
         
-        <a href="../book/day19.html" class="navigation navigation-prev " aria-label="Previous page: Day 19 - rusti"><i class="fa fa-angle-left"></i></a>
+        <a href="../book/day14.html" class="navigation navigation-prev " aria-label="Previous page: Day 14 - nalgebra"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../book/day21.html" class="navigation navigation-next " aria-label="Next page: Day 21 - rust-crypto"><i class="fa fa-angle-right"></i></a>
+        <a href="../book/day16.html" class="navigation navigation-next " aria-label="Next page: Day 16 - FUSE filesystems, part 2"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
