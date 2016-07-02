@@ -53,7 +53,7 @@
         data-chapter-title="Day 20 - zeromq"
         data-filepath="book/day20.md"
         data-basepath=".."
-        data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
+        data-revision="Sat Jul 02 2016 22:10:12 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -477,18 +477,26 @@
                     
                         <h1 id="day-20--zeromq">Day 20 - zeromq</h1>
 <blockquote>
-<p>Relevancy: 1.6 stable</p>
+<p>Relevancy: 1.9 stable</p>
 </blockquote>
 <p><a href="http://zeromq.org/" target="_blank">ZeroMQ</a> is a language-independent messaging solution. It&apos;s not a full-fledged system such as for example <a href="http://www.rabbitmq.com/" target="_blank">RabbitMQ</a>, basically it&apos;s just a transport layer. From the programmer&apos;s perspective working with it doesn&apos;t differ much from ordinary sockets, but there&apos;s a lot of power hidden underneath. The <a href="https://github.com/erickt/rust-zmq" target="_blank">rust-zmq</a> crate is a Rust binding to the C library. There used to be a working native binding (<a href="https://github.com/zeromq/zmq.rs" target="_blank">zeromq</a>), but it&apos;s now undergoing a redesign and rewrite.</p>
 <h2 id="operational-patterns">Operational patterns</h2>
 <p>The <a href="http://zguide.zeromq.org/page:all#Messaging-Patterns" target="_blank">ZeroMQ guide</a> lists several messaging patterns such as request-response, pub-sub, pipeline etc. Different patterns suit different needs for distributed systems; for example the request-response pattern is commonly used for remote procedure calls. This is the only mode of operation implemented in the <code>zeromq</code> crate at the moment, but hopefully more will be added soon.</p>
 <p>Before we start implementing the client and server, let&apos;s prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.</p>
+<blockquote>
+<p><a id="day20.rs" href="../src/day20.rs">day20.rs</a></p>
+</blockquote>
 <pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zmq;
-
-<span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
-
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
+</code></pre>
+<blockquote>
+<p><a id="day20.rs" href="../src/day20.rs">day20.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> zmq::{Context, Message, Error};
+</code></pre>
+<blockquote>
+<p><a id="day20.rs" href="../src/day20.rs">day20.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
     <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
         <span class="hljs-keyword">return</span>;
@@ -503,9 +511,11 @@
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZeroMQ server listening on {}&quot;</span>, addr);
         run_server(&amp;<span class="hljs-keyword">mut</span> ctx, addr).unwrap_or_else(|err| <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, err));
     }
-}
 </code></pre>
 <h2 id="client">Client</h2>
+<blockquote>
+<p><a id="day20.rs" href="../src/day20.rs">day20.rs</a></p>
+</blockquote>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
     <span class="hljs-built_in">try!</span>(sock.connect(addr));
@@ -523,6 +533,9 @@
 <p>Note that we&apos;re using the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a> for error handling.</p>
 <h2 id="server">Server</h2>
 <p>We&apos;re going to build a simple echo server that repeats the incoming message in the response.</p>
+<blockquote>
+<p><a id="day20.rs" href="../src/day20.rs">day20.rs</a></p>
+</blockquote>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
     <span class="hljs-built_in">try!</span>(sock.bind(addr));

@@ -53,7 +53,7 @@
         data-chapter-title="Day 4 - docopt"
         data-filepath="book/day4.md"
         data-basepath=".."
-        data-revision="Sat Jul 02 2016 21:23:22 GMT+0000 (UTC)"
+        data-revision="Sat Jul 02 2016 22:10:12 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -477,7 +477,7 @@
                     
                         <h1 id="day-4--docopt">Day 4 - docopt</h1>
 <blockquote>
-<p>Relevancy: 1.6 stable (macros only on nightly)</p>
+<p>Relevancy: 1.9 stable (macros only on nightly)</p>
 </blockquote>
 <p>One of the few chores when building a commandline program is argument parsing, so that <code>myprogram --config=myfile.conf --verbose -o output.txt</code> makes sense. Some arguments come in short and long variants, some are optional and some are positional only. There are a lot of libraries for argument parsing, some are even included in the respective languages&apos; distributions. In Rust&apos;s case there&apos;s the <a href="https://crates.io/crates/getopts" target="_blank">getopts crate</a>.</p>
 <p>The first thing a moderately savvy user will do is... no, not read the documentation, but run <code>myprogram -h</code> (or <code>--help</code>) to discover available options. <code>getopts</code> and other libraries can derive such help summary for you, saving your time and reducing duplication. But what if it was the other way round? You&apos;d write the usage message, listing possible options, and the tool would build an argument parser from that. Enter <a href="http://docopt.org/" target="_blank">docopt</a>.</p>
