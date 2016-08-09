@@ -14,7 +14,7 @@ dependencies = [
  "libc 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "nalgebra 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.34 (registry+https://github.com/rust-lang/crates.io-index)",
- "postgres 0.11.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "postgres 0.11.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres_array 0.6.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres_macros 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres_range 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -56,11 +56,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "byteorder"
 version = "0.5.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "cfg-if"
-version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -358,18 +353,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "net2"
-version = "0.2.26"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "cfg-if 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "kernel32-sys 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
- "winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "ws2_32-sys 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "num"
 version = "0.1.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -488,15 +471,15 @@ dependencies = [
 
 [[package]]
 name = "phf"
-version = "0.7.14"
+version = "0.7.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "phf_shared 0.7.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "phf_shared 0.7.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "phf_shared"
-version = "0.7.14"
+version = "0.7.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -525,15 +508,14 @@ dependencies = [
 
 [[package]]
 name = "postgres"
-version = "0.11.9"
+version = "0.11.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bufstream 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "byteorder 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "hex 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "net2 0.2.26 (registry+https://github.com/rust-lang/crates.io-index)",
- "phf 0.7.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "phf 0.7.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.35 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -544,7 +526,7 @@ version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "byteorder 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "postgres 0.11.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "postgres 0.11.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -558,7 +540,7 @@ version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "byteorder 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "postgres 0.11.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "postgres 0.11.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.35 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -814,15 +796,6 @@ version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "ws2_32-sys"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "zmq"
 version = "0.7.0"
 source = "git+https://github.com/erickt/rust-zmq.git#87a6bd2a7ce09200b6f0a5bdc08ef684c4951f21"
@@ -846,7 +819,6 @@ dependencies = [
 "checksum bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "aad18937a628ec6abcd26d1489012cc0e18c21798210f491af69ded9b881106d"
 "checksum bufstream 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7b48dbe2ff0e98fa2f03377d204a9637d3c9816cd431bfe05a8abbd0ea11d074"
 "checksum byteorder 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)" = "0fc10e8cc6b2580fda3f36eb6dc5316657f812a3df879a44a66fc9f0fdbc4855"
-"checksum cfg-if 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "de1e760d7b6535af4241fca8bd8adf68e2e7edacc6b29f5d399050c5e48cf88c"
 "checksum color_quant 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "a475fc4af42d83d28adf72968d9bcfaf035a1a9381642d8e85d8a04957767b0d"
 "checksum cookie 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)" = "0e3d6405328b6edb412158b3b7710e2634e23f3614b9bb1c412df7952489a626"
 "checksum csv 0.14.7 (registry+https://github.com/rust-lang/crates.io-index)" = "266c1815d7ca63a5bd86284043faf91e8c95e943e55ce05dc0ae08e952de18bc"
@@ -884,7 +856,6 @@ dependencies = [
 "checksum mime 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b5c93a4bd787ddc6e7833c519b73a50883deb5863d76d9b71eb8216fb7f94e66"
 "checksum miniz-sys 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = "9d1f4d337a01c32e1f2122510fed46393d53ca35a7f429cb0450abaedfa3ed54"
 "checksum nalgebra 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)" = "8b5e68da68cda7f451505587de1b63cadb09188e53f38d8c2716a4a4a6d43eeb"
-"checksum net2 0.2.26 (registry+https://github.com/rust-lang/crates.io-index)" = "5edf9cb6be97212423aed9413dd4729d62b370b5e1c571750e882cebbbc1e3e2"
 "checksum num 0.1.34 (registry+https://github.com/rust-lang/crates.io-index)" = "d2ee34a0338c16ae67afb55824aaf8852700eb0f77ccd977807ccb7606b295f6"
 "checksum num-bigint 0.1.33 (registry+https://github.com/rust-lang/crates.io-index)" = "fbc450723a2fe91d332a29edd8660e099b937d29e1a3ebe914e0da3f77ac1ad3"
 "checksum num-complex 0.1.33 (registry+https://github.com/rust-lang/crates.io-index)" = "8aabbc079e1855ce8415141fee0ebebf171f56505373b3a966e2716ad7c0e555"
@@ -897,12 +868,12 @@ dependencies = [
 "checksum openssl-sys 0.7.14 (registry+https://github.com/rust-lang/crates.io-index)" = "b8ac5e9d911dd4c3202bbf4139b73bc7a1231f7d0a39432c6f893745f0e04120"
 "checksum openssl-sys-extras 0.7.14 (registry+https://github.com/rust-lang/crates.io-index)" = "11c5e1dba7d3d03d80f045bf0d60111dc69213b67651e7c889527a3badabb9fa"
 "checksum openssl-verify 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3ed86cce894f6b0ed4572e21eb34026f1dc8869cb9ee3869029131bc8c3feb2d"
-"checksum phf 0.7.14 (registry+https://github.com/rust-lang/crates.io-index)" = "447d9d45f2e0b4a9b532e808365abf18fc211be6ca217202fcd45236ef12f026"
-"checksum phf_shared 0.7.14 (registry+https://github.com/rust-lang/crates.io-index)" = "fee4d039930e4f45123c9b15976cf93a499847b6483dc09c42ea0ec4940f2aa6"
+"checksum phf 0.7.15 (registry+https://github.com/rust-lang/crates.io-index)" = "17896951e179a6cbed7d3519b3078ac6c03a347d3e9cf8f303c8a1a73c5a3e44"
+"checksum phf_shared 0.7.15 (registry+https://github.com/rust-lang/crates.io-index)" = "bb6c14aac1140c2b06b41477096f249416b17c893d56386a892ac657edfdffba"
 "checksum pkg-config 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)" = "8cee804ecc7eaf201a4a207241472cc870e825206f6c031e3ee2a72fa425f2fa"
 "checksum pnacl-build-helper 1.4.10 (registry+https://github.com/rust-lang/crates.io-index)" = "61c9231d31aea845007443d62fcbb58bb6949ab9c18081ee1e09920e0cf1118b"
 "checksum png 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)" = "06208e2ee243e3118a55dda9318f821f206d8563fb8d4df258767f8e62bb0997"
-"checksum postgres 0.11.9 (registry+https://github.com/rust-lang/crates.io-index)" = "9f2ad4bf477b9c46cbcb635d1677c0dbd0d931ddde43f3184ab929fafe848b5d"
+"checksum postgres 0.11.10 (registry+https://github.com/rust-lang/crates.io-index)" = "a0f7adafc925794e68788e915d56e3ada13717b70df7b66b44dad4a63b1d5679"
 "checksum postgres_array 0.6.2 (registry+https://github.com/rust-lang/crates.io-index)" = "f0709382d8fc6fd4cd443925d29b68610733a47c6b9a487439e97192d3b2ef33"
 "checksum postgres_macros 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)" = "849632969f8603abe44ee0a091e73d15420ab8206a04f4394c8bc4a29525587a"
 "checksum postgres_range 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b28636477faf39381ce2436165a4d498038c503729a0276a74f749e7657fbab5"
@@ -940,6 +911,5 @@ dependencies = [
 "checksum uuid 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "37b6bcf0ca642aa5eacd180801d6cfd196bf5defadef564e6cf680a9b8235d56"
 "checksum winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)" = "167dc9d6949a9b857f3451275e911c3f44255842c1f7a76f33c55103a909087a"
 "checksum winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "2d315eee3b34aca4797b2da6b13ed88266e6d612562a0c46390af8299fc699bc"
-"checksum ws2_32-sys 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "d59cefebd0c892fa2dd6de581e937301d8552cb44489cdff035c6187cb63fa5e"
 "checksum zmq 0.7.0 (git+https://github.com/erickt/rust-zmq.git)" = "<none>"
 "checksum zmq-sys 0.7.0 (git+https://github.com/erickt/rust-zmq.git)" = "<none>"
