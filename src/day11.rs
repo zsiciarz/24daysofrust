@@ -8,7 +8,7 @@ extern crate postgres;
 extern crate postgres_array;
 extern crate postgres_range;
 
-use postgres::{Connection, SslMode};
+use postgres::{Connection, TlsMode};
 use postgres::types::FromSql;
 use postgres::Result as PgResult;
 use postgres_array::Array;
@@ -31,7 +31,7 @@ fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
 fn main() {
     println!("24 days of Rust - postgres (day 11)");
     let dsn = "postgresql://rust:rust@localhost/rust";
-    let conn = match Connection::connect(dsn, SslMode::None) {
+    let conn = match Connection::connect(dsn, TlsMode::None) {
         Ok(conn) => conn,
         Err(e) => {
             println!("Connection error: {:?}", e);
@@ -79,20 +79,19 @@ fn main() {
     println!("{:?}",
              arr.map(|arr| {
                  arr.iter()
-                    .filter_map(|x| *x)
-                    .collect::<Vec<_>>()
+                     .filter_map(|x| *x)
+                     .collect::<Vec<_>>()
              }));
 
     let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{:?}", json);
 
-    let range = get_single_value::<Range<i32>>(&conn, "select '[10, 20)'::int4range");
-    println!("{:?}", range);
-    let ts_range = get_single_value::<Range<Timespec>>(&conn,
-                                                       "select '[2015-01-01, \
-                                                        2015-12-31]'::tsrange");
-    println!("{:?}", ts_range);
+    // let range = get_single_value::<Range<i32>>(&conn, "select '[10, 20)'::int4range");
+    // println!("{:?}", range);
+    // let ts_range =
+    // get_single_value::<Range<Timespec>>(&conn, "select '[2015-01-01, 2015-12-31]'::tsrange");
+    // println!("{:?}", ts_range);
 
-    //let query = sql!("select '{4, 5, 6}'::int[]");
-    //println!("{:?}", query);
+    // let query = sql!("select '{4, 5, 6}'::int[]");
+    // println!("{:?}", query);
 }
