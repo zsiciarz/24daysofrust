@@ -53,7 +53,7 @@
         data-chapter-title="Day 11 - postgres"
         data-filepath="book/day11.md"
         data-basepath=".."
-        data-revision="Sun Sep 25 2016 09:39:25 GMT+0000 (UTC)"
+        data-revision="Fri Oct 21 2016 04:33:04 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -498,7 +498,7 @@
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;24 days of Rust - postgres (day 11)&quot;</span>);
     <span class="hljs-keyword">let</span> dsn = <span class="hljs-string">&quot;postgresql://rust:rust@localhost/rust&quot;</span>;
-    <span class="hljs-keyword">let</span> conn = <span class="hljs-keyword">match</span> Connection::connect(dsn, SslMode::<span class="hljs-built_in">None</span>) {
+    <span class="hljs-keyword">let</span> conn = <span class="hljs-keyword">match</span> Connection::connect(dsn, TlsMode::<span class="hljs-built_in">None</span>) {
         <span class="hljs-built_in">Ok</span>(conn) =&gt; conn,
         <span class="hljs-built_in">Err</span>(e) =&gt; {
             <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Connection error: {:?}&quot;</span>, e);
@@ -562,7 +562,7 @@
 <blockquote>
 <p><a id="day11.rs" href="../src/day11.rs">day11.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">use</span> postgres::{Connection, SslMode};
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> postgres::{Connection, TlsMode};
 <span class="hljs-keyword">use</span> postgres::types::FromSql;
 </code></pre>
 <blockquote>
@@ -607,18 +607,18 @@
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>,
              arr.map(|arr| {
                  arr.iter()
-                    .filter_map(|x| *x)
-                    .collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;()
+                     .filter_map(|x| *x)
+                     .collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;()
              }));
 
     <span class="hljs-keyword">let</span> json = get_single_value::&lt;Json&gt;(&amp;conn, <span class="hljs-string">&quot;select &apos;{\&quot;foo\&quot;: \&quot;bar\&quot;, \&quot;answer\&quot;: 42}&apos;::json&quot;</span>);
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json);
 
-    <span class="hljs-keyword">let</span> range = get_single_value::&lt;Range&lt;<span class="hljs-keyword">i32</span>&gt;&gt;(&amp;conn, <span class="hljs-string">&quot;select &apos;[10, 20)&apos;::int4range&quot;</span>);
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, range);
-    <span class="hljs-keyword">let</span> ts_range = get_single_value::&lt;Range&lt;Timespec&gt;&gt;(&amp;conn,
-                                                       <span class="hljs-string">&quot;select &apos;[2015-01-01, \
-                                                        2015-12-31]&apos;::tsrange&quot;</span>);
+    <span class="hljs-comment">// let range = get_single_value::&lt;Range&lt;i32&gt;&gt;(&amp;conn, &quot;select &apos;[10, 20)&apos;::int4range&quot;);</span>
+    <span class="hljs-comment">// println!(&quot;{:?}&quot;, range);</span>
+    <span class="hljs-comment">// let ts_range =</span>
+    <span class="hljs-comment">// get_single_value::&lt;Range&lt;Timespec&gt;&gt;(&amp;conn, &quot;select &apos;[2015-01-01, 2015-12-31]&apos;::tsrange&quot;);</span>
+    <span class="hljs-comment">// println!(&quot;{:?}&quot;, ts_range);</span>
 </code></pre>
 <pre><code class="lang-sh">$ cargo run
 Executing query: select <span class="hljs-number">1</span>=<span class="hljs-number">1</span>
