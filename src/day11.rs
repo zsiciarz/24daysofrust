@@ -1,6 +1,6 @@
 #![feature(plugin)]
 
-#![cfg_attr(target_family="unix", plugin(postgres_macros))]
+// #![cfg_attr(target_family="unix", plugin(postgres_macros))]
 
 extern crate rustc_serialize;
 extern crate time;

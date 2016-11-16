@@ -16,7 +16,6 @@ dependencies = [
  "num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres_array 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "postgres_macros 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres_range 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "primal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.14 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -574,11 +573,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "postgres_macros"
-version = "0.1.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
 name = "postgres_range"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -931,7 +925,6 @@ dependencies = [
 "checksum postgres 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)" = "a7ef92468927003a037e175b54320319e358886865899b37f7318837a646a9fd"
 "checksum postgres-protocol 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7e2fc3d800dacc2dd749b690ad15b9b78bc04c26c3f0525cbe163436559bc3fc"
 "checksum postgres_array 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)" = "c83fae36b634521ae6f623aba60780d33e959249fd0a85806338952ae699149b"
-"checksum postgres_macros 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)" = "849632969f8603abe44ee0a091e73d15420ab8206a04f4394c8bc4a29525587a"
 "checksum postgres_range 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b28636477faf39381ce2436165a4d498038c503729a0276a74f749e7657fbab5"
 "checksum primal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "0e31b86efadeaeb1235452171a66689682783149a6249ff334a2c5d8218d00a4"
 "checksum primal-bit 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "464a91febc06166783d4f5ba3577b5ed8dda8e421012df80bfe48a971ed7be8f"
