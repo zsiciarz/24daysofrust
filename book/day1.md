@@ -1,7 +1,5 @@
 # Day 1 - Cargo and crates.io
 
-> Relevancy: 1.0 stable
-
 Inspired by Ollie Charles and his excellent [24 days of Hackage](https://ocharles.org.uk/blog/pages/2013-12-01-24-days-of-hackage.html) series, I'm going to try and introduce you to a number of Rust language features, useful libraries and cool projects built with Rust. In fact this is a learning opportunity for me too - as much as I love Rust, I'm just diving in. If you think I'm wrong or know an interesting library you want me to write about, feel free to comment!
 
 So let's start! As in the Haskell series by Ollie, where he [introduced Cabal](https://ocharles.org.uk/blog/posts/2012-12-01-24-days-of-hackage.html), the first post will briefly cover package management. For those of you coming from Python, Ruby or Node this may be a bit familiar. C++ does not have a dedicated package manager, so hopefully this is one of the selling points of Rust for people with such background.
@@ -15,21 +13,20 @@ Cargo
 $ cargo new myproject --bin # or --lib, if you're creating a library
 ```
 
-Cargo will then generate some initial sources and a `Cargo.toml` file (sometimes called a *manifest*). This is where you describe your project's metadata, such as name, version, etc. It's also the right place to declare any possible dependencies your project might have. See for example [Cargo.toml](https://github.com/zsiciarz/euler.rs/blob/efb135ef9774f2c9cc64b68c881b882c983889c5/Cargo.toml) from one of my toy projects:
+Cargo will then generate some initial sources and a `Cargo.toml` file (sometimes called a *manifest*). This is where you describe your project's metadata, such as name, version, etc. It's also the right place to declare any possible dependencies your project might have. See for example [Cargo.toml](https://github.com/zsiciarz/euler.rs/blob/7e7f93c395a8eb010221015fa3585d8c70663cd7/Cargo.toml) from one of my toy projects:
 
 ```ini
 [package]
+
 name = "euler"
 version = "0.0.1"
 authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 
-[[bin]]
-name = "euler"
-path = "src/main.rs"
-
 [dependencies]
-num = "~0.0.4"
-primal = "~0.1.4"
+getopts = "~0.2.14"
+num = "~0.1.36"
+permutohedron = "~0.2.2"
+primal = "~0.2.3"
 ```
 
 Cargo can also run a test suite, generate documentation or upload your crate to the repository, but that's the topic for later.
