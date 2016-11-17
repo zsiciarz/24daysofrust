@@ -16,6 +16,7 @@ before_script:
   - psql -c "create user rust with password 'rust';" -U postgres
   - psql -c "create database rust owner rust;" -U postgres
 script:
+  - cd vol1
   - cargo build
   - cargo run --bin=day2
   - cargo run --bin=day3
@@ -34,6 +35,7 @@ script:
   - cargo run --bin=day20
   - cargo run --bin=day21
 after_success:
+  - cd ..
   - npm install gitbook-cli
   - gitbook install
   - gitbook build -v 2.6.7
