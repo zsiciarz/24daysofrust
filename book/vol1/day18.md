@@ -9,9 +9,9 @@ Connecting
 
 The `redis` crate provides a `Client` type that is used to connect to the Redis server. The `get_connection()` method returns a `Connection` object which execute Redis commands.
 
-[include:2-2](../../src/day18.rs)
-[include:4-4](../../src/day18.rs)
-[include:44-48](../../src/day18.rs)
+[include:2-2](../../vol1/src/day18.rs)
+[include:4-4](../../vol1/src/day18.rs)
+[include:44-48](../../vol1/src/day18.rs)
 
 Most of the [Redis commands](http://redis.io/commands) translate directly to `Connection` methods. But if you encounter an error similar to `Type ``redis::connection::Connection`` does not implement any method in scope named ``set`` `, you probably forgot to import the `Commands` trait.
 
@@ -24,16 +24,16 @@ When viewing someone's profile page on most of the social networking sites, you 
 
 In case someone accepts your friendship request, a function similar to the one below will be called.
 
-[include:5-5](../../src/day18.rs)
-[include:7-15](../../src/day18.rs)
+[include:5-5](../../vol1/src/day18.rs)
+[include:7-15](../../vol1/src/day18.rs)
 
 I'm assuming here that the friendship relation is mutual. That's why there are two `sadd` calls - one to add yourself to their set of friends and the other one is symmetrical. Now checking friends in common is just a matter of set intersection - expressed in Redis as the `SINTER` command.
 
-[include:17-21](../../src/day18.rs)
+[include:17-21](../../vol1/src/day18.rs)
 
 We can now simulate adding a few friends:
 
-[include:50-54](../../src/day18.rs)
+[include:50-54](../../vol1/src/day18.rs)
 
 Here's the output:
 
@@ -47,17 +47,17 @@ Leaderboards
 
 [Sorted sets](http://redis.io/commands#sorted_set) are possibly my favorite Redis data structure. They're a perfect fit to create leaderboards for example in online games. Add scores with `ZADD`, fetch the leaderboard with `ZREVRANGE` - that's the gist of it.
 
-[include:23-25](../../src/day18.rs)
+[include:23-25](../../vol1/src/day18.rs)
 
 The `add_score` function is just a wrapper to provide a more high-level API. It will be called every time player's score changes.
 
-[include:27-40](../../src/day18.rs)
+[include:27-40](../../vol1/src/day18.rs)
 
 The `Leaderboard` alias is there just to simplify the result type. We use `zrevrange_withscores` to get the leaderboard data (sorted by score descending) and display it using Rust's [string formatting](http://doc.rust-lang.org/std/fmt/) syntax.
 
 Putting all this together:
 
-[include:56-61](../../src/day18.rs)
+[include:56-61](../../vol1/src/day18.rs)
 
 And if we run this, we'll get something similar to the output below:
 

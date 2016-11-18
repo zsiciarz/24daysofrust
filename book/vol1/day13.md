@@ -20,8 +20,8 @@ features = ["v4"]
 
 Let's generate a few UUIDs and display them in the most familar form:
 
-[include:1-3](../../src/day13.rs)
-[include:7-9](../../src/day13.rs)
+[include:1-3](../../vol1/src/day13.rs)
+[include:7-9](../../vol1/src/day13.rs)
 
 The example output would look like:
 
@@ -41,7 +41,7 @@ $ cargo run
 
 We can use the `parse_str()` method to check if a string represents a valid UUID and convert it to an `Uuid` value.
 
-[include:10-13](../../src/day13.rs)
+[include:10-13](../../vol1/src/day13.rs)
 
 (Web developers might recognize that specific value.) Here's the output:
 

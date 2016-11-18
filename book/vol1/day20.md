@@ -11,14 +11,14 @@ The [ZeroMQ guide](http://zguide.zeromq.org/page:all#Messaging-Patterns) lists s
 
 Before we start implementing the client and server, let's prepare some boilerplate code. We will decide whether to run our demo program as client or server based on the commandline argument.
 
-[include:2-2](../../src/day20.rs)
-[include:5-5](../../src/day20.rs)
-[include:44-58](../../src/day20.rs)
+[include:2-2](../../vol1/src/day20.rs)
+[include:5-5](../../vol1/src/day20.rs)
+[include:44-58](../../vol1/src/day20.rs)
 
 Client
 ------
 
-[include:9-20](../../src/day20.rs)
+[include:9-20](../../vol1/src/day20.rs)
 
 A ZeroMQ request starts with opening a `REQ` socket. The sockets send and receive `Message` objects. You can use any encoding you like, ZeroMQ doesn't enforce anything. It can be JSON, [msgpack](https://github.com/mneumann/rust-msgpack), [protobuf](https://github.com/stepancheg/rust-protobuf), whatever - as long as you push some bytes over the wire, ZeroMQ is happy.
 
@@ -29,7 +29,7 @@ Server
 
 We're going to build a simple echo server that repeats the incoming message in the response.
 
-[include:23-33](../../src/day20.rs)
+[include:23-33](../../vol1/src/day20.rs)
 
 The server opens a `REP` socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...
 

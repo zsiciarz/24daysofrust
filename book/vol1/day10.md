@@ -6,8 +6,8 @@
 
 Let's see this amazing number in full glory:
 
-[include:2-2](../../src/day10.rs)
-[include:8-8](../../src/day10.rs)
+[include:2-2](../../vol1/src/day10.rs)
+[include:8-8](../../vol1/src/day10.rs)
 
 ```sh
 $ cargo run
@@ -16,11 +16,11 @@ $ cargo run
 
 We can do all sorts of important calculations with τ, just look:
 
-[include:9-13](../../src/day10.rs)
+[include:9-13](../../vol1/src/day10.rs)
 
 And if someone really, I mean *really* needs to refer to that other mathematical constant, it is (regrettably) possible as well.
 
-[include:14-14](../../src/day10.rs)
+[include:14-14](../../vol1/src/day10.rs)
 
 Here's the output:
 
