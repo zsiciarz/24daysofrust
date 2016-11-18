@@ -1,0 +1,668 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Day 6 - working with JSON | 24 days of Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../book/vol1/day7.html" />
+    
+    
+    <link rel="prev" href="../../book/vol1/day5.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="1.6"
+        data-chapter-title="Day 6 - working with JSON"
+        data-filepath="book/vol1/day6.md"
+        data-basepath="../.."
+        data-revision="Fri Nov 18 2016 16:33:32 GMT+0000 (UTC)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/vol1/index.html">
+            
+                
+                    <a href="../../book/vol1/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Volume 1
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
+            
+                
+                    <a href="../../book/vol1/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
+            
+                
+                    <a href="../../book/vol1/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        Day 2 - primal
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
+            
+                
+                    <a href="../../book/vol1/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
+            
+                
+                    <a href="../../book/vol1/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
+            
+                
+                    <a href="../../book/vol1/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6" data-path="book/vol1/day6.html">
+            
+                
+                    <a href="../../book/vol1/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
+            
+                
+                    <a href="../../book/vol1/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
+            
+                
+                    <a href="../../book/vol1/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
+            
+                
+                    <a href="../../book/vol1/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
+            
+                
+                    <a href="../../book/vol1/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
+            
+                
+                    <a href="../../book/vol1/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
+            
+                
+                    <a href="../../book/vol1/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.12.</b>
+                        
+                        Day 12 - image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
+            
+                
+                    <a href="../../book/vol1/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
+            
+                
+                    <a href="../../book/vol1/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
+            
+                
+                    <a href="../../book/vol1/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
+            
+                
+                    <a href="../../book/vol1/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
+            
+                
+                    <a href="../../book/vol1/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
+            
+                
+                    <a href="../../book/vol1/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
+            
+                
+                    <a href="../../book/vol1/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
+            
+                
+                    <a href="../../book/vol1/day20.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
+            
+                
+                    <a href="../../book/vol1/day21.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
+            
+                
+                    <a href="../../book/vol1/day22.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
+            
+                
+                    <a href="../../book/vol1/day23.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
+            
+                
+                    <a href="../../book/vol1/day24.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/vol2/index.html">
+            
+                
+                    <a href="../../book/vol2/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Volume 2
+                    </a>
+            
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >24 days of Rust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-6--working-with-json">Day 6 - working with JSON</h1>
+<blockquote>
+<p>Relevancy: 1.9 stable (macros only on nightly)</p>
+</blockquote>
+<p><a href="http://en.wikipedia.org/wiki/JSON" target="_blank">JSON</a> is a workhorse data format of the modern Web. Originating from the JavaScript world, it gained a lot of traction and at the moment it&apos;s usually the first choice of a Web developer for a data interchange format. Not only Web - once JavaScript-only, JSON support is now ubiquitous. A lot of languages ship with JSON parsers in the standard libraries, and when it&apos;s not the case, surely someone has already built a third party library. In case of Rust, JSON support comes out in the <a href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/index.html" target="_blank">rustc_serialize::json</a> module.</p>
+<p><strong>Note</strong>: in this article I deliberately do not focus on the Web, APIs, requests and so on. I mentioned JSON in a <a href="http://siciarz.net/24-days-of-rust-hyper/" target="_blank">previous post about hyper</a> but now I don&apos;t care where the JSON-encoded data comes from or what to do with it later. Here I&apos;m just going to show you a few practical tips.</p>
+<p>Slightly offtopic: I&apos;m writing this blogpost while getting ready to coach a group of fantastic women at <a href="http://djangogirls.org/" target="_blank">Django Girls</a> in &#x141;&#xF3;d&#x17A;, Poland. If you&apos;re a woman interested in learning programming (or know such girls) check out if there&apos;s a Django Girls workshop near you! The workshops focus on basic Python, Django and web technologies, but the general idea is to get the attendees genuinely interested in programming and empowered to create.</p>
+<p>That said, now back to JSON and Rust.</p>
+<h2 id="primitives">Primitives</h2>
+<p>A lot of Rust types serialize to JSON just as you would expect. Note that <code>encode()</code> immutably borrows its argument:</p>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
+
+<span class="hljs-keyword">use</span> rustc_serialize::Encodable;
+<span class="hljs-keyword">use</span> rustc_serialize::json::{<span class="hljs-keyword">self</span>, Encoder};
+</code></pre>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-number">42</span>));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>, <span class="hljs-string">&quot;or&quot;</span>, <span class="hljs-string">&quot;not&quot;</span>, <span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>]));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-built_in">Some</span>(<span class="hljs-keyword">true</span>)));
+</code></pre>
+<p><code>Option&lt;T&gt;</code> maps to the encoding of <code>value</code> itself if it is a <code>Some(value)</code> while <code>None</code> maps to <code>null</code>.</p>
+<h2 id="automatic-deserialization">Automatic (de)serialization</h2>
+<p>In the <a href="day3.html">chapter on CSV</a> I mentioned the <code>RustcEncodable</code> and <code>RustcDecodable</code> traits. Here&apos;s an example with a nested struct:</p>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> user = User {
+        name: <span class="hljs-string">&quot;Zbyszek&quot;</span>.to_owned(),
+        post_count: <span class="hljs-number">100u32</span>,
+        likes_burgers: <span class="hljs-keyword">true</span>,
+        avatar: <span class="hljs-built_in">Some</span>(Photo {
+            url: <span class="hljs-string">&quot;http://lorempixel.com/160/160/&quot;</span>.to_owned(),
+            dimensions: (<span class="hljs-number">160u32</span>, <span class="hljs-number">160u32</span>),
+        }),
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;user));
+</code></pre>
+<pre><code class="lang-sh">$ cargo run
+Ok(<span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;Zbyszek\&quot;,\&quot;post_count\&quot;:100,\&quot;likes_burgers\&quot;:true,\&quot;avatar\&quot;:{\&quot;url\&quot;:\&quot;http://lorempixel.com/160/160/\&quot;,\&quot;dimensions\&quot;:[160,160]}}&quot;</span>)
+</code></pre>
+<h2 id="pretty-printing">Pretty printing</h2>
+<p>The <code>json::encode()</code> doesn&apos;t care for readability of it&apos;s output. Although the JSON it emits is correct and machine-readable, there are no newlines or indents making it hard for a human to debug. Pretty-printing is a little bit more complex than just one function call, but not too complicated:</p>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> encoded = String::new();
+    {
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> encoder = Encoder::new_pretty(&amp;<span class="hljs-keyword">mut</span> encoded);
+        user.encode(&amp;<span class="hljs-keyword">mut</span> encoder).expect(<span class="hljs-string">&quot;JSON encode error&quot;</span>);
+    }
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, encoded);
+</code></pre>
+<h2 id="decoding">Decoding</h2>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> incoming_request = <span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;John\&quot;,\&quot;post_count\&quot;:2,\&quot;likes_burgers\&quot;:false,\&quot;avatar\&quot;:null}&quot;</span>;
+    <span class="hljs-keyword">let</span> decoded: User = json::decode(incoming_request).unwrap();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;My name is {} and I {} burgers&quot;</span>,
+        decoded.name, <span class="hljs-keyword">if</span> decoded.likes_burgers { <span class="hljs-string">&quot;love&quot;</span> } <span class="hljs-keyword">else</span> { <span class="hljs-string">&quot;don&apos;t like&quot;</span> });
+    <span class="hljs-built_in">assert!</span>(decoded.avatar.is_none());
+</code></pre>
+<p>As you cen see, decoding is also pretty easy. But what happens if we don&apos;t know all of the fields in advance? We can use another function in the <code>json</code> module - <code>from_str()</code>. The difference between <code>from_str()</code> and <code>decode()</code> is that the latter may return some struct implementing <code>RustcDecodable</code> while the former returns a <a href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/enum.Json.html" target="_blank">Json</a> value. This type has a few methods of its own, including <code>find()</code>. See the example below:</p>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> new_request = <span class="hljs-string">&quot;{\&quot;id\&quot;:64,\&quot;title\&quot;:\&quot;24days\&quot;,\&quot;stats\&quot;:{\&quot;pageviews\&quot;:1500}}&quot;</span>;
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(request_json) = json::Json::from_str(new_request) {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Some</span>(<span class="hljs-keyword">ref</span> stats) = request_json.find(<span class="hljs-string">&quot;stats&quot;</span>) {
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Some</span>(<span class="hljs-keyword">ref</span> pageviews) = stats.find(<span class="hljs-string">&quot;pageviews&quot;</span>) {
+                <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Pageviews: {}&quot;</span>, pageviews);
+            }
+        }
+    }
+</code></pre>
+<p>We&apos;re using the <a href="http://doc.rust-lang.org/book/if-let.html" target="_blank">if let</a> language construct which often simplifies pattern matches where we care for only one branch and do nothing if the expression doesn&apos;t match.</p>
+<h2 id="the-json-macro">The json! macro</h2>
+<blockquote>
+<p><strong>Note:</strong> syntax extensions work only on nightly</p>
+</blockquote>
+<p>There&apos;s one more thing I wanted to show you today. You can embed JSON-like literals directly in your Rust code with the help of the <a href="https://crates.io/crates/json_macros" target="_blank">json_macros</a> crate. This is a compiler extension that allows for some nice syntactic sugar like below:</p>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#![feature(plugin)]</span>
+<span class="hljs-preprocessor">#![plugin(json_macros)]</span>
+</code></pre>
+<blockquote>
+<p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
+</blockquote>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> config = json!({
+        <span class="hljs-string">&quot;hostname&quot;</span>: <span class="hljs-string">&quot;localhost&quot;</span>,
+        <span class="hljs-string">&quot;port&quot;</span>: <span class="hljs-number">6543</span>,
+        <span class="hljs-string">&quot;allowed_methods&quot;</span>: [<span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;post&quot;</span>],
+        <span class="hljs-string">&quot;limits&quot;</span>: {
+            <span class="hljs-string">&quot;bandwidth&quot;</span>: (<span class="hljs-number">500</span> * <span class="hljs-number">16</span>),
+            <span class="hljs-string">&quot;rate&quot;</span>: null
+        }
+    });
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Configuration: {}&quot;</span>, config);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Bandwidth: {}&quot;</span>, config.search(<span class="hljs-string">&quot;bandwidth&quot;</span>).unwrap());
+</code></pre>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../book/vol1/day5.html" class="navigation navigation-prev " aria-label="Previous page: Day 5 - hyper"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../book/vol1/day7.html" class="navigation navigation-next " aria-label="Next page: Day 7 - itertools"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"include-codeblock":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>
