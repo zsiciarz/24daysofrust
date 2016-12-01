@@ -1,4 +1,4 @@
 Volume 2
 ========
 
-Coming in December 2016.
+Welcome to the second edition of 24 Days of Rust!

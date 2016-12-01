@@ -27,3 +27,4 @@ Summary
     * [Day 23 - calling Rust from other languages](book/vol1/day23.md)
     * [Day 24 - conclusion](book/vol1/day24.md)
 * [Volume 2](book/vol2/README.md)
+    * [Day 1 - cargo subcommands](book/vol2/day1.md)
