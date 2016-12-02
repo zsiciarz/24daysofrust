@@ -1,0 +1,12 @@
+[package]
+name = "24daysofrust_vol2"
+version = "0.0.1"
+authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
+
+[[bin]]
+name = "day2"
+
+[dependencies]
+hound = "2.0.0"
+num = "0.1.36"
+rustfft = "1.0.1"
