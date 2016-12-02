@@ -28,3 +28,4 @@ Summary
     * [Day 24 - conclusion](book/vol1/day24.md)
 * [Volume 2](book/vol2/README.md)
     * [Day 1 - cargo subcommands](book/vol2/day1.md)
+    * [Day 2 - hound](book/vol2/day2.md)
