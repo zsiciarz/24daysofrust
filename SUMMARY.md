@@ -29,3 +29,4 @@ Summary
 * [Volume 2](book/vol2/README.md)
     * [Day 1 - cargo subcommands](book/vol2/day1.md)
     * [Day 2 - hound](book/vol2/day2.md)
+    * [Day 3 - rayon](book/vol2/day3.md)
