@@ -6,7 +6,13 @@ authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
 [[bin]]
 name = "day2"
 
+[[bin]]
+name = "day3"
+
 [dependencies]
 hound = "2.0.0"
 num = "0.1.36"
+num_cpus = "1.1.0"
+rand = "0.3.14"
+rayon = "0.5.0"
 rustfft = "1.0.1"

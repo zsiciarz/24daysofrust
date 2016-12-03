@@ -37,6 +37,7 @@ script:
   - cd ../vol2
   - cargo build
   - cargo run --bin=day2
+  - cargo run --bin=day3
 after_success:
   - cd ..
   - npm install gitbook-cli
