@@ -30,3 +30,4 @@ Summary
     * [Day 1 - cargo subcommands](book/vol2/day1.md)
     * [Day 2 - hound](book/vol2/day2.md)
     * [Day 3 - rayon](book/vol2/day3.md)
+    * [Day 4 - structured logging](book/vol2/day4.md)
