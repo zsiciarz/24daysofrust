@@ -32,3 +32,4 @@ Summary
     * [Day 3 - rayon](book/vol2/day3.md)
     * [Day 4 - structured logging](book/vol2/day4.md)
     * [Day 5 - environment variables](book/vol2/day5.md)
+    * [Day 6 - derive_builder](book/vol2/day6.md)
