@@ -15,7 +15,12 @@ name = "day4"
 [[bin]]
 name = "day5"
 
+[[bin]]
+name = "day6"
+
 [dependencies]
+custom_derive = "0.1.7"
+derive_builder = "0.2.1"
 dotenv = "0.8.0"
 envy = "0.1.2"
 hound = "2.0.0"
