@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: tell the time
+      command: date
