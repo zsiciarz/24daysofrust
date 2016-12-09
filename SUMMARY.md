@@ -35,3 +35,4 @@ Summary
     * [Day 6 - derive_builder](book/vol2/day6.md)
     * [Day 7 - static initialization](book/vol2/day7.md)
     * [Day 8 - serde](book/vol2/day8.md)
+    * [Day 9 - winreg](book/vol2/day9.md)
