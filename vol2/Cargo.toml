@@ -24,6 +24,9 @@ name = "day7"
 [[bin]]
 name = "day8"
 
+[[bin]]
+name = "day9"
+
 [dependencies]
 custom_derive = "0.1.7"
 derive_builder = "0.2.1"
@@ -47,3 +50,15 @@ slog-json = "1.2.1"
 slog-stream = "1.2.0"
 slog-term = "1.3.3"
 time = "0.1.35"
+
+[target.i686-pc-windows-gnu.dependencies]
+winreg = "0.4"
+
+[target.i686-pc-windows-msvc.dependencies]
+winreg = "0.4"
+
+[target.x86_64-pc-windows-gnu.dependencies]
+winreg = "0.4"
+
+[target.x86_64-pc-windows-msvc.dependencies]
+winreg = "0.4"
