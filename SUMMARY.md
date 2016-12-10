@@ -36,3 +36,4 @@ Summary
     * [Day 7 - static initialization](book/vol2/day7.md)
     * [Day 8 - serde](book/vol2/day8.md)
     * [Day 9 - winreg](book/vol2/day9.md)
+    * [Day 10 - nom, part 1](book/vol2/day10.md)
