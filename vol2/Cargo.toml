@@ -30,6 +30,9 @@ name = "day9"
 [[bin]]
 name = "day10"
 
+[[bin]]
+name = "day11"
+
 [dependencies]
 custom_derive = "0.1.7"
 derive_builder = "0.2.1"
