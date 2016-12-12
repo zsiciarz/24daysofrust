@@ -33,7 +33,11 @@ name = "day10"
 [[bin]]
 name = "day11"
 
+[[bin]]
+name = "day12"
+
 [dependencies]
+clap = "2.19.1"
 custom_derive = "0.1.7"
 derive_builder = "0.2.1"
 dotenv = "0.8.0"
