@@ -38,3 +38,4 @@ Summary
     * [Day 9 - winreg](book/vol2/day9.md)
     * [Day 10 - nom, part 1](book/vol2/day10.md)
     * [Day 11 - nom, part 2](book/vol2/day11.md)
+    * [Day 12 - clap](book/vol2/day12.md)
