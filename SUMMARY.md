@@ -39,3 +39,4 @@ Summary
     * [Day 10 - nom, part 1](book/vol2/day10.md)
     * [Day 11 - nom, part 2](book/vol2/day11.md)
     * [Day 12 - clap](book/vol2/day12.md)
+    * [Day 13 - zip and lzma compression](book/vol2/day13.md)
