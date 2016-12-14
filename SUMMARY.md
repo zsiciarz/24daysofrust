@@ -40,3 +40,4 @@ Summary
     * [Day 11 - nom, part 2](book/vol2/day11.md)
     * [Day 12 - clap](book/vol2/day12.md)
     * [Day 13 - zip and lzma compression](book/vol2/day13.md)
+    * [Day 14 - Cursive](book/vol2/day14.md)
