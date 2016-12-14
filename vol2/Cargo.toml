@@ -39,8 +39,12 @@ name = "day12"
 [[bin]]
 name = "day13"
 
+[[bin]]
+name = "day14"
+
 [dependencies]
 clap = "2.19.1"
+cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
 custom_derive = "0.1.7"
 derive_builder = "0.2.1"
 dotenv = "0.8.0"
