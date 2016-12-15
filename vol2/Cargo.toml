@@ -42,6 +42,9 @@ name = "day13"
 [[bin]]
 name = "day14"
 
+[[bin]]
+name = "day15"
+
 [dependencies]
 clap = "2.19.1"
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
@@ -51,6 +54,7 @@ dotenv = "0.8.0"
 envy = "0.1.2"
 hound = "2.0.0"
 lazy_static = "0.2.2"
+markdown = "0.1.1"
 nom = "2.0.1"
 num = "0.1.36"
 num_cpus = "1.1.0"
@@ -68,6 +72,7 @@ slog = "1.3.2"
 slog-json = "1.2.1"
 slog-stream = "1.2.0"
 slog-term = "1.3.3"
+tera = "0.4.1"
 time = "0.1.35"
 zip = "0.2.0"
 
