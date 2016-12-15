@@ -41,3 +41,4 @@ Summary
     * [Day 12 - clap](book/vol2/day12.md)
     * [Day 13 - zip and lzma compression](book/vol2/day13.md)
     * [Day 14 - Cursive](book/vol2/day14.md)
+    * [Day 15 - tera](book/vol2/day15.md)
