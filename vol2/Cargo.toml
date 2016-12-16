@@ -45,6 +45,9 @@ name = "day14"
 [[bin]]
 name = "day15"
 
+[[bin]]
+name = "day16"
+
 [dependencies]
 clap = "2.19.1"
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
@@ -52,6 +55,7 @@ custom_derive = "0.1.7"
 derive_builder = "0.2.1"
 dotenv = "0.8.0"
 envy = "0.1.2"
+git2 = "0.6.3"
 hound = "2.0.0"
 lazy_static = "0.2.2"
 markdown = "0.1.1"

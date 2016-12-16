@@ -49,6 +49,7 @@ script:
   - cargo run --bin=day13
   - cargo run --bin=day14
   - cargo run --bin=day15
+  - cargo run --bin=day16
 after_success:
   - cd ..
   - npm install gitbook-cli
