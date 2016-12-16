@@ -42,3 +42,4 @@ Summary
     * [Day 13 - zip and lzma compression](book/vol2/day13.md)
     * [Day 14 - Cursive](book/vol2/day14.md)
     * [Day 15 - tera](book/vol2/day15.md)
+    * [Day 16 - git2](book/vol2/day16.md)
