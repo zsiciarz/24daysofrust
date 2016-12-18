@@ -120,6 +120,12 @@ fn main() {
     let updated_photo: Photo = inserted_photo.save_changes(&conn).expect("Error updating photo");
     println!("{:?}", updated_photo);
 
+    let cute_cat_count: i64 = photos::table.filter(photos::tags.contains(vec!["cute", "kitten"]))
+        .count()
+        .get_result(&conn)
+        .expect("Error counting cute kittens");
+    println!("There's {} photos of cute cats", cute_cat_count);
+
     let cute_cat_count: i64 = sql("select count(*) from photos \
                                    where tags @> array['cute', 'kitten']")
         .get_result(&conn)

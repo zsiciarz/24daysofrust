@@ -271,17 +271,37 @@ $ cargo run
 Photo { id: 27, user_id: 1, url: "http://lorempixel.com/output/cats-q-c-640-480-8.jpg", tags: ["cute", "kitten"] }
 ```
 
-Unfortunately at the moment `diesel` doesn't support complex
+`diesel` even supports
 [array lookups](https://www.postgresql.org/docs/9.1/static/functions-array.html)
-such as `@>` to filter photos by tags. I would love to see that implemented in
-`diesel`. There's also an
+such as `@>` to filter photos by tags. See the example below:
+
+```rust
+let cute_cat_count: i64 = photos::table.filter(photos::tags.contains(vec!["cute", "kitten"]))
+    .count()
+    .get_result(&conn)
+    .expect("Error counting cute kittens");
+println!("There's {} photos of cute cats", cute_cat_count);
+```
+
+```text
+$ cargo run
+There's 2 photos of cute cats
+```
+
+There's also an
 [open issue](https://github.com/diesel-rs/diesel/issues/44) for JSON support
 ([this comment](https://github.com/diesel-rs/diesel/issues/44#issuecomment-218325285)
 from Sean gives the basic idea how it could be done).
 
-But there's a last resort solution. The `sql()` function can execute raw SQL
-queries. However it should be used only when absolutely necessary as it
-provides no guarantees about safety and correctness of the query.
+If you need to execute some custom SQL query that you  *really* couldn't
+express with `diesel`, there's a last resort solution. The `sql()` function
+can execute raw SQL queries. However it should be used only when absolutely
+necessary as it provides no guarantees about safety and correctness of the
+query.
+
+For the record, here's the above cute cat counter implemented with `sql()`
+before [Sean pointed out](https://twitter.com/sgrif/status/810365851903885312)
+that `diesel` in fact supports Postgres array lookups.
 
 ```rust
 use diesel::expression::sql_literal::sql;
@@ -290,7 +310,6 @@ let cute_cat_count: i64 = sql("select count(*) from photos \
                                where tags @> array['cute', 'kitten']")
     .get_result(&conn)
     .expect("Error executing raw SQL");
-println!("There's {} photos of cute cats", cute_cat_count);
 ```
 
 ```text
