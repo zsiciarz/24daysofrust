@@ -51,6 +51,9 @@ name = "day16"
 [[bin]]
 name = "day17"
 
+[[bin]]
+name = "day18"
+
 [dependencies]
 clap = "2.19.1"
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
@@ -60,6 +63,7 @@ diesel = "0.9.1"
 diesel_codegen = { version = "0.9.0", features=["postgres"]}
 dotenv = "0.8.0"
 envy = "0.1.2"
+error-chain = "0.7.1"
 git2 = "0.6.3"
 hound = "2.0.0"
 lazy_static = "0.2.2"
@@ -81,6 +85,7 @@ slog = "1.3.2"
 slog-json = "1.2.1"
 slog-stream = "1.2.0"
 slog-term = "1.3.3"
+tempfile = "2.1.4"
 tera = "0.4.1"
 time = "0.1.35"
 zip = "0.2.0"
