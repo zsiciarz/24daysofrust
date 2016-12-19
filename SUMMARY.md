@@ -45,3 +45,4 @@ Summary
     * [Day 16 - git2](book/vol2/day16.md)
     * [Day 17 - diesel](book/vol2/day17.md)
     * [Day 18 - error_chain](book/vol2/day18.md)
+    * [Day 19 - leftpad](book/vol2/day19.md)
