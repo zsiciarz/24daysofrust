@@ -11,7 +11,7 @@ fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     try!(sock.connect(addr));
     let payload = "Hello world!";
     println!("-> {:?}", payload);
-    let mut msg = try!(Message::new());
+    let mut msg = Message::new();
     try!(sock.send(payload.as_bytes(), 0));
     try!(sock.recv(&mut msg, 0));
     let contents = msg.as_str().unwrap();
@@ -23,7 +23,7 @@ fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
 fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     let mut sock = try!(ctx.socket(zmq::REP));
     try!(sock.bind(addr));
-    let mut msg = try!(Message::new());
+    let mut msg = Message::new();
     loop {
         if let Ok(_) = sock.recv(&mut msg, 0) {
             try!(sock.send_str(msg.as_str().unwrap(), 0));
@@ -51,8 +51,7 @@ fn main() {
     if args[1] == "client" {
         println!("ZeroMQ client connecting to {}", addr);
         run_client(&mut ctx, addr).unwrap_or_else(|err| println!("{:?}", err));
-    }
-    else {
+    } else {
         println!("ZeroMQ server listening on {}", addr);
         run_server(&mut ctx, addr).unwrap_or_else(|err| println!("{:?}", err));
     }

@@ -1,0 +1,22 @@
+{
+  "rules": [
+    {
+      "frequency": {
+        "Hourly": 0
+      },
+      "command": "mark_emails_as_read --all"
+    },
+    {
+      "frequency": {
+        "Daily": 17
+      },
+      "command": "./finish_work.sh"
+    },
+    {
+      "frequency": {
+        "Monthly": 28
+      },
+      "command": "python send_monthly_report.py > /dev/null"
+    }
+  ]
+}

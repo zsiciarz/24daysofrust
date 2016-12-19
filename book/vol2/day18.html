@@ -1,0 +1,1019 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Day 18 - error_chain | 24 days of Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../book/vol2/day19.html" />
+    
+    
+    <link rel="prev" href="../../book/vol2/day17.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="2.18"
+        data-chapter-title="Day 18 - error_chain"
+        data-filepath="book/vol2/day18.md"
+        data-basepath="../.."
+        data-revision="Mon Dec 19 2016 18:25:03 GMT+0000 (UTC)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/vol1/index.html">
+            
+                
+                    <a href="../../book/vol1/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Volume 1
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
+            
+                
+                    <a href="../../book/vol1/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
+            
+                
+                    <a href="../../book/vol1/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        Day 2 - primal
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
+            
+                
+                    <a href="../../book/vol1/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
+            
+                
+                    <a href="../../book/vol1/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
+            
+                
+                    <a href="../../book/vol1/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="book/vol1/day6.html">
+            
+                
+                    <a href="../../book/vol1/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
+            
+                
+                    <a href="../../book/vol1/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
+            
+                
+                    <a href="../../book/vol1/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
+            
+                
+                    <a href="../../book/vol1/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
+            
+                
+                    <a href="../../book/vol1/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
+            
+                
+                    <a href="../../book/vol1/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
+            
+                
+                    <a href="../../book/vol1/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.12.</b>
+                        
+                        Day 12 - image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
+            
+                
+                    <a href="../../book/vol1/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
+            
+                
+                    <a href="../../book/vol1/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
+            
+                
+                    <a href="../../book/vol1/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
+            
+                
+                    <a href="../../book/vol1/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
+            
+                
+                    <a href="../../book/vol1/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
+            
+                
+                    <a href="../../book/vol1/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
+            
+                
+                    <a href="../../book/vol1/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
+            
+                
+                    <a href="../../book/vol1/day20.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
+            
+                
+                    <a href="../../book/vol1/day21.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
+            
+                
+                    <a href="../../book/vol1/day22.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
+            
+                
+                    <a href="../../book/vol1/day23.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
+            
+                
+                    <a href="../../book/vol1/day24.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/vol2/index.html">
+            
+                
+                    <a href="../../book/vol2/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Volume 2
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1" data-path="book/vol2/day1.html">
+            
+                
+                    <a href="../../book/vol2/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                        Day 1 - cargo subcommands
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="book/vol2/day2.html">
+            
+                
+                    <a href="../../book/vol2/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                        Day 2 - hound
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="book/vol2/day3.html">
+            
+                
+                    <a href="../../book/vol2/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                        Day 3 - rayon
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
+            
+                
+                    <a href="../../book/vol2/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                        Day 4 - structured logging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="book/vol2/day5.html">
+            
+                
+                    <a href="../../book/vol2/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                        Day 5 - environment variables
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="book/vol2/day6.html">
+            
+                
+                    <a href="../../book/vol2/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                        Day 6 - derive_builder
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="book/vol2/day7.html">
+            
+                
+                    <a href="../../book/vol2/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.7.</b>
+                        
+                        Day 7 - static initialization
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="book/vol2/day8.html">
+            
+                
+                    <a href="../../book/vol2/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.8.</b>
+                        
+                        Day 8 - serde
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="book/vol2/day9.html">
+            
+                
+                    <a href="../../book/vol2/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.9.</b>
+                        
+                        Day 9 - winreg
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="book/vol2/day10.html">
+            
+                
+                    <a href="../../book/vol2/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.10.</b>
+                        
+                        Day 10 - nom, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="book/vol2/day11.html">
+            
+                
+                    <a href="../../book/vol2/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.11.</b>
+                        
+                        Day 11 - nom, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="book/vol2/day12.html">
+            
+                
+                    <a href="../../book/vol2/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.12.</b>
+                        
+                        Day 12 - clap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="book/vol2/day13.html">
+            
+                
+                    <a href="../../book/vol2/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.13.</b>
+                        
+                        Day 13 - zip and lzma compression
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="book/vol2/day14.html">
+            
+                
+                    <a href="../../book/vol2/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.14.</b>
+                        
+                        Day 14 - Cursive
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.15" data-path="book/vol2/day15.html">
+            
+                
+                    <a href="../../book/vol2/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.15.</b>
+                        
+                        Day 15 - tera
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.16" data-path="book/vol2/day16.html">
+            
+                
+                    <a href="../../book/vol2/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.16.</b>
+                        
+                        Day 16 - git2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.17" data-path="book/vol2/day17.html">
+            
+                
+                    <a href="../../book/vol2/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.17.</b>
+                        
+                        Day 17 - diesel
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.18" data-path="book/vol2/day18.html">
+            
+                
+                    <a href="../../book/vol2/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.18.</b>
+                        
+                        Day 18 - error_chain
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.19" data-path="book/vol2/day19.html">
+            
+                
+                    <a href="../../book/vol2/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.19.</b>
+                        
+                        Day 19 - leftpad
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >24 days of Rust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-18--errorchain">Day 18 - error_chain</h1>
+<p>If you have a background in Python, Java or C++, you&apos;re probably used to
+raising exceptions if something goes wrong. Rust doesn&apos;t have exceptions.
+The official Rust book has a
+<a href="https://doc.rust-lang.org/book/error-handling.html" target="_blank">comprehensive chapter on error handling</a>,
+but the TL;DR is we should probably use the <code>Result</code> type. We can match
+on its variants to handle both the happy path and error cases in a very
+explicit, if not verbose, way. To address the verbosity, there was a <code>try!</code>
+macro that cut down on a lot of pattern matching boilerplate. And as of now
+we have an even simpler syntax - the <code>?</code> operator. But when there are many
+error types, possibly coming from different libraries, making them compose well
+still requires a lot of code: <code>From</code> and <code>Error</code> implementations and such.</p>
+<p>The <a href="https://crates.io/crates/error-chain" target="_blank"><code>error_chain</code></a> crate was created
+to avoid all that remaining boilerplate. Let&apos;s see it in action!</p>
+<h2 id="results-and-errors-and-errorkinds-oh-my">Results and Errors and ErrorKinds, oh my!</h2>
+<p>We will build a simple command line utility called <code>json2cron</code>.
+It&apos;s going to read a JSON file with a schedule of commands to run, convert
+it into a format that <code>cron</code> understands and finally feed that into <code>crontab</code>.
+(One could argue that it&apos;s better to learn <code>crontab</code> syntax rather than
+write custom JSON, but I&apos;m not going to discuss the usefulness of our tool
+here.)</p>
+<p>But first let&apos;s start with adding <code>error_chain</code> to our project.</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#![recursion_limit = &quot;1024&quot;]</span>
+
+<span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> error_chain;
+
+<span class="hljs-keyword">mod</span> errors {
+    error_chain!{}
+}
+
+<span class="hljs-keyword">use</span> errors::*;
+</code></pre>
+<p>With only these few lines of code, we have now:</p>
+<ul>
+<li>custom <code>Error</code> and <code>ErrorKind</code> types</li>
+<li>a <code>Result</code> type wrapping the standard library <code>Result</code> with a fixed
+error type - the custom <code>Error</code> mentioned above</li>
+<li>a <code>ResultExt</code> trait that adds a <code>chain_err()</code> method to standard library
+<code>Result</code>s</li>
+</ul>
+<p>Our <code>main()</code> function will follow the template recommended by Brian Anderson in
+the <a href="http://brson.github.io/2016/11/30/starting-with-error-chain" target="_blank">getting started with <code>error_chain</code></a>
+blog post.</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Err</span>(<span class="hljs-keyword">ref</span> e) = run() {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;error: {}&quot;</span>, e);
+        <span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> e.iter().skip(<span class="hljs-number">1</span>) {
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;caused by: {}&quot;</span>, e);
+        }
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Some</span>(backtrace) = e.backtrace() {
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;backtrace: {:?}&quot;</span>, backtrace);
+        }
+        std::process::exit(<span class="hljs-number">1</span>);
+    }
+}
+</code></pre>
+<p>This will print the entire error chain and possibly a backtrace of the original
+error. We&apos;re also good command line citizens and return with a non-zero exit
+code.</p>
+<p>With <code>main()</code> out of the way, we can now focus on the <code>run()</code> function.</p>
+<h2 id="different-errors-in-json2cron">Different errors in json2cron</h2>
+<p>A lot of things can go wrong. File I/O, JSON parsing, even calling <code>crontab</code>
+can fail. And if Murphy is right, <em>if anything can go wrong, it will</em>.
+But we&apos;re prepared for that, we&apos;re using Rust! If you&apos;ve seen the
+<a href="http://leftoversalad.com/c/015_programmingpeople/" target="_blank"><em>if programming languages were people</em></a>
+cartoon, you&apos;ll remember Rust being portrayed as a knight with three shields
+and a witty message. I like to think of <code>error_chain</code> as a squire loyal to the
+Rust knight.</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run</span></span>() -&gt; <span class="hljs-built_in">Result</span>&lt;()&gt; {
+    <span class="hljs-keyword">let</span> schedule = load_schedule(<span class="hljs-string">&quot;data/schedule.json&quot;</span>).chain_err(|| <span class="hljs-string">&quot;failed to load schedule&quot;</span>)?;
+    <span class="hljs-keyword">if</span> schedule.rules.is_empty() {
+        bail!(<span class="hljs-string">&quot;the schedule is empty&quot;</span>);
+    }
+    update_crontab(&amp;schedule).chain_err(|| <span class="hljs-string">&quot;failed to update crontab&quot;</span>)
+}
+</code></pre>
+<p>We&apos;re doing three things in the <code>run()</code> function. First we need to load the
+schedule from a JSON file, using <code>chain_err()</code> to add some more context to any
+errors that <code>load_schedule()</code> may return. Next, we check business logic rules,
+such as requiring a non-empty schedule. The <code>bail!</code> macro does an early return,
+converting its argument into an <code>Err</code> with our custom error inside. Finally
+we try to update crontab with a new schedule.</p>
+<p>The <code>Schedule</code> type is not important here. It&apos;s just a struct that is
+JSON-serializable (with <code>serde</code>) and implements the <code>Display</code> trait. You can
+find the entire source code for this example in the
+<a href="https://github.com/zsiciarz/24daysofrust" target="_blank">24daysofrust repository</a>.</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#![feature(proc_macro)]</span>
+<span class="hljs-preprocessor">#[macro_use]</span>
+
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> serde_derive;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> serde_json;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> tempfile;
+
+<span class="hljs-keyword">use</span> std::fs::File;
+<span class="hljs-keyword">use</span> std::io::Write;
+<span class="hljs-keyword">use</span> std::path::Path;
+<span class="hljs-keyword">use</span> std::process::Command;
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">load_schedule</span></span>&lt;P: <span class="hljs-built_in">AsRef</span>&lt;Path&gt;&gt;(path: P) -&gt; <span class="hljs-built_in">Result</span>&lt;Schedule&gt; {
+    <span class="hljs-keyword">let</span> file = File::open(path).chain_err(|| <span class="hljs-string">&quot;failed to open input file&quot;</span>)?;
+    serde_json::from_reader(&amp;file).chain_err(|| <span class="hljs-string">&quot;failed to read JSON&quot;</span>)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">update_crontab</span></span>(schedule: &amp;Schedule) -&gt; <span class="hljs-built_in">Result</span>&lt;()&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> file =
+        tempfile::NamedTempFile::new().chain_err(|| <span class="hljs-string">&quot;failed to create a temporary file&quot;</span>)?;
+    <span class="hljs-keyword">let</span> schedule_str = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;{}&quot;</span>, schedule);
+    file.write_all(&amp;schedule_str.into_bytes()[..]).chain_err(|| <span class="hljs-string">&quot;failed to write schedule&quot;</span>)?;
+    <span class="hljs-keyword">let</span> path = file.path().to_str().ok_or(<span class="hljs-string">&quot;temporary path is not UTF-8&quot;</span>)?;
+    Command::new(<span class="hljs-string">&quot;crontab&quot;</span>).arg(path)
+        .spawn()
+        .chain_err(|| <span class="hljs-string">&quot;failed to run crontab command&quot;</span>)?;
+    <span class="hljs-built_in">Ok</span>(())
+}
+</code></pre>
+<p>We&apos;re using several APIs here that return <code>Result</code>s. Thanks to the <code>ResultExt</code>
+trait implementation generated by <code>error_chain!</code>, all of them have a
+<code>chain_err()</code> method, even though they may come from external crates.
+Note the <code>ok_or(&quot;...&quot;)?</code> call. <code>Path::to_str()</code> returns an <code>Option</code> and
+not a <code>Result</code>, but we can fix that with <code>Option::ok_or()</code>. And thanks to the
+<code>?</code> operator we can still return immediately in case of an error.</p>
+<p>Let&apos;s raise our shields, run the program a few times and see what happens. What
+if the JSON file is missing?</p>
+<pre><code class="lang-text">$ cargo run
+error: failed to load schedule
+caused by: failed to open input file
+caused by: The system cannot find the file specified. (os error 2)
+</code></pre>
+<p>Let&apos;s fix that part by adding the file, but make it invalid JSON.</p>
+<pre><code class="lang-text">$ cargo run
+error: failed to load schedule
+caused by: failed to read JSON
+caused by: expected `:` at line 2 column 11
+</code></pre>
+<p>We can see that the general message (<em>failed to load schedule</em>) didn&apos;t change,
+but the actual <em>reason</em> why it failed is different. Yay, error chaining!</p>
+<p>And what if the <code>crontab</code> command fails for some reason?</p>
+<pre><code class="lang-text">$ cargo run
+error: failed to update crontab
+caused by: failed to run crontab command
+caused by: The system cannot find the file specified. (os error 2)
+</code></pre>
+<p>The actual operating system error isn&apos;t really helpful here, but it boils
+down to the <code>crontab</code> command being unavailable on Windows.</p>
+<h2 id="embrace-open-source">Embrace Open Source</h2>
+<p>If you want to find real-life examples of how a Rust crate works (which is
+what I did with <code>error_chain</code> before writing this article), I have a tip
+for you. The page for each crate on crates.io has a <code>Dependent crates</code> link,
+which leads to
+<a href="https://crates.io/crates/error-chain/reverse_dependencies" target="_blank">a listing like this</a>.
+From there it&apos;s just a matter of opening several browser tabs with repositories
+for interesting crates and using code search to find the APIs you want. A few
+examples:</p>
+<ul>
+<li><a href="https://github.com/nikomatsakis/cargo-chrono/search?utf8=%E2%9C%93&amp;q=chain_err" target="_blank"><code>chain_err</code> usage in cargo-chrono</a> -
+where errors from filesystem, CSV parser or regex engine can work together</li>
+<li><a href="https://github.com/sourcefrog/conserve/blob/d00c060faae1d45312c102cb51a67b85ca5195c7/src/errors.rs" target="_blank"><code>foreign_links</code> and custom errors in conserve</a></li>
+<li><a href="https://github.com/dflemstr/rq/blob/4c04fee237c87815009377a2d20bf7a9596478b5/src/error.rs" target="_blank">a lot of <code>foreign_links</code> in rq</a></li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="http://brson.github.io/2016/11/30/starting-with-error-chain" target="_blank">Starting a new Rust project right, with error-chain</a></li>
+<li><a href="https://thefeedbackloop.xyz/stroustrups-rule-and-layering-over-time/" target="_blank">Stroustrup&apos;s Rule and Layering Over Time</a></li>
+<li><a href="https://doc.rust-lang.org/book/error-handling.html" target="_blank">Error handling</a> in The Rust Programming Language</li>
+<li><a href="http://rust-lang.github.io/book/ch09-00-error-handling.html" target="_blank">Error handling</a> in the upcoming second edition of the above book</li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../book/vol2/day17.html" class="navigation navigation-prev " aria-label="Previous page: Day 17 - diesel"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../book/vol2/day19.html" class="navigation navigation-next " aria-label="Next page: Day 19 - leftpad"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"include-codeblock":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

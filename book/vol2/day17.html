@@ -1,0 +1,1103 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Day 17 - diesel | 24 days of Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../book/vol2/day18.html" />
+    
+    
+    <link rel="prev" href="../../book/vol2/day16.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="2.17"
+        data-chapter-title="Day 17 - diesel"
+        data-filepath="book/vol2/day17.md"
+        data-basepath="../.."
+        data-revision="Mon Dec 19 2016 18:25:03 GMT+0000 (UTC)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/vol1/index.html">
+            
+                
+                    <a href="../../book/vol1/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Volume 1
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
+            
+                
+                    <a href="../../book/vol1/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
+            
+                
+                    <a href="../../book/vol1/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        Day 2 - primal
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
+            
+                
+                    <a href="../../book/vol1/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
+            
+                
+                    <a href="../../book/vol1/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
+            
+                
+                    <a href="../../book/vol1/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="book/vol1/day6.html">
+            
+                
+                    <a href="../../book/vol1/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
+            
+                
+                    <a href="../../book/vol1/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
+            
+                
+                    <a href="../../book/vol1/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
+            
+                
+                    <a href="../../book/vol1/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
+            
+                
+                    <a href="../../book/vol1/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
+            
+                
+                    <a href="../../book/vol1/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
+            
+                
+                    <a href="../../book/vol1/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.12.</b>
+                        
+                        Day 12 - image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
+            
+                
+                    <a href="../../book/vol1/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
+            
+                
+                    <a href="../../book/vol1/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
+            
+                
+                    <a href="../../book/vol1/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
+            
+                
+                    <a href="../../book/vol1/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
+            
+                
+                    <a href="../../book/vol1/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
+            
+                
+                    <a href="../../book/vol1/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
+            
+                
+                    <a href="../../book/vol1/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
+            
+                
+                    <a href="../../book/vol1/day20.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
+            
+                
+                    <a href="../../book/vol1/day21.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
+            
+                
+                    <a href="../../book/vol1/day22.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
+            
+                
+                    <a href="../../book/vol1/day23.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
+            
+                
+                    <a href="../../book/vol1/day24.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/vol2/index.html">
+            
+                
+                    <a href="../../book/vol2/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Volume 2
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1" data-path="book/vol2/day1.html">
+            
+                
+                    <a href="../../book/vol2/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                        Day 1 - cargo subcommands
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="book/vol2/day2.html">
+            
+                
+                    <a href="../../book/vol2/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                        Day 2 - hound
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="book/vol2/day3.html">
+            
+                
+                    <a href="../../book/vol2/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                        Day 3 - rayon
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
+            
+                
+                    <a href="../../book/vol2/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                        Day 4 - structured logging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="book/vol2/day5.html">
+            
+                
+                    <a href="../../book/vol2/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                        Day 5 - environment variables
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="book/vol2/day6.html">
+            
+                
+                    <a href="../../book/vol2/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                        Day 6 - derive_builder
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="book/vol2/day7.html">
+            
+                
+                    <a href="../../book/vol2/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.7.</b>
+                        
+                        Day 7 - static initialization
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="book/vol2/day8.html">
+            
+                
+                    <a href="../../book/vol2/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.8.</b>
+                        
+                        Day 8 - serde
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="book/vol2/day9.html">
+            
+                
+                    <a href="../../book/vol2/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.9.</b>
+                        
+                        Day 9 - winreg
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="book/vol2/day10.html">
+            
+                
+                    <a href="../../book/vol2/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.10.</b>
+                        
+                        Day 10 - nom, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="book/vol2/day11.html">
+            
+                
+                    <a href="../../book/vol2/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.11.</b>
+                        
+                        Day 11 - nom, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="book/vol2/day12.html">
+            
+                
+                    <a href="../../book/vol2/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.12.</b>
+                        
+                        Day 12 - clap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="book/vol2/day13.html">
+            
+                
+                    <a href="../../book/vol2/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.13.</b>
+                        
+                        Day 13 - zip and lzma compression
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="book/vol2/day14.html">
+            
+                
+                    <a href="../../book/vol2/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.14.</b>
+                        
+                        Day 14 - Cursive
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.15" data-path="book/vol2/day15.html">
+            
+                
+                    <a href="../../book/vol2/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.15.</b>
+                        
+                        Day 15 - tera
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.16" data-path="book/vol2/day16.html">
+            
+                
+                    <a href="../../book/vol2/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.16.</b>
+                        
+                        Day 16 - git2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.17" data-path="book/vol2/day17.html">
+            
+                
+                    <a href="../../book/vol2/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.17.</b>
+                        
+                        Day 17 - diesel
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.18" data-path="book/vol2/day18.html">
+            
+                
+                    <a href="../../book/vol2/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.18.</b>
+                        
+                        Day 18 - error_chain
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.19" data-path="book/vol2/day19.html">
+            
+                
+                    <a href="../../book/vol2/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.19.</b>
+                        
+                        Day 19 - leftpad
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >24 days of Rust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-17--diesel">Day 17 - diesel</h1>
+<p><a href="http://diesel.rs/" target="_blank"><code>diesel</code></a> is an in-development ORM (Object-Relational
+Mapper) for Rust. It aims to be a safe and efficient layer between your
+business logic and the database. In the words of its authors:</p>
+<blockquote>
+<p>Diesel gets rid of the boilerplate for database interaction and eliminates
+runtime errors, without sacrificing performance. It takes full advantage
+of Rust&apos;s type system to create a low overhead query builder that
+&quot;feels like Rust&quot;.</p>
+</blockquote>
+<p>The primary author of <code>diesel</code> - <a href="https://twitter.com/sgrif" target="_blank">Sean Griffin</a> -
+is also a Ruby on Rails committer and maintainer of Active Record, the ORM used
+in Rails. So when I saw his name in relation to a Rust ORM, I knew I have
+to check it out. Sean also gave a great talk at
+<a href="http://polyconf.com/" target="_blank">PolyConf 16</a> about ownership semantics (not only in
+Rust) - <a href="https://www.youtube.com/watch?v=PBV6j2BhEGE" target="_blank">Owning Ownership</a>.</p>
+<h2 id="diesel-as-a-photo-gallery-backend">Diesel as a photo gallery backend</h2>
+<p>For this example we&apos;re going to use the ORM as if we were building a photo
+gallery app. Doesn&apos;t matter if it&apos;s a web or desktop app - the focus here is
+only on the database interaction.</p>
+<p><strong>Note</strong>: I&apos;m not going to describe the basics of <code>diesel</code> and how to get up
+ and running. The
+ <a href="http://diesel.rs/guides/getting-started/" target="_blank">geting started guide</a> covers
+the initial setup. I&apos;m also using a nightly Rust compiler, but the essential
+custom derive machinery should land in stable, hopefully soon (1.15 perhaps).</p>
+<p>Let&apos;s see the model for our app:</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#![feature(custom_attribute, proc_macro)]</span>
+<span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> diesel;
+<span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> diesel_codegen;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> dotenv;
+
+<span class="hljs-keyword">use</span> diesel::prelude::*;
+<span class="hljs-keyword">use</span> diesel::pg::PgConnection;
+
+<span class="hljs-keyword">mod</span> schema {
+    infer_schema!(<span class="hljs-string">&quot;dotenv:DATABASE_URL&quot;</span>);
+}
+
+<span class="hljs-keyword">use</span> schema::*;
+
+<span class="hljs-preprocessor">#[derive(Debug, Queryable, Identifiable, Associations, AsChangeset)]</span>
+<span class="hljs-preprocessor">#[has_many(photos)]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> User {
+    <span class="hljs-keyword">pub</span> id: <span class="hljs-keyword">i32</span>,
+    <span class="hljs-keyword">pub</span> username: <span class="hljs-built_in">String</span>,
+    <span class="hljs-keyword">pub</span> avatar: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">String</span>&gt;,
+}
+
+<span class="hljs-preprocessor">#[derive(Debug, Queryable, Identifiable, Associations, AsChangeset)]</span>
+<span class="hljs-preprocessor">#[belongs_to(User)]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> Photo {
+    <span class="hljs-keyword">pub</span> id: <span class="hljs-keyword">i32</span>,
+    <span class="hljs-keyword">pub</span> user_id: <span class="hljs-keyword">i32</span>,
+    <span class="hljs-keyword">pub</span> url: <span class="hljs-built_in">String</span>,
+}
+</code></pre>
+<p>There are a few traits that we tell <code>diesel</code> to derive for us:</p>
+<ul>
+<li><code>Queryable</code> allows querying with <code>load()</code>, <code>first()</code> etc.</li>
+<li><code>Identifiable</code> marks structs which correspond to a single table and have an
+ID column</li>
+<li><code>Associations</code> allows specifying relations between tables and using them for
+<code>JOIN</code>s etc.</li>
+<li><code>AsChangeset</code> for things that can be updated</li>
+</ul>
+<p>Here&apos;s the corresponding schema definition and some initial data:</p>
+<pre><code class="lang-sql"><span class="hljs-operator"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">users</span> (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">serial</span> primary <span class="hljs-keyword">key</span>,
+    username <span class="hljs-built_in">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>,
+    avatar <span class="hljs-built_in">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-literal">null</span>
+);</span>
+<span class="hljs-operator"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> <span class="hljs-keyword">users</span> (username) <span class="hljs-keyword">values</span> (<span class="hljs-string">&apos;zbyszek&apos;</span>);</span>
+
+<span class="hljs-operator"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> photos (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">serial</span> primary <span class="hljs-keyword">key</span>,
+    user_id <span class="hljs-built_in">integer</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span> <span class="hljs-keyword">references</span> <span class="hljs-keyword">users</span> (<span class="hljs-keyword">id</span>),
+    <span class="hljs-keyword">url</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>
+);</span>
+<span class="hljs-operator"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> photos (user_id, <span class="hljs-keyword">url</span>) <span class="hljs-keyword">values</span> (<span class="hljs-number">1</span>, <span class="hljs-string">&apos;http://lorempixel.com/output/cats-q-c-640-480-10.jpg&apos;</span>);</span>
+</code></pre>
+<p>Note: I&apos;m using PostgreSQL as a database backend here. At the moment <code>diesel</code>
+supports SQLite as well, but some of the later examples in this article
+are Postgres-specific.</p>
+<h2 id="selects-and-relationships">Selects and relationships</h2>
+<p>We&apos;ll start with a simple select that fetches all photos by a single user.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> me = users::table.find(<span class="hljs-number">1</span>).first::&lt;User&gt;(&amp;conn).expect(<span class="hljs-string">&quot;Error loading user&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, me);
+<span class="hljs-keyword">let</span> my_photos = Photo::belonging_to(&amp;me)
+    .load::&lt;Photo&gt;(&amp;conn)
+    .expect(<span class="hljs-string">&quot;Error loading photos&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, my_photos);
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+User { id: 1, username: &quot;zbyszek&quot;, avatar: None }
+User zbyszek has 1 photo(s)
+[Photo { id: 1, user_id: 1, url: &quot;http://lorempixel.com/output/cats-q-c-640-480-10.jpg&quot; }]
+</code></pre>
+<p>We&apos;re loading the user with ID=1 (<code>find()</code> searches by primary key) and
+afterwards fetch all photos associated with this user. The <code>belonging_to()</code>
+method takes a reference to the type declared in the <code>belongs_to</code>
+attribute. This is an example of a 1:N relationship - a <code>User</code> can have
+multiple <code>Photo</code>s. The Rust code above issues SQL queries similar to these:</p>
+<pre><code class="lang-sql"><span class="hljs-operator"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">users</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">id</span>=<span class="hljs-number">1</span> <span class="hljs-keyword">limit</span> <span class="hljs-number">1</span>;</span>
+<span class="hljs-operator"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> photos <span class="hljs-keyword">where</span> user_id=<span class="hljs-number">1</span>;</span>
+</code></pre>
+<p>If we&apos;re interested in the actual SQL statement, we can use the <code>print_sql!</code>
+macro:</p>
+<pre><code class="lang-rust">print_sql!(Photo::belonging_to(&amp;me).count());
+</code></pre>
+<p>This would output <code>SELECT COUNT(*) FROM ``photos`` WHERE ``photos``.``user_id`` = ?</code>.
+This macro works only on <code>QueryFragment</code>s and not on every statement that
+hits the database, but there is work underway to have logging support in
+connections or query builders.</p>
+<p>If we wanted to do an <code>INNER JOIN</code> to attach a user to every photo, we can
+use <code>inner_join()</code> like this:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> photos: <span class="hljs-built_in">Vec</span>&lt;(Photo, User)&gt; =
+    photos::table.inner_join(users::table).load(&amp;conn).expect(<span class="hljs-string">&quot;Error loading photos&quot;</span>);
+<span class="hljs-keyword">for</span> (photo, user) <span class="hljs-keyword">in</span> photos {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Photo #{} by {}&quot;</span>, photo.id, user.username);
+}
+</code></pre>
+<p>This time the <code>load()</code> method yields tuples of structs. The order of types
+in the tuple is the same as that of respective tables in the query. There&apos;s
+also a <code>left_outer_join()</code> method when one end of the relation may be <code>NULL</code>.</p>
+<p>We can also filter on fields of the joined table, as well as group the results:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> users_with_cat_photos: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-built_in">String</span>&gt; = users::table.select(users::username)
+    .inner_join(photos::table)
+    .filter(photos::url.like(<span class="hljs-string">&quot;%cat%&quot;</span>))
+    .group_by(users::id)
+    .load(&amp;conn)
+    .expect(<span class="hljs-string">&quot;Error loading users&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, users_with_cat_photos);
+</code></pre>
+<p>This time we have only one column in the <code>SELECT</code> part of the query,
+thanks to the <code>select()</code> method.</p>
+<pre><code class="lang-text">$ cargo run
+[&quot;zbyszek&quot;]
+</code></pre>
+<h2 id="inserting-and-deleting">Inserting and deleting</h2>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[derive(Debug, Insertable)]</span>
+<span class="hljs-preprocessor">#[table_name=&quot;photos&quot;]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> NewPhoto {
+    <span class="hljs-keyword">pub</span> user_id: <span class="hljs-keyword">i32</span>,
+    <span class="hljs-keyword">pub</span> url: <span class="hljs-built_in">String</span>,
+}
+
+<span class="hljs-keyword">impl</span> User {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new_photo</span></span>(&amp;<span class="hljs-keyword">self</span>, url: &amp;<span class="hljs-keyword">str</span>) -&gt; NewPhoto {
+        NewPhoto {
+            user_id: <span class="hljs-keyword">self</span>.id,
+            url: url.to_string(),
+        }
+    }
+}
+</code></pre>
+<p>We&apos;ve added a custom method to the <code>User</code> struct that prepares a new photo
+to be inserted into the database. The <code>NewPhoto</code> struct implements the
+<code>Insertable</code> trait so that <code>diesel</code> knows what to do in the following code:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> photo = me.new_photo(<span class="hljs-string">&quot;http://lorempixel.com/output/cats-q-c-640-480-8.jpg&quot;</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> inserted_photo = diesel::insert(&amp;photo)
+    .into(photos::table)
+    .get_result::&lt;Photo&gt;(&amp;conn)
+    .expect(<span class="hljs-string">&quot;Failed to insert photo&quot;</span>);
+</code></pre>
+<p>We&apos;ve already seen a few methods that actually execute the query using a
+database connection. <code>load()</code> returns an <code>Iterator</code> over the results,
+while <code>first()</code> or <code>get_result()</code> return a single object. There&apos;s also
+<code>execute()</code> which returns how many rows were affected by the query, as in
+the example below:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> deleted_count = diesel::delete(photos::table.filter(photos::id.gt(<span class="hljs-number">1</span>)))
+    .execute(&amp;conn)
+    .expect(<span class="hljs-string">&quot;Failed to clean up photos&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Deleted {} photo(s)&quot;</span>, deleted_count);
+</code></pre>
+<p>We&apos;re using <code>filter</code> here to delete all photos <em>except</em> the first one.</p>
+<h2 id="postgres-arrays">Postgres arrays</h2>
+<p>Let&apos;s add tags to our photos! PostgreSQL has a data type that&apos;s perfect for
+this purpose - arrays (of text). Since migrations in <code>diesel</code> are just
+SQL code, let&apos;s add the column first.</p>
+<pre><code class="lang-sql"><span class="hljs-operator"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> photos <span class="hljs-keyword">add</span> <span class="hljs-keyword">column</span> tags <span class="hljs-built_in">text</span>[] <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&apos;{}&apos;</span>;</span>
+</code></pre>
+<p>We can run <code>diesel migration run</code> and a new column will be added to the
+table. However, at this moment our program fails to compile:</p>
+<pre><code class="lang-text">  --&gt; src/example.rs:87:10
+   |
+87 |         .load::<Photo>(&amp;conn)
+   |          ^^^^ the trait `diesel::types::FromSqlRow<(diesel::types::Integer, diesel::types::Integer,="" diesel::types::Text,="" diesel::types::Array<diesel::types::Text="">), _&gt;` is not implemented for `(i32, i32, std::string::String)`
+</(diesel::types::Integer,></Photo></code></pre>
+<p><code>diesel</code> inferred from the database that the <code>Photo</code> struct should have one
+more field. So let&apos;s define it (I&apos;ve omitted the attributes here):</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> Photo {
+    <span class="hljs-keyword">pub</span> id: <span class="hljs-keyword">i32</span>,
+    <span class="hljs-keyword">pub</span> user_id: <span class="hljs-keyword">i32</span>,
+    <span class="hljs-keyword">pub</span> url: <span class="hljs-built_in">String</span>,
+    <span class="hljs-keyword">pub</span> tags: <span class="hljs-built_in">Vec</span>&lt;<span class="hljs-built_in">String</span>&gt;,
+}
+</code></pre>
+<p>Thanks to a clever
+<a href="https://github.com/diesel-rs/diesel/blob/9ea449c480739253766bd097e7b06d038fe16590/diesel/src/pg/types/array.rs#L34" target="_blank"><code>FromSql</code> implementation</a>,
+Postgres arrays are transparently mapped to <code>Vec</code>s.</p>
+<pre><code class="lang-rust">inserted_photo.tags = <span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;cute&quot;</span>.to_string(), <span class="hljs-string">&quot;kitten&quot;</span>.to_string()];
+<span class="hljs-keyword">let</span> updated_photo: Photo = inserted_photo.save_changes(&amp;conn).expect(<span class="hljs-string">&quot;Error updating photo&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, updated_photo);
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+Photo { id: 27, user_id: 1, url: &quot;http://lorempixel.com/output/cats-q-c-640-480-8.jpg&quot;, tags: [&quot;cute&quot;, &quot;kitten&quot;] }
+</code></pre>
+<p><code>diesel</code> even supports
+<a href="https://www.postgresql.org/docs/9.1/static/functions-array.html" target="_blank">array lookups</a>
+such as <code>@&gt;</code> to filter photos by tags. See the example below:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> cute_cat_count: <span class="hljs-keyword">i64</span> = photos::table.filter(photos::tags.contains(<span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;cute&quot;</span>, <span class="hljs-string">&quot;kitten&quot;</span>]))
+    .count()
+    .get_result(&amp;conn)
+    .expect(<span class="hljs-string">&quot;Error counting cute kittens&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;There&apos;s {} photos of cute cats&quot;</span>, cute_cat_count);
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+There&apos;s 2 photos of cute cats
+</code></pre>
+<p>There&apos;s also an
+<a href="https://github.com/diesel-rs/diesel/issues/44" target="_blank">open issue</a> for JSON support
+(<a href="https://github.com/diesel-rs/diesel/issues/44#issuecomment-218325285" target="_blank">this comment</a>
+from Sean gives the basic idea how it could be done).</p>
+<p>If you need to execute some custom SQL query that you  <em>really</em> couldn&apos;t
+express with <code>diesel</code>, there&apos;s a last resort solution. The <code>sql()</code> function
+can execute raw SQL queries. However it should be used only when absolutely
+necessary as it provides no guarantees about safety and correctness of the
+query.</p>
+<p>For the record, here&apos;s the above cute cat counter implemented with <code>sql()</code>
+before <a href="https://twitter.com/sgrif/status/810365851903885312" target="_blank">Sean pointed out</a>
+that <code>diesel</code> in fact supports Postgres array lookups.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> diesel::expression::sql_literal::sql;
+
+<span class="hljs-keyword">let</span> cute_cat_count: <span class="hljs-keyword">i64</span> = sql(<span class="hljs-string">&quot;select count(*) from photos \
+                               where tags @&gt; array[&apos;cute&apos;, &apos;kitten&apos;]&quot;</span>)
+    .get_result(&amp;conn)
+    .expect(<span class="hljs-string">&quot;Error executing raw SQL&quot;</span>);
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+There&apos;s 2 photos of cute cats
+</code></pre>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="http://diesel.rs/guides/getting-started/" target="_blank">Getting started with Diesel</a></li>
+<li><a href="http://docs.diesel.rs/diesel/associations/index.html" target="_blank">Associations</a></li>
+<li><a href="https://hackernoon.com/comparing-diesel-and-rust-postgres-97fd8c656fdd#.kr5agrsji" target="_blank">Comparing diesel and rust-postgres</a></li>
+<li><a href="https://crates.io/crates/nickel-diesel" target="_blank"><code>nickel-diesel</code></a> - a diesel middleware for the Nickel web framework</li>
+<li><a href="https://crates.io/crates/rustorm" target="_blank"><code>rustorm</code></a> - another ORM for Rust</li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../book/vol2/day16.html" class="navigation navigation-prev " aria-label="Previous page: Day 16 - git2"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../book/vol2/day18.html" class="navigation navigation-next " aria-label="Next page: Day 18 - error_chain"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"include-codeblock":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

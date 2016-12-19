@@ -1,0 +1,980 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Day 13 - zip and lzma compression | 24 days of Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../book/vol2/day14.html" />
+    
+    
+    <link rel="prev" href="../../book/vol2/day12.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="2.13"
+        data-chapter-title="Day 13 - zip and lzma compression"
+        data-filepath="book/vol2/day13.md"
+        data-basepath="../.."
+        data-revision="Mon Dec 19 2016 18:25:03 GMT+0000 (UTC)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/vol1/index.html">
+            
+                
+                    <a href="../../book/vol1/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Volume 1
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
+            
+                
+                    <a href="../../book/vol1/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
+            
+                
+                    <a href="../../book/vol1/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        Day 2 - primal
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
+            
+                
+                    <a href="../../book/vol1/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
+            
+                
+                    <a href="../../book/vol1/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
+            
+                
+                    <a href="../../book/vol1/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="book/vol1/day6.html">
+            
+                
+                    <a href="../../book/vol1/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
+            
+                
+                    <a href="../../book/vol1/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
+            
+                
+                    <a href="../../book/vol1/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
+            
+                
+                    <a href="../../book/vol1/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
+            
+                
+                    <a href="../../book/vol1/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
+            
+                
+                    <a href="../../book/vol1/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
+            
+                
+                    <a href="../../book/vol1/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.12.</b>
+                        
+                        Day 12 - image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
+            
+                
+                    <a href="../../book/vol1/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
+            
+                
+                    <a href="../../book/vol1/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
+            
+                
+                    <a href="../../book/vol1/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
+            
+                
+                    <a href="../../book/vol1/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
+            
+                
+                    <a href="../../book/vol1/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
+            
+                
+                    <a href="../../book/vol1/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
+            
+                
+                    <a href="../../book/vol1/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
+            
+                
+                    <a href="../../book/vol1/day20.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
+            
+                
+                    <a href="../../book/vol1/day21.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
+            
+                
+                    <a href="../../book/vol1/day22.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
+            
+                
+                    <a href="../../book/vol1/day23.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
+            
+                
+                    <a href="../../book/vol1/day24.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/vol2/index.html">
+            
+                
+                    <a href="../../book/vol2/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Volume 2
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1" data-path="book/vol2/day1.html">
+            
+                
+                    <a href="../../book/vol2/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                        Day 1 - cargo subcommands
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="book/vol2/day2.html">
+            
+                
+                    <a href="../../book/vol2/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                        Day 2 - hound
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="book/vol2/day3.html">
+            
+                
+                    <a href="../../book/vol2/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                        Day 3 - rayon
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
+            
+                
+                    <a href="../../book/vol2/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                        Day 4 - structured logging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="book/vol2/day5.html">
+            
+                
+                    <a href="../../book/vol2/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                        Day 5 - environment variables
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="book/vol2/day6.html">
+            
+                
+                    <a href="../../book/vol2/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                        Day 6 - derive_builder
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="book/vol2/day7.html">
+            
+                
+                    <a href="../../book/vol2/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.7.</b>
+                        
+                        Day 7 - static initialization
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="book/vol2/day8.html">
+            
+                
+                    <a href="../../book/vol2/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.8.</b>
+                        
+                        Day 8 - serde
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="book/vol2/day9.html">
+            
+                
+                    <a href="../../book/vol2/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.9.</b>
+                        
+                        Day 9 - winreg
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="book/vol2/day10.html">
+            
+                
+                    <a href="../../book/vol2/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.10.</b>
+                        
+                        Day 10 - nom, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="book/vol2/day11.html">
+            
+                
+                    <a href="../../book/vol2/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.11.</b>
+                        
+                        Day 11 - nom, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="book/vol2/day12.html">
+            
+                
+                    <a href="../../book/vol2/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.12.</b>
+                        
+                        Day 12 - clap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.13" data-path="book/vol2/day13.html">
+            
+                
+                    <a href="../../book/vol2/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.13.</b>
+                        
+                        Day 13 - zip and lzma compression
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="book/vol2/day14.html">
+            
+                
+                    <a href="../../book/vol2/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.14.</b>
+                        
+                        Day 14 - Cursive
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.15" data-path="book/vol2/day15.html">
+            
+                
+                    <a href="../../book/vol2/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.15.</b>
+                        
+                        Day 15 - tera
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.16" data-path="book/vol2/day16.html">
+            
+                
+                    <a href="../../book/vol2/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.16.</b>
+                        
+                        Day 16 - git2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.17" data-path="book/vol2/day17.html">
+            
+                
+                    <a href="../../book/vol2/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.17.</b>
+                        
+                        Day 17 - diesel
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.18" data-path="book/vol2/day18.html">
+            
+                
+                    <a href="../../book/vol2/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.18.</b>
+                        
+                        Day 18 - error_chain
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.19" data-path="book/vol2/day19.html">
+            
+                
+                    <a href="../../book/vol2/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.19.</b>
+                        
+                        Day 19 - leftpad
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >24 days of Rust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-13--zip-and-lzma-compression">Day 13 - zip and lzma compression</h1>
+<p>The <a href="https://crates.io/crates/zip" target="_blank"><code>zip</code></a> crate is the most commonly used
+Rust library for manipulating ZIP archives. It supports reading and writing
+.zip files with different compression methods (store, deflate, bzip2).</p>
+<p>There are at least three crates for LZMA (de)compression on crates.io.
+<a href="https://crates.io/crates/lzma" target="_blank"><code>lzma</code></a> is pure Rust, but currently allows
+only reading from archives.
+<a href="https://crates.io/crates/rust-lzma" target="_blank"><code>rust-lzma</code></a> supports both reading
+and writing compressed data, but it&apos;s a wrapper for <code>liblzma</code>. Similarly
+the <a href="https://crates.io/crates/xz2" target="_blank"><code>xz2</code></a> crate is a binding for <code>liblzma</code>.</p>
+<h2 id="creating-archives">Creating archives</h2>
+<p>We&apos;re going to compress a text file, namely the <code>Cargo.lock</code> file which
+exists in every <code>cargo</code> project and keeps track of precise versions
+of dependencies. This is for illustration only, the lock file doesn&apos;t grow
+so much it would require compression.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">static</span> FILE_CONTENTS: &amp;<span class="hljs-string">&apos;static</span> [<span class="hljs-keyword">u8</span>] = include_bytes!(<span class="hljs-string">&quot;../Cargo.lock&quot;</span>);
+</code></pre>
+<p>The <code>include_bytes!</code> macro comes from the standard library and allows
+for embedding literal arrays of bytes in the source code.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> zip;
+
+<span class="hljs-keyword">use</span> std::io::{Seek, Write};
+<span class="hljs-keyword">use</span> zip::result::ZipResult;
+<span class="hljs-keyword">use</span> zip::write::{FileOptions, ZipWriter};
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">create_zip_archive</span></span>&lt;T: Seek + Write&gt;(buf: &amp;<span class="hljs-keyword">mut</span> T) -&gt; ZipResult&lt;()&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> writer = ZipWriter::new(buf);
+    writer.start_file(<span class="hljs-string">&quot;example.txt&quot;</span>, FileOptions::default())?;
+    writer.write(FILE_CONTENTS)?;
+    writer.finish()?;
+    <span class="hljs-built_in">Ok</span>(())
+}
+</code></pre>
+<p>The <code>zip</code> crate exposes a <code>ZipWriter</code> struct which wraps anything that&apos;s
+<code>Seek + Write</code> (a file, stdout, an in-memory buffer etc).</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> file = File::create(<span class="hljs-string">&quot;example.zip&quot;</span>).expect(<span class="hljs-string">&quot;Couldn&apos;t create file&quot;</span>);
+    create_zip_archive(&amp;<span class="hljs-keyword">mut</span> file).expect(<span class="hljs-string">&quot;Couldn&apos;t create archive&quot;</span>);
+}
+</code></pre>
+<p>After running this, we should now have an <code>example.zip</code> file in the current
+directory. You can verify with <code>unzip</code> or a GUI archive reader like 7-Zip
+that it contains correct data.</p>
+<h2 id="reading-zip-archives">Reading ZIP archives</h2>
+<p>In the same vein as <code>ZipWriter</code> wraps a writable object, the <code>ZipArchive</code>
+is a wrapper around <code>Read + Seek</code>. We can use it to read archive contents
+like in the example below:</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">browse_zip_archive</span></span>&lt;T, F, U&gt;(buf: &amp;<span class="hljs-keyword">mut</span> T, browse_func: F) -&gt; ZipResult&lt;<span class="hljs-built_in">Vec</span>&lt;U&gt;&gt;
+    <span class="hljs-keyword">where</span> T: Read + Seek,
+          F: <span class="hljs-built_in">Fn</span>(&amp;ZipFile) -&gt; ZipResult&lt;U&gt;
+{
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> archive = ZipArchive::new(buf)?;
+    (<span class="hljs-number">0</span>..archive.len())
+        .map(|i| archive.by_index(i).and_then(|file| browse_func(&amp;file)))
+        .collect()
+}
+</code></pre>
+<p>The <code>browse_zip_archive</code> function goes through all files in the archive and
+applies a callback function to each one. This flexibility allows the caller
+to decide what to do with each file in turn. The values returned by the
+callback are collected into a <code>Vec</code> and returned if all goes well. We&apos;re
+using a clever trick here: <code>Result</code>
+<a href="https://doc.rust-lang.org/std/result/enum.Result.html#method.from_iter" target="_blank">implements <code>FromIterator</code></a>.
+This means we can turn an iterator of <code>Result</code>s into a <code>Result</code> wrapping a
+container (<code>Vec</code> here) with a single call to <code>collect()</code>. And if any element
+is an <code>Err</code>, the <code>Err</code> is returned from the entire function.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> file = File::open(<span class="hljs-string">&quot;example.zip&quot;</span>).expect(<span class="hljs-string">&quot;Couldn&apos;t open file&quot;</span>);
+<span class="hljs-keyword">let</span> files = browse_zip_archive(&amp;<span class="hljs-keyword">mut</span> file, |f| {
+    <span class="hljs-built_in">Ok</span>(<span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;{}: {} -&gt; {}&quot;</span>, f.name(), f.size(), f.compressed_size()))
+});
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, files);
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+Ok([&quot;example.txt: 66386 -&gt; 10570&quot;])
+</code></pre>
+<h2 id="other-archive-formats">Other archive formats</h2>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">create_bz2_archive</span></span>&lt;T: Seek + Write&gt;(buf: &amp;<span class="hljs-keyword">mut</span> T) -&gt; ZipResult&lt;()&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> writer = ZipWriter::new(buf);
+    writer.start_file(<span class="hljs-string">&quot;example.txt&quot;</span>,
+                    FileOptions::default().compression_method(zip::CompressionMethod::Bzip2))?;
+    writer.write(FILE_CONTENTS)?;
+    writer.finish()?;
+    <span class="hljs-built_in">Ok</span>(())
+}
+</code></pre>
+<p>We can use <code>zip</code> to create a BZIP2 archive. The only change is in the
+compression method used by <code>ZipWriter</code>.</p>
+<p>And now let&apos;s use the <code>rust-lzma</code> crate to compress our file to an <code>.xz</code>
+archive.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> lzma::{LzmaWriter, LzmaError};
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">create_xz_archive</span></span>&lt;T: Write&gt;(buf: &amp;<span class="hljs-keyword">mut</span> T) -&gt; <span class="hljs-built_in">Result</span>&lt;(), LzmaError&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> writer = LzmaWriter::new_compressor(buf, <span class="hljs-number">6</span>)?;
+    writer.write(FILE_CONTENTS)?;
+    writer.finish()?;
+    <span class="hljs-built_in">Ok</span>(())
+}
+</code></pre>
+<p>LZMA compression doesn&apos;t require the buffer to be seekable, it just emits a
+stream of compressed bytes as it goes over the input. The other difference
+is that <code>LzmaWriter</code> supports different compression levels (6 is typically
+the default).</p>
+<h2 id="comparison">Comparison</h2>
+<p>We may be interested in space efficiency of various compression methods.
+Let&apos;s use the <a href="https://doc.rust-lang.org/std/fs/fn.metadata.html" target="_blank"><code>metadata</code></a>
+function to retrieve size of each file:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(meta) = metadata(<span class="hljs-string">&quot;example.zip&quot;</span>) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;ZIP file size: {} bytes&quot;</span>, meta.len());
+}
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(meta) = metadata(<span class="hljs-string">&quot;example.bz2&quot;</span>) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;BZ2 file size: {} bytes&quot;</span>, meta.len());
+}
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(meta) = metadata(<span class="hljs-string">&quot;example.xz&quot;</span>) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;XZ file size: {} bytes&quot;</span>, meta.len());
+}
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+ZIP file size: 10696 bytes
+BZ2 file size: 8524 bytes
+XZ file size: 9154 bytes
+</code></pre>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://github.com/alexcrichton/tar-rs" target="_blank">tar-rs</a></li>
+<li><a href="https://crates.io/crates/brotli" target="_blank">brotli</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Comparison_of_archive_formats" target="_blank">Comparison of archive formats</a></li>
+<li><a href="https://www.rootusers.com/gzip-vs-bzip2-vs-xz-performance-comparison/" target="_blank">Gzip vs Bzip2 vs XZ Performance Comparison</a></li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../book/vol2/day12.html" class="navigation navigation-prev " aria-label="Previous page: Day 12 - clap"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../book/vol2/day14.html" class="navigation navigation-next " aria-label="Next page: Day 14 - Cursive"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"include-codeblock":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

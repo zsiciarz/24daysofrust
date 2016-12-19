@@ -1,0 +1,107 @@
+[package]
+name = "24daysofrust_vol2"
+version = "0.0.1"
+authors = ["Zbigniew Siciarz <zbigniew@siciarz.net>"]
+
+[[bin]]
+name = "day2"
+
+[[bin]]
+name = "day3"
+
+[[bin]]
+name = "day4"
+
+[[bin]]
+name = "day5"
+
+[[bin]]
+name = "day6"
+
+[[bin]]
+name = "day7"
+
+[[bin]]
+name = "day8"
+
+[[bin]]
+name = "day9"
+
+[[bin]]
+name = "day10"
+
+[[bin]]
+name = "day11"
+
+[[bin]]
+name = "day12"
+
+[[bin]]
+name = "day13"
+
+[[bin]]
+name = "day14"
+
+[[bin]]
+name = "day15"
+
+[[bin]]
+name = "day16"
+
+[[bin]]
+name = "day17"
+
+[[bin]]
+name = "day18"
+
+[[bin]]
+name = "day19"
+
+[dependencies]
+clap = "2.19.1"
+cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
+custom_derive = "0.1.7"
+derive_builder = "0.2.1"
+diesel = "0.9.1"
+diesel_codegen = { version = "0.9.0", features=["postgres"]}
+dotenv = "0.8.0"
+envy = "0.1.2"
+error-chain = "0.7.1"
+git2 = "0.6.3"
+hound = "2.0.0"
+lazy_static = "0.2.2"
+leftpad = "0.2.0"
+markdown = "0.1.1"
+nom = "2.0.1"
+num = "0.1.36"
+num_cpus = "1.1.0"
+phf = "0.7.20"
+phf_macros = "0.7.20"
+rand = "0.3.14"
+rayon = "0.5.0"
+rust-lzma = "0.2.1"
+rustfft = "1.0.1"
+serde = "0.8.19"
+serde_derive = "0.8.19"
+serde_json = "0.8.4"
+serde_yaml = "0.5.0"
+slog = "1.3.2"
+slog-json = "1.2.1"
+slog-stream = "1.2.0"
+slog-term = "1.3.3"
+tempfile = "2.1.4"
+tera = "0.4.1"
+time = "0.1.35"
+zip = "0.2.0"
+
+[target.i686-pc-windows-gnu.dependencies]
+winreg = "0.4"
+
+[target.i686-pc-windows-msvc.dependencies]
+winreg = "0.4"
+
+[target.x86_64-pc-windows-gnu.dependencies]
+winreg = "0.4"
+
+[target.x86_64-pc-windows-msvc.dependencies]
+winreg = "0.4"

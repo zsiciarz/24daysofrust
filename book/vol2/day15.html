@@ -1,0 +1,1052 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Day 15 - tera | 24 days of Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../book/vol2/day16.html" />
+    
+    
+    <link rel="prev" href="../../book/vol2/day14.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="2.15"
+        data-chapter-title="Day 15 - tera"
+        data-filepath="book/vol2/day15.md"
+        data-basepath="../.."
+        data-revision="Mon Dec 19 2016 18:25:03 GMT+0000 (UTC)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/vol1/index.html">
+            
+                
+                    <a href="../../book/vol1/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Volume 1
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
+            
+                
+                    <a href="../../book/vol1/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
+            
+                
+                    <a href="../../book/vol1/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        Day 2 - primal
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
+            
+                
+                    <a href="../../book/vol1/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
+            
+                
+                    <a href="../../book/vol1/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
+            
+                
+                    <a href="../../book/vol1/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="book/vol1/day6.html">
+            
+                
+                    <a href="../../book/vol1/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
+            
+                
+                    <a href="../../book/vol1/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
+            
+                
+                    <a href="../../book/vol1/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
+            
+                
+                    <a href="../../book/vol1/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
+            
+                
+                    <a href="../../book/vol1/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
+            
+                
+                    <a href="../../book/vol1/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
+            
+                
+                    <a href="../../book/vol1/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.12.</b>
+                        
+                        Day 12 - image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
+            
+                
+                    <a href="../../book/vol1/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
+            
+                
+                    <a href="../../book/vol1/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
+            
+                
+                    <a href="../../book/vol1/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
+            
+                
+                    <a href="../../book/vol1/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
+            
+                
+                    <a href="../../book/vol1/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
+            
+                
+                    <a href="../../book/vol1/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
+            
+                
+                    <a href="../../book/vol1/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
+            
+                
+                    <a href="../../book/vol1/day20.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
+            
+                
+                    <a href="../../book/vol1/day21.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
+            
+                
+                    <a href="../../book/vol1/day22.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
+            
+                
+                    <a href="../../book/vol1/day23.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
+            
+                
+                    <a href="../../book/vol1/day24.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/vol2/index.html">
+            
+                
+                    <a href="../../book/vol2/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Volume 2
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1" data-path="book/vol2/day1.html">
+            
+                
+                    <a href="../../book/vol2/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                        Day 1 - cargo subcommands
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="book/vol2/day2.html">
+            
+                
+                    <a href="../../book/vol2/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                        Day 2 - hound
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="book/vol2/day3.html">
+            
+                
+                    <a href="../../book/vol2/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                        Day 3 - rayon
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
+            
+                
+                    <a href="../../book/vol2/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                        Day 4 - structured logging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="book/vol2/day5.html">
+            
+                
+                    <a href="../../book/vol2/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                        Day 5 - environment variables
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="book/vol2/day6.html">
+            
+                
+                    <a href="../../book/vol2/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                        Day 6 - derive_builder
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="book/vol2/day7.html">
+            
+                
+                    <a href="../../book/vol2/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.7.</b>
+                        
+                        Day 7 - static initialization
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="book/vol2/day8.html">
+            
+                
+                    <a href="../../book/vol2/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.8.</b>
+                        
+                        Day 8 - serde
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="book/vol2/day9.html">
+            
+                
+                    <a href="../../book/vol2/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.9.</b>
+                        
+                        Day 9 - winreg
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="book/vol2/day10.html">
+            
+                
+                    <a href="../../book/vol2/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.10.</b>
+                        
+                        Day 10 - nom, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="book/vol2/day11.html">
+            
+                
+                    <a href="../../book/vol2/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.11.</b>
+                        
+                        Day 11 - nom, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="book/vol2/day12.html">
+            
+                
+                    <a href="../../book/vol2/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.12.</b>
+                        
+                        Day 12 - clap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="book/vol2/day13.html">
+            
+                
+                    <a href="../../book/vol2/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.13.</b>
+                        
+                        Day 13 - zip and lzma compression
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="book/vol2/day14.html">
+            
+                
+                    <a href="../../book/vol2/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.14.</b>
+                        
+                        Day 14 - Cursive
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.15" data-path="book/vol2/day15.html">
+            
+                
+                    <a href="../../book/vol2/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.15.</b>
+                        
+                        Day 15 - tera
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.16" data-path="book/vol2/day16.html">
+            
+                
+                    <a href="../../book/vol2/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.16.</b>
+                        
+                        Day 16 - git2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.17" data-path="book/vol2/day17.html">
+            
+                
+                    <a href="../../book/vol2/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.17.</b>
+                        
+                        Day 17 - diesel
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.18" data-path="book/vol2/day18.html">
+            
+                
+                    <a href="../../book/vol2/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.18.</b>
+                        
+                        Day 18 - error_chain
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.19" data-path="book/vol2/day19.html">
+            
+                
+                    <a href="../../book/vol2/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.19.</b>
+                        
+                        Day 19 - leftpad
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >24 days of Rust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-15--tera">Day 15 - tera</h1>
+<p><a href="https://crates.io/crates/tera" target="_blank"><code>tera</code></a> is a pure Rust templating engine.
+Those familiar with <a href="https://www.djangoproject.com" target="_blank">Django</a>,
+<a href="http://jinja.pocoo.org" target="_blank">Jinja2</a> or <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a>
+will feel right at home with <code>tera</code>, as its syntax is very similar.
+<code>tera</code> is still very young and may not be as feature complete as, say, Jinja2.
+However it is actively developed and the maintainer is very open to new
+contributions, so feel free to
+<a href="https://github.com/Keats/tera/issues" target="_blank">tackle some issues</a>!</p>
+<h2 id="basic-templates">Basic templates</h2>
+<p>Let&apos;s use <code>tera</code> to render a simple HTML template.</p>
+<p>Note: The templates are parsed when <code>Tera::new()</code> is called, so if any of
+the templates contains invalid syntax, the function will panic right there.
+Keep that in mind!</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> tera;
+
+<span class="hljs-keyword">use</span> tera::{Context, Tera};
+
+<span class="hljs-keyword">const</span> LIPSUM: &amp;<span class="hljs-string">&apos;static</span> <span class="hljs-keyword">str</span> =
+    <span class="hljs-string">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
+     labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco \
+     laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in \
+     voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat \
+     cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum&quot;</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> tera = Tera::new(<span class="hljs-string">&quot;templates/**/*&quot;</span>);
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
+    ctx.add(<span class="hljs-string">&quot;title&quot;</span>, &amp;<span class="hljs-string">&quot;hello world!&quot;</span>);
+    ctx.add(<span class="hljs-string">&quot;content&quot;</span>, &amp;LIPSUM);
+    ctx.add(<span class="hljs-string">&quot;todos&quot;</span>,
+            &amp;<span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;buy milk&quot;</span>, <span class="hljs-string">&quot;walk the dog&quot;</span>, <span class="hljs-string">&quot;write about tera&quot;</span>]);
+    <span class="hljs-keyword">let</span> rendered = tera.render(<span class="hljs-string">&quot;index.html&quot;</span>, ctx).expect(<span class="hljs-string">&quot;Failed to render template&quot;</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, rendered);
+}
+</code></pre>
+<p>We pass variables from Rust code to the template using a <code>Context</code> struct.
+The <code>add()</code> method takes variable name and a reference to the value. Values
+can be basic Rust types, vectors or custom structs (provided that they
+implement the <code>Serialize</code> trait from <code>serde</code>.)</p>
+<p>Our <code>index.html</code> looks like this:</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>{{ title|title }}<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>{{ title|title }}<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>{{ content|wordcount }} words<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{{ content }}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+{% if todos|length &gt; 1 %}
+    <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    {% for todo in todos %}
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>{{ todo }}<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    {% endfor %}
+    <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+{% endif %}
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>We use <code>{{ ... }}</code> in the templates to refer to variables, while <code>{% ... %}</code>
+syntax is for flow control tags such as loops and blocks. The excellent
+<a href="https://docs.djangoproject.com/en/1.10/ref/templates/language/" target="_blank">Django docs</a>
+describe this syntax in more detail. <code>tera</code> templates follow the same
+conventions.</p>
+<pre><code class="lang-text">$ cargo run
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello World!</title>
+</head>
+<body>
+<h1>Hello World!</h1>
+<h2>69 words</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+<ul>
+    <li>buy milk</li>
+    <li>walk the dog</li>
+    <li>write about tera</li>
+    </ul>
+</body>
+</html>
+</code></pre>
+<h2 id="custom-template-filters">Custom template filters</h2>
+<p>Template filters are expressions that affect how variables are displayed.
+We can apply them using the pipe character <code>|</code> after variable name, for
+example <code>{{ content|lower }}</code>.
+<code>tera</code> provides a selection of built-in template filters, such as <code>trim</code>,
+<code>wordcount</code>, <code>pluralize</code> or <code>reverse</code>. But the power of template engines
+lies in their extensibility. We can add our own template filters to cover
+the specific needs of our application. (Or to make life easier for
+frontend developers on the team.)</p>
+<p>A template filter is just a Rust function that has the following type:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">type</span> <span class="hljs-title">FilterFn</span> = <span class="hljs-function"><span class="hljs-keyword">fn</span></span>(Value, HashMap&lt;<span class="hljs-built_in">String</span>, Value&gt;) -&gt; TeraResult&lt;Value&gt;;
+</code></pre>
+<p>Let&apos;s use the <a href="https://crates.io/crates/markdown" target="_blank"><code>markdown</code></a> crate
+to render Markdown to HTML on the fly.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> markdown;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> tera;
+
+<span class="hljs-keyword">use</span> std::collections::HashMap;
+<span class="hljs-keyword">use</span> tera::{Context, Tera, TeraResult, Value, to_value};
+
+<span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">markdown_filter</span></span>(value: Value, _: HashMap&lt;<span class="hljs-built_in">String</span>, Value&gt;) -&gt; TeraResult&lt;Value&gt; {
+    <span class="hljs-keyword">let</span> s = try_get_value!(<span class="hljs-string">&quot;upper&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-built_in">String</span>, value);
+    <span class="hljs-built_in">Ok</span>(to_value(markdown::to_html(s.as_str())))
+}
+</code></pre>
+<p>We&apos;re using here a <code>try_get_value!</code> macro, which isn&apos;t currently a part of
+<code>tera</code>&apos;s public API (because value serializing may change; at the moment <code>tera</code>
+is using <code>serde_json</code>). I&apos;ve copied it
+<a href="https://github.com/Keats/tera/blob/3471df41ab454c60a85ec271a945f7123705e49a/src/macros.rs#L6" target="_blank">from <code>tera</code> sources</a>
+but decided to omit its definition from the example for clarity. We try
+to read our input as a <code>String</code> and if that succeeds, we pass the string slice
+to <code>markdown::to_html()</code>. The rest is just bookkeeping - convert the rendered
+HTML back to a <code>Value</code> and wrap in <code>Ok</code>. Let&apos;s see it in action:</p>
+<pre><code class="lang-rust">tera.register_filter(<span class="hljs-string">&quot;markdown&quot;</span>, markdown_filter);
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
+ctx.add(<span class="hljs-string">&quot;content&quot;</span>, &amp;<span class="hljs-string">&quot;**bold** and `beautiful`&quot;</span>);
+<span class="hljs-keyword">let</span> rendered = tera.render(<span class="hljs-string">&quot;blog.html&quot;</span>, ctx).expect(<span class="hljs-string">&quot;Failed to render template&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, rendered);
+</code></pre>
+<p>And the template:</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">&quot;utf-8&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    {{ content|markdown|safe }}
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>We can chain filters one after another. Here we&apos;re using the built-in <code>safe</code>
+filter to disable auto-escaping of the generated HTML.</p>
+<pre><code class="lang-text">$ cargo run
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <p><strong>bold</strong> and <code>beautiful</code></p>
+
+</body>
+</html>
+</code></pre>
+<h2 id="not-only-html">Not only HTML</h2>
+<p>The Django template docs contain a following paragraph (near the beginning,
+so that&apos;s important for them):</p>
+<blockquote>
+<p>Why use a text-based template instead of an XML-based one (like Zope&#x2019;s TAL)?
+We wanted Django&#x2019;s template language to be usable for more than just XML/HTML
+templates. At World Online, we use it for emails, JavaScript and CSV.
+You can use the template language for any text-based format.</p>
+<p>Oh, and one more thing: making humans edit XML is sadistic!</p>
+</blockquote>
+<p><code>tera</code> shares the same philosophy. We don&apos;t have to emit HTML and HTML only.
+In the following example we&apos;re rendering a map of configuration values
+into an <code>.ini</code> file:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> config = HashMap::new();
+config.insert(<span class="hljs-string">&quot;hostname&quot;</span>, <span class="hljs-string">&quot;127.0.0.1&quot;</span>);
+config.insert(<span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-string">&quot;root&quot;</span>);
+config.insert(<span class="hljs-string">&quot;email&quot;</span>, <span class="hljs-string">&quot;NAME@example.com&quot;</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
+ctx.add(<span class="hljs-string">&quot;config&quot;</span>, &amp;config);
+<span class="hljs-keyword">let</span> rendered = tera.render(<span class="hljs-string">&quot;config.ini&quot;</span>, ctx).expect(<span class="hljs-string">&quot;Failed to render template&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, rendered);
+</code></pre>
+<p><code>config.ini</code>:</p>
+<pre><code class="lang-ini">[system]
+{% if config.user != &quot;anonymous&quot; %}
+user={{ config.user }}
+{% endif %}
+
+[network]
+hostname={{ config.hostname }}
+email={{ config.email|replace(from=&quot;NAME&quot;, to=config.user) }}
+</code></pre>
+<p>We can access <code>HashMap</code> members in the template using dot notation, as in
+<code>config.user</code>. This example also demonstrates that filters can take extra
+arguments, like <code>replace</code>.</p>
+<p>And the result:</p>
+<pre><code class="lang-text">$ cargo run
+[system]
+user=root
+
+[network]
+hostname=127.0.0.1
+email=root@example.com
+</code></pre>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://blog.wearewizards.io/introducing-tera-a-template-engine-in-rust" target="_blank">Introducing Tera, a template engine in Rust</a></li>
+<li><a href="https://docs.djangoproject.com/en/1.10/ref/templates/" target="_blank">Django templates documentation</a></li>
+<li><a href="http://jinja.pocoo.org/docs/dev/" target="_blank">Jinja2 documentation</a></li>
+<li><a href="https://crates.io/crates/dtl" target="_blank">dtl</a> - Django Template Language for Rust</li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../book/vol2/day14.html" class="navigation navigation-prev " aria-label="Previous page: Day 14 - Cursive"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../book/vol2/day16.html" class="navigation navigation-next " aria-label="Next page: Day 16 - git2"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"include-codeblock":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

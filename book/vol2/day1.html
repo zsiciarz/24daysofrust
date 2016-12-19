@@ -1,0 +1,1011 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Day 1 - cargo subcommands | 24 days of Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../book/vol2/day2.html" />
+    
+    
+    <link rel="prev" href="../../book/vol2/index.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="2.1"
+        data-chapter-title="Day 1 - cargo subcommands"
+        data-filepath="book/vol2/day1.md"
+        data-basepath="../.."
+        data-revision="Mon Dec 19 2016 18:25:03 GMT+0000 (UTC)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/vol1/index.html">
+            
+                
+                    <a href="../../book/vol1/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Volume 1
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
+            
+                
+                    <a href="../../book/vol1/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
+            
+                
+                    <a href="../../book/vol1/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        Day 2 - primal
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
+            
+                
+                    <a href="../../book/vol1/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
+            
+                
+                    <a href="../../book/vol1/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
+            
+                
+                    <a href="../../book/vol1/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="book/vol1/day6.html">
+            
+                
+                    <a href="../../book/vol1/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
+            
+                
+                    <a href="../../book/vol1/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
+            
+                
+                    <a href="../../book/vol1/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
+            
+                
+                    <a href="../../book/vol1/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
+            
+                
+                    <a href="../../book/vol1/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
+            
+                
+                    <a href="../../book/vol1/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
+            
+                
+                    <a href="../../book/vol1/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.12.</b>
+                        
+                        Day 12 - image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
+            
+                
+                    <a href="../../book/vol1/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
+            
+                
+                    <a href="../../book/vol1/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
+            
+                
+                    <a href="../../book/vol1/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
+            
+                
+                    <a href="../../book/vol1/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
+            
+                
+                    <a href="../../book/vol1/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
+            
+                
+                    <a href="../../book/vol1/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
+            
+                
+                    <a href="../../book/vol1/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
+            
+                
+                    <a href="../../book/vol1/day20.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
+            
+                
+                    <a href="../../book/vol1/day21.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
+            
+                
+                    <a href="../../book/vol1/day22.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
+            
+                
+                    <a href="../../book/vol1/day23.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
+            
+                
+                    <a href="../../book/vol1/day24.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/vol2/index.html">
+            
+                
+                    <a href="../../book/vol2/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Volume 2
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="2.1" data-path="book/vol2/day1.html">
+            
+                
+                    <a href="../../book/vol2/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                        Day 1 - cargo subcommands
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="book/vol2/day2.html">
+            
+                
+                    <a href="../../book/vol2/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                        Day 2 - hound
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="book/vol2/day3.html">
+            
+                
+                    <a href="../../book/vol2/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                        Day 3 - rayon
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
+            
+                
+                    <a href="../../book/vol2/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                        Day 4 - structured logging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="book/vol2/day5.html">
+            
+                
+                    <a href="../../book/vol2/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                        Day 5 - environment variables
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="book/vol2/day6.html">
+            
+                
+                    <a href="../../book/vol2/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                        Day 6 - derive_builder
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="book/vol2/day7.html">
+            
+                
+                    <a href="../../book/vol2/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.7.</b>
+                        
+                        Day 7 - static initialization
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="book/vol2/day8.html">
+            
+                
+                    <a href="../../book/vol2/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.8.</b>
+                        
+                        Day 8 - serde
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="book/vol2/day9.html">
+            
+                
+                    <a href="../../book/vol2/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.9.</b>
+                        
+                        Day 9 - winreg
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="book/vol2/day10.html">
+            
+                
+                    <a href="../../book/vol2/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.10.</b>
+                        
+                        Day 10 - nom, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="book/vol2/day11.html">
+            
+                
+                    <a href="../../book/vol2/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.11.</b>
+                        
+                        Day 11 - nom, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="book/vol2/day12.html">
+            
+                
+                    <a href="../../book/vol2/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.12.</b>
+                        
+                        Day 12 - clap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="book/vol2/day13.html">
+            
+                
+                    <a href="../../book/vol2/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.13.</b>
+                        
+                        Day 13 - zip and lzma compression
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="book/vol2/day14.html">
+            
+                
+                    <a href="../../book/vol2/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.14.</b>
+                        
+                        Day 14 - Cursive
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.15" data-path="book/vol2/day15.html">
+            
+                
+                    <a href="../../book/vol2/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.15.</b>
+                        
+                        Day 15 - tera
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.16" data-path="book/vol2/day16.html">
+            
+                
+                    <a href="../../book/vol2/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.16.</b>
+                        
+                        Day 16 - git2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.17" data-path="book/vol2/day17.html">
+            
+                
+                    <a href="../../book/vol2/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.17.</b>
+                        
+                        Day 17 - diesel
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.18" data-path="book/vol2/day18.html">
+            
+                
+                    <a href="../../book/vol2/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.18.</b>
+                        
+                        Day 18 - error_chain
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.19" data-path="book/vol2/day19.html">
+            
+                
+                    <a href="../../book/vol2/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.19.</b>
+                        
+                        Day 19 - leftpad
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >24 days of Rust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-1--cargo-subcommands">Day 1 - Cargo subcommands</h1>
+<p>Welcome to the second edition of <strong>24 Days of Rust</strong>!</p>
+<p>Two years ago in December 2014 the
+<a href="https://zsiciarz.github.io/24daysofrust/" target="_blank">first edition</a>  was pretty well
+received by the Rust community. That was a hard time - we were still before
+the 1.0 release of the language. I had to keep up with updating my examples
+day by day since almost every nightly broke <em>something</em>. Even so, I managed
+to publish all 24 blogposts on schedule :-)</p>
+<p>This year I&apos;m back with another series of articles about Rust tools and
+libraries. The languge is at version 1.13 as I&apos;m writing this introduction.
+It&apos;s definitely more stable and mature at this point than it was in
+those savage pre-1.0 times. Some of my examples will probably still require a
+nightly release, but I&apos;ll try to keep them updated when relevant features get
+into stable.</p>
+<p>With that, let&apos;s dive in into our first topic, which is....</p>
+<h2 id="cargo-subcommands">Cargo subcommands</h2>
+<p>By now you&apos;re probably familiar with commands like <code>cargo build</code>, <code>cargo run</code>,
+<code>cargo test</code> etc. But these are just the built-in commands. Cargo is extensible,
+allowing you to plug in third party subcommands. I&apos;ll briefly describe some of
+those in this post. Read on!</p>
+<h2 id="subcommand-discovery">Subcommand discovery</h2>
+<p>First of all, what are those subcommands and how does Cargo know what code to
+run? Turns out it&apos;s very simple. If you have an executable named
+<code>cargo-embiggen</code> in your <code>PATH</code>, then it will be available as <code>cargo embiggen</code>
+subcommand.</p>
+<h2 id="cargo-fmt"><code>cargo fmt</code></h2>
+<p>If you write code in other languages, there are probably some coding style
+guides you follow (or at least have heard of). In Python land there&apos;s
+<a href="https://www.python.org/dev/peps/pep-0008/" target="_blank">PEP 8</a>, PHP has their coding
+standards spread across <a href="http://www.php-fig.org/psr/psr-1/" target="_blank">several</a>
+<a href="http://www.php-fig.org/psr/psr-2/" target="_blank">PSRs</a>, and a lot of organizations have
+their internal style guides for the languages they use. But having a coding
+style is one thing, actually sticking to it is another. Wouldn&apos;t it be nice
+to have some automated tool to enforce code formatting? Fortunately there&apos;s one
+for Rust.</p>
+<p>Enter <a href="https://github.com/rust-lang-nursery/rustfmt" target="_blank"><code>rustfmt</code></a>, which is the
+officially supported code formatter for Rust. If you install it with
+<code>cargo install rustfmt</code>, then a <code>cargo fmt</code> command becomes available. Run
+it on your project to fix any code that doesn&apos;t necessarily follow best
+formatting practices. For example, <code>rustfmt</code> can turn this:</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">make_it_happen</span></span>&lt;T, U&gt;(x: &amp;<span class="hljs-built_in">Option</span>&lt;T&gt;, y: U) -&gt; <span class="hljs-built_in">Result</span>&lt;U, <span class="hljs-built_in">String</span>&gt; <span class="hljs-keyword">where</span> T: std::io::Write, U: std::io::Read
+{
+    <span class="hljs-keyword">match</span> *x
+    {
+        <span class="hljs-built_in">Some</span>(_) =&gt; {<span class="hljs-built_in">Ok</span>(y)},
+        <span class="hljs-built_in">None</span> =&gt; <span class="hljs-built_in">Err</span>(<span class="hljs-string">&quot;not happening&quot;</span>.into())
+    }
+}
+</code></pre>
+<p>into this:</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">make_it_happen</span></span>&lt;T, U&gt;(x: &amp;<span class="hljs-built_in">Option</span>&lt;T&gt;, y: U) -&gt; <span class="hljs-built_in">Result</span>&lt;U, <span class="hljs-built_in">String</span>&gt;
+    <span class="hljs-keyword">where</span> T: std::io::Write,
+          U: std::io::Read
+{
+    <span class="hljs-keyword">match</span> *x {
+        <span class="hljs-built_in">Some</span>(_) =&gt; <span class="hljs-built_in">Ok</span>(y),
+        <span class="hljs-built_in">None</span> =&gt; <span class="hljs-built_in">Err</span>(<span class="hljs-string">&quot;not happening&quot;</span>.into()),
+    }
+}
+</code></pre>
+<p><code>rustfmt</code> fixed where clause, unnecessary braces and trailing commas. The
+code is now consistent with current Rust style guidelines. If you use
+one of popular text editors or IDEs, you can probably hook <code>rustfmt</code>/<code>cargo fmt</code>
+on save, so all your Rust sources will be formatted automatically.</p>
+<h2 id="cargo-outdated"><code>cargo outdated</code></h2>
+<p>This command is the equivalent of <code>npm outdated</code> or <code>pip list --outdated</code>.
+Install it with <code>cargo install cargo-outdated</code>, and then run <code>cargo outdated</code>
+in your project directory. For example in one of my projects:</p>
+<pre><code class="lang-text">$ cargo outdated
+Checking for SemVer compatible updates...Done
+Checking for the latest updates...Done
+The following dependencies have newer versions available:
+
+    Name                   Project Ver  SemVer Compat  Latest Ver
+    hound                     1.1.0          --          2.0.0
+    rustfft                   1.0.0        1.0.1         1.0.1
+</code></pre>
+<p>As you can see, it tells me I can probably safely update the <code>rustfft</code>
+crate to its latest version. On the other hand, <code>hound</code> might have introduced
+breaking changes, so there&apos;s no <a href="http://semver.org/" target="_blank">SemVer</a>-compatible version.</p>
+<p><strong>Note</strong>: always test your project after upgrading your dependencies, even if
+it&apos;s only a patch version. SemVer is only a promise not to break your code,
+not a strict guarantee.</p>
+<h2 id="cargo-clippy"><code>cargo clippy</code></h2>
+<p><code>clippy</code> (which takes its name from an obnoxious
+<a href="https://en.wikipedia.org/wiki/Office_Assistant" target="_blank">MS Office feature</a>) is
+actually a very useful tool, compared to its namesake. It is a linter that
+checks your code against common mistakes and suggests idiomatic improvements.
+At this moment clippy has over
+<a href="https://github.com/Manishearth/rust-clippy/wiki" target="_blank">170 different checks</a>,
+so it&apos;s definitely worth trying out on your codebase.</p>
+<p>If you install it with <code>cargo install clippy</code> (requires nightly), you can run it
+as a Cargo subcommand - <code>cargo clippy</code>.</p>
+<p>For example:</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">needs_improving</span></span>(x: <span class="hljs-keyword">bool</span>) {
+    <span class="hljs-keyword">if</span> x.clone() == <span class="hljs-keyword">true</span> {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;x is true&quot;</span>);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span> <span class="hljs-number">42</span> &gt; std::i32::MAX {
+            <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;WAT&quot;</span>);
+        }
+    }
+}
+</code></pre>
+<p>This code is well-formatted and compiles succesfully. However, there are a few
+things that could be improved here and <code>clippy</code> tells you just that:</p>
+<pre><code class="lang-text">warning: this `else { if .. }` block can be collapsed, #[warn(collapsible_if)] on by default
+  --&gt; src\example.rs:55:12
+   |
+55 |     } else {
+   |            ^
+   |
+help: try
+   |     } else if 42 &gt; std::i32::MAX {
+   |     panic!(&quot;WAT&quot;);
+   | }
+   = help: for further information visit https://github.com/Manishearth/rust-clippy/wiki#collapsible_if
+
+warning: equality checks against true are unnecessary, #[warn(bool_comparison)] on by default
+  --&gt; src\example.rs:53:8
+   |
+53 |     if x.clone() == true {
+   |        ^^^^^^^^^^^^^^^^^
+   |
+help: try simplifying it as shown:
+   |     if x.clone() {
+   = help: for further information visit https://github.com/Manishearth/rust-clippy/wiki#bool_comparison
+
+warning: using `clone` on a `Copy` type, #[warn(clone_on_copy)] on by default
+  --&gt; src\example.rs:53:8
+   |
+53 |     if x.clone() == true {
+   |        ^^^^^^^^^
+   |
+help: try removing the `clone` call
+   |     if x == true {
+   = help: for further information visit https://github.com/Manishearth/rust-clippy/wiki#clone_on_copy
+
+warning: this comparison involving the minimum or maximum element for this type contains a case that is always true or always false, #[warn(absurd_extreme_comparisons)] on by default
+  --&gt; src\example.rs:56:12
+   |
+56 |         if 42 &gt; std::i32::MAX {
+   |            ^^^^^^^^^^^^^^^^^^
+   |
+   = help: because std::i32::MAX is the maximum value for this type, this comparison is always false
+   = help: for further information visit https://github.com/Manishearth/rust-clippy/wiki#absurd_extreme_comparisons
+</code></pre>
+<p>Note how each of these checks points you to clippy wiki for more explanation if
+it&apos;s still unclear from the message. <strong>Thanks clippy!</strong></p>
+<p>Before I finish this article, I need to point out that there&apos;s unfortunately
+no (un)official tutorial on how to write a custom Cargo subcommand.
+That&apos;s an idea for a future blogpost :-)</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/cargo/wiki/Third-party-cargo-subcommands" target="_blank">Third party cargo subcommands</a></li>
+<li><a href="http://libs.rs/cargo-subcommands/" target="_blank">Cargo subcommands at libs.rs</a></li>
+<li><a href="https://github.com/rust-lang/cargo/pull/3004" target="_blank">Pull request to add templating to Cargo</a></li>
+<li><a href="https://clippy.bashy.io/" target="_blank">Clippy as a service</a></li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../book/vol2/index.html" class="navigation navigation-prev " aria-label="Previous page: Volume 2"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../book/vol2/day2.html" class="navigation navigation-next " aria-label="Next page: Day 2 - hound"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"include-codeblock":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

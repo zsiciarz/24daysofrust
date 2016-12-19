@@ -1,0 +1,1090 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Day 12 - clap | 24 days of Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../book/vol2/day13.html" />
+    
+    
+    <link rel="prev" href="../../book/vol2/day11.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="2.12"
+        data-chapter-title="Day 12 - clap"
+        data-filepath="book/vol2/day12.md"
+        data-basepath="../.."
+        data-revision="Mon Dec 19 2016 18:25:03 GMT+0000 (UTC)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="book/vol1/index.html">
+            
+                
+                    <a href="../../book/vol1/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Volume 1
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
+            
+                
+                    <a href="../../book/vol1/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        Day 1 - Cargo and crates.io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
+            
+                
+                    <a href="../../book/vol1/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        Day 2 - primal
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
+            
+                
+                    <a href="../../book/vol1/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        Day 3 - csv
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
+            
+                
+                    <a href="../../book/vol1/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                        Day 4 - docopt
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
+            
+                
+                    <a href="../../book/vol1/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                        Day 5 - hyper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="book/vol1/day6.html">
+            
+                
+                    <a href="../../book/vol1/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                        Day 6 - working with JSON
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
+            
+                
+                    <a href="../../book/vol1/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                        Day 7 - itertools
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
+            
+                
+                    <a href="../../book/vol1/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                        Day 8 - racer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
+            
+                
+                    <a href="../../book/vol1/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.9.</b>
+                        
+                        Day 9 - anymap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
+            
+                
+                    <a href="../../book/vol1/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.10.</b>
+                        
+                        Day 10 - the glorious tau
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
+            
+                
+                    <a href="../../book/vol1/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.11.</b>
+                        
+                        Day 11 - postgres
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
+            
+                
+                    <a href="../../book/vol1/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.12.</b>
+                        
+                        Day 12 - image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
+            
+                
+                    <a href="../../book/vol1/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.13.</b>
+                        
+                        Day 13 - uuid
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
+            
+                
+                    <a href="../../book/vol1/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.14.</b>
+                        
+                        Day 14 - nalgebra
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
+            
+                
+                    <a href="../../book/vol1/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.15.</b>
+                        
+                        Day 15 - FUSE filesystems, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
+            
+                
+                    <a href="../../book/vol1/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.16.</b>
+                        
+                        Day 16 - FUSE filesystems, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
+            
+                
+                    <a href="../../book/vol1/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.17.</b>
+                        
+                        Day 17 - from_fn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
+            
+                
+                    <a href="../../book/vol1/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.18.</b>
+                        
+                        Day 18 - redis
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
+            
+                
+                    <a href="../../book/vol1/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.19.</b>
+                        
+                        Day 19 - rusti
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
+            
+                
+                    <a href="../../book/vol1/day20.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.20.</b>
+                        
+                        Day 20 - zeromq
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
+            
+                
+                    <a href="../../book/vol1/day21.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.21.</b>
+                        
+                        Day 21 - rust-crypto
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
+            
+                
+                    <a href="../../book/vol1/day22.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.22.</b>
+                        
+                        Day 22 - built with Rust
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
+            
+                
+                    <a href="../../book/vol1/day23.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.23.</b>
+                        
+                        Day 23 - calling Rust from other languages
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
+            
+                
+                    <a href="../../book/vol1/day24.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.24.</b>
+                        
+                        Day 24 - conclusion
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="book/vol2/index.html">
+            
+                
+                    <a href="../../book/vol2/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Volume 2
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1" data-path="book/vol2/day1.html">
+            
+                
+                    <a href="../../book/vol2/day1.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                        Day 1 - cargo subcommands
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="book/vol2/day2.html">
+            
+                
+                    <a href="../../book/vol2/day2.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                        Day 2 - hound
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="book/vol2/day3.html">
+            
+                
+                    <a href="../../book/vol2/day3.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                        Day 3 - rayon
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
+            
+                
+                    <a href="../../book/vol2/day4.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                        Day 4 - structured logging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="book/vol2/day5.html">
+            
+                
+                    <a href="../../book/vol2/day5.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                        Day 5 - environment variables
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="book/vol2/day6.html">
+            
+                
+                    <a href="../../book/vol2/day6.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                        Day 6 - derive_builder
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="book/vol2/day7.html">
+            
+                
+                    <a href="../../book/vol2/day7.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.7.</b>
+                        
+                        Day 7 - static initialization
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="book/vol2/day8.html">
+            
+                
+                    <a href="../../book/vol2/day8.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.8.</b>
+                        
+                        Day 8 - serde
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="book/vol2/day9.html">
+            
+                
+                    <a href="../../book/vol2/day9.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.9.</b>
+                        
+                        Day 9 - winreg
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="book/vol2/day10.html">
+            
+                
+                    <a href="../../book/vol2/day10.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.10.</b>
+                        
+                        Day 10 - nom, part 1
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="book/vol2/day11.html">
+            
+                
+                    <a href="../../book/vol2/day11.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.11.</b>
+                        
+                        Day 11 - nom, part 2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.12" data-path="book/vol2/day12.html">
+            
+                
+                    <a href="../../book/vol2/day12.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.12.</b>
+                        
+                        Day 12 - clap
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="book/vol2/day13.html">
+            
+                
+                    <a href="../../book/vol2/day13.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.13.</b>
+                        
+                        Day 13 - zip and lzma compression
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="book/vol2/day14.html">
+            
+                
+                    <a href="../../book/vol2/day14.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.14.</b>
+                        
+                        Day 14 - Cursive
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.15" data-path="book/vol2/day15.html">
+            
+                
+                    <a href="../../book/vol2/day15.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.15.</b>
+                        
+                        Day 15 - tera
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.16" data-path="book/vol2/day16.html">
+            
+                
+                    <a href="../../book/vol2/day16.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.16.</b>
+                        
+                        Day 16 - git2
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.17" data-path="book/vol2/day17.html">
+            
+                
+                    <a href="../../book/vol2/day17.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.17.</b>
+                        
+                        Day 17 - diesel
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.18" data-path="book/vol2/day18.html">
+            
+                
+                    <a href="../../book/vol2/day18.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.18.</b>
+                        
+                        Day 18 - error_chain
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.19" data-path="book/vol2/day19.html">
+            
+                
+                    <a href="../../book/vol2/day19.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.19.</b>
+                        
+                        Day 19 - leftpad
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >24 days of Rust</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="day-12--clap">Day 12 - clap</h1>
+<p><a href="https://crates.io/crates/clap" target="_blank"><code>clap</code></a> is a fantastic Rust library
+for <strong>C</strong>ommand <strong>L</strong>ine <strong>A</strong>rgument <strong>P</strong>arsing. It&apos;s both
+easy to use and powerful - in the spirit of Rust philosophy - you get what
+you pay for. Simple CLI options are simple to define, while complex schemes
+(think <code>git</code> level of complex) are absolutely doable.</p>
+<p><code>clap</code> is also one of the best examples of what I would call
+<strong>developer marketing</strong> in the Rust community. It has a
+<a href="https://clap.rs/" target="_blank">beautiful and informative</a> homepage, an extensive
+<a href="https://github.com/kbknapp/clap-rs" target="_blank">README</a> (including changelog - see note
+below), a bunch of
+<a href="https://github.com/kbknapp/clap-rs/tree/master/examples" target="_blank">good examples</a>, even
+<a href="https://www.youtube.com/playlist?list=PLza5oFLQGTl2Z5T8g1pRkIynR3E0_pc7U" target="_blank">video tutorials</a>!
+Hats off to Kevin and all <code>clap</code> contributors, you&apos;re doing a great job!</p>
+<p><strong>Note</strong>: Rust crate authors, please, <em>please</em> add changelogs/release notes to
+your libraries. Coming from Python where it&apos;s customary, it struck me that
+a lot of libraries do not document their changes aside from the commit log.
+(Oops, I&apos;m <a href="https://github.com/zsiciarz/rust-cpuid" target="_blank">guilty of this myself</a>...)</p>
+<h2 id="simple-arguments">Simple arguments</h2>
+<p><code>clap</code> allows specifying our command line opions in a number of ways. We can
+use regular Rust method calls, macros or YAML configuration. I prefer the
+first approach - a builder pattern with method chaining - and this is what I&apos;ll
+be using throughout this article.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> clap;
+
+<span class="hljs-keyword">use</span> std::process;
+<span class="hljs-keyword">use</span> clap::{Arg, ArgMatches, App, SubCommand};
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> matches = App::new(<span class="hljs-string">&quot;24daysofrust&quot;</span>)
+        .version(<span class="hljs-string">&quot;0.1&quot;</span>)
+        .author(<span class="hljs-string">&quot;Zbigniew Siciarz&quot;</span>)
+        .about(<span class="hljs-string">&quot;learn you some Rust!&quot;</span>)
+        .arg(Arg::with_name(<span class="hljs-string">&quot;verbose&quot;</span>)
+            .short(<span class="hljs-string">&quot;v&quot;</span>)
+            .multiple(<span class="hljs-keyword">true</span>)
+            .help(<span class="hljs-string">&quot;verbosity level&quot;</span>))
+        .get_matches();
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Err</span>(e) = run(matches) {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Application error: {}&quot;</span>, e);
+        process::exit(<span class="hljs-number">1</span>);
+    }
+}
+</code></pre>
+<p>Before specyfing our first argument, we use <code>version()</code>, <code>author()</code> and
+<code>about()</code> to give some general information about our program to <code>clap</code>.
+If we stopped there, <code>clap</code> already knows enough to automatically handle two
+common arguments: <code>--help</code> and <code>--version</code> (or their short forms <code>-h</code> and <code>-V</code>).</p>
+<pre><code class="lang-text">cargo run -- -h
+24daysofrust 0.1
+Zbigniew Siciarz
+learn you some Rust!
+
+USAGE:
+    example.exe
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+$ cargo run -- -V
+24daysofrust 0.1
+</code></pre>
+<p>Awesome! But we&apos;re not stopping there. We want to be able to print out some
+logs from our program. It&apos;s customary to use <code>-v</code> or (<code>--verbose</code>) to
+control the verbosity level of program output. The <code>Arg::with_name()</code> call
+creates a simple named argument. This struct has a selection of useful
+methods such as:</p>
+<ul>
+<li><code>short()</code> to provide a short, one-letter form</li>
+<li><code>required()</code> to indicate whether the argument is optional or required</li>
+<li><code>takes_value()</code> and <code>default_value()</code> to read values from arguments like
+<code>--option=foo</code></li>
+<li><code>multiple()</code> to allow for repeated occurences; here we can call our program
+with <code>-v</code> for verbose output, or <code>-vv</code> to be even more verbose</li>
+</ul>
+<p>The main function uses a pattern I&apos;ve noticed in a few applications or blog
+posts from the community. We process configuration and pass options to a
+<code>run()</code> function, which does all the work. This function returns a <code>Result</code>,
+allowing the use of <code>?</code> directly in <code>run()</code> (we can&apos;t do that in <code>main()</code>).</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> slog;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> slog_term;
+
+<span class="hljs-keyword">use</span> slog::DrainExt;
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run</span></span>(matches: ArgMatches) -&gt; <span class="hljs-built_in">Result</span>&lt;(), <span class="hljs-built_in">String</span>&gt; {
+    <span class="hljs-keyword">let</span> min_log_level = <span class="hljs-keyword">match</span> matches.occurrences_of(<span class="hljs-string">&quot;verbose&quot;</span>) {
+        <span class="hljs-number">0</span> =&gt; slog::Level::Info,
+        <span class="hljs-number">1</span> =&gt; slog::Level::Debug,
+        <span class="hljs-number">2</span> | _ =&gt; slog::Level::Trace,
+    };
+    <span class="hljs-keyword">let</span> drain = slog::level_filter(min_log_level, slog_term::streamer().build()).fuse();
+    <span class="hljs-keyword">let</span> logger = slog::Logger::root(drain, o!());
+    trace!(logger, <span class="hljs-string">&quot;app_setup&quot;</span>);
+    <span class="hljs-comment">// setting up app...</span>
+    debug!(logger, <span class="hljs-string">&quot;load_configuration&quot;</span>);
+    trace!(logger, <span class="hljs-string">&quot;app_setup_complete&quot;</span>);
+    <span class="hljs-comment">// starting processing...</span>
+    info!(logger, <span class="hljs-string">&quot;processing_started&quot;</span>);
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>We&apos;re using <a href="https://siciarz.net/24-days-rust-structured-logging/" target="_blank"><code>slog</code></a> here
+to configure logging level. The more verbose output is requested, the lower
+level is set in the <code>level_filter</code>. Let&apos;s see that in action:</p>
+<pre><code class="lang-text">$ cargo run
+Dec 12 20:17:01.284 INFO processing_started
+
+$ cargo run -- -v
+Dec 12 20:17:17.510 DEBG load_configuration
+Dec 12 20:17:17.511 INFO processing_started
+
+$ cargo run -- -vv
+Dec 12 20:17:28.763 TRCE app_setup
+Dec 12 20:17:28.764 DEBG load_configuration
+Dec 12 20:17:28.765 TRCE app_setup_complete
+Dec 12 20:17:28.765 INFO processing_started
+</code></pre>
+<p>With two (or more) occurences of <code>v</code> in the arguments, our app spews out a lot
+of debugging and trace information. These are filtered out if we don&apos;t want
+the verbose output. Perfect!</p>
+<h2 id="subcommands">Subcommands</h2>
+<p>A lot of CLI programs like <code>apt</code>, <code>git</code> or <code>cargo</code> group several specialized
+tasks under one executable. These subcommands (eg. <code>apt install</code>,
+<code>git checkout</code> or <code>cargo run</code>) behave like separate apps and can have their own
+options and even nested subcommands. Defining an interface like that is
+super easy with <code>clap</code>.</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> clap;
+
+<span class="hljs-keyword">use</span> clap::{Arg, App, SubCommand};
+
+arg_enum! {
+    <span class="hljs-preprocessor">#[derive(Debug)]</span>
+    <span class="hljs-keyword">enum</span> <span class="hljs-title">Algorithm</span> {
+        SHA1,
+        SHA256,
+        Argon2
+    }
+}
+
+<span class="hljs-keyword">let</span> matches = App::new(<span class="hljs-string">&quot;24daysofrust&quot;</span>)
+    <span class="hljs-comment">// ...</span>
+    .subcommand(SubCommand::with_name(<span class="hljs-string">&quot;analyse&quot;</span>)
+        .about(<span class="hljs-string">&quot;Analyses the data from file&quot;</span>)
+        .arg(Arg::with_name(<span class="hljs-string">&quot;input-file&quot;</span>)
+            .short(<span class="hljs-string">&quot;i&quot;</span>)
+            .default_value(<span class="hljs-string">&quot;default.csv&quot;</span>)
+            .value_name(<span class="hljs-string">&quot;FILE&quot;</span>)))
+    .subcommand(SubCommand::with_name(<span class="hljs-string">&quot;verify&quot;</span>)
+        .about(<span class="hljs-string">&quot;Verifies the data&quot;</span>)
+        .arg(Arg::with_name(<span class="hljs-string">&quot;algorithm&quot;</span>)
+            .short(<span class="hljs-string">&quot;a&quot;</span>)
+            .help(<span class="hljs-string">&quot;Hash algorithm to use&quot;</span>)
+            .possible_values(&amp;Algorithm::variants())
+            .required(<span class="hljs-keyword">true</span>)
+            .value_name(<span class="hljs-string">&quot;ALGORITHM&quot;</span>)))
+    <span class="hljs-comment">// ...</span>
+    .get_matches();
+</code></pre>
+<p>Our program has two subcommands: <code>analyse</code> and <code>verify</code>. The first one needs
+an input file, but can use a default location. The second has one argument
+which is required and doesn&apos;t have a default value. By the way, this example
+shows how to use enums as arguments with a helper <code>arg_enum!</code> macro.</p>
+<p>Let&apos;s see what should we add to <code>run()</code> to delegate work to subcommands:</p>
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run</span></span>(matches: ArgMatches) -&gt; <span class="hljs-built_in">Result</span>&lt;(), <span class="hljs-built_in">String</span>&gt; {
+    <span class="hljs-comment">// ...</span>
+    <span class="hljs-keyword">match</span> matches.subcommand() {
+        (<span class="hljs-string">&quot;analyse&quot;</span>, <span class="hljs-built_in">Some</span>(m)) =&gt; run_analyse(m, &amp;logger),
+        (<span class="hljs-string">&quot;verify&quot;</span>, <span class="hljs-built_in">Some</span>(m)) =&gt; run_verify(m, &amp;logger),
+        _ =&gt; <span class="hljs-built_in">Ok</span>(()),
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_analyse</span></span>(matches: &amp;ArgMatches, parent_logger: &amp;slog::Logger) -&gt; <span class="hljs-built_in">Result</span>&lt;(), <span class="hljs-built_in">String</span>&gt; {
+    <span class="hljs-keyword">let</span> logger = parent_logger.new(o!(<span class="hljs-string">&quot;command&quot;</span> =&gt; <span class="hljs-string">&quot;analyse&quot;</span>));
+    <span class="hljs-keyword">let</span> input = matches.value_of(<span class="hljs-string">&quot;input-file&quot;</span>).unwrap();
+    debug!(logger, <span class="hljs-string">&quot;analysis_started&quot;</span>; <span class="hljs-string">&quot;input_file&quot;</span> =&gt; input);
+    <span class="hljs-comment">// ...</span>
+    <span class="hljs-built_in">Ok</span>(())
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_verify</span></span>(matches: &amp;ArgMatches, parent_logger: &amp;slog::Logger) -&gt; <span class="hljs-built_in">Result</span>&lt;(), <span class="hljs-built_in">String</span>&gt; {
+    <span class="hljs-keyword">let</span> logger = parent_logger.new(o!(<span class="hljs-string">&quot;command&quot;</span> =&gt; <span class="hljs-string">&quot;verify&quot;</span>));
+    <span class="hljs-keyword">let</span> algorithm = value_t!(matches.value_of(<span class="hljs-string">&quot;algorithm&quot;</span>), Algorithm).unwrap();
+    debug!(logger, <span class="hljs-string">&quot;verification_started&quot;</span>; <span class="hljs-string">&quot;algorithm&quot;</span> =&gt; <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, algorithm));
+    <span class="hljs-comment">// ...</span>
+    <span class="hljs-built_in">Ok</span>(())
+}
+</code></pre>
+<p>We&apos;re matching on the return value of <code>subcommand()</code> to dispatch control to
+appropriate functions. Calling <code>value_of(...).unwrap()</code> in both examples is
+safe. <code>clap</code> will use default value for <code>--input-file</code> if it&apos;s not provided,
+while it won&apos;t allow skipping the required <code>--algorithm</code> argument.</p>
+<h2 id="errors-and-typo-corrections">Errors and typo corrections</h2>
+<p><code>clap</code> gives a precise error when the user didn&apos;t supply the required argument
+or used an unrecognized one. Every error message ends with a <code>USAGE</code> section,
+so the user can immediately see an example of a correct invocation.</p>
+<pre><code class="lang-text">$ cargo run --bin=example -- verify
+error: The following required arguments were not provided:
+    -a <ALGORITHM>
+
+USAGE:
+    clap verify -a <ALGORITHM>
+</ALGORITHM></ALGORITHM></code></pre>
+<p>If you&apos;re a fast typer like me, chances are you make typos and spelling
+mistakes all the time. Great news - <code>clap</code> can spot these and suggest correct
+spelling! And it&apos;s built in, you don&apos;t have to configure anything else
+other than your regular arguments and subcommands.</p>
+<pre><code class="lang-text">$ cargo run --bin=example -- analyze
+error: The subcommand &apos;analyze&apos; wasn&apos;t recognized
+        Did you mean &apos;analyse&apos;?
+
+If you believe you received this message in error, try re-running with &apos;example -- analyze&apos;
+
+USAGE:
+    example [FLAGS] [SUBCOMMAND]
+
+For more information try --help
+</code></pre>
+<p>This may be slightly annoying to my American readers, sorry about that ;-)</p>
+<h2 id="and-more">And more</h2>
+<p>We barely scratched the surface of <code>clap</code>. We can have related argument groups
+using <code>group()</code>, aliases (so that you Americans can have your spelling as well),
+complex relationships between arguments such as
+<code>required_unless()</code>/<code>overrides_with()</code>/<code>conflicts_with()</code>, value validation etc.
+<a href="https://docs.rs/clap/2.19.2/clap/struct.Arg.html" target="_blank">The docs for <code>Arg</code></a> provide
+clean, useful examples to all these scenarios.</p>
+<p>And if you&apos;re tired of writing arguments by hand, <code>clap</code> can generate
+completions for popular shells. This includes even Windows Powershell.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://clap.rs/" target="_blank">clap.rs</a> - just look at that homepage!</li>
+<li><a href="https://www.reddit.com/r/rust/comments/2xineh/clap_a_simple_getoptlike_argument_parser_first/" target="_blank">clap introduced to /r/rust subreddit (2015)</a></li>
+<li><a href="https://github.com/kbknapp/clap-rs/wiki/FAQ#why-use-clap-instead-of-docopt-or-getopts" target="_blank">Why use clap instead of docopt or getopts?</a></li>
+<li><a href="http://softwareengineering.stackexchange.com/questions/307467/what-are-good-habits-for-designing-command-line-arguments" target="_blank">What are good habits for designing command line arguments?</a></li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../book/vol2/day11.html" class="navigation navigation-prev " aria-label="Previous page: Day 11 - nom, part 2"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../book/vol2/day13.html" class="navigation navigation-next " aria-label="Next page: Day 13 - zip and lzma compression"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"include-codeblock":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

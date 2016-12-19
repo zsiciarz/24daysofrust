@@ -4,6 +4,12 @@ rust:
 cache: cargo
 addons:
   postgresql: "9.4"
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
 services:
   - redis-server
 before_install:
@@ -15,6 +21,14 @@ before_install:
 before_script:
   - psql -c "create user rust with password 'rust';" -U postgres
   - psql -c "create database rust owner rust;" -U postgres
+  - psql -c "create user diesel with password 'diesel';" -U postgres
+  - psql -c "create database diesel owner diesel;" -U postgres
+  - git config --global user.email "example@example.com"
+  - git config --global user.name "24daysofrust"
+  - mkdir repo && cd repo && git init && echo "hello" > hello.txt && git add hello.txt && git commit -am "Initial commit" && cd ..
+  - mkdir git_remote && cd git_remote && git init --bare && cd ..
+  - export PATH=$PATH:$HOME/.cargo/bin/
+  - if ! command -v diesel > /dev/null; then cargo install diesel_cli; fi
 script:
   - cd vol1
   - cargo build
@@ -34,6 +48,26 @@ script:
   - cargo run --bin=day18
   - cargo run --bin=day20
   - cargo run --bin=day21
+  - cd ../vol2
+  - diesel migration run
+  - cargo build
+  - cargo run --bin=day2
+  - cargo run --bin=day3
+  - cargo run --bin=day4
+  - cargo run --bin=day5
+  - cargo run --bin=day6
+  - cargo run --bin=day7
+  - cargo run --bin=day8
+  - cargo run --bin=day10
+  - cargo run --bin=day11
+  - cargo run --bin=day12
+  - cargo run --bin=day13
+#  - cargo run --bin=day14
+  - cargo run --bin=day15
+  - cargo run --bin=day16 -- ../repo
+  - cargo run --bin=day17
+  - cargo run --bin=day18
+  - cargo run --bin=day19
 after_success:
   - cd ..
   - npm install gitbook-cli
