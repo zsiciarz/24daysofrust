@@ -1,6 +1,3 @@
-#![feature(plugin)]
-#![plugin(json_macros)]
-
 #[cfg(target_family="unix")]
 extern crate fuse;
 extern crate time;
@@ -143,10 +140,7 @@ fn main() {
 #[cfg(target_family="unix")]
 fn main() {
     println!("24 days of Rust - fuse (days 15 & 16)");
-    let data = json!({
-        "foo": "bar",
-        "answer": 42,
-    });
+    let data = json::Json::from_str("{\"foo\": \"bar\", \"answer\": 42}").unwrap();
     let tree = data.as_object().unwrap();
     let fs = JsonFilesystem::new(tree);
     let mountpoint = match env::args().nth(1) {
