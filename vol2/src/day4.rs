@@ -44,7 +44,7 @@ impl User {
 }
 
 fn read_database(username: &str) -> Result<String, DatabaseError> {
-    Err("Not this time".to_string())
+    Err(format!("{}: Not this time", username))
 }
 
 fn main() {

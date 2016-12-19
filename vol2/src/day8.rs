@@ -39,6 +39,6 @@ fn main() {
 
     let yaml = include_str!("../data/playbook.yml");
     println!("{}", yaml);
-    let playbook = serde_yaml::from_str::<Playbook>(&yaml);
+    let playbook = serde_yaml::from_str::<Playbook>(yaml);
     println!("{:?}", playbook);
 }

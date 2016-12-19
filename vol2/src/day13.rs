@@ -4,7 +4,7 @@ extern crate zip;
 use std::fs::{File, metadata};
 use std::io::{Read, Seek, Write};
 use zip::read::{ZipArchive, ZipFile};
-use zip::result::{ZipError, ZipResult};
+use zip::result::ZipResult;
 use zip::write::{FileOptions, ZipWriter};
 
 use lzma::{LzmaWriter, LzmaError};

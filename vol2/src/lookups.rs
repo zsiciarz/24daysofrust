@@ -1,3 +1,4 @@
+#![allow(match_same_arms)]
 
 use std::collections::HashMap;
 use phf;

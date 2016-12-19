@@ -31,7 +31,7 @@ fn add_and_commit(repo: &Repository, path: &Path, message: &str) -> Result<Oid, 
     index.add_path(path)?;
     let oid = index.write_tree()?;
     let signature = Signature::now("Zbigniew Siciarz", "zbigniew@siciarz.net")?;
-    let parent_commit = find_last_commit(&repo)?;
+    let parent_commit = find_last_commit(repo)?;
     let tree = repo.find_tree(oid)?;
     repo.commit(Some("HEAD"), //  point HEAD to our new commit
                 &signature, // author
@@ -71,12 +71,12 @@ fn main() {
         let mut file = File::create(file_path.clone()).expect("Couldn't create file");
         file.write_all(b"Hello git2").unwrap();
     }
-    let commit_id = add_and_commit(&repo, &relative_path, "Add example text file")
+    let commit_id = add_and_commit(&repo, relative_path, "Add example text file")
         .expect("Couldn't add file to repo");
     println!("New commit: {}", commit_id);
 
     let remote_url = format!("file://{}",
                              canonicalize("../git_remote").unwrap().display());
     println!("Pushing to: {}", remote_url);
-    let _ = push(&repo, remote_url.as_str()).expect("Couldn't push to remote repo");
+    push(&repo, remote_url.as_str()).expect("Couldn't push to remote repo");
 }
