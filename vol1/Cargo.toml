@@ -67,7 +67,7 @@ libc = "~0.2.17"
 nalgebra = "~0.10.1"
 num = "~0.1.36"
 postgres_array = "~0.7.1"
-postgres_range = "~0.8.2"
+#postgres_range = "~0.8.2"
 primal = "~0.2.3"
 rand = "~0.3.14"
 redis = "~0.7.0"
@@ -82,7 +82,7 @@ url = "~1.2.3"
 version = "~0.9.12"
 
 [dependencies.postgres]
-version= "~0.12.0"
+version= "~0.13.3"
 features = ["with-rustc-serialize", "with-time"]
 
 [dependencies.uuid]

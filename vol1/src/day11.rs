@@ -6,13 +6,13 @@ extern crate rustc_serialize;
 extern crate time;
 extern crate postgres;
 extern crate postgres_array;
-extern crate postgres_range;
+// extern crate postgres_range;
 
 use postgres::{Connection, TlsMode};
 use postgres::types::FromSql;
 use postgres::Result as PgResult;
 use postgres_array::Array;
-use postgres_range::Range;
+// use postgres_range::Range;
 
 use rustc_serialize::json::Json;
 
