@@ -54,6 +54,9 @@ name = "day17"
 [[bin]]
 name = "day18"
 
+[[bin]]
+name = "day19"
+
 [dependencies]
 clap = "2.19.1"
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
@@ -67,6 +70,7 @@ error-chain = "0.7.1"
 git2 = "0.6.3"
 hound = "2.0.0"
 lazy_static = "0.2.2"
+leftpad = "0.2.0"
 markdown = "0.1.1"
 nom = "2.0.1"
 num = "0.1.36"
