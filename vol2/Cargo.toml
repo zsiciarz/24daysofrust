@@ -57,6 +57,9 @@ name = "day18"
 [[bin]]
 name = "day19"
 
+[[bin]]
+name = "day20"
+
 [dependencies]
 clap = "2.19.1"
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
@@ -79,6 +82,7 @@ phf = "0.7.20"
 phf_macros = "0.7.20"
 rand = "0.3.14"
 rayon = "0.5.0"
+reqwest = "0.2.0"
 rust-lzma = "0.2.1"
 rustfft = "1.0.1"
 serde = "0.8.19"
