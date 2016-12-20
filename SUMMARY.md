@@ -46,3 +46,4 @@ Summary
     * [Day 17 - diesel](book/vol2/day17.md)
     * [Day 18 - error_chain](book/vol2/day18.md)
     * [Day 19 - leftpad](book/vol2/day19.md)
+    * [Day 20 - reqwest](book/vol2/day20.md)
