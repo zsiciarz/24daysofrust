@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 5 - hyper | 24 days of Rust</title>
+        <title>Day 21 - app_dirs and preferences | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,8 @@
         
     
     
-    <link rel="next" href="../../book/vol1/day6.html" />
     
-    
-    <link rel="prev" href="../../book/vol1/day4.html" />
+    <link rel="prev" href="../../book/vol2/day20.html" />
     
 
         
@@ -49,9 +47,9 @@
         
         
     <div class="book"
-        data-level="1.5"
-        data-chapter-title="Day 5 - hyper"
-        data-filepath="book/vol1/day5.md"
+        data-level="2.21"
+        data-chapter-title="Day 21 - app_dirs and preferences"
+        data-filepath="book/vol2/day21.md"
         data-basepath="../.."
         data-revision="Wed Dec 21 2016 19:43:28 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -158,7 +156,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.5" data-path="book/vol1/day5.html">
+        <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
             
                 
                     <a href="../../book/vol1/day5.html">
@@ -779,7 +777,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.21" data-path="book/vol2/day21.html">
+        <li class="chapter active" data-level="2.21" data-path="book/vol2/day21.html">
             
                 
                     <a href="../../book/vol2/day21.html">
@@ -832,121 +830,123 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-5--hyper">Day 5 - hyper</h1>
-<blockquote>
-<p>Relevancy: 1.9 stable</p>
-</blockquote>
-<p>The state of HTTP libraries in Rust was a constant flux before 1.0. However it appears that a specific package won the hearts of Rust programmers: <a href="https://crates.io/crates/hyper" target="_blank">hyper</a>, which will be the subject of this chapter.</p>
-<p>I&apos;m going to focus on using <code>hyper</code> only as a client, although the library contains also a server implementation. However with the advance of Rust web frameworks building on top of HTTP libraries, the programmers will focus less on developing servers and more on the clients. Consuming web APIs is a lot more common than writing new shiny servers. How can <code>hyper</code> help us?</p>
-<h2 id="basic-requests">Basic requests</h2>
-<p>Let&apos;s start from the usual dependency definition in <code>Cargo.toml</code>.</p>
-<pre><code class="lang-ini"><span class="hljs-title">[dependencies]</span>
-<span class="hljs-setting">hyper = <span class="hljs-value"><span class="hljs-string">&quot;~0.7&quot;</span></span></span>
-</code></pre>
-<p>When you run <code>cargo build</code>, Cargo will download a few other required crates (for URL handling, mimetype support, OpenSSL bindings etc.) and hopefully compile <code>hyper</code> afterwards. Time for our first request!</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> hyper;
+                        <h1 id="day-21--appdirs-and-preferences">Day 21 - app_dirs and preferences</h1>
+<p>Today we&apos;re going to take a brief look at two crates from the same author -
+<a href="https://github.com/AndyBarron" target="_blank">Andy Barron</a>. The first of them is
+<a href="https://crates.io/crates/app_dirs" target="_blank"><code>app_dirs</code></a> - a useful library
+to find platform-dependent directories, such as application configuration,
+data directory or cache. The second crate for today is
+<a href="https://crates.io/crates/preferences" target="_blank"><code>preferences</code></a>, which provides a
+simple way of managing user preferences and other data relevant to our program.</p>
+<h2 id="application-directories">Application directories</h2>
+<p>Let&apos;s think for a moment about application-specific data. For example,
+where on the filesystem should we put persistent files like game saves,
+download cache or any non-default configuration? We could try storing them
+in the same directory as the executable itself. While this approach
+makes for portable installations (just copy the entire directory),
+it runs into issues with permissions. If you&apos;ve installed the program
+with <code>sudo</code> on Linux, you certainly shouldn&apos;t be able to mess inside
+<code>/usr/bin</code> as a regular non-root user. Fortunately every popular operating
+system has a concept of per-user data and configuration directories.
+On Windows this would be some subdirectory of <code>C:\Users\&lt;username&gt;\AppData</code>,
+while Linux uses <code>/home/&lt;username&gt;/.config</code>
+(see <a href="https://developer.gnome.org/basedir-spec/" target="_blank">XDG specification</a> for
+details).</p>
+<p>The <code>app_dirs</code> crate makes it easy to access or create these directories
+in a cross-platform way.</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> app_dirs;
 
-<span class="hljs-keyword">use</span> std::io::Read;
-<span class="hljs-keyword">use</span> hyper::{Client};
+<span class="hljs-keyword">use</span> app_dirs::{AppDataType, AppInfo, app_root, get_app_root};
+
+<span class="hljs-keyword">const</span> APP_INFO: AppInfo = AppInfo {
+    name: <span class="hljs-string">&quot;24daysofrust&quot;</span>,
+    author: <span class="hljs-string">&quot;Zbigniew Siciarz&quot;</span>,
+};
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> client = Client::new();
-    <span class="hljs-keyword">let</span> url = <span class="hljs-string">&quot;http://httpbin.org/status/201&quot;</span>;
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-keyword">match</span> client.get(url).send() {
-        <span class="hljs-built_in">Ok</span>(response) =&gt; response,
-        <span class="hljs-built_in">Err</span>(_) =&gt; <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;Whoops.&quot;</span>),
-    };
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
-    <span class="hljs-keyword">match</span> response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf) {
-        <span class="hljs-built_in">Ok</span>(_) =&gt; (),
-        <span class="hljs-built_in">Err</span>(_) =&gt; <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;I give up.&quot;</span>),
-    };
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;buf: {}&quot;</span>, buf);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_app_root(AppDataType::UserConfig, &amp;APP_INFO));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, app_root(AppDataType::UserConfig, &amp;APP_INFO));
 }
 </code></pre>
-<p>That was... <em>verbose</em>. I could just use <code>unwrap()</code> everywhere, but that would be handwaving and in poor taste. Sprinkling your code with <code>panic!</code> is not a sign of good style too. However, there are so many things that can go wrong during an HTTP request/response cycle! But there seems to be a pattern. Can we do better?</p>
-<blockquote>
-<p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
-</blockquote>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_content</span></span>(url: &amp;<span class="hljs-keyword">str</span>) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt; {
-    <span class="hljs-keyword">let</span> client = Client::new();
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.get(url).send());
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
-    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
-    <span class="hljs-built_in">Ok</span>(buf)
+<p>We need to create an <code>AppInfo</code> value up front. The docs for <code>app_dirs</code>
+recommend a single const instance, so that&apos;s what we&apos;re doing here. The
+application and author names may be used as path fragments. In the <code>main()</code>
+function we&apos;re requesting directories for a specific type of data. It can be
+one of <code>UserConfig</code>, <code>UserData</code>, <code>UserCache</code>, <code>SharedConfig</code> or <code>SharedData</code>.</p>
+<pre><code class="lang-text">$ cargo run
+Ok(&quot;C:\\Users\\USER\\AppData\\Roaming\\Zbigniew Siciarz\\24daysofrust&quot;)
+Ok(&quot;C:\\Users\\USER\\AppData\\Roaming\\Zbigniew Siciarz\\24daysofrust&quot;)
+</code></pre>
+<p>Both function calls returned the same path. So what&apos;s the difference?</p>
+<p><code>get_</code> variants only build the path, but <strong>do not</strong> touch the filesystem at all.
+There is no guarantee that the directory returned by <code>get_app_root()</code> exists.
+To actually create the directory (if it doesn&apos;t exist), use <code>app_root()</code>.</p>
+<p>We can also use <code>app_dir()</code> to directly create a subdirectory under one of the
+app-specific data directories:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">use</span> app_dirs::app_dir;
+
+<span class="hljs-keyword">let</span> save_dir = app_dir(AppDataType::UserData, &amp;APP_INFO, <span class="hljs-string">&quot;game/saves&quot;</span>)
+    .expect(<span class="hljs-string">&quot;Couldn&apos;t create directory for game saves&quot;</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, save_dir.display());
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+C:\Users\USER\AppData\Roaming\Zbigniew Siciarz\24daysofrust\game\saves
+</code></pre>
+<h2 id="application-preferences">Application preferences</h2>
+<p>The <code>preferences</code> crate builds upon <code>app_dirs</code> to provide a somewhat
+opinionated approach to storing program configuration. If we have a
+serializable struct, it can be saved in an application-specific configuration
+directory as a JSON-encoded file. Let&apos;s revisit the <code>GameConfig</code> example that
+already appeared earlier in this series:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> preferences;
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> rustc_serialize;
+
+<span class="hljs-keyword">use</span> std::path::PathBuf;
+<span class="hljs-keyword">use</span> preferences::Preferences;
+
+<span class="hljs-preprocessor">#[derive(RustcEncodable, RustcDecodable, Debug, Default)]</span>
+<span class="hljs-keyword">struct</span> GameConfig {
+    save_dir: <span class="hljs-built_in">Option</span>&lt;PathBuf&gt;,
+    autosave: <span class="hljs-keyword">bool</span>,
+    fov: <span class="hljs-keyword">f32</span>,
+    render_distance: <span class="hljs-keyword">u32</span>,
 }
-</code></pre>
-<blockquote>
-<p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
-</blockquote>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-</code></pre>
-<p>We refactored the request cycle into a separate function. But look how the code got simpler, thanks to the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a>. There&apos;s no explicit matching on the <code>Result</code> variants and the first <code>try!</code> that fails will return from the function with some kind of an HTTP error.</p>
-<h2 id="post-and-query-parameters">POST and query parameters</h2>
-<p>Sending POST requests with hyper is only a little bit more complicated. We&apos;ll write a wrapper function again, this time taking an additional argument of type <code>Query</code>.</p>
-<blockquote>
-<p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
-</blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">type</span> <span class="hljs-title">Query</span>&lt;<span class="hljs-string">&apos;a</span>&gt; = <span class="hljs-built_in">Vec</span>&lt;(&amp;<span class="hljs-string">&apos;a</span> <span class="hljs-keyword">str</span>, &amp;<span class="hljs-string">&apos;a</span> <span class="hljs-keyword">str</span>)&gt;;
 
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_query</span></span>(url: &amp;<span class="hljs-keyword">str</span>, query: Query) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt; {
-    <span class="hljs-keyword">let</span> client = Client::new();
-    <span class="hljs-keyword">let</span> body = form_urlencoded::Serializer::new(String::new())
-        .extend_pairs(query.iter())
-        .finish();
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.post(url).body(&amp;body[..]).send());
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
-    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> config = <span class="hljs-keyword">match</span> GameConfig::load(&amp;APP_INFO, <span class="hljs-string">&quot;game_config&quot;</span>) {
+    <span class="hljs-built_in">Ok</span>(cfg) =&gt; cfg,
+    <span class="hljs-built_in">Err</span>(_) =&gt; GameConfig::default(),
+};
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, config);
+config.save_dir = <span class="hljs-built_in">Some</span>(save_dir);
+config.autosave = <span class="hljs-keyword">true</span>;
+config.save(&amp;APP_INFO, <span class="hljs-string">&quot;game_config&quot;</span>).expect(<span class="hljs-string">&quot;Failed to save game config&quot;</span>);
 </code></pre>
-<blockquote>
-<p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
-</blockquote>
-<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;24 days of Rust - hyper (day 5)&quot;</span>);
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_content(<span class="hljs-string">&quot;http://httpbin.org/status/200&quot;</span>));
-</code></pre>
-<p>The main difference from <code>get_content()</code> is the serialization machinery coming from the <a href="https://crates.io/crates/url" target="_blank">url</a> crate. Once we&apos;ve built a raw request body (like <code>key=value&amp;foo=bar</code>), we pass it to the <code>body()</code> method and the rest is identical to the GET example above.</p>
-<h2 id="sending-json">Sending JSON</h2>
-<p>Our <code>post_query</code> function can be easily changed to borrow a struct, serialize it to JSON and send it over the wire.</p>
-<blockquote>
-<p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
-</blockquote>
-<pre><code class="lang-rust">}
+<p>Deriving the serialization traits automatically implements another trait -
+<code>Preferences</code>. It provides the <code>load()</code> and <code>save()</code> methods that we use
+to persist our game configuration.
+We&apos;re reusing the same <code>AppInfo</code> value as before, so that the underlying
+calls to <code>app_dirs</code> API know where to find our application directories.</p>
+<p><strong>Note</strong>: <code>preferences</code> is going to move to <code>serde</code> once custom derive
+lands in stable Rust. But that doesn&apos;t mean a lot of upgrade work for us. Only
+the trait names will change to <code>Serialize</code> and <code>Deserialize</code>.</p>
+<pre><code class="lang-text">$ cargo run
+GameConfig { save_dir: None, autosave: false, fov: 0, render_distance: 0 }
 
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_json</span></span>&lt;T&gt;(url: &amp;<span class="hljs-keyword">str</span>, payload: &amp;T) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt;
-    <span class="hljs-keyword">where</span> T: Encodable {
-    <span class="hljs-keyword">let</span> client = Client::new();
-    <span class="hljs-keyword">let</span> body = json::encode(payload).unwrap();
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.post(url).body(&amp;body[..]).send());
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
-    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
+$ cargo run
+GameConfig { save_dir: Some(&quot;C:\\Users\\USER\\AppData\\Roaming\\Zbigniew Siciarz\\24daysofrust\\game\\saves&quot;), autosave: false, fov: 0, render_distance: 0 }
 </code></pre>
-<p>This function is generic in its <code>payload</code> argument, accepting anything that implements the <code>Encodable</code> trait. We can use the function as follows:</p>
-<blockquote>
-<p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
-</blockquote>
-<pre><code class="lang-rust">}
-
-<span class="hljs-preprocessor">#[derive(RustcDecodable, RustcEncodable)]</span>
-<span class="hljs-keyword">struct</span> Movie {
-    title: <span class="hljs-built_in">String</span>,
-    bad_guy: <span class="hljs-built_in">String</span>,
-</code></pre>
-<blockquote>
-<p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
-</blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> query = <span class="hljs-built_in">vec!</span>[(<span class="hljs-string">&quot;key&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>), (<span class="hljs-string">&quot;foo&quot;</span>, <span class="hljs-string">&quot;bar&quot;</span>)];
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, post_query(<span class="hljs-string">&quot;http://httpbin.org/post&quot;</span>, query).unwrap());
-    <span class="hljs-keyword">let</span> movie = Movie {
-        title: <span class="hljs-string">&quot;You Only Live Twice&quot;</span>.to_owned(),
-        bad_guy: <span class="hljs-string">&quot;Blofeld&quot;</span>.to_owned(),
-        pub_year: <span class="hljs-number">1967</span>,
-</code></pre>
-<h2 id="see-also">See also</h2>
+<p>Running the program for the first time ever used default values for the
+configuration. However, in the second run the configuration file already exists
+on disk, so it&apos;s loaded and printed out.</p>
+<p>There&apos;s also a <code>PreferencesMap</code> type, which is just a <code>HashMap</code> that knows how
+to load and store itself in a JSON file. It&apos;s particularily useful when you
+need to persist key-value data.</p>
+<h2 id="further-reading">Further reading</h2>
 <ul>
-<li><a href="https://github.com/servo/servo/wiki/HTTP-library-requirements" target="_blank">HTTP library requirements</a> from the Servo project</li>
-<li><a href="https://github.com/jgillich/rust-request" target="_blank">rust-request</a> - a HTTP client library written on top of hyper</li>
-<li><a href="https://github.com/gtolle/rest_client" target="_blank">rest_client</a> - another HTTP client built with hyper</li>
-<li><a href="http://lucumr.pocoo.org/2014/11/6/error-handling-in-rust/" target="_blank">Improved error handling in Rust</a> by Armin Ronacher</li>
+<li><a href="https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html" target="_blank">XDG Base Directory Specification</a></li>
+<li><a href="http://www.pcworld.com/article/2690709/whats-in-the-hidden-windows-appdata-folder-and-how-to-find-it-if-you-need-it.html" target="_blank">What&apos;s in the hidden Windows AppData Folder, and how to find it if you need it</a></li>
+<li><a href="https://crates.io/crates/jconfig" target="_blank"><code>jconfig</code></a>  and <a href="https://crates.io/crates/toml-config" target="_blank"><code>toml-config</code></a> -
+similar crates to access settings stored as JSON or TOML</li>
 </ul>
 
                     
@@ -958,10 +958,8 @@
         </div>
 
         
-        <a href="../../book/vol1/day4.html" class="navigation navigation-prev " aria-label="Previous page: Day 4 - docopt"><i class="fa fa-angle-left"></i></a>
+        <a href="../../book/vol2/day20.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Day 20 - reqwest"><i class="fa fa-angle-left"></i></a>
         
-        
-        <a href="../../book/vol1/day6.html" class="navigation navigation-next " aria-label="Next page: Day 6 - working with JSON"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
