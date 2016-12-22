@@ -48,3 +48,4 @@ Summary
     * [Day 19 - leftpad](book/vol2/day19.md)
     * [Day 20 - reqwest](book/vol2/day20.md)
     * [Day 21 - app_dirs and preferences](book/vol2/day21.md)
+    * [Day 22 - lettre](book/vol2/day22.md)
