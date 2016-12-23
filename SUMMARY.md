@@ -49,3 +49,4 @@ Summary
     * [Day 20 - reqwest](book/vol2/day20.md)
     * [Day 21 - app_dirs and preferences](book/vol2/day21.md)
     * [Day 22 - lettre](book/vol2/day22.md)
+    * [Day 23 - built with Rust](book/vol2/day23.md)
