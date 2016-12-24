@@ -50,3 +50,4 @@ Summary
     * [Day 21 - app_dirs and preferences](book/vol2/day21.md)
     * [Day 22 - lettre](book/vol2/day22.md)
     * [Day 23 - built with Rust](book/vol2/day23.md)
+    * [Day 24 - conclusion](book/vol2/day24.md)
