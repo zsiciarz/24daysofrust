@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Day 4 - structured logging | 24 days of Rust</title>
+        <title>Day 23 - built with Rust | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../../book/vol2/day5.html" />
+    <link rel="next" href="../../book/vol2/day24.html" />
     
     
-    <link rel="prev" href="../../book/vol2/day3.html" />
+    <link rel="prev" href="../../book/vol2/day22.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="2.4"
-        data-chapter-title="Day 4 - structured logging"
-        data-filepath="book/vol2/day4.md"
+        data-level="2.23"
+        data-chapter-title="Day 23 - built with Rust"
+        data-filepath="book/vol2/day23.md"
         data-basepath="../.."
         data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
         data-innerlanguage="">
@@ -524,7 +524,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.4" data-path="book/vol2/day4.html">
+        <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
             
                 
                     <a href="../../book/vol2/day4.html">
@@ -809,7 +809,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.23" data-path="book/vol2/day23.html">
+        <li class="chapter active" data-level="2.23" data-path="book/vol2/day23.html">
             
                 
                     <a href="../../book/vol2/day23.html">
@@ -877,136 +877,95 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="day-4--slog">Day 4 - slog</h1>
-<h2 id="structured-logging">Structured logging</h2>
-<p>I hope you&apos;re using <strong>any</strong> sort of logging in your applications. Even if that
-means printing stuff to stdout and relying on shell output redirection,
-it&apos;s still better than no logging at all. However, most programming languages
-have great libraries for logging. Be it Java, Python, Elixir - there are
-logging utilities everywhere. But more often than not, what is logged is some
-sort of prose that a programmer thought was applicable at a time.</p>
-<p>I once wrote this line of Python code:</p>
-<pre><code class="lang-python">logger.error(<span class="hljs-string">&apos;Oh no, something terrible happened: %s&apos;</span>, details)
-</code></pre>
-<p>Even though I&apos;ve configured my logging levels, formatters and other stuff
-that&apos;s very useful, in the end I still had to <code>grep terrible</code> to find
-what actually happened, and later parse the details with a nasty regexp.
-Not very convenient. <strong>Structured logging</strong> is a concept that puts <em>events</em>
-over <em>messages</em>; we&apos;re now logging events with associated key-value data,
-not plain string messages.</p>
-<h2 id="slog-basics"><code>slog</code> basics</h2>
-<p><a href="https://crates.io/crates/slog" target="_blank"><code>slog</code></a> is the single most popular crate for
-structured logging in Rust. It supports various outputs (called <em>drains</em>
-in <code>slog</code> terminology), but for now we&apos;ll stick to the terminal output provided
-by the <a href="https://crates.io/crates/slog-term" target="_blank"><code>slog_term</code></a> crate.</p>
-<pre><code class="lang-rust"><span class="hljs-preprocessor">#[macro_use]</span>
-<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> slog;
-<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> slog_term;
-
-<span class="hljs-keyword">use</span> slog::DrainExt;
-
-<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> drain = slog_term::streamer().build().fuse();
-    <span class="hljs-keyword">let</span> root_logger = slog::Logger::root(drain, o!(<span class="hljs-string">&quot;version&quot;</span> =&gt; <span class="hljs-string">&quot;0.5&quot;</span>));
-    info!(root_logger, <span class="hljs-string">&quot;Application started&quot;</span>;
-        <span class="hljs-string">&quot;started_at&quot;</span> =&gt; <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;{}&quot;</span>, time::now().rfc3339()));
-}
-</code></pre>
-<p>The first line in <code>main()</code> creates and configures a drain which will output
-log messages to the terminal. By default, <code>slog_term</code> autodetects color
-terminals and uses a compact style for output. Next we&apos;re creating the root
-logger. Every application must have a root logger, so it makes sense to
-provide some initial logging context from the start, such as app version.
-We&apos;re using a convenience &apos;o!` macro to define that context as key-value pairs.</p>
-<p>Once we have a logger, we can log stuff! There&apos;s a couple macros such as
-<code>debug!</code>, <code>info!</code>, <code>err!</code> etc. to log events of different severity. We can add
-more context in each call to these macros. Here lies the power of
-structured logging: it&apos;s <strong>composable</strong>. Every time we add some more context,
-we retain the context defined when logger was created. See the output:</p>
-<pre><code class="lang-text">$ cargo run
-Nov 30 20:46:47.073 INFO Application started, version: 0.5, started_at: 2016-11-30T20:46:47+01:00
-</code></pre>
-<p>Even though the call to <code>info!</code> doesn&apos;t mention app version at all, it is there.
-Cool, but there&apos;s more. We can create child loggers that will inherit their
-context from parent logger. Let&apos;s assume our app has some users that can
-sign in.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">struct</span> User {
-    username: <span class="hljs-built_in">String</span>,
-    logger: slog::Logger,
-}
-
-<span class="hljs-keyword">impl</span> User {
-    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(username: &amp;<span class="hljs-keyword">str</span>, logger: &amp;slog::Logger) -&gt; <span class="hljs-keyword">Self</span> {
-        User {
-            username: username.to_string(),
-            logger: logger.new(o!(<span class="hljs-string">&quot;username&quot;</span> =&gt; username.to_string())),
-        }
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">sign_in</span></span>(&amp;<span class="hljs-keyword">self</span>) {
-        info!(<span class="hljs-keyword">self</span>.logger, <span class="hljs-string">&quot;User signed in&quot;</span>);
-    }
-}
-
-<span class="hljs-comment">// in main:</span>
-<span class="hljs-keyword">let</span> user = User::new(<span class="hljs-string">&quot;zbyszek&quot;</span>, &amp;root_logger);
-user.sign_in();
-</code></pre>
-<pre><code class="lang-text">$ cargo run
-Nov 30 20:59:42.811 INFO User signed in, username: zbyszek, version: 0.5
-</code></pre>
-<p>Our <code>User</code> objects contain their own loggers that inherit from the root logger
-and add context relevant to user interactions. The event inside <code>sign_in()</code>
-method still logs app version coming from the root logger, while enhancing the
-context with the username of the user who signs in. Again, <strong>composition</strong> is
-a strong selling point of <code>slog</code>.</p>
+                        <h1 id="day-23--built-with-rust">Day 23 - built with Rust</h1>
+<p>Today&apos;s article is another throwback to the first edition of <em>24 days of Rust</em>.
+In one of the final posts I
+<a href="http://siciarz.net/24-days-of-rust-built-with-rust/" target="_blank">wrote about interesting projects</a>
+built with Rust. That was even before the language hit version 1.0.
+Two years later and we&apos;re at 1.14. <a href="https://github.com/servo/servo/" target="_blank">Servo</a>,
+<a href="https://github.com/gchp/iota" target="_blank">iota</a> and
+<a href="https://github.com/uutils/coreutils" target="_blank">coreutils</a> are still going strong.
+It&apos;s surely worth checking them out again, but I&apos;m going to introduce a few
+more Rust projects that emerged during the last two years.</p>
+<h2 id="redox">Redox</h2>
+<p>How about starting with an <strong>entire operating system</strong> written in Rust? Because
+this is what <a href="https://www.redox-os.org/" target="_blank">Redox</a> is about. It consists of:</p>
+<ul>
+<li>a Unix-like microkernel</li>
+<li>file system (RedoxFS)</li>
+<li>userspace drivers</li>
+<li>networking</li>
+<li>GUI (Orbital)</li>
+<li>and more...</li>
+</ul>
+<p>All built with Rust, free and open source! An impressive achievement for sure.
+While I wouldn&apos;t replace my Linux installs with Redox just yet, there are
+<a href="https://github.com/redox-os/redox/releases" target="_blank">.iso releases</a> already. It should
+work in QEMU or VirtualBox.</p>
+<p>Project website: <a href="https://www.redox-os.org/" target="_blank">https://www.redox-os.org/</a></p>
+<h2 id="ripgrep">ripgrep</h2>
+<p><a href="https://github.com/BurntSushi" target="_blank">Andrew Gallant</a>, aka <code>burntsushi</code>, is a
+<em>prolific</em> contributor to the Rust library ecosystem. Regexes, CSV,
+byte ordering, docopt, property-based testing - Andrew&apos;s your man.
+This time he took a stab at filesystem search, with an impressive outcome.
+<a href="https://github.com/BurntSushi/ripgrep" target="_blank"><code>ripgrep</code></a> is a CLI search tool
+that aims to surpass <code>grep</code>, <code>ack</code>, <code>ag</code> and others in both usability and
+performance. In the aptly titled introductory blog post -
+<a href="http://blog.burntsushi.net/ripgrep/" target="_blank">ripgrep is faster than {grep, ag, git grep, ucg, pt, sift}</a> -
+Andrew explains his motivation and presents performance benchmarks.</p>
+<p>TL;DR - <code>ripgrep</code> is <strong>fast</strong>. Try it out!</p>
+<p>Project website: <a href="https://github.com/BurntSushi/ripgrep" target="_blank">https://github.com/BurntSushi/ripgrep</a></p>
+<h2 id="panopticon">panopticon</h2>
+<p>I learned about <a href="https://panopticon.re/" target="_blank">panopticon</a> at
+<a href="http://www.rustfest.eu/talks/#panopticon-a-libre-cross-platform-disassembler-in-rust" target="_blank">RustFest EU 2016</a>.
+It&apos;s a GUI disassembler (for x86, AMD64, AVR and 6502) that aims to be a free,
+easy to use and powerful alternative to proprietary tools such as IDA.
+Panopticon was rewritten from C++ to Rust and the author expresses his joy
+<a href="https://www.reddit.com/r/rust/comments/4ihtfa/panopticon_a_libre_crossplatform_disassembler/" target="_blank">in a reddit thread</a>:</p>
 <blockquote>
-<p>Note: we can avoid passing <code>Logger</code> around in the arguments, thanks to
-the <a href="https://crates.io/crates/slog-scope" target="_blank"><code>slog-scope</code></a> crate. I decided
-not to do that here to make the examples more explicit.</p>
+<p>Programming in Rust is not only more fun, it&apos;s definitely easier too.
+Panopticon used alot sum types that were implemented using boost::variant.
+Like everything with Boost it kind of worked but was incredible ugly and
+complex. Replacing them with enums was probably the biggest reason I switched
+to Rust. Also I found iterator invalidation bugs simply by translating C++
+to Rust, thanks Borrow Checker!</p>
 </blockquote>
-<h2 id="other-outputs">Other outputs</h2>
-<p>With <a href="https://crates.io/crates/slog-stream" target="_blank"><code>slog-stream</code></a> we can have
-drains that write events to anything implementing
-<a href="https://doc.rust-lang.org/std/io/trait.Write.html" target="_blank"><code>io::Write</code></a>.
-Let&apos;s build a drain that writes both to stdout and a log file.</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> slog_json;
-<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> slog_stream;
-
-<span class="hljs-keyword">use</span> std::fs::File;
-
-<span class="hljs-keyword">let</span> console_drain = slog_term::streamer().build();
-<span class="hljs-keyword">let</span> file = File::create(<span class="hljs-string">&quot;app.log&quot;</span>).expect(<span class="hljs-string">&quot;Couldn&apos;t open log file&quot;</span>);
-<span class="hljs-keyword">let</span> file_drain = slog_stream::stream(file, slog_json::default());
-<span class="hljs-keyword">let</span> logger = slog::Logger::root(slog::duplicate(console_drain, file_drain).fuse(), o!());
-warn!(logger, <span class="hljs-string">&quot;not_enough_resources&quot;</span>; <span class="hljs-string">&quot;resource&quot;</span> =&gt; <span class="hljs-string">&quot;cat pictures&quot;</span>);
-</code></pre>
-<p>The <code>slog_json::default()</code> function creates a JSON formatter with some
-convenient keys like timestamp and log level already added to the objects.
-We feed it in the second argument to <code>stream()</code> which accepts anything that
-is writable - like files, stdout or network sockets.
-Later we use <code>duplicate()</code> to create a higher level drain that will
-forward events to both outputs.</p>
-<pre><code class="lang-text">$ cargo run
-Dec 01 22:25:08.520 WARN not_enough_resources, resource: cat pictures
-$ cat app.log
-{&quot;ts&quot;:&quot;2016-12-01T22:25:08.521265800+01:00&quot;,&quot;level&quot;:&quot;WARN&quot;,&quot;msg&quot;:&quot;not_enough_resources&quot;,&quot;resource&quot;:&quot;cat pictures&quot;}
-</code></pre>
-<p>Of course we could stream events into something more appropriate than a simple
-file, like <a href="https://www.elastic.co/products/logstash" target="_blank">Logstash</a> or
-<a href="https://www.graylog.org/" target="_blank">Graylog</a>.</p>
-<p>There&apos;s a few more bits and pieces related to <code>slog</code>. We can filter log levels
-either with drains, or entirely at compile time. <code>slog</code> itself removes trace
-and debug logging in release builds. There&apos;s also a way to log events
-asynchronously to improve performance. Furthermore, if you&apos;ve already
-used <code>env_logger</code> before, <code>slog</code> comes with
-<a href="https://github.com/slog-rs/envlogger" target="_blank">a shim</a> to ease transition.</p>
+<p>Project website: <a href="https://panopticon.re/" target="_blank">https://panopticon.re/</a></p>
+<h2 id="mozilla-firefox">Mozilla Firefox</h2>
+<p>Well, this may be a little stretch ;-) But just a little. Firefox itself wasn&apos;t
+suddenly rewritten in its entirety from C++ to Rust. However, there are already
+<a href="https://hacks.mozilla.org/2016/07/shipping-rust-in-firefox/" target="_blank">some parts of the browser</a>
+built with Rust. <a href="https://wiki.mozilla.org/Stylo" target="_blank">Stylo</a> is an upcoming
+bridge between Firefox and Servo&apos;s CSS engine. And with
+<a href="https://medium.com/mozilla-tech/a-quantum-leap-for-the-web-a3b7174b3c12#.kcpq0q16m" target="_blank">Project Quantum</a>
+even more good stuff is coming!</p>
+<h2 id="now-its-your-turn">Now it&apos;s your turn!</h2>
+<p>I&apos;d love to see <strong>you</strong> building awesome Rust projects! Pick a problem that
+you&apos;d like to solve and try doing that with Rust. It doesn&apos;t have to be an
+entire new operating system (that was a hell of an itch to scratch,
+Redox folks, right?).</p>
+<p>Here are some inspirations:</p>
+<ul>
+<li><a href="https://github.com/kud1ing/awesome-rust" target="_blank">Awesome Rust</a> - a collection of
+programs, libraries and resources</li>
+<li><a href="https://www.rust-lang.org/en-US/contribute-libs.html" target="_blank">Contributing to Rust &#x2014; libraries</a></li>
+<li><a href="http://www.arewewebyet.org/" target="_blank">Are we Web yet?</a> - some areas aren&apos;t as green
+as I&apos;d like them to be</li>
+<li><a href="https://github.com/karan/Projects" target="_blank">A list of practical projects that anyone can solve in any programming language</a></li>
+<li><a href="https://news.ycombinator.com/item?id=5234692" target="_blank">Where do you get ideas to build side-projects?</a> -
+a Hacker News discussion</li>
+</ul>
+<p>To summarize this article:</p>
+<blockquote>
+<p>Getting a project featured in <em>24 days of Rust</em> is left as an exercise for
+the reader.</p>
+</blockquote>
 <h2 id="further-reading">Further reading</h2>
 <ul>
-<li><a href="https://github.com/slog-rs/slog/wiki/Getting-started" target="_blank">Getting started with slog</a></li>
-<li><a href="http://www.structlog.org/en/stable/" target="_blank">structlog - Structured Logging for Python</a></li>
-<li><a href="https://serilog.net/" target="_blank">serilog</a> - structured logging for .NET</li>
-<li><a href="http://softwareengineering.stackexchange.com/questions/312197/benefits-of-structured-logging-vs-basic-logging" target="_blank">Benefits of Structured Logging vs basic logging</a></li>
+<li><a href="https://github.com/kud1ing/awesome-rust" target="_blank">Awesome Rust</a> - includes applications written in Rust</li>
+<li><a href="https://www.rust-lang.org/en-US/friends.html" target="_blank">Friends of Rust</a> - Organizations running Rust in production</li>
+<li><a href="http://blog.mbrt.it/2016-12-01-ripgrep-code-review/" target="_blank">ripgrep code review</a></li>
+<li><a href="https://wiki.mozilla.org/Quantum" target="_blank">Quantum</a> at Mozilla Wiki</li>
 </ul>
 
                     
@@ -1018,10 +977,10 @@ used <code>env_logger</code> before, <code>slog</code> comes with
         </div>
 
         
-        <a href="../../book/vol2/day3.html" class="navigation navigation-prev " aria-label="Previous page: Day 3 - rayon"><i class="fa fa-angle-left"></i></a>
+        <a href="../../book/vol2/day22.html" class="navigation navigation-prev " aria-label="Previous page: Day 22 - lettre"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../../book/vol2/day5.html" class="navigation navigation-next " aria-label="Next page: Day 5 - environment variables"><i class="fa fa-angle-right"></i></a>
+        <a href="../../book/vol2/day24.html" class="navigation navigation-next " aria-label="Next page: Day 24 - conclusion"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
