@@ -63,8 +63,8 @@ name = "day20"
 [[bin]]
 name = "day21"
 
-[[bin]]
-name = "day22"
+#[[bin]]
+#name = "day22"
 
 [dependencies]
 app_dirs = "1.1.1"
@@ -81,7 +81,7 @@ git2 = "0.6.3"
 hound = "2.0.0"
 lazy_static = "0.2.2"
 leftpad = "0.2.0"
-lettre = "0.6.1"
+#lettre = "0.6.1"
 markdown = "0.1.1"
 nom = "2.0.1"
 num = "0.1.36"
