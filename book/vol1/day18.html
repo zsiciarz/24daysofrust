@@ -53,7 +53,7 @@
         data-chapter-title="Day 18 - redis"
         data-filepath="book/vol1/day18.md"
         data-basepath="../.."
-        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:37:36 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -920,8 +920,8 @@
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">add_friend</span></span>(conn: &amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;()&gt; {
     <span class="hljs-keyword">let</span> my_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, my_id);
     <span class="hljs-keyword">let</span> their_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, their_id);
-    <span class="hljs-built_in">try!</span>(conn.sadd(my_key, their_id));
-    <span class="hljs-built_in">try!</span>(conn.sadd(their_key, my_id));
+    conn.sadd(my_key, their_id)?;
+    conn.sadd(their_key, my_id)?;
     <span class="hljs-built_in">Ok</span>(())
 }
 </code></pre>
@@ -954,7 +954,7 @@ You have <span class="hljs-number">1</span> friend(s) <span class="hljs-keyword"
 <blockquote>
 <p><a id="day18.rs" href="../../vol1/src/day18.rs">day18.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-built_in">Ok</span>(<span class="hljs-built_in">try!</span>(conn.sinter((my_key, their_key))))
+<pre><code class="lang-rust">conn.sinter((my_key, their_key))
 }
 </code></pre>
 <p>The <code>add_score</code> function is just a wrapper to provide a more high-level API. It will be called every time player&apos;s score changes.</p>

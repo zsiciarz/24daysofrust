@@ -53,7 +53,7 @@
         data-chapter-title="Day 20 - zeromq"
         data-filepath="book/vol1/day20.md"
         data-basepath="../.."
-        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:37:36 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -918,13 +918,13 @@
 <p><a id="day20.rs" href="../../vol1/src/day20.rs">day20.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
-    <span class="hljs-built_in">try!</span>(sock.connect(addr));
+    <span class="hljs-keyword">let</span> sock = ctx.socket(zmq::REQ)?;
+    sock.connect(addr)?;
     <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = Message::new();
-    <span class="hljs-built_in">try!</span>(sock.send(payload.as_bytes(), <span class="hljs-number">0</span>));
-    <span class="hljs-built_in">try!</span>(sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>));
+    sock.send(payload.as_bytes(), <span class="hljs-number">0</span>)?;
+    sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>)?;
     <span class="hljs-keyword">let</span> contents = msg.as_str().unwrap();
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lt;- {:?}&quot;</span>, contents);
     <span class="hljs-built_in">Ok</span>(())
@@ -938,12 +938,12 @@
 <p><a id="day20.rs" href="../../vol1/src/day20.rs">day20.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
-    <span class="hljs-built_in">try!</span>(sock.bind(addr));
+    <span class="hljs-keyword">let</span> sock = ctx.socket(zmq::REP)?;
+    sock.bind(addr)?;
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = Message::new();
     <span class="hljs-keyword">loop</span> {
         <span class="hljs-keyword">if</span> sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>).is_ok() {
-            <span class="hljs-built_in">try!</span>(sock.send(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
+            sock.send(msg.as_str().unwrap(), <span class="hljs-number">0</span>)?;
         }
     }
 }

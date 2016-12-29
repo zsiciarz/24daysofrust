@@ -53,7 +53,7 @@
         data-chapter-title="Day 5 - hyper"
         data-filepath="book/vol1/day5.md"
         data-basepath="../.."
-        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:37:36 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -915,16 +915,17 @@
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_content</span></span>(url: &amp;<span class="hljs-keyword">str</span>) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt; {
     <span class="hljs-keyword">let</span> client = Client::new();
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.get(url).send());
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = client.get(url).send()?;
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
-    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
+    response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf)?;
     <span class="hljs-built_in">Ok</span>(buf)
 }
 </code></pre>
 <blockquote>
 <p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+<pre><code class="lang-rust">
+
 </code></pre>
 <p>We refactored the request cycle into a separate function. But look how the code got simpler, thanks to the <a href="http://doc.rust-lang.org/std/result/#the-try!-macro" target="_blank">try! macro</a>. There&apos;s no explicit matching on the <code>Result</code> variants and the first <code>try!</code> that fails will return from the function with some kind of an HTTP error.</p>
 <h2 id="post-and-query-parameters">POST and query parameters</h2>
@@ -939,15 +940,15 @@
     <span class="hljs-keyword">let</span> body = form_urlencoded::Serializer::new(String::new())
         .extend_pairs(query.iter())
         .finish();
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.post(url).body(&amp;body[..]).send());
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = client.post(url).body(&amp;body[..]).send()?;
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
-    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
+    response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf)?;
 </code></pre>
 <blockquote>
 <p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;24 days of Rust - hyper (day 5)&quot;</span>);
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_content(<span class="hljs-string">&quot;http://httpbin.org/status/200&quot;</span>));
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;24 days of Rust - hyper (day 5)&quot;</span>);
 </code></pre>
 <p>The main difference from <code>get_content()</code> is the serialization machinery coming from the <a href="https://crates.io/crates/url" target="_blank">url</a> crate. Once we&apos;ve built a raw request body (like <code>key=value&amp;foo=bar</code>), we pass it to the <code>body()</code> method and the rest is identical to the GET example above.</p>
 <h2 id="sending-json">Sending JSON</h2>
@@ -958,33 +959,33 @@
 <pre><code class="lang-rust">}
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">post_json</span></span>&lt;T&gt;(url: &amp;<span class="hljs-keyword">str</span>, payload: &amp;T) -&gt; hyper::<span class="hljs-built_in">Result</span>&lt;<span class="hljs-built_in">String</span>&gt;
-    <span class="hljs-keyword">where</span> T: Encodable {
+    <span class="hljs-keyword">where</span> T: Encodable
+{
     <span class="hljs-keyword">let</span> client = Client::new();
     <span class="hljs-keyword">let</span> body = json::encode(payload).unwrap();
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = <span class="hljs-built_in">try!</span>(client.post(url).body(&amp;body[..]).send());
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> response = client.post(url).body(&amp;body[..]).send()?;
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> buf = String::new();
-    <span class="hljs-built_in">try!</span>(response.read_to_string(&amp;<span class="hljs-keyword">mut</span> buf));
 </code></pre>
 <p>This function is generic in its <code>payload</code> argument, accepting anything that implements the <code>Encodable</code> trait. We can use the function as follows:</p>
 <blockquote>
 <p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust">}
+<pre><code class="lang-rust"><span class="hljs-built_in">Ok</span>(buf)
+}
 
 <span class="hljs-preprocessor">#[derive(RustcDecodable, RustcEncodable)]</span>
 <span class="hljs-keyword">struct</span> Movie {
     title: <span class="hljs-built_in">String</span>,
-    bad_guy: <span class="hljs-built_in">String</span>,
 </code></pre>
 <blockquote>
 <p><a id="day5.rs" href="../../vol1/src/day5.rs">day5.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> query = <span class="hljs-built_in">vec!</span>[(<span class="hljs-string">&quot;key&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>), (<span class="hljs-string">&quot;foo&quot;</span>, <span class="hljs-string">&quot;bar&quot;</span>)];
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, get_content(<span class="hljs-string">&quot;http://httpbin.org/status/200&quot;</span>));
+    <span class="hljs-keyword">let</span> query = <span class="hljs-built_in">vec!</span>[(<span class="hljs-string">&quot;key&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>), (<span class="hljs-string">&quot;foo&quot;</span>, <span class="hljs-string">&quot;bar&quot;</span>)];
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, post_query(<span class="hljs-string">&quot;http://httpbin.org/post&quot;</span>, query).unwrap());
     <span class="hljs-keyword">let</span> movie = Movie {
         title: <span class="hljs-string">&quot;You Only Live Twice&quot;</span>.to_string(),
         bad_guy: <span class="hljs-string">&quot;Blofeld&quot;</span>.to_string(),
-        pub_year: <span class="hljs-number">1967</span>,
 </code></pre>
 <h2 id="see-also">See also</h2>
 <ul>
