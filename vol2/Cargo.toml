@@ -77,7 +77,6 @@ diesel_codegen = { version = "0.9.0", features=["postgres"]}
 dotenv = "0.8.0"
 envy = "0.1.2"
 error-chain = "0.7.1"
-git2 = "0.6.3"
 hound = "3.0.0"
 lazy_static = "0.2.2"
 leftpad = "0.2.0"
@@ -120,3 +119,9 @@ winreg = "0.4"
 
 [target.x86_64-pc-windows-msvc.dependencies]
 winreg = "0.4"
+
+[target.i686-uknown-linux-gnu.dependencies]
+git2 = "0.6.3"
+
+[target.x86_64-unknown-linux-gnu.dependencies]
+git2 = "0.6.3"
