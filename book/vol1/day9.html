@@ -53,7 +53,7 @@
         data-chapter-title="Day 9 - anymap"
         data-filepath="book/vol1/day9.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -912,7 +912,7 @@
 <p><a id="day9.rs" href="../../vol1/src/day9.rs">day9.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> config = AnyMap::new();
-    config.insert(HostAddress::DomainName(<span class="hljs-string">&quot;siciarz.net&quot;</span>.to_owned()));
+    config.insert(HostAddress::DomainName(<span class="hljs-string">&quot;siciarz.net&quot;</span>.to_string()));
     config.insert(Port(<span class="hljs-number">666</span>));
     config.insert(ConnectionLimit(<span class="hljs-number">32</span>));
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, config.get::&lt;HostAddress&gt;());

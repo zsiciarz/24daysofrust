@@ -14,7 +14,10 @@ fn add_friend(conn: &Connection, my_id: UserId, their_id: UserId) -> RedisResult
     Ok(())
 }
 
-fn friends_in_common(conn: &Connection, my_id: UserId, their_id: UserId) -> RedisResult<HashSet<UserId>> {
+fn friends_in_common(conn: &Connection,
+                     my_id: UserId,
+                     their_id: UserId)
+                     -> RedisResult<HashSet<UserId>> {
     let my_key = format!("friends:{}", my_id);
     let their_key = format!("friends:{}", their_id);
     Ok(try!(conn.sinter((my_key, their_key))))
@@ -34,7 +37,7 @@ fn show_leaderboard(conn: &Connection, n: isize) {
             for (i, (username, score)) in board.into_iter().enumerate() {
                 println!("{:<5} {:^20} {:>4}", i + 1, username, score);
             }
-        },
+        }
         Err(_) => println!("Failed to fetch leaderboard."),
     }
 }

@@ -18,7 +18,7 @@ struct ConnectionLimit(u32);
 fn main() {
     println!("24 days of Rust - anymap (day 9)");
     let mut config = AnyMap::new();
-    config.insert(HostAddress::DomainName("siciarz.net".to_owned()));
+    config.insert(HostAddress::DomainName("siciarz.net".to_string()));
     config.insert(Port(666));
     config.insert(ConnectionLimit(32));
     println!("{:?}", config.get::<HostAddress>());

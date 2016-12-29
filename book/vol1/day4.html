@@ -53,7 +53,7 @@
         data-chapter-title="Day 4 - docopt"
         data-filepath="book/vol1/day4.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -941,7 +941,7 @@ Options:
 <blockquote>
 <p><a id="day4.rs" href="../../vol1/src/day4.rs">day4.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting stuff in {}&quot;</span>, args.arg_file.unwrap_or(<span class="hljs-string">&quot;standard input&quot;</span>.to_owned()));
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting stuff in {}&quot;</span>, args.arg_file.unwrap_or(<span class="hljs-string">&quot;standard input&quot;</span>.to_string()));
     <span class="hljs-keyword">if</span> args.flag_bytes {
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Counting bytes!&quot;</span>);
     }

@@ -36,7 +36,9 @@ fn main() {
     let rot = Rotation2::new(Vector1::new(angle));
     println!("{:?}", rot * v);
     let point = Point2::new(4.0f64, 4.0);
-    println!("Translate from {:?} to {:?}", point, nalgebra::translate(&v, &point));
+    println!("Translate from {:?} to {:?}",
+             point,
+             nalgebra::translate(&v, &point));
 
     let v1 = Vector3::new(2.0f64, 2.0, 0.0);
     let v2 = Vector3::new(2.0f64, -2.0, 0.0);
@@ -52,12 +54,12 @@ fn main() {
         let t = i as f64 / 16.0f64;
         t.sin()
     });
-    draw(&sine, &Path::new("out_sine.png"));
+    draw(&sine, Path::new("out_sine.png"));
 
     let window = DVector::from_fn(SIZE, |i: usize| {
         0.54f64 - 0.46 * (PI * 2.0 * (i as f64) / (SIZE - 1) as f64).cos()
     });
-    draw(&window, &Path::new("out_window.png"));
+    draw(&window, Path::new("out_window.png"));
 
-    draw(&(sine * window), &Path::new("out_windowed.png"));
+    draw(&(sine * window), Path::new("out_windowed.png"));
 }

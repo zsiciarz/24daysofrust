@@ -7,10 +7,11 @@ extern crate rustc_serialize;
 use std::collections::BTreeMap;
 use std::env;
 use std::path::Path;
-use libc::{ENOENT};
+use libc::ENOENT;
 use time::Timespec;
 #[cfg(target_family="unix")]
-use fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry, ReplyDirectory};
+use fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry,
+           ReplyDirectory};
 use rustc_serialize::json;
 
 #[cfg(target_family="unix")]
@@ -43,7 +44,7 @@ impl JsonFilesystem {
             flags: 0,
         };
         attrs.insert(1, attr);
-        inodes.insert("/".to_owned(), 1);
+        inodes.insert("/".to_string(), 1);
         for (i, (key, value)) in tree.iter().enumerate() {
             let attr = FileAttr {
                 ino: i as u64 + 2,
@@ -64,7 +65,11 @@ impl JsonFilesystem {
             attrs.insert(attr.ino, attr);
             inodes.insert(key.clone(), attr.ino);
         }
-        JsonFilesystem { tree: tree.clone(), attrs: attrs, inodes: inodes }
+        JsonFilesystem {
+            tree: tree.clone(),
+            attrs: attrs,
+            inodes: inodes,
+        }
     }
 }
 
@@ -76,7 +81,7 @@ impl Filesystem for JsonFilesystem {
             Some(attr) => {
                 let ttl = Timespec::new(1, 0);
                 reply.attr(&ttl, attr);
-            },
+            }
             None => reply.error(ENOENT),
         };
     }
@@ -88,22 +93,32 @@ impl Filesystem for JsonFilesystem {
             None => {
                 reply.error(ENOENT);
                 return;
-            },
+            }
         };
         match self.attrs.get(inode) {
             Some(attr) => {
                 let ttl = Timespec::new(1, 0);
                 reply.entry(&ttl, attr, 0);
-            },
+            }
             None => reply.error(ENOENT),
         };
     }
 
-    fn read(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, size: u32, reply: ReplyData) {
-        println!("read(ino={}, fh={}, offset={}, size={})", ino, fh, offset, size);
+    fn read(&mut self,
+            _req: &Request,
+            ino: u64,
+            fh: u64,
+            offset: u64,
+            size: u32,
+            reply: ReplyData) {
+        println!("read(ino={}, fh={}, offset={}, size={})",
+                 ino,
+                 fh,
+                 offset,
+                 size);
         for (key, &inode) in &self.inodes {
             if inode == ino {
-                let value = self.tree.get(key).unwrap();
+                let value = &self.tree[key];
                 reply.data(value.pretty().to_string().as_bytes());
                 return;
             }
@@ -111,14 +126,21 @@ impl Filesystem for JsonFilesystem {
         reply.error(ENOENT);
     }
 
-    fn readdir(&mut self, _req: &Request, ino: u64, fh: u64, offset: u64, mut reply: ReplyDirectory) {
+    fn readdir(&mut self,
+               _req: &Request,
+               ino: u64,
+               fh: u64,
+               offset: u64,
+               mut reply: ReplyDirectory) {
         println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
         if ino == 1 {
             if offset == 0 {
                 reply.add(1, 0, FileType::Directory, &Path::new("."));
                 reply.add(1, 1, FileType::Directory, &Path::new(".."));
                 for (key, &inode) in &self.inodes {
-                    if inode == 1 { continue; }
+                    if inode == 1 {
+                        continue;
+                    }
                     let offset = inode; // hack
                     println!("\tkey={}, inode={}, offset={}", key, inode, offset);
                     reply.add(inode, offset, FileType::RegularFile, &Path::new(key));

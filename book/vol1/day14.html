@@ -53,7 +53,7 @@
         data-chapter-title="Day 14 - nalgebra"
         data-filepath="book/vol1/day14.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -910,21 +910,20 @@ Vec2 { x: <span class="hljs-number">1</span>, y: <span class="hljs-number">0</sp
 <p><a id="day14.rs" href="../../vol1/src/day14.rs">day14.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-keyword">let</span> point = Point2::new(<span class="hljs-number">4.0f64</span>, <span class="hljs-number">4.0</span>);
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Translate from {:?} to {:?}&quot;</span>, point, nalgebra::translate(&amp;v, &amp;point));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Translate from {:?} to {:?}&quot;</span>,
 </code></pre>
 <p>A number of other operations are also exposed as top-level functions, such as <code>transform()</code>, <code>rotate()</code> along with their inverse counterparts.</p>
 <h2 id="dot-and-cross-product">Dot and cross product</h2>
 <blockquote>
 <p><a id="day14.rs" href="../../vol1/src/day14.rs">day14.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> v1 = Vector3::new(<span class="hljs-number">2.0f64</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">0.0</span>);
+<pre><code class="lang-rust">nalgebra::translate(&amp;v, &amp;point));
+
+    <span class="hljs-keyword">let</span> v1 = Vector3::new(<span class="hljs-number">2.0f64</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">0.0</span>);
     <span class="hljs-keyword">let</span> v2 = Vector3::new(<span class="hljs-number">2.0f64</span>, -<span class="hljs-number">2.0</span>, <span class="hljs-number">0.0</span>);
     <span class="hljs-keyword">if</span> nalgebra::approx_eq(&amp;<span class="hljs-number">0.0f64</span>, &amp;nalgebra::dot(&amp;v1, &amp;v2)) {
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;v1 is orthogonal to v2&quot;</span>);
     }
-
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, nalgebra::cross(&amp;v1, &amp;v2));
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, nalgebra::cross(&amp;v2, &amp;v1));
 </code></pre>
 <p>The output is:</p>
 <pre><code class="lang-sh">$ cargo run
@@ -939,19 +938,19 @@ Vec3 { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</sp
 <blockquote>
 <p><a id="day14.rs" href="../../vol1/src/day14.rs">day14.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">const</span> SIZE: usize = <span class="hljs-number">512</span>;
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, nalgebra::cross(&amp;v2, &amp;v1));
+
+    <span class="hljs-keyword">const</span> SIZE: usize = <span class="hljs-number">512</span>;
     <span class="hljs-keyword">let</span> sine = DVector::from_fn(SIZE, |i: usize| {
         <span class="hljs-keyword">let</span> t = i <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span> / <span class="hljs-number">16.0f64</span>;
         t.sin()
     });
-    draw(&amp;sine, &amp;Path::new(<span class="hljs-string">&quot;out_sine.png&quot;</span>));
+    draw(&amp;sine, Path::new(<span class="hljs-string">&quot;out_sine.png&quot;</span>));
 
     <span class="hljs-keyword">let</span> window = DVector::from_fn(SIZE, |i: usize| {
         <span class="hljs-number">0.54f64</span> - <span class="hljs-number">0.46</span> * (PI * <span class="hljs-number">2.0</span> * (i <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span>) / (SIZE - <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">f64</span>).cos()
     });
-    draw(&amp;window, &amp;Path::new(<span class="hljs-string">&quot;out_window.png&quot;</span>));
-
-    draw(&amp;(sine * window), &amp;Path::new(<span class="hljs-string">&quot;out_windowed.png&quot;</span>));
+    draw(&amp;window, Path::new(<span class="hljs-string">&quot;out_window.png&quot;</span>));
 </code></pre>
 <p>We can use the <code>from_fn()</code> mwthod to create a vector by generating each element in a closure. The <code>window</code> variable is a <a href="http://en.wikipedia.org/wiki/Window_function#Hamming_window" target="_blank">Hamming window</a>; such window functions are a common preprocessing step in DSP.</p>
 <p>The <code>draw()</code> function borrows a <code>DVec</code> and a <code>Path</code> and plots a simple representation of the vector to a PNG file using the <a href="https://siciarz.net/24-days-of-rust-image/" target="_blank">image crate</a>. The code is <a href="https://github.com/zsiciarz/24daysofrust/blob/9a88969f156581da8ba16ae50c87d884983b17c9/src/day14.rs#L11" target="_blank">on GitHub</a> for anybody interested. Here&apos;s the output of all three steps of the above code:</p>

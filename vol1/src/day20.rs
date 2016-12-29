@@ -7,7 +7,7 @@ use zmq::{Context, Message, Error};
 
 #[cfg(target_family="unix")]
 fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
-    let mut sock = try!(ctx.socket(zmq::REQ));
+    let sock = try!(ctx.socket(zmq::REQ));
     try!(sock.connect(addr));
     let payload = "Hello world!";
     println!("-> {:?}", payload);
@@ -21,15 +21,14 @@ fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
 
 #[cfg(target_family="unix")]
 fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
-    let mut sock = try!(ctx.socket(zmq::REP));
+    let sock = try!(ctx.socket(zmq::REP));
     try!(sock.bind(addr));
     let mut msg = Message::new();
     loop {
-        if let Ok(_) = sock.recv(&mut msg, 0) {
-            try!(sock.send_str(msg.as_str().unwrap(), 0));
+        if sock.recv(&mut msg, 0).is_ok() {
+            try!(sock.send(msg.as_str().unwrap(), 0));
         }
     }
-    Ok(())
 }
 
 #[cfg(target_family="windows")]

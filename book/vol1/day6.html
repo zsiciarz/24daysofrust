@@ -53,7 +53,7 @@
         data-chapter-title="Day 6 - working with JSON"
         data-filepath="book/vol1/day6.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -899,8 +899,8 @@
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-number">42</span>));
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>, <span class="hljs-string">&quot;or&quot;</span>, <span class="hljs-string">&quot;not&quot;</span>, <span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>]));
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-built_in">Some</span>(<span class="hljs-keyword">true</span>)));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>,
+             json::encode(&amp;<span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>, <span class="hljs-string">&quot;or&quot;</span>, <span class="hljs-string">&quot;not&quot;</span>, <span class="hljs-string">&quot;to&quot;</span>, <span class="hljs-string">&quot;be&quot;</span>]));
 </code></pre>
 <p><code>Option&lt;T&gt;</code> maps to the encoding of <code>value</code> itself if it is a <code>Some(value)</code> while <code>None</code> maps to <code>null</code>.</p>
 <h2 id="automatic-deserialization">Automatic (de)serialization</h2>
@@ -908,16 +908,16 @@
 <blockquote>
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> user = User {
-        name: <span class="hljs-string">&quot;Zbyszek&quot;</span>.to_owned(),
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;<span class="hljs-built_in">Some</span>(<span class="hljs-keyword">true</span>)));
+    <span class="hljs-keyword">let</span> user = User {
+        name: <span class="hljs-string">&quot;Zbyszek&quot;</span>.to_string(),
         post_count: <span class="hljs-number">100u32</span>,
         likes_burgers: <span class="hljs-keyword">true</span>,
         avatar: <span class="hljs-built_in">Some</span>(Photo {
-            url: <span class="hljs-string">&quot;http://lorempixel.com/160/160/&quot;</span>.to_owned(),
+            url: <span class="hljs-string">&quot;http://lorempixel.com/160/160/&quot;</span>.to_string(),
             dimensions: (<span class="hljs-number">160u32</span>, <span class="hljs-number">160u32</span>),
         }),
     };
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;user));
 </code></pre>
 <pre><code class="lang-sh">$ cargo run
 Ok(<span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;Zbyszek\&quot;,\&quot;post_count\&quot;:100,\&quot;likes_burgers\&quot;:true,\&quot;avatar\&quot;:{\&quot;url\&quot;:\&quot;http://lorempixel.com/160/160/\&quot;,\&quot;dimensions\&quot;:[160,160]}}&quot;</span>)
@@ -927,35 +927,35 @@ Ok(<span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;Zbyszek\&quot;,\&q
 <blockquote>
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> encoded = String::new();
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, json::encode(&amp;user));
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> encoded = String::new();
     {
         <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> encoder = Encoder::new_pretty(&amp;<span class="hljs-keyword">mut</span> encoded);
         user.encode(&amp;<span class="hljs-keyword">mut</span> encoder).expect(<span class="hljs-string">&quot;JSON encode error&quot;</span>);
     }
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, encoded);
 </code></pre>
 <h2 id="decoding">Decoding</h2>
 <blockquote>
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> incoming_request = <span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;John\&quot;,\&quot;post_count\&quot;:2,\&quot;likes_burgers\&quot;:false,\&quot;avatar\&quot;:null}&quot;</span>;
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, encoded);
+    <span class="hljs-keyword">let</span> incoming_request = <span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;John\&quot;,\&quot;post_count\&quot;:2,\&quot;likes_burgers\&quot;:false,\
+                            \&quot;avatar\&quot;:null}&quot;</span>;
     <span class="hljs-keyword">let</span> decoded: User = json::decode(incoming_request).unwrap();
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;My name is {} and I {} burgers&quot;</span>,
-        decoded.name, <span class="hljs-keyword">if</span> decoded.likes_burgers { <span class="hljs-string">&quot;love&quot;</span> } <span class="hljs-keyword">else</span> { <span class="hljs-string">&quot;don&apos;t like&quot;</span> });
-    <span class="hljs-built_in">assert!</span>(decoded.avatar.is_none());
 </code></pre>
 <p>As you cen see, decoding is also pretty easy. But what happens if we don&apos;t know all of the fields in advance? We can use another function in the <code>json</code> module - <code>from_str()</code>. The difference between <code>from_str()</code> and <code>decode()</code> is that the latter may return some struct implementing <code>RustcDecodable</code> while the former returns a <a href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/enum.Json.html" target="_blank">Json</a> value. This type has a few methods of its own, including <code>find()</code>. See the example below:</p>
 <blockquote>
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> new_request = <span class="hljs-string">&quot;{\&quot;id\&quot;:64,\&quot;title\&quot;:\&quot;24days\&quot;,\&quot;stats\&quot;:{\&quot;pageviews\&quot;:1500}}&quot;</span>;
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(request_json) = json::Json::from_str(new_request) {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Some</span>(<span class="hljs-keyword">ref</span> stats) = request_json.find(<span class="hljs-string">&quot;stats&quot;</span>) {
-            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Some</span>(<span class="hljs-keyword">ref</span> pageviews) = stats.find(<span class="hljs-string">&quot;pageviews&quot;</span>) {
-                <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Pageviews: {}&quot;</span>, pageviews);
-            }
-        }
-    }
+<pre><code class="lang-rust">decoded.name,
+             <span class="hljs-keyword">if</span> decoded.likes_burgers {
+                 <span class="hljs-string">&quot;love&quot;</span>
+             } <span class="hljs-keyword">else</span> {
+                 <span class="hljs-string">&quot;don&apos;t like&quot;</span>
+             });
+    <span class="hljs-built_in">assert!</span>(decoded.avatar.is_none());
+    <span class="hljs-keyword">let</span> new_request = <span class="hljs-string">&quot;{\&quot;id\&quot;:64,\&quot;title\&quot;:\&quot;24days\&quot;,\&quot;stats\&quot;:{\&quot;pageviews\&quot;:1500}}&quot;</span>;
 </code></pre>
 <p>We&apos;re using the <a href="http://doc.rust-lang.org/book/if-let.html" target="_blank">if let</a> language construct which often simplifies pattern matches where we care for only one branch and do nothing if the expression doesn&apos;t match.</p>
 <h2 id="the-json-macro">The json! macro</h2>
@@ -972,17 +972,17 @@ Ok(<span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;Zbyszek\&quot;,\&q
 <blockquote>
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-comment">// let config = json!({</span>
+<pre><code class="lang-rust"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(request_json) = json::Json::from_str(new_request) {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Some</span>(stats) = request_json.find(<span class="hljs-string">&quot;stats&quot;</span>) {
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Some</span>(pageviews) = stats.find(<span class="hljs-string">&quot;pageviews&quot;</span>) {
+                <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Pageviews: {}&quot;</span>, pageviews);
+            }
+        }
+    }
+    <span class="hljs-comment">// let config = json!({</span>
     <span class="hljs-comment">//     &quot;hostname&quot;: &quot;localhost&quot;,</span>
     <span class="hljs-comment">//     &quot;port&quot;: 6543,</span>
     <span class="hljs-comment">//     &quot;allowed_methods&quot;: [&quot;get&quot;, &quot;post&quot;],</span>
-    <span class="hljs-comment">//     &quot;limits&quot;: {</span>
-    <span class="hljs-comment">//         &quot;bandwidth&quot;: (500 * 16),</span>
-    <span class="hljs-comment">//         &quot;rate&quot;: null</span>
-    <span class="hljs-comment">//     }</span>
-    <span class="hljs-comment">// });</span>
-    <span class="hljs-comment">// println!(&quot;Configuration: {}&quot;, config);</span>
-    <span class="hljs-comment">// println!(&quot;Bandwidth: {}&quot;, config.search(&quot;bandwidth&quot;).unwrap());</span>
 </code></pre>
 
                     

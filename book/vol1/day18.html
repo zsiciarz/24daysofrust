@@ -53,7 +53,7 @@
         data-chapter-title="Day 18 - redis"
         data-filepath="book/vol1/day18.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -897,11 +897,10 @@
 <blockquote>
 <p><a id="day18.rs" href="../../vol1/src/day18.rs">day18.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> client = Client::open(<span class="hljs-string">&quot;redis://127.0.0.1/&quot;</span>).unwrap();
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;24 days of Rust - redis (day 18)&quot;</span>);
+    <span class="hljs-keyword">let</span> client = Client::open(<span class="hljs-string">&quot;redis://127.0.0.1/&quot;</span>).unwrap();
     <span class="hljs-keyword">let</span> conn = client.get_connection().unwrap();
-    <span class="hljs-keyword">let</span> _: () = conn.set(<span class="hljs-string">&quot;answer&quot;</span>, <span class="hljs-number">42</span>).unwrap();
-    <span class="hljs-keyword">let</span> answer: <span class="hljs-keyword">i32</span> = conn.get(<span class="hljs-string">&quot;answer&quot;</span>).unwrap();
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Answer: {}&quot;</span>, answer);
 </code></pre>
 <p>Most of the <a href="http://redis.io/commands" target="_blank">Redis commands</a> translate directly to <code>Connection</code> methods. But if you encounter an error similar to <code>Type ``redis::connection::Connection`` does not implement any method in scope named ``set`` </code>, you probably forgot to import the <code>Commands</code> trait.</p>
 <p>(I accidentally used the same example number as Armin did in the readme; not surprising since it is the <a href="http://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29" target="_blank">Answer to the Ultimate Question of Life, the Universe, and Everything</a>.)</p>
@@ -930,21 +929,21 @@
 <blockquote>
 <p><a id="day18.rs" href="../../vol1/src/day18.rs">day18.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">friends_in_common</span></span>(conn: &amp;Connection, my_id: UserId, their_id: UserId) -&gt; RedisResult&lt;HashSet&lt;UserId&gt;&gt; {
+<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">friends_in_common</span></span>(conn: &amp;Connection,
+                     my_id: UserId,
+                     their_id: UserId)
+                     -&gt; RedisResult&lt;HashSet&lt;UserId&gt;&gt; {
     <span class="hljs-keyword">let</span> my_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, my_id);
-    <span class="hljs-keyword">let</span> their_key = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;friends:{}&quot;</span>, their_id);
-    <span class="hljs-built_in">Ok</span>(<span class="hljs-built_in">try!</span>(conn.sinter((my_key, their_key))))
-}
 </code></pre>
 <p>We can now simulate adding a few friends:</p>
 <blockquote>
 <p><a id="day18.rs" href="../../vol1/src/day18.rs">day18.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..<span class="hljs-number">10u64</span> {
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> answer: <span class="hljs-keyword">i32</span> = conn.get(<span class="hljs-string">&quot;answer&quot;</span>).unwrap();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Answer: {}&quot;</span>, answer);
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..<span class="hljs-number">10u64</span> {
         add_friend(&amp;conn, i, i + <span class="hljs-number">2</span>).expect(<span class="hljs-string">&quot;Friendship failed :(&quot;</span>);
-    }
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;You have {} friends in common.&quot;</span>,
-             friends_in_common(&amp;conn, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>).map(|s| s.len()).unwrap_or(<span class="hljs-number">0</span>));
 </code></pre>
 <p>Here&apos;s the output:</p>
 <pre><code class="lang-sh">$ cargo run
@@ -955,15 +954,17 @@ You have <span class="hljs-number">1</span> friend(s) <span class="hljs-keyword"
 <blockquote>
 <p><a id="day18.rs" href="../../vol1/src/day18.rs">day18.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">add_score</span></span>(conn: &amp;Connection, username: &amp;<span class="hljs-keyword">str</span>, score: <span class="hljs-keyword">u32</span>) -&gt; RedisResult&lt;()&gt; {
-    conn.zadd(<span class="hljs-string">&quot;leaderboard&quot;</span>, username, score)
+<pre><code class="lang-rust"><span class="hljs-built_in">Ok</span>(<span class="hljs-built_in">try!</span>(conn.sinter((my_key, their_key))))
 }
 </code></pre>
 <p>The <code>add_score</code> function is just a wrapper to provide a more high-level API. It will be called every time player&apos;s score changes.</p>
 <blockquote>
 <p><a id="day18.rs" href="../../vol1/src/day18.rs">day18.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">type</span> <span class="hljs-title">Leaderboard</span> = <span class="hljs-built_in">Vec</span>&lt;(<span class="hljs-built_in">String</span>, <span class="hljs-keyword">u32</span>)&gt;;
+<pre><code class="lang-rust">conn.zadd(<span class="hljs-string">&quot;leaderboard&quot;</span>, username, score)
+}
+
+<span class="hljs-keyword">type</span> <span class="hljs-title">Leaderboard</span> = <span class="hljs-built_in">Vec</span>&lt;(<span class="hljs-built_in">String</span>, <span class="hljs-keyword">u32</span>)&gt;;
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">show_leaderboard</span></span>(conn: &amp;Connection, n: isize) {
     <span class="hljs-keyword">let</span> result: RedisResult&lt;Leaderboard&gt; = conn.zrevrange_withscores(<span class="hljs-string">&quot;leaderboard&quot;</span>, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>);
@@ -973,22 +974,19 @@ You have <span class="hljs-number">1</span> friend(s) <span class="hljs-keyword"
             <span class="hljs-keyword">for</span> (i, (username, score)) <span class="hljs-keyword">in</span> board.into_iter().enumerate() {
                 <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:&lt;5} {:^20} {:&gt;4}&quot;</span>, i + <span class="hljs-number">1</span>, username, score);
             }
-        },
-        <span class="hljs-built_in">Err</span>(_) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Failed to fetch leaderboard.&quot;</span>),
-    }
-}
+        }
 </code></pre>
 <p>The <code>Leaderboard</code> alias is there just to simplify the result type. We use <code>zrevrange_withscores</code> to get the leaderboard data (sorted by score descending) and display it using Rust&apos;s <a href="http://doc.rust-lang.org/std/fmt/" target="_blank">string formatting</a> syntax.</p>
 <p>Putting all this together:</p>
 <blockquote>
 <p><a id="day18.rs" href="../../vol1/src/day18.rs">day18.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> players = <span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;raynor&quot;</span>, <span class="hljs-string">&quot;kerrigan&quot;</span>, <span class="hljs-string">&quot;mengsk&quot;</span>, <span class="hljs-string">&quot;zasz&quot;</span>, <span class="hljs-string">&quot;tassadar&quot;</span>];
+<pre><code class="lang-rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;You have {} friends in common.&quot;</span>,
+             friends_in_common(&amp;conn, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>).map(|s| s.len()).unwrap_or(<span class="hljs-number">0</span>));
+
+    <span class="hljs-keyword">let</span> players = <span class="hljs-built_in">vec!</span>[<span class="hljs-string">&quot;raynor&quot;</span>, <span class="hljs-string">&quot;kerrigan&quot;</span>, <span class="hljs-string">&quot;mengsk&quot;</span>, <span class="hljs-string">&quot;zasz&quot;</span>, <span class="hljs-string">&quot;tassadar&quot;</span>];
     <span class="hljs-keyword">for</span> player <span class="hljs-keyword">in</span> &amp;players {
         <span class="hljs-keyword">let</span> score = rand::random::&lt;<span class="hljs-keyword">u32</span>&gt;() % <span class="hljs-number">1000</span>;
-        add_score(&amp;conn, *player, score).expect(<span class="hljs-string">&quot;Nuclear launch detected&quot;</span>);
-    }
-    show_leaderboard(&amp;conn, <span class="hljs-number">3</span>);
 </code></pre>
 <p>And if we run this, we&apos;ll get something similar to the output below:</p>
 <pre><code class="lang-sh">$ cargo run

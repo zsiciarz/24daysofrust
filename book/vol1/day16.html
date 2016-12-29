@@ -53,7 +53,7 @@
         data-chapter-title="Day 16 - FUSE filesystems, part 2"
         data-filepath="book/vol1/day16.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -959,7 +959,7 @@ drwxrwxrwt <span class="hljs-number">10</span> root root <span class="hljs-numbe
             flags: <span class="hljs-number">0</span>,
         };
         attrs.insert(<span class="hljs-number">1</span>, attr);
-        inodes.insert(<span class="hljs-string">&quot;/&quot;</span>.to_owned(), <span class="hljs-number">1</span>);
+        inodes.insert(<span class="hljs-string">&quot;/&quot;</span>.to_string(), <span class="hljs-number">1</span>);
         <span class="hljs-keyword">for</span> (i, (key, value)) <span class="hljs-keyword">in</span> tree.iter().enumerate() {
             <span class="hljs-keyword">let</span> attr = FileAttr {
                 ino: i <span class="hljs-keyword">as</span> <span class="hljs-keyword">u64</span> + <span class="hljs-number">2</span>,

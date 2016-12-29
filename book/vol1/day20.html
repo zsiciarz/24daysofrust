@@ -53,7 +53,7 @@
         data-chapter-title="Day 20 - zeromq"
         data-filepath="book/vol1/day20.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -898,8 +898,7 @@
 <blockquote>
 <p><a id="day20.rs" href="../../vol1/src/day20.rs">day20.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-keyword">let</span> args = std::env::args().collect::&lt;<span class="hljs-built_in">Vec</span>&lt;_&gt;&gt;();
-    <span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
+<pre><code class="lang-rust"><span class="hljs-keyword">if</span> args.len() &lt; <span class="hljs-number">2</span> {
         <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Usage: {} (client|server)&quot;</span>, args[<span class="hljs-number">0</span>]);
         <span class="hljs-keyword">return</span>;
     }
@@ -919,7 +918,7 @@
 <p><a id="day20.rs" href="../../vol1/src/day20.rs">day20.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_client</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
+    <span class="hljs-keyword">let</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REQ));
     <span class="hljs-built_in">try!</span>(sock.connect(addr));
     <span class="hljs-keyword">let</span> payload = <span class="hljs-string">&quot;Hello world!&quot;</span>;
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;-&gt; {:?}&quot;</span>, payload);
@@ -939,15 +938,14 @@
 <p><a id="day20.rs" href="../../vol1/src/day20.rs">day20.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">run_server</span></span>(ctx: &amp;<span class="hljs-keyword">mut</span> Context, addr: &amp;<span class="hljs-keyword">str</span>) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
+    <span class="hljs-keyword">let</span> sock = <span class="hljs-built_in">try!</span>(ctx.socket(zmq::REP));
     <span class="hljs-built_in">try!</span>(sock.bind(addr));
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> msg = Message::new();
     <span class="hljs-keyword">loop</span> {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-built_in">Ok</span>(_) = sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>) {
-            <span class="hljs-built_in">try!</span>(sock.send_str(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
+        <span class="hljs-keyword">if</span> sock.recv(&amp;<span class="hljs-keyword">mut</span> msg, <span class="hljs-number">0</span>).is_ok() {
+            <span class="hljs-built_in">try!</span>(sock.send(msg.as_str().unwrap(), <span class="hljs-number">0</span>));
         }
     }
-    <span class="hljs-built_in">Ok</span>(())
 }
 </code></pre>
 <p>The server opens a <code>REP</code> socket and then loops infinitely and echoes back incoming message data. In my first implementation I forgot to send the response and got weird socket errors - turns out a response is necessary in a request/response mode, who would have thought...</p>

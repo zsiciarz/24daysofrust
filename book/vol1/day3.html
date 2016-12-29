@@ -53,7 +53,7 @@
         data-chapter-title="Day 3 - csv"
         data-filepath="book/vol1/day3.md"
         data-basepath="../.."
-        data-revision="Mon Dec 26 2016 10:28:14 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 13:19:18 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -926,8 +926,8 @@ For a Few Dollars More,El Indio,<span class="hljs-number">1965</span>
 <p><a id="day3.rs" href="../../vol1/src/day3.rs">day3.rs</a></p>
 </blockquote>
 <pre><code class="lang-rust"><span class="hljs-keyword">let</span> movie = Movie {
-        title: <span class="hljs-string">&quot;Hang &apos;Em High&quot;</span>.to_owned(),
-        bad_guy: <span class="hljs-string">&quot;Wilson&quot;</span>.to_owned(),
+        title: <span class="hljs-string">&quot;Hang &apos;Em High&quot;</span>.to_string(),
+        bad_guy: <span class="hljs-string">&quot;Wilson&quot;</span>.to_string(),
         pub_year: <span class="hljs-number">1968</span>,
     };
     writer.encode(movie).expect(<span class="hljs-string">&quot;CSV writer error&quot;</span>);
