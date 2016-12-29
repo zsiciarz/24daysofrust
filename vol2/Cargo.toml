@@ -71,8 +71,6 @@ app_dirs = "1.1.1"
 clap = "2.19.3"
 custom_derive = "0.1.7"
 derive_builder = "0.2.1"
-diesel = "0.9.1"
-diesel_codegen = { version = "0.9.0", features=["postgres"]}
 dotenv = "0.8.0"
 envy = "0.1.2"
 error-chain = "0.7.1"
@@ -120,10 +118,14 @@ winreg = "0.4"
 
 [target.i686-uknown-linux-gnu.dependencies]
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
+diesel = "0.9.1"
+diesel_codegen = { version = "0.9.0", features=["postgres"]}
 git2 = "0.6.3"
 rust-lzma = "0.2.1"
 
 [target.x86_64-unknown-linux-gnu.dependencies]
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
+diesel = "0.9.1"
+diesel_codegen = { version = "0.9.0", features=["postgres"]}
 git2 = "0.6.3"
 rust-lzma = "0.2.1"
