@@ -69,7 +69,6 @@ name = "day21"
 [dependencies]
 app_dirs = "1.1.1"
 clap = "2.19.3"
-cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
 custom_derive = "0.1.7"
 derive_builder = "0.2.1"
 diesel = "0.9.1"
@@ -120,9 +119,11 @@ winreg = "0.4"
 winreg = "0.4"
 
 [target.i686-uknown-linux-gnu.dependencies]
+cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
 git2 = "0.6.3"
 rust-lzma = "0.2.1"
 
 [target.x86_64-unknown-linux-gnu.dependencies]
+cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
 git2 = "0.6.3"
 rust-lzma = "0.2.1"
