@@ -1,27 +1,12 @@
 extern crate markdown;
 extern crate serde_json;
+#[macro_use]
 extern crate tera;
 
 use std::collections::HashMap;
-use tera::{Context, Tera, TeraResult, TeraError, Value, to_value};
+use tera::{Context, Tera, Result, Value, to_value};
 
-macro_rules! try_get_value {
-    ($filter_name:expr, $var_name:expr, $ty:ty, $val:expr) => {{
-        match ::serde_json::value::from_value::<$ty>($val.clone()) {
-            Ok(s) => s,
-            Err(_) => {
-                return Err(TeraError::FilterIncorrectArgType(
-                    $filter_name.to_string(),
-                    $var_name.to_string(),
-                    $val,
-                    stringify!($ty).to_string())
-                );
-            }
-        }
-    }};
-}
-
-pub fn markdown_filter(value: Value, _: HashMap<String, Value>) -> TeraResult<Value> {
+pub fn markdown_filter(value: Value, _: HashMap<String, Value>) -> Result<Value> {
     let s = try_get_value!("upper", "value", String, value);
     Ok(to_value(markdown::to_html(s.as_str())))
 }
@@ -35,7 +20,7 @@ const LIPSUM: &'static str =
 
 fn main() {
     println!("24 days of Rust vol. 2 - tera");
-    let mut tera = Tera::new("templates/**/*");
+    let mut tera = compile_templates!("templates/**/*");
     let mut ctx = Context::new();
     ctx.add("title", &"hello world!");
     ctx.add("content", &LIPSUM);

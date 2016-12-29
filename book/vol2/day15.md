@@ -14,11 +14,8 @@ Basic templates
 
 Let's use `tera` to render a simple HTML template.
 
-Note: The templates are parsed when `Tera::new()` is called, so if any of
-the templates contains invalid syntax, the function will panic right there.
-Keep that in mind!
-
 ```rust
+#[macro_use]
 extern crate tera;
 
 use tera::{Context, Tera};
@@ -31,7 +28,7 @@ const LIPSUM: &'static str =
      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
 
 fn main() {
-    let tera = Tera::new("templates/**/*");
+    let mut tera = compile_templates!("templates/**/*");
     let mut ctx = Context::new();
     ctx.add("title", &"hello world!");
     ctx.add("content", &LIPSUM);
@@ -113,7 +110,7 @@ frontend developers on the team.)
 A template filter is just a Rust function that has the following type:
 
 ```rust
-pub type FilterFn = fn(Value, HashMap<String, Value>) -> TeraResult<Value>;
+pub type FilterFn = fn(Value, HashMap<String, Value>) -> Result<Value>;
 ```
 
 Let's use the [`markdown`](https://crates.io/crates/markdown) crate
@@ -121,22 +118,19 @@ to render Markdown to HTML on the fly.
 
 ```rust
 extern crate markdown;
+#[macro_use]
 extern crate tera;
 
 use std::collections::HashMap;
-use tera::{Context, Tera, TeraResult, Value, to_value};
+use tera::{Context, Tera, Result, Value, to_value};
 
-pub fn markdown_filter(value: Value, _: HashMap<String, Value>) -> TeraResult<Value> {
+pub fn markdown_filter(value: Value, _: HashMap<String, Value>) -> Result<Value> {
     let s = try_get_value!("upper", "value", String, value);
     Ok(to_value(markdown::to_html(s.as_str())))
 }
 ```
 
-We're using here a `try_get_value!` macro, which isn't currently a part of
-`tera`'s public API (because value serializing may change; at the moment `tera`
-is using `serde_json`). I've copied it
-[from `tera` sources](https://github.com/Keats/tera/blob/3471df41ab454c60a85ec271a945f7123705e49a/src/macros.rs#L6)
-but decided to omit its definition from the example for clarity. We try
+We're using here a `try_get_value!` macro to process filter input. We try
 to read our input as a `String` and if that succeeds, we pass the string slice
 to `markdown::to_html()`. The rest is just bookkeeping - convert the rendered
 HTML back to a `Value` and wrap in `Ok`. Let's see it in action:
