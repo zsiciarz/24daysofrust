@@ -51,8 +51,8 @@ fn main() {
     let query = vec![("key", "value"), ("foo", "bar")];
     println!("{}", post_query("http://httpbin.org/post", query).unwrap());
     let movie = Movie {
-        title: "You Only Live Twice".to_owned(),
-        bad_guy: "Blofeld".to_owned(),
+        title: "You Only Live Twice".to_string(),
+        bad_guy: "Blofeld".to_string(),
         pub_year: 1967,
     };
     println!("{}", post_json("http://httpbin.org/post", &movie).unwrap());

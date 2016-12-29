@@ -28,11 +28,11 @@ fn main() {
              json::encode(&vec!["to", "be", "or", "not", "to", "be"]));
     println!("{:?}", json::encode(&Some(true)));
     let user = User {
-        name: "Zbyszek".to_owned(),
+        name: "Zbyszek".to_string(),
         post_count: 100u32,
         likes_burgers: true,
         avatar: Some(Photo {
-            url: "http://lorempixel.com/160/160/".to_owned(),
+            url: "http://lorempixel.com/160/160/".to_string(),
             dimensions: (160u32, 160u32),
         }),
     };

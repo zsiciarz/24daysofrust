@@ -27,8 +27,8 @@ rusti=> (1..100).filter(|x| *x % 19 == 3).fold(0, |acc, x| acc + x)
 One great thing about `rusti` is the `.type` command which shows the type of an expression. (It's quite similar to `:type` in GHCi.)
 
 ```sh
-rusti=> .type Some("Hello world!".to_owned())
-Some("Hello world!".to_owned()) = core::option::Option<collections::string::String>
+rusti=> .type Some("Hello world!".to_string())
+Some("Hello world!".to_string()) = core::option::Option<collections::string::String>
 rusti=> .type vec![1, 2, 3]
 vec![1, 2, 3] = collections::vec::Vec<i32>
 rusti=> .type std::io::stdin
