@@ -9,8 +9,8 @@ type UserId = u64;
 fn add_friend(conn: &Connection, my_id: UserId, their_id: UserId) -> RedisResult<()> {
     let my_key = format!("friends:{}", my_id);
     let their_key = format!("friends:{}", their_id);
-    try!(conn.sadd(my_key, their_id));
-    try!(conn.sadd(their_key, my_id));
+    conn.sadd(my_key, their_id)?;
+    conn.sadd(their_key, my_id)?;
     Ok(())
 }
 
@@ -20,7 +20,7 @@ fn friends_in_common(conn: &Connection,
                      -> RedisResult<HashSet<UserId>> {
     let my_key = format!("friends:{}", my_id);
     let their_key = format!("friends:{}", their_id);
-    Ok(try!(conn.sinter((my_key, their_key))))
+    conn.sinter((my_key, their_key))
 }
 
 fn add_score(conn: &Connection, username: &str, score: u32) -> RedisResult<()> {

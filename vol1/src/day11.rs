@@ -22,8 +22,8 @@ fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     where T: FromSql
 {
     println!("Executing query: {}", query);
-    let stmt = try!(conn.prepare(query));
-    let rows = try!(stmt.query(&[]));
+    let stmt = conn.prepare(query)?;
+    let rows = stmt.query(&[])?;
     let row = rows.iter().next().unwrap();
     row.get_opt(0).unwrap()
 }

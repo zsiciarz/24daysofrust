@@ -7,13 +7,13 @@ use zmq::{Context, Message, Error};
 
 #[cfg(target_family="unix")]
 fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
-    let sock = try!(ctx.socket(zmq::REQ));
-    try!(sock.connect(addr));
+    let sock = ctx.socket(zmq::REQ)?;
+    sock.connect(addr)?;
     let payload = "Hello world!";
     println!("-> {:?}", payload);
     let mut msg = Message::new();
-    try!(sock.send(payload.as_bytes(), 0));
-    try!(sock.recv(&mut msg, 0));
+    sock.send(payload.as_bytes(), 0)?;
+    sock.recv(&mut msg, 0)?;
     let contents = msg.as_str().unwrap();
     println!("<- {:?}", contents);
     Ok(())
@@ -21,12 +21,12 @@ fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
 
 #[cfg(target_family="unix")]
 fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
-    let sock = try!(ctx.socket(zmq::REP));
-    try!(sock.bind(addr));
+    let sock = ctx.socket(zmq::REP)?;
+    sock.bind(addr)?;
     let mut msg = Message::new();
     loop {
         if sock.recv(&mut msg, 0).is_ok() {
-            try!(sock.send(msg.as_str().unwrap(), 0));
+            sock.send(msg.as_str().unwrap(), 0)?;
         }
     }
 }
