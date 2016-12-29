@@ -11,6 +11,9 @@ install:
     - gcc --version
     - rustc -V
     - cargo -V
+    - nuget install redis-64 -excludeversion
+    - redis-64\tools\redis-server.exe --service-install
+    - redis-64\tools\redis-server.exe --service-start
 
 build: false
 
