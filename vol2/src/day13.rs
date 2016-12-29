@@ -1,3 +1,4 @@
+#[cfg(target_family="unix")]
 extern crate lzma;
 extern crate zip;
 
@@ -7,6 +8,7 @@ use zip::read::{ZipArchive, ZipFile};
 use zip::result::ZipResult;
 use zip::write::{FileOptions, ZipWriter};
 
+#[cfg(target_family="unix")]
 use lzma::{LzmaWriter, LzmaError};
 
 static FILE_CONTENTS: &'static [u8] = include_bytes!("../Cargo.lock");
@@ -38,10 +40,16 @@ fn create_bz2_archive<T: Seek + Write>(buf: &mut T) -> ZipResult<()> {
     Ok(())
 }
 
+#[cfg(target_family="unix")]
 fn create_xz_archive<T: Write>(buf: &mut T) -> Result<(), LzmaError> {
     let mut writer = LzmaWriter::new_compressor(buf, 6)?;
     writer.write(FILE_CONTENTS)?;
     writer.finish()?;
+    Ok(())
+}
+
+#[cfg(target_family="windows")]
+fn create_xz_archive<T: Write>(buf: &mut T) -> Result<(), ()> {
     Ok(())
 }
 

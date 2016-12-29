@@ -91,7 +91,6 @@ phf_macros = "0.7.20"
 rand = "0.3.14"
 rayon = "0.6.0"
 reqwest = "0.2.0"
-rust-lzma = "0.2.1"
 rustc-serialize = "0.3.22"
 rustfft = "1.0.1"
 serde = "0.8.19"
@@ -122,6 +121,8 @@ winreg = "0.4"
 
 [target.i686-uknown-linux-gnu.dependencies]
 git2 = "0.6.3"
+rust-lzma = "0.2.1"
 
 [target.x86_64-unknown-linux-gnu.dependencies]
 git2 = "0.6.3"
+rust-lzma = "0.2.1"
