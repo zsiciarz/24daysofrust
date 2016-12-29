@@ -53,7 +53,7 @@
         data-chapter-title="Day 15 - tera"
         data-filepath="book/vol2/day15.md"
         data-basepath="../.."
-        data-revision="Thu Dec 29 2016 13:45:23 GMT+0000 (UTC)"
+        data-revision="Thu Dec 29 2016 14:13:30 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -888,10 +888,8 @@ contributions, so feel free to
 <a href="https://github.com/Keats/tera/issues" target="_blank">tackle some issues</a>!</p>
 <h2 id="basic-templates">Basic templates</h2>
 <p>Let&apos;s use <code>tera</code> to render a simple HTML template.</p>
-<p>Note: The templates are parsed when <code>Tera::new()</code> is called, so if any of
-the templates contains invalid syntax, the function will panic right there.
-Keep that in mind!</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> tera;
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> tera;
 
 <span class="hljs-keyword">use</span> tera::{Context, Tera};
 
@@ -903,7 +901,7 @@ Keep that in mind!</p>
      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum&quot;</span>;
 
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
-    <span class="hljs-keyword">let</span> tera = Tera::new(<span class="hljs-string">&quot;templates/**/*&quot;</span>);
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> tera = compile_templates!(<span class="hljs-string">&quot;templates/**/*&quot;</span>);
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> ctx = Context::new();
     ctx.add(<span class="hljs-string">&quot;title&quot;</span>, &amp;<span class="hljs-string">&quot;hello world!&quot;</span>);
     ctx.add(<span class="hljs-string">&quot;content&quot;</span>, &amp;LIPSUM);
@@ -972,26 +970,23 @@ lies in their extensibility. We can add our own template filters to cover
 the specific needs of our application. (Or to make life easier for
 frontend developers on the team.)</p>
 <p>A template filter is just a Rust function that has the following type:</p>
-<pre><code class="lang-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">type</span> <span class="hljs-title">FilterFn</span> = <span class="hljs-function"><span class="hljs-keyword">fn</span></span>(Value, HashMap&lt;<span class="hljs-built_in">String</span>, Value&gt;) -&gt; TeraResult&lt;Value&gt;;
+<pre><code class="lang-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">type</span> <span class="hljs-title">FilterFn</span> = <span class="hljs-function"><span class="hljs-keyword">fn</span></span>(Value, HashMap&lt;<span class="hljs-built_in">String</span>, Value&gt;) -&gt; <span class="hljs-built_in">Result</span>&lt;Value&gt;;
 </code></pre>
 <p>Let&apos;s use the <a href="https://crates.io/crates/markdown" target="_blank"><code>markdown</code></a> crate
 to render Markdown to HTML on the fly.</p>
 <pre><code class="lang-rust"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> markdown;
+<span class="hljs-preprocessor">#[macro_use]</span>
 <span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> tera;
 
 <span class="hljs-keyword">use</span> std::collections::HashMap;
-<span class="hljs-keyword">use</span> tera::{Context, Tera, TeraResult, Value, to_value};
+<span class="hljs-keyword">use</span> tera::{Context, Tera, <span class="hljs-built_in">Result</span>, Value, to_value};
 
-<span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">markdown_filter</span></span>(value: Value, _: HashMap&lt;<span class="hljs-built_in">String</span>, Value&gt;) -&gt; TeraResult&lt;Value&gt; {
+<span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">markdown_filter</span></span>(value: Value, _: HashMap&lt;<span class="hljs-built_in">String</span>, Value&gt;) -&gt; <span class="hljs-built_in">Result</span>&lt;Value&gt; {
     <span class="hljs-keyword">let</span> s = try_get_value!(<span class="hljs-string">&quot;upper&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-built_in">String</span>, value);
     <span class="hljs-built_in">Ok</span>(to_value(markdown::to_html(s.as_str())))
 }
 </code></pre>
-<p>We&apos;re using here a <code>try_get_value!</code> macro, which isn&apos;t currently a part of
-<code>tera</code>&apos;s public API (because value serializing may change; at the moment <code>tera</code>
-is using <code>serde_json</code>). I&apos;ve copied it
-<a href="https://github.com/Keats/tera/blob/3471df41ab454c60a85ec271a945f7123705e49a/src/macros.rs#L6" target="_blank">from <code>tera</code> sources</a>
-but decided to omit its definition from the example for clarity. We try
+<p>We&apos;re using here a <code>try_get_value!</code> macro to process filter input. We try
 to read our input as a <code>String</code> and if that succeeds, we pass the string slice
 to <code>markdown::to_html()</code>. The rest is just bookkeeping - convert the rendered
 HTML back to a <code>Value</code> and wrap in <code>Ok</code>. Let&apos;s see it in action:</p>
