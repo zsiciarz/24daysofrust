@@ -1,12 +1,12 @@
 environment:
-    OPENSSL_INCLUDE_DIR: C:\OpenSSL-Win32\include
-    OPENSSL_LIB_DIR: C:\OpenSSL-Win32\lib
-    OPENSSL_LIBS: ssleay32:libeay32
+    OPENSSL_INCLUDE_DIR: C:\OpenSSL-Win64\include
+    OPENSSL_LIB_DIR: C:\OpenSSL-Win64\lib
+    OPENSSL_LIBS: ssleay64:libeay64
 
 install:
-    - ps: Start-FileDownload 'https://static.rust-lang.org/dist/rust-nightly-i686-pc-windows-gnu.exe'
-    - rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
-    - SET PATH=%PATH%;C:\Program Files (x86)\Rust\bin;C:\msys64\mingw64\bin;C:\OpenSSL-Win32
+    - ps: Start-FileDownload 'https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.exe'
+    - rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Program Files\Rust"
+    - SET PATH=%PATH%;C:\Program Files\Rust\bin;C:\msys64\mingw64\bin;C:\OpenSSL-Win64
     - cc --version
     - gcc --version
     - rustc -V
