@@ -36,3 +36,5 @@ test_script:
     - cargo run --bin=day18
     - cargo run --bin=day20
     - cargo run --bin=day21
+    - cd ..\vol2
+    - cargo build
