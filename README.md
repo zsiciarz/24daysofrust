@@ -2,10 +2,8 @@
 ============
 
 [![Build Status](https://travis-ci.org/zsiciarz/24daysofrust.svg?branch=master)](https://travis-ci.org/zsiciarz/24daysofrust)
-
 [![Build status](https://ci.appveyor.com/api/projects/status/ys82q4b43td2mxb7?svg=true)](https://ci.appveyor.com/project/zsiciarz/24daysofrust)
 
-[![Clippy Linting Result](http://clippy.bashy.io/github/zsiciarz/24daysofrust/master/badge.svg)](http://clippy.bashy.io/github/zsiciarz/24daysofrust/master/log)
 
 The "24 days of Rust" article series.
 
