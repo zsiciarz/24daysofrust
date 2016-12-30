@@ -24,7 +24,7 @@ dependencies = [
  "time 0.1.35 (registry+https://github.com/rust-lang/crates.io-index)",
  "url 1.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "zmq 0.9.0 (git+https://github.com/erickt/rust-zmq.git)",
+ "zmq 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -117,11 +117,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
-
-[[package]]
-name = "error-chain"
-version = "0.7.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "fallible-iterator"
@@ -315,16 +310,6 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libc 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "metadeps"
-version = "1.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "error-chain 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "pkg-config 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "toml 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -683,11 +668,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "toml"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
 name = "traitobject"
 version = "0.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -752,22 +732,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "zmq"
-version = "0.9.0"
-source = "git+https://github.com/erickt/rust-zmq.git#29fd68f1d08e5e4103399a13969b50832579ccf8"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "zmq-sys 0.9.0 (git+https://github.com/erickt/rust-zmq.git)",
+ "zmq-sys 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "zmq-sys"
-version = "0.9.0"
-source = "git+https://github.com/erickt/rust-zmq.git#29fd68f1d08e5e4103399a13969b50832579ccf8"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libc 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
- "metadeps 1.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pkg-config 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [metadata]
@@ -784,7 +763,6 @@ dependencies = [
 "checksum docopt_macros 0.6.87 (registry+https://github.com/rust-lang/crates.io-index)" = "82956f63dce84b76e2ceb9800ddce387cee001aff9a6bc0d005a98e22eafd38c"
 "checksum either 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "3d2b503c86dad62aaf414ecf2b8c527439abedb3f8d812537f0b12bfd6f32a91"
 "checksum enum_primitive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "f79eff5be92a4d7d5bddf7daa7d650717ea71628634efe6ca7bcda85b2183c23"
-"checksum error-chain 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)" = "318cb3c71ee4cdea69fdc9e15c173b245ed6063e1709029e8fd32525a881120f"
 "checksum fallible-iterator 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = "5d48ab1bc11a086628e8cc0cc2c2dc200b884ac05c4b48fb71d6036b6999ff1d"
 "checksum flate2 0.2.14 (registry+https://github.com/rust-lang/crates.io-index)" = "3eeb481e957304178d2e782f2da1257f1434dfecbae883bafb61ada2a9fea3bb"
 "checksum fuse 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)" = "adf08478eb39cff95e34daa7a2743a256d1c18388c0328d2f717e8ef748001f6"
@@ -811,7 +789,6 @@ dependencies = [
 "checksum matches 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "efd7622e3022e1a6eaa602c4cea8912254e5582c9c692e9167714182244801b1"
 "checksum md5 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7df230903ccdffd6b3b4ec21624498ea64c912ce50297846907f0b8e1bb249dd"
 "checksum memchr 0.1.11 (registry+https://github.com/rust-lang/crates.io-index)" = "d8b629fb514376c675b98c1421e80b151d3817ac42d7c667717d282761418d20"
-"checksum metadeps 1.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "829fffe7ea1d747e23f64be972991bc516b2f1ac2ae4a3b33d8bea150c410151"
 "checksum mime 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b5c93a4bd787ddc6e7833c519b73a50883deb5863d76d9b71eb8216fb7f94e66"
 "checksum miniz-sys 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = "9d1f4d337a01c32e1f2122510fed46393d53ca35a7f429cb0450abaedfa3ed54"
 "checksum nalgebra 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f754f64bd1a5f5899285c2e182df7ddebcecf466369663be2277ca01b6da5d5d"
@@ -854,7 +831,6 @@ dependencies = [
 "checksum thread-scoped 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "14387dce246d09efe184c8ebc34d9db5c0672a908b2f50efc53359ae13d5ae68"
 "checksum thread_local 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)" = "8576dbbfcaef9641452d5cf0df9b0e7eeab7694956dd33bb61515fb8f18cfdd5"
 "checksum time 0.1.35 (registry+https://github.com/rust-lang/crates.io-index)" = "3c7ec6d62a20df54e07ab3b78b9a3932972f4b7981de295563686849eb3989af"
-"checksum toml 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "736b60249cb25337bc196faa43ee12c705e426f3d55c214d73a4e7be06f92cb4"
 "checksum traitobject 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "07eaeb7689bb7fca7ce15628319635758eda769fed481ecfe6686ddef2600616"
 "checksum typeable 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "1410f6f91f21d1612654e7cc69193b0334f909dcf2c790c4826254fbb86f8887"
 "checksum unicase 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "13a5906ca2b98c799f4b1ab4557b76367ebd6ae5ef14930ec841c74aed5f3764"
@@ -865,5 +841,5 @@ dependencies = [
 "checksum uuid 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1a9ff57156caf7e22f37baf3c9d8f6ce8194842c23419dafcb0716024514d162"
 "checksum winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)" = "167dc9d6949a9b857f3451275e911c3f44255842c1f7a76f33c55103a909087a"
 "checksum winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "2d315eee3b34aca4797b2da6b13ed88266e6d612562a0c46390af8299fc699bc"
-"checksum zmq 0.9.0 (git+https://github.com/erickt/rust-zmq.git)" = "<none>"
-"checksum zmq-sys 0.9.0 (git+https://github.com/erickt/rust-zmq.git)" = "<none>"
+"checksum zmq 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "9d58a0273355358980735c75f1b6f5f2e215cd36742053fe75906b2c002155d7"
+"checksum zmq-sys 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7a857f46b6d4147230615bf3c3b9ebfa8c021d0ed086c8ec9ca2b934c3a0cac3"
