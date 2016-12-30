@@ -1,18 +1,62 @@
 environment:
-    OPENSSL_INCLUDE_DIR: C:\OpenSSL-Win32\include
-    OPENSSL_LIB_DIR: C:\OpenSSL-Win32\lib
+    OPENSSL_INCLUDE_DIR: C:\OpenSSL-Win64\include
+    OPENSSL_LIB_DIR: C:\OpenSSL-Win64\lib
     OPENSSL_LIBS: ssleay32:libeay32
 
+cache:
+    - 'C:\Users\appveyor\.cargo'
+
 install:
-    - ps: Start-FileDownload 'https://static.rust-lang.org/dist/rust-nightly-i686-pc-windows-gnu.exe'
-    - rust-nightly-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
-    - SET PATH=%PATH%;C:\Program Files (x86)\Rust\bin;C:\MinGW\bin;C:\OpenSSL-Win32
+    - ps: Start-FileDownload 'https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-gnu.exe'
+    - rust-nightly-x86_64-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Program Files\Rust"
+    - SET PATH=%PATH%;C:\Program Files\Rust\bin;C:\msys64\mingw64\bin;C:\OpenSSL-Win64
+    - cc --version
     - gcc --version
     - rustc -V
     - cargo -V
+    - nuget install redis-64 -excludeversion
+    - redis-64\tools\redis-server.exe --service-install
+    - redis-64\tools\redis-server.exe --service-start
 
 build: false
 
 test_script:
     - cd vol1
     - cargo build
+    - cargo run --bin=day2
+    - cargo run --bin=day3
+    - cargo run --bin=day4
+    - cargo run --bin=day5
+    - cargo run --bin=day6
+    - cargo run --bin=day7
+    - cargo run --bin=day9
+    - cargo run --bin=day10
+    - cargo run --bin=day11
+    - cargo run --bin=day12
+    - cargo run --bin=day13
+    - cargo run --bin=day14
+    - cargo run --bin=day17
+    - cargo run --bin=day18
+    - cargo run --bin=day20
+    - cargo run --bin=day21
+    - cd ..\vol2
+    - cargo build
+    - cargo run --bin=day2
+    - cargo run --bin=day3
+    - cargo run --bin=day4
+    - cargo run --bin=day5
+    - cargo run --bin=day6
+    - cargo run --bin=day7
+    - cargo run --bin=day8
+    - cargo run --bin=day10
+    - cargo run --bin=day11
+    - cargo run --bin=day12
+    - cargo run --bin=day13
+    - cargo run --bin=day14
+    - cargo run --bin=day15
+    - cargo run --bin=day16
+    - cargo run --bin=day17
+    - cargo run --bin=day18 || ver>nul
+    - cargo run --bin=day19
+    - cargo run --bin=day20
+    - cargo run --bin=day21

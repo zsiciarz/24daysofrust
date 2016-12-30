@@ -69,15 +69,11 @@ name = "day21"
 [dependencies]
 app_dirs = "1.1.1"
 clap = "2.19.3"
-cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
 custom_derive = "0.1.7"
 derive_builder = "0.2.1"
-diesel = "0.9.1"
-diesel_codegen = { version = "0.9.0", features=["postgres"]}
 dotenv = "0.8.0"
 envy = "0.1.2"
 error-chain = "0.7.1"
-git2 = "0.6.3"
 hound = "3.0.0"
 lazy_static = "0.2.2"
 leftpad = "0.2.0"
@@ -92,7 +88,6 @@ phf_macros = "0.7.20"
 rand = "0.3.14"
 rayon = "0.6.0"
 reqwest = "0.2.0"
-rust-lzma = "0.2.1"
 rustc-serialize = "0.3.22"
 rustfft = "1.0.1"
 serde = "0.8.19"
@@ -120,3 +115,17 @@ winreg = "0.4"
 
 [target.x86_64-pc-windows-msvc.dependencies]
 winreg = "0.4"
+
+[target.i686-uknown-linux-gnu.dependencies]
+cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
+diesel = "0.9.1"
+diesel_codegen = { version = "0.9.0", features=["postgres"]}
+git2 = "0.6.3"
+rust-lzma = "0.2.1"
+
+[target.x86_64-unknown-linux-gnu.dependencies]
+cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
+diesel = "0.9.1"
+diesel_codegen = { version = "0.9.0", features=["postgres"]}
+git2 = "0.6.3"
+rust-lzma = "0.2.1"

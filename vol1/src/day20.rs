@@ -11,7 +11,7 @@ fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     sock.connect(addr)?;
     let payload = "Hello world!";
     println!("-> {:?}", payload);
-    let mut msg = Message::new();
+    let mut msg = Message::new()?;
     sock.send(payload.as_bytes(), 0)?;
     sock.recv(&mut msg, 0)?;
     let contents = msg.as_str().unwrap();
@@ -23,10 +23,10 @@ fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
 fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     let sock = ctx.socket(zmq::REP)?;
     sock.bind(addr)?;
-    let mut msg = Message::new();
+    let mut msg = Message::new()?;
     loop {
         if sock.recv(&mut msg, 0).is_ok() {
-            sock.send(msg.as_str().unwrap(), 0)?;
+            sock.send(msg.as_str().unwrap().as_bytes(), 0)?;
         }
     }
 }
