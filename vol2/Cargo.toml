@@ -107,7 +107,7 @@ zip = "0.2.0"
 [target.'cfg(windows)'.dependencies]
 winreg = "0.4"
 
-[target.'cfg(linux)'.dependencies]
+[target.'cfg(unix)'.dependencies]
 cursive = { git = "https://github.com/gyscos/Cursive", default-features = false, features=["pancurses"] }
 diesel = "0.9.1"
 diesel_codegen = { version = "0.9.0", features=["postgres"]}
