@@ -4,8 +4,11 @@ extern crate time;
 
 #[cfg(target_family="unix")]
 use git2::{Commit, Direction, ObjectType, Oid, Repository, Signature};
+#[cfg(target_family="unix")]
 use std::fs::{File, canonicalize};
+#[cfg(target_family="unix")]
 use std::io::Write;
+#[cfg(target_family="unix")]
 use std::path::Path;
 
 #[cfg(target_family="unix")]
