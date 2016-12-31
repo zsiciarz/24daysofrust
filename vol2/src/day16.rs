@@ -76,7 +76,7 @@ fn main() {
     println!("New commit: {}", commit_id);
 
     let remote_url = format!("file://{}",
-                             canonicalize("../git_remote").unwrap().display());
+                             canonicalize("../../git_remote").unwrap().display());
     println!("Pushing to: {}", remote_url);
     push(&repo, remote_url.as_str()).expect("Couldn't push to remote repo");
 }

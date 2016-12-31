@@ -25,8 +25,8 @@ before_script:
   - psql -c "create database diesel owner diesel;" -U postgres
   - git config --global user.email "example@example.com"
   - git config --global user.name "24daysofrust"
-  - mkdir repo && cd repo && git init && echo "hello" > hello.txt && git add hello.txt && git commit -am "Initial commit" && cd ..
-  - mkdir git_remote && cd git_remote && git init --bare && cd ..
+  - cd .. && mkdir repo && cd repo && git init && echo "hello" > hello.txt && git add hello.txt && git commit -am "Initial commit" && cd ..
+  - mkdir git_remote && cd git_remote && git init --bare && cd $TRAVIS_BUILD_DIR
   - export PATH=$PATH:$HOME/.cargo/bin/
   - if ! command -v diesel > /dev/null; then cargo install diesel_cli; fi
 script:
@@ -64,7 +64,7 @@ script:
   - cargo run --bin=day13
 #  - cargo run --bin=day14
   - cargo run --bin=day15
-  - cargo run --bin=day16 -- ../repo
+  - cargo run --bin=day16 -- ../../repo
   - cargo run --bin=day17
   - cargo run --bin=day18
   - cargo run --bin=day19
