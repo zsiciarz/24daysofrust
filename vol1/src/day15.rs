@@ -4,14 +4,20 @@ extern crate time;
 extern crate libc;
 extern crate rustc_serialize;
 
+#[cfg(target_family="unix")]
 use std::collections::BTreeMap;
+#[cfg(target_family="unix")]
 use std::env;
+#[cfg(target_family="unix")]
 use std::path::Path;
+#[cfg(target_family="unix")]
 use libc::ENOENT;
+#[cfg(target_family="unix")]
 use time::Timespec;
 #[cfg(target_family="unix")]
 use fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry,
            ReplyDirectory};
+#[cfg(target_family="unix")]
 use rustc_serialize::json;
 
 #[cfg(target_family="unix")]
