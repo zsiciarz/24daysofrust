@@ -49,7 +49,7 @@ fn create_xz_archive<T: Write>(buf: &mut T) -> Result<(), LzmaError> {
 }
 
 #[cfg(target_family="windows")]
-fn create_xz_archive<T: Write>(buf: &mut T) -> Result<(), ()> {
+fn create_xz_archive<T: Write>(_: &mut T) -> Result<(), ()> {
     Ok(())
 }
 

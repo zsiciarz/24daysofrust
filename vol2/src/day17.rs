@@ -18,6 +18,7 @@ use diesel::pg::PgConnection;
 #[cfg(target_family="unix")]
 use diesel::expression::sql_literal::sql;
 
+#[cfg(target_family="unix")]
 use std::env;
 
 #[cfg(target_family="unix")]
