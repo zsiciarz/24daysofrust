@@ -53,7 +53,7 @@
         data-chapter-title="Day 6 - working with JSON"
         data-filepath="book/vol1/day6.md"
         data-basepath="../.."
-        data-revision="Sat Dec 31 2016 23:22:36 GMT+0000 (UTC)"
+        data-revision="Mon Jan 02 2017 07:09:44 GMT+0000 (UTC)"
         data-innerlanguage="">
     
 
@@ -966,8 +966,8 @@ Ok(<span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;Zbyszek\&quot;,\&q
 <blockquote>
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
 </blockquote>
-<pre><code class="lang-rust"><span class="hljs-comment">// #![feature(plugin)]</span>
-<span class="hljs-comment">// #![plugin(json_macros)]</span>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#![feature(plugin)]</span>
+ <span class="hljs-preprocessor">#![plugin(json_macros)]</span>
 </code></pre>
 <blockquote>
 <p><a id="day6.rs" href="../../vol1/src/day6.rs">day6.rs</a></p>
@@ -979,10 +979,10 @@ Ok(<span class="hljs-string">&quot;{\&quot;name\&quot;:\&quot;Zbyszek\&quot;,\&q
             }
         }
     }
-    <span class="hljs-comment">// let config = json!({</span>
-    <span class="hljs-comment">//     &quot;hostname&quot;: &quot;localhost&quot;,</span>
-    <span class="hljs-comment">//     &quot;port&quot;: 6543,</span>
-    <span class="hljs-comment">//     &quot;allowed_methods&quot;: [&quot;get&quot;, &quot;post&quot;],</span>
+    <span class="hljs-keyword">let</span> config = json!({
+        <span class="hljs-string">&quot;hostname&quot;</span>: <span class="hljs-string">&quot;localhost&quot;</span>,
+        <span class="hljs-string">&quot;port&quot;</span>: <span class="hljs-number">6543</span>,
+        <span class="hljs-string">&quot;allowed_methods&quot;</span>: [<span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;post&quot;</span>],
 </code></pre>
 
                     
