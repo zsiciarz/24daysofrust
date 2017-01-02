@@ -1,5 +1,5 @@
-// #![feature(plugin)]
-// #![plugin(json_macros)]
+ #![feature(plugin)]
+ #![plugin(json_macros)]
 
 extern crate rustc_serialize;
 
@@ -62,15 +62,15 @@ fn main() {
             }
         }
     }
-    // let config = json!({
-    //     "hostname": "localhost",
-    //     "port": 6543,
-    //     "allowed_methods": ["get", "post"],
-    //     "limits": {
-    //         "bandwidth": (500 * 16),
-    //         "rate": null
-    //     }
-    // });
-    // println!("Configuration: {}", config);
-    // println!("Bandwidth: {}", config.search("bandwidth").unwrap());
+    let config = json!({
+        "hostname": "localhost",
+        "port": 6543,
+        "allowed_methods": ["get", "post"],
+        "limits": {
+            "bandwidth": (500 * 16),
+            "rate": null
+        }
+    });
+    println!("Configuration: {}", config);
+    println!("Bandwidth: {}", config.search("bandwidth").unwrap());
 }

@@ -62,7 +62,7 @@ docopt_macros = "0.6.88"
 hyper = { version = "0.9.14", default-features = false }
 image = "0.10.3"
 itertools = "0.5.8"
-#json_macros = "0.3.2"
+json_macros = { git = "https://github.com/zsiciarz/json_macros.git" }
 libc = "0.2.17"
 nalgebra = "0.10.1"
 num = "0.1.36"
