@@ -28,6 +28,17 @@ fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     row.get_opt(0).unwrap()
 }
 
+#[cfg(target_family="unix")]
+fn sql_macro() {
+    let query = sql!("select '{4, 5, 6}'::int[]");
+    println!("{:?}", query);
+}
+
+#[cfg(not(target_family="unix"))]
+fn sql_macro() {
+    println!("TODO");
+}
+
 fn main() {
     println!("24 days of Rust - postgres (day 11)");
     let dsn = "postgresql://rust:rust@localhost/rust";
@@ -92,6 +103,5 @@ fn main() {
     // get_single_value::<Range<Timespec>>(&conn, "select '[2015-01-01, 2015-12-31]'::tsrange");
     // println!("{:?}", ts_range);
 
-    let query = sql!("select '{4, 5, 6}'::int[]");
-    println!("{:?}", query);
+    sql_macro();
 }
