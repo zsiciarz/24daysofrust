@@ -56,11 +56,11 @@ name = "day21"
 
 [dependencies]
 anymap = "0.12.0"
-csv = "0.14.7"
-docopt = "0.6.86"
-docopt_macros = "0.6.88"
+csv = "0.15.0"
+docopt = "0.7.0"
+docopt_macros = "0.7.0"
 hyper = { version = "0.9.14", default-features = false }
-image = "0.10.3"
+image = "0.12.1"
 itertools = "0.5.8"
 json_macros = { git = "https://github.com/zsiciarz/json_macros.git" }
 libc = "0.2.17"
