@@ -1,5 +1,3 @@
-#![feature(proc_macro)]
-
 extern crate dotenv;
 extern crate envy;
 
