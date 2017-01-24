@@ -83,3 +83,6 @@ uuid = { version = "0.3.1", features = ["v4"] }
 fuse = "0.2.8"
 postgres_macros = "0.1.13"
 zmq = "0.8.0"
+
+[replace]
+"docopt_macros:0.7.0" = { git = "https://github.com/zsiciarz/docopt.rs.git" }

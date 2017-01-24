@@ -102,6 +102,17 @@ dependencies = [
 [[package]]
 name = "docopt"
 version = "0.7.0"
+source = "git+https://github.com/zsiciarz/docopt.rs.git#8d56e936ed49e97076d89b6051d81c60e08c1681"
+dependencies = [
+ "lazy_static 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "regex 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.22 (registry+https://github.com/rust-lang/crates.io-index)",
+ "strsim 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "docopt"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "lazy_static 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -113,10 +124,16 @@ dependencies = [
 [[package]]
 name = "docopt_macros"
 version = "0.7.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/zsiciarz/docopt.rs.git#8d56e936ed49e97076d89b6051d81c60e08c1681"
 dependencies = [
- "docopt 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "docopt 0.7.0 (git+https://github.com/zsiciarz/docopt.rs.git)",
 ]
+
+[[package]]
+name = "docopt_macros"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+replace = "docopt_macros 0.7.0 (git+https://github.com/zsiciarz/docopt.rs.git)"
 
 [[package]]
 name = "either"
@@ -792,7 +809,9 @@ dependencies = [
 "checksum csv 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7ef22b37c7a51c564a365892c012dc0271221fdcc64c69b19ba4d6fa8bd96d9c"
 "checksum deflate 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)" = "eab23bda1e017b3408412dd8d1e81e157b8fe09af8abce809fbe0aa9e6c7da4d"
 "checksum deque 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1614659040e711785ed8ea24219140654da1729f3ec8a47a9719d041112fe7bf"
+"checksum docopt 0.7.0 (git+https://github.com/zsiciarz/docopt.rs.git)" = "<none>"
 "checksum docopt 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ab32ea6e284d87987066f21a9e809a73c14720571ef34516f0890b3d355ccfd8"
+"checksum docopt_macros 0.7.0 (git+https://github.com/zsiciarz/docopt.rs.git)" = "<none>"
 "checksum docopt_macros 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ac439b88ab0d3926c9852dbf49daa4ac40cc0cf229589ef12baa6394a5cd012f"
 "checksum either 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "3d2b503c86dad62aaf414ecf2b8c527439abedb3f8d812537f0b12bfd6f32a91"
 "checksum enum_primitive 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "be4551092f4d519593039259a9ed8daedf0da12e5109c5280338073eaeb81180"
