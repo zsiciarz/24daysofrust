@@ -1,5 +1,3 @@
-#![feature(proc_macro)]
-
 extern crate reqwest;
 #[macro_use]
 extern crate serde_derive;

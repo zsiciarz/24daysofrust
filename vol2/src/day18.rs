@@ -1,4 +1,3 @@
-#![feature(proc_macro)]
 #![recursion_limit = "1024"]
 
 #[macro_use]
@@ -94,13 +93,12 @@ fn load_schedule<P: AsRef<Path>>(path: P) -> Result<Schedule> {
 }
 
 fn update_crontab(schedule: &Schedule) -> Result<()> {
-    let mut file = tempfile::NamedTempFile::new()
-        .chain_err(|| "failed to create a temporary file")?;
+    let mut file =
+        tempfile::NamedTempFile::new().chain_err(|| "failed to create a temporary file")?;
     let schedule_str = format!("{}", schedule);
     file.write_all(&schedule_str.into_bytes()[..]).chain_err(|| "failed to write schedule")?;
     let path = file.path().to_str().ok_or("temporary path is not UTF-8")?;
-    Command::new("crontab")
-        .arg(path)
+    Command::new("crontab").arg(path)
         .spawn()
         .chain_err(|| "failed to run crontab command")?;
     Ok(())

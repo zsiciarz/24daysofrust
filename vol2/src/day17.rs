@@ -1,4 +1,4 @@
-#![feature(custom_attribute, proc_macro)]
+#![feature(custom_attribute)]
 
 #[cfg(target_family="unix")]
 #[macro_use]
