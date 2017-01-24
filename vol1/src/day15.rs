@@ -9,7 +9,7 @@ use std::collections::BTreeMap;
 #[cfg(target_family="unix")]
 use std::env;
 #[cfg(target_family="unix")]
-use std::path::Path;
+use std::ffi::OsStr;
 #[cfg(target_family="unix")]
 use libc::ENOENT;
 #[cfg(target_family="unix")]
@@ -92,8 +92,8 @@ impl Filesystem for JsonFilesystem {
         };
     }
 
-    fn lookup(&mut self, _req: &Request, parent: u64, name: &Path, reply: ReplyEntry) {
-        println!("lookup(parent={}, name={})", parent, name.display());
+    fn lookup(&mut self, _req: &Request, parent: u64, name: &OsStr, reply: ReplyEntry) {
+        println!("lookup(parent={}, name={})", parent, name.to_str().unwrap());
         let inode = match self.inodes.get(name.to_str().unwrap()) {
             Some(inode) => inode,
             None => {
@@ -141,15 +141,15 @@ impl Filesystem for JsonFilesystem {
         println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
         if ino == 1 {
             if offset == 0 {
-                reply.add(1, 0, FileType::Directory, &Path::new("."));
-                reply.add(1, 1, FileType::Directory, &Path::new(".."));
+                reply.add(1, 0, FileType::Directory, ".");
+                reply.add(1, 1, FileType::Directory, "..");
                 for (key, &inode) in &self.inodes {
                     if inode == 1 {
                         continue;
                     }
                     let offset = inode; // hack
                     println!("\tkey={}, inode={}, offset={}", key, inode, offset);
-                    reply.add(inode, offset, FileType::RegularFile, &Path::new(key));
+                    reply.add(inode, offset, FileType::RegularFile, key);
                 }
             }
             reply.ok();
@@ -178,5 +178,5 @@ fn main() {
             return;
         }
     };
-    fuse::mount(fs, &mountpoint, &[]);
+    fuse::mount(fs, &mountpoint, &[]).expect("Couldn't mount filesystem");
 }
