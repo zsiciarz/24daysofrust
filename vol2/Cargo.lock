@@ -21,12 +21,11 @@ dependencies = [
  "num_cpus 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "phf 0.7.21 (registry+https://github.com/rust-lang/crates.io-index)",
  "phf_macros 0.7.21 (registry+https://github.com/rust-lang/crates.io-index)",
- "preferences 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "preferences 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "rayon 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "reqwest 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rust-lzma 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.22 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustfft 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.9.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 0.9.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -830,11 +829,12 @@ dependencies = [
 
 [[package]]
 name = "preferences"
-version = "0.7.3"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "app_dirs 1.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.22 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 0.9.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde_json 0.9.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1520,7 +1520,7 @@ dependencies = [
 "checksum pkg-config 0.3.9 (registry+https://github.com/rust-lang/crates.io-index)" = "3a8b4c6b8165cd1a1cd4b9b120978131389f64bdaf456435caa41e630edba903"
 "checksum podio 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "e5422a1ee1bc57cc47ae717b0137314258138f38fd5f3cea083f43a9725383a0"
 "checksum pq-sys 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)" = "33cd6d75cd3dac41f0adc6dad3eb644ff63a9208c5168835386b4991b88b481d"
-"checksum preferences 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ff9c3ced992631957c650e837d8d517e118097d109130130db514e3c44d6085d"
+"checksum preferences 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "87469812890e51b8ce6f20d8fd256ee36a462828dd5d1a0b42b93a315037cfbd"
 "checksum quote 0.3.12 (registry+https://github.com/rust-lang/crates.io-index)" = "e7b44fd83db28b83c1c58187159934906e5e955c812e211df413b76b03c909a5"
 "checksum rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)" = "022e0636ec2519ddae48154b028864bdce4eaf7d35226ab8e65c611be97b189d"
 "checksum rayon 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = "50c575b58c2b109e2fbc181820cbe177474f35610ff9e357dc75f6bac854ffbf"

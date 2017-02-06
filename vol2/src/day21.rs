@@ -1,6 +1,8 @@
 extern crate app_dirs;
 extern crate preferences;
-extern crate rustc_serialize;
+
+#[macro_use]
+extern crate serde_derive;
 
 use app_dirs::{AppDataType, AppInfo, app_dir, app_root, get_app_root};
 use preferences::Preferences;
@@ -11,7 +13,7 @@ const APP_INFO: AppInfo = AppInfo {
     author: "Zbigniew Siciarz",
 };
 
-#[derive(RustcEncodable, RustcDecodable, Debug, Default)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 struct GameConfig {
     save_dir: Option<PathBuf>,
     autosave: bool,
