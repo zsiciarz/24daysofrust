@@ -4,11 +4,11 @@ extern crate serde_json;
 extern crate tera;
 
 use std::collections::HashMap;
-use tera::{Context, Tera, Result, Value, to_value};
+use tera::{Context, Result, Value, to_value};
 
 pub fn markdown_filter(value: Value, _: HashMap<String, Value>) -> Result<Value> {
     let s = try_get_value!("upper", "value", String, value);
-    Ok(to_value(markdown::to_html(s.as_str())))
+    Ok(to_value(markdown::to_html(s.as_str()))?)
 }
 
 const LIPSUM: &'static str =
