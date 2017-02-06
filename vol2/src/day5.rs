@@ -1,5 +1,5 @@
 extern crate dotenv;
-extern crate envy;
+// extern crate envy;
 
 #[macro_use]
 extern crate serde_derive;
@@ -24,17 +24,17 @@ fn main() {
         Err(e) => println!("Couldn't read LANG ({})", e),
     };
 
-    match envy::from_env::<Environment>() {
-        Ok(environment) => println!("Language code: {}", environment.lang),
-        Err(e) => println!("Couldn't read LANG ({})", e),
-    };
+    // match envy::from_env::<Environment>() {
+    //     Ok(environment) => println!("Language code: {}", environment.lang),
+    //     Err(e) => println!("Couldn't read LANG ({})", e),
+    // };
 
     dotenv::dotenv().expect("Failed to read .env file");
     println!("Email backend: {}",
              env::var("EMAIL_BACKEND").expect("EMAIL_BACKEND not found"));
 
-    match envy::from_env::<MailerConfig>() {
-        Ok(config) => println!("{:?}", config),
-        Err(e) => println!("Couldn't read mailer config ({})", e),
-    };
+    // match envy::from_env::<MailerConfig>() {
+    //     Ok(config) => println!("{:?}", config),
+    //     Err(e) => println!("Couldn't read mailer config ({})", e),
+    // };
 }
