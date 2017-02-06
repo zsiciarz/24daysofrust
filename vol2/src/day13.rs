@@ -16,7 +16,7 @@ static FILE_CONTENTS: &'static [u8] = include_bytes!("../Cargo.lock");
 fn create_zip_archive<T: Seek + Write>(buf: &mut T) -> ZipResult<()> {
     let mut writer = ZipWriter::new(buf);
     writer.start_file("example.txt", FileOptions::default())?;
-    writer.write(FILE_CONTENTS)?;
+    writer.write_all(FILE_CONTENTS)?;
     writer.finish()?;
     Ok(())
 }
@@ -35,7 +35,7 @@ fn create_bz2_archive<T: Seek + Write>(buf: &mut T) -> ZipResult<()> {
     let mut writer = ZipWriter::new(buf);
     writer.start_file("example.txt",
                     FileOptions::default().compression_method(zip::CompressionMethod::Bzip2))?;
-    writer.write(FILE_CONTENTS)?;
+    writer.write_all(FILE_CONTENTS)?;
     writer.finish()?;
     Ok(())
 }
@@ -43,7 +43,7 @@ fn create_bz2_archive<T: Seek + Write>(buf: &mut T) -> ZipResult<()> {
 #[cfg(target_family="unix")]
 fn create_xz_archive<T: Write>(buf: &mut T) -> Result<(), LzmaError> {
     let mut writer = LzmaWriter::new_compressor(buf, 6)?;
-    writer.write(FILE_CONTENTS)?;
+    writer.write_all(FILE_CONTENTS)?;
     writer.finish()?;
     Ok(())
 }
