@@ -117,7 +117,7 @@ struct Play {
 
 type Playbook = Vec<Play>;
 
-let yaml = include_str!("../data/playbook.yml");
+let yaml = include_str!("../../data/playbook.yml");
 println!("{}", yaml);
 let playbook = serde_yaml::from_str::<Playbook>(&yaml);
 println!("{:?}", playbook);

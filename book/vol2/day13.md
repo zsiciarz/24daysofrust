@@ -20,7 +20,7 @@ of dependencies. This is for illustration only, the lock file doesn't grow
 so much it would require compression.
 
 ```rust
-static FILE_CONTENTS: &'static [u8] = include_bytes!("../Cargo.lock");
+static FILE_CONTENTS: &'static [u8] = include_bytes!("../../Cargo.lock");
 ```
 
 The `include_bytes!` macro comes from the standard library and allows

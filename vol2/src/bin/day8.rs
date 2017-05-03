@@ -35,7 +35,7 @@ fn main() {
     let json = serde_json::to_string_pretty(&config).expect("Couldn't serialize config");
     println!("{}", json);
 
-    let yaml = include_str!("../data/playbook.yml");
+    let yaml = include_str!("../../data/playbook.yml");
     println!("{}", yaml);
     let playbook = serde_yaml::from_str::<Playbook>(yaml);
     println!("{:?}", playbook);
