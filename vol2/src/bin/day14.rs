@@ -36,7 +36,7 @@ fn file_picker<D>(directory: D) -> SelectView<DirEntry>
 
 #[cfg(target_family="unix")]
 fn update_status(app: &mut Cursive, entry: &DirEntry) {
-    let status_bar = app.find_id::<TextView>("status").unwrap();
+    let mut status_bar = app.find_id::<TextView>("status").unwrap();
     let file_name = entry.file_name().into_string().unwrap();
     let file_size = entry.metadata().unwrap().len();
     let content = format!("{}: {} bytes", file_name, file_size);
@@ -45,7 +45,7 @@ fn update_status(app: &mut Cursive, entry: &DirEntry) {
 
 #[cfg(target_family="unix")]
 fn load_contents(app: &mut Cursive, entry: &DirEntry) {
-    let text_view = app.find_id::<TextView>("contents").unwrap();
+    let mut text_view = app.find_id::<TextView>("contents").unwrap();
     let content = if entry.metadata().unwrap().is_dir() {
         "<DIR>".to_string()
     } else {
