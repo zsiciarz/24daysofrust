@@ -1,12 +1,11 @@
 #[macro_use]
 extern crate slog;
 extern crate slog_json;
-extern crate slog_stream;
 extern crate slog_term;
 extern crate time;
 
 use std::fs::File;
-use slog::DrainExt;
+use slog::Drain;
 
 #[allow(dead_code)]
 struct User {
@@ -49,7 +48,8 @@ fn read_database(username: &str) -> Result<String, DatabaseError> {
 
 fn main() {
     println!("24 Days of Rust vol. 2 - slog");
-    let drain = slog_term::streamer().build().fuse();
+    let decorator = slog_term::PlainSyncDecorator::new(std::io::stderr());
+    let drain = slog_term::FullFormat::new(decorator).build().fuse();
     let root_logger = slog::Logger::root(drain, o!("version" => "0.5"));
     info!(root_logger, "Application started";
         "started_at" => format!("{}", time::now().rfc3339()));
@@ -57,9 +57,14 @@ fn main() {
     user.sign_in();
     let _ = user.find_waldo();
 
-    let console_drain = slog_term::streamer().build();
+    let console_drain =
+        slog_term::FullFormat::new(slog_term::PlainSyncDecorator::new(std::io::stdout()))
+            .build()
+            .fuse();
     let file = File::create("app.log").expect("Couldn't open log file");
-    let file_drain = slog_stream::stream(file, slog_json::default());
-    let logger = slog::Logger::root(slog::duplicate(console_drain, file_drain).fuse(), o!());
+    let file_drain = slog_term::FullFormat::new(slog_term::PlainSyncDecorator::new(file))
+        .build()
+        .fuse();
+    let logger = slog::Logger::root(slog::Duplicate::new(console_drain, file_drain).fuse(), o!());
     warn!(logger, "not_enough_resources"; "resource" => "cat pictures");
 }
