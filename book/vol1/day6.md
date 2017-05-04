@@ -15,8 +15,8 @@ Primitives
 
 A lot of Rust types serialize to JSON just as you would expect. Note that `encode()` immutably borrows its argument:
 
-[include:4-7](../../vol1/src/day6.rs)
-[include:26-28](../../vol1/src/day6.rs)
+[include:4-7](../../vol1/src/bin/day6.rs)
+[include:26-28](../../vol1/src/bin/day6.rs)
 
 `Option<T>` maps to the encoding of `value` itself if it is a `Some(value)` while `None` maps to `null`.
 
@@ -25,7 +25,7 @@ Automatic (de)serialization
 
 In the [chapter on CSV](day3.md) I mentioned the `RustcEncodable` and `RustcDecodable` traits. Here's an example with a nested struct:
 
-[include:29-38](../../vol1/src/day6.rs)
+[include:29-38](../../vol1/src/bin/day6.rs)
 
 ```sh
 $ cargo run
@@ -37,16 +37,16 @@ Pretty printing
 
 The `json::encode()` doesn't care for readability of it's output. Although the JSON it emits is correct and machine-readable, there are no newlines or indents making it hard for a human to debug. Pretty-printing is a little bit more complex than just one function call, but not too complicated:
 
-[include:39-44](../../vol1/src/day6.rs)
+[include:39-44](../../vol1/src/bin/day6.rs)
 
 Decoding
 --------
 
-[include:45-49](../../vol1/src/day6.rs)
+[include:45-49](../../vol1/src/bin/day6.rs)
 
 As you cen see, decoding is also pretty easy. But what happens if we don't know all of the fields in advance? We can use another function in the `json` module - `from_str()`. The difference between `from_str()` and `decode()` is that the latter may return some struct implementing `RustcDecodable` while the former returns a [Json](http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/enum.Json.html) value. This type has a few methods of its own, including `find()`. See the example below:
 
-[include:50-57](../../vol1/src/day6.rs)
+[include:50-57](../../vol1/src/bin/day6.rs)
 
 We're using the [if let](http://doc.rust-lang.org/book/if-let.html) language construct which often simplifies pattern matches where we care for only one branch and do nothing if the expression doesn't match.
 
@@ -57,5 +57,5 @@ The json! macro
 
 There's one more thing I wanted to show you today. You can embed JSON-like literals directly in your Rust code with the help of the [json_macros](https://crates.io/crates/json_macros) crate. This is a compiler extension that allows for some nice syntactic sugar like below:
 
-[include:1-2](../../vol1/src/day6.rs)
-[include:58-68](../../vol1/src/day6.rs)
+[include:1-2](../../vol1/src/bin/day6.rs)
+[include:58-68](../../vol1/src/bin/day6.rs)

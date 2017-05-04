@@ -20,7 +20,7 @@ This and a few other functions live in the `Itertools` trait, so we need to brin
 
 `foreach()` is very simple conceptually. It consumes the (mutable) iterator, calling a closure witch each of the elements. The return type is `()` (unit), meaning that `foreach()` usually should be at the end of a call chain, like below:
 
-[include:8-9](../../vol1/src/day7.rs)
+[include:8-9](../../vol1/src/bin/day7.rs)
 
 As you can see, `foreach()` is similar to the `map()` method from the standard library, however `map` returns another iterator. Therefore it's lazy and allows for further method chaining, while `foreach` is eager and has the final word.
 
@@ -29,7 +29,7 @@ interleave and intersperse
 
 `interleave()` is somewhat similar to `zip()`. But when `zip` builds tuples from two iterators, `interleave` yields the values alternating between both iterators.
 
-[include:10-12](../../vol1/src/day7.rs)
+[include:10-12](../../vol1/src/bin/day7.rs)
 
 The result:
 
@@ -42,7 +42,7 @@ As you can see, the iterators don't have to contain the same number of elements.
 
 In a manner similar to its [Haskell counterpart](http://hackage.haskell.org/package/base-4.7.0.1/docs/Data-List.html#v:intersperse), `intersperse` takes a single value and an iterator (implicitly as the `self` argument) and emits the given value between every element of the wrapped iterator. For example:
 
-[include:13-13](../../vol1/src/day7.rs)
+[include:13-13](../../vol1/src/bin/day7.rs)
 
 Output:
 
@@ -56,4 +56,4 @@ iproduct!
 
 Let's now turn our attention to macros provided by `itertools`. Sometimes there is a need to iterate over a cartesian product of some lists/arrays/vectors. Usually it involves two nested loops; however we can use the `iproduct()` macro to simplify it to a single `for` loop.
 
-[include:14-18](../../vol1/src/day7.rs)
+[include:14-18](../../vol1/src/bin/day7.rs)

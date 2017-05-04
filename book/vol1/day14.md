@@ -7,7 +7,7 @@ The [nalgebra](https://crates.io/crates/nalgebra) crate provides a wide set of m
 Basic vector and matrix operations
 ----------------------------------
 
-[include:29-34](../../vol1/src/day14.rs)
+[include:29-34](../../vol1/src/bin/day14.rs)
 
 ```sh
 $ cargo run
@@ -16,20 +16,20 @@ Vec2 { x: 1, y: 0 }
 
 In `nalgebra` there are several statically sized vector and square matrix types (for dimensions up to 6). The standard mathematical operators are overloaded, so all allowed kinds of vector/matrix multiplication should just work. In the example above we defined the [rotation matrix](http://en.wikipedia.org/wiki/Rotation_matrix) ourselves, but there is a nice shortcut: the `RotN` type.
 
-[include:35-37](../../vol1/src/day14.rs)
+[include:35-37](../../vol1/src/bin/day14.rs)
 
 The output is the same but this time we tell Rust *what* to do, not *how* to do it. Note that we need to wrap the `angle` in a single-element vector.
 
 We can use vectors to translate (move) points.
 
-[include:38-39](../../vol1/src/day14.rs)
+[include:38-39](../../vol1/src/bin/day14.rs)
 
 A number of other operations are also exposed as top-level functions, such as `transform()`, `rotate()` along with their inverse counterparts.
 
 Dot and cross product
 ---------------------
 
-[include:41-48](../../vol1/src/day14.rs)
+[include:41-48](../../vol1/src/bin/day14.rs)
 
 The output is:
 
@@ -49,7 +49,7 @@ Dynamic vectors
 
 All of the `nalgebra` types we've seen so far have their higher-dimensional variants up to `Vec6`/`Mat6` etc. But what if we want to go further? Very high number of dimensions is common for example in digital signal processing. In `nalgebra` there is a `DVec` type for that purpose.
 
-[include:50-62](../../vol1/src/day14.rs)
+[include:50-62](../../vol1/src/bin/day14.rs)
 
 We can use the `from_fn()` mwthod to create a vector by generating each element in a closure. The `window` variable is a [Hamming window](http://en.wikipedia.org/wiki/Window_function#Hamming_window); such window functions are a common preprocessing step in DSP.
 

@@ -12,8 +12,8 @@ You may ask - why would I ever need something that holds just one value of each 
 
 We can use `AnyMap` together with the [newtype idiom](http://aturon.github.io/features/types/newtype.html) to create a strongly typed configuration holder.
 
-[include:1-16](../../vol1/src/day9.rs)
-[include:20-27](../../vol1/src/day9.rs)
+[include:1-16](../../vol1/src/bin/day9.rs)
+[include:20-27](../../vol1/src/bin/day9.rs)
 
 The output:
 
@@ -27,7 +27,7 @@ Here the `Port` and `ConnectionLimit` types are abstractions over the underlying
 
 When we insert another value of a type that already exists in the `AnyMap`, the previous value gets overwritten. Even if this is another enum variant - as enum variants are values grouped under one type - and remember we think of `AnyMap` as mapping from *types* to values.
 
-[include:28-29](../../vol1/src/day9.rs)
+[include:28-29](../../vol1/src/bin/day9.rs)
 
 ```sh
 $ cargo run
@@ -36,4 +36,4 @@ Some(Ip(127.0.0.1))
 
 Generic types are considered different for every type parameter, so for example every `Option`-al type gets a separate entry in the `AnyMap`.
 
-[include:30-40](../../vol1/src/day9.rs)
+[include:30-40](../../vol1/src/bin/day9.rs)
