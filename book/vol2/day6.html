@@ -5,9 +5,9 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Introduction | 24 days of Rust</title>
+        <title>Day 6 - derive_builder | 24 days of Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="Build StatusBuild status">
+        <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
         
         
@@ -15,21 +15,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
-        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
         
-    <link rel="stylesheet" href="gitbook/style.css">
+    <link rel="stylesheet" href="../../gitbook/style.css">
     
         
-        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-highlight/website.css">
-        
-    
-        
-        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-search/search.css">
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-highlight/website.css">
         
     
         
-        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
         
     
     
@@ -37,8 +37,10 @@
         
     
     
-    <link rel="next" href="./book/vol1/index.html" />
+    <link rel="next" href="../../book/vol2/day7.html" />
     
+    
+    <link rel="prev" href="../../book/vol2/day5.html" />
     
 
         
@@ -47,10 +49,10 @@
         
         
     <div class="book"
-        data-level="0"
-        data-chapter-title="Introduction"
-        data-filepath="README.md"
-        data-basepath="."
+        data-level="2.6"
+        data-chapter-title="Day 6 - derive_builder"
+        data-filepath="book/vol2/day6.md"
+        data-basepath="../.."
         data-revision="Thu May 04 2017 11:53:07 GMT+0000 (UTC)"
         data-innerlanguage="">
     
@@ -67,10 +69,10 @@
 
             
     
-        <li class="chapter active" data-level="0" data-path="index.html">
+        <li class="chapter " data-level="0" data-path="index.html">
             
                 
-                    <a href="./index.html">
+                    <a href="../../index.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -83,7 +85,7 @@
         <li class="chapter " data-level="1" data-path="book/vol1/index.html">
             
                 
-                    <a href="./book/vol1/index.html">
+                    <a href="../../book/vol1/index.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -99,7 +101,7 @@
         <li class="chapter " data-level="1.1" data-path="book/vol1/day1.html">
             
                 
-                    <a href="./book/vol1/day1.html">
+                    <a href="../../book/vol1/day1.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -114,7 +116,7 @@
         <li class="chapter " data-level="1.2" data-path="book/vol1/day2.html">
             
                 
-                    <a href="./book/vol1/day2.html">
+                    <a href="../../book/vol1/day2.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -129,7 +131,7 @@
         <li class="chapter " data-level="1.3" data-path="book/vol1/day3.html">
             
                 
-                    <a href="./book/vol1/day3.html">
+                    <a href="../../book/vol1/day3.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -144,7 +146,7 @@
         <li class="chapter " data-level="1.4" data-path="book/vol1/day4.html">
             
                 
-                    <a href="./book/vol1/day4.html">
+                    <a href="../../book/vol1/day4.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -159,7 +161,7 @@
         <li class="chapter " data-level="1.5" data-path="book/vol1/day5.html">
             
                 
-                    <a href="./book/vol1/day5.html">
+                    <a href="../../book/vol1/day5.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -174,7 +176,7 @@
         <li class="chapter " data-level="1.6" data-path="book/vol1/day6.html">
             
                 
-                    <a href="./book/vol1/day6.html">
+                    <a href="../../book/vol1/day6.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -189,7 +191,7 @@
         <li class="chapter " data-level="1.7" data-path="book/vol1/day7.html">
             
                 
-                    <a href="./book/vol1/day7.html">
+                    <a href="../../book/vol1/day7.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -204,7 +206,7 @@
         <li class="chapter " data-level="1.8" data-path="book/vol1/day8.html">
             
                 
-                    <a href="./book/vol1/day8.html">
+                    <a href="../../book/vol1/day8.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -219,7 +221,7 @@
         <li class="chapter " data-level="1.9" data-path="book/vol1/day9.html">
             
                 
-                    <a href="./book/vol1/day9.html">
+                    <a href="../../book/vol1/day9.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -234,7 +236,7 @@
         <li class="chapter " data-level="1.10" data-path="book/vol1/day10.html">
             
                 
-                    <a href="./book/vol1/day10.html">
+                    <a href="../../book/vol1/day10.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -249,7 +251,7 @@
         <li class="chapter " data-level="1.11" data-path="book/vol1/day11.html">
             
                 
-                    <a href="./book/vol1/day11.html">
+                    <a href="../../book/vol1/day11.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -264,7 +266,7 @@
         <li class="chapter " data-level="1.12" data-path="book/vol1/day12.html">
             
                 
-                    <a href="./book/vol1/day12.html">
+                    <a href="../../book/vol1/day12.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -279,7 +281,7 @@
         <li class="chapter " data-level="1.13" data-path="book/vol1/day13.html">
             
                 
-                    <a href="./book/vol1/day13.html">
+                    <a href="../../book/vol1/day13.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -294,7 +296,7 @@
         <li class="chapter " data-level="1.14" data-path="book/vol1/day14.html">
             
                 
-                    <a href="./book/vol1/day14.html">
+                    <a href="../../book/vol1/day14.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -309,7 +311,7 @@
         <li class="chapter " data-level="1.15" data-path="book/vol1/day15.html">
             
                 
-                    <a href="./book/vol1/day15.html">
+                    <a href="../../book/vol1/day15.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -324,7 +326,7 @@
         <li class="chapter " data-level="1.16" data-path="book/vol1/day16.html">
             
                 
-                    <a href="./book/vol1/day16.html">
+                    <a href="../../book/vol1/day16.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -339,7 +341,7 @@
         <li class="chapter " data-level="1.17" data-path="book/vol1/day17.html">
             
                 
-                    <a href="./book/vol1/day17.html">
+                    <a href="../../book/vol1/day17.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -354,7 +356,7 @@
         <li class="chapter " data-level="1.18" data-path="book/vol1/day18.html">
             
                 
-                    <a href="./book/vol1/day18.html">
+                    <a href="../../book/vol1/day18.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -369,7 +371,7 @@
         <li class="chapter " data-level="1.19" data-path="book/vol1/day19.html">
             
                 
-                    <a href="./book/vol1/day19.html">
+                    <a href="../../book/vol1/day19.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -384,7 +386,7 @@
         <li class="chapter " data-level="1.20" data-path="book/vol1/day20.html">
             
                 
-                    <a href="./book/vol1/day20.html">
+                    <a href="../../book/vol1/day20.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -399,7 +401,7 @@
         <li class="chapter " data-level="1.21" data-path="book/vol1/day21.html">
             
                 
-                    <a href="./book/vol1/day21.html">
+                    <a href="../../book/vol1/day21.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -414,7 +416,7 @@
         <li class="chapter " data-level="1.22" data-path="book/vol1/day22.html">
             
                 
-                    <a href="./book/vol1/day22.html">
+                    <a href="../../book/vol1/day22.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -429,7 +431,7 @@
         <li class="chapter " data-level="1.23" data-path="book/vol1/day23.html">
             
                 
-                    <a href="./book/vol1/day23.html">
+                    <a href="../../book/vol1/day23.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -444,7 +446,7 @@
         <li class="chapter " data-level="1.24" data-path="book/vol1/day24.html">
             
                 
-                    <a href="./book/vol1/day24.html">
+                    <a href="../../book/vol1/day24.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -464,7 +466,7 @@
         <li class="chapter " data-level="2" data-path="book/vol2/index.html">
             
                 
-                    <a href="./book/vol2/index.html">
+                    <a href="../../book/vol2/index.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -480,7 +482,7 @@
         <li class="chapter " data-level="2.1" data-path="book/vol2/day1.html">
             
                 
-                    <a href="./book/vol2/day1.html">
+                    <a href="../../book/vol2/day1.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -495,7 +497,7 @@
         <li class="chapter " data-level="2.2" data-path="book/vol2/day2.html">
             
                 
-                    <a href="./book/vol2/day2.html">
+                    <a href="../../book/vol2/day2.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -510,7 +512,7 @@
         <li class="chapter " data-level="2.3" data-path="book/vol2/day3.html">
             
                 
-                    <a href="./book/vol2/day3.html">
+                    <a href="../../book/vol2/day3.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -525,7 +527,7 @@
         <li class="chapter " data-level="2.4" data-path="book/vol2/day4.html">
             
                 
-                    <a href="./book/vol2/day4.html">
+                    <a href="../../book/vol2/day4.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -540,7 +542,7 @@
         <li class="chapter " data-level="2.5" data-path="book/vol2/day5.html">
             
                 
-                    <a href="./book/vol2/day5.html">
+                    <a href="../../book/vol2/day5.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -552,10 +554,10 @@
             
         </li>
     
-        <li class="chapter " data-level="2.6" data-path="book/vol2/day6.html">
+        <li class="chapter active" data-level="2.6" data-path="book/vol2/day6.html">
             
                 
-                    <a href="./book/vol2/day6.html">
+                    <a href="../../book/vol2/day6.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -570,7 +572,7 @@
         <li class="chapter " data-level="2.7" data-path="book/vol2/day7.html">
             
                 
-                    <a href="./book/vol2/day7.html">
+                    <a href="../../book/vol2/day7.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -585,7 +587,7 @@
         <li class="chapter " data-level="2.8" data-path="book/vol2/day8.html">
             
                 
-                    <a href="./book/vol2/day8.html">
+                    <a href="../../book/vol2/day8.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -600,7 +602,7 @@
         <li class="chapter " data-level="2.9" data-path="book/vol2/day9.html">
             
                 
-                    <a href="./book/vol2/day9.html">
+                    <a href="../../book/vol2/day9.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -615,7 +617,7 @@
         <li class="chapter " data-level="2.10" data-path="book/vol2/day10.html">
             
                 
-                    <a href="./book/vol2/day10.html">
+                    <a href="../../book/vol2/day10.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -630,7 +632,7 @@
         <li class="chapter " data-level="2.11" data-path="book/vol2/day11.html">
             
                 
-                    <a href="./book/vol2/day11.html">
+                    <a href="../../book/vol2/day11.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -645,7 +647,7 @@
         <li class="chapter " data-level="2.12" data-path="book/vol2/day12.html">
             
                 
-                    <a href="./book/vol2/day12.html">
+                    <a href="../../book/vol2/day12.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -660,7 +662,7 @@
         <li class="chapter " data-level="2.13" data-path="book/vol2/day13.html">
             
                 
-                    <a href="./book/vol2/day13.html">
+                    <a href="../../book/vol2/day13.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -675,7 +677,7 @@
         <li class="chapter " data-level="2.14" data-path="book/vol2/day14.html">
             
                 
-                    <a href="./book/vol2/day14.html">
+                    <a href="../../book/vol2/day14.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -690,7 +692,7 @@
         <li class="chapter " data-level="2.15" data-path="book/vol2/day15.html">
             
                 
-                    <a href="./book/vol2/day15.html">
+                    <a href="../../book/vol2/day15.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -705,7 +707,7 @@
         <li class="chapter " data-level="2.16" data-path="book/vol2/day16.html">
             
                 
-                    <a href="./book/vol2/day16.html">
+                    <a href="../../book/vol2/day16.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -720,7 +722,7 @@
         <li class="chapter " data-level="2.17" data-path="book/vol2/day17.html">
             
                 
-                    <a href="./book/vol2/day17.html">
+                    <a href="../../book/vol2/day17.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -735,7 +737,7 @@
         <li class="chapter " data-level="2.18" data-path="book/vol2/day18.html">
             
                 
-                    <a href="./book/vol2/day18.html">
+                    <a href="../../book/vol2/day18.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -750,7 +752,7 @@
         <li class="chapter " data-level="2.19" data-path="book/vol2/day19.html">
             
                 
-                    <a href="./book/vol2/day19.html">
+                    <a href="../../book/vol2/day19.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -765,7 +767,7 @@
         <li class="chapter " data-level="2.20" data-path="book/vol2/day20.html">
             
                 
-                    <a href="./book/vol2/day20.html">
+                    <a href="../../book/vol2/day20.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -780,7 +782,7 @@
         <li class="chapter " data-level="2.21" data-path="book/vol2/day21.html">
             
                 
-                    <a href="./book/vol2/day21.html">
+                    <a href="../../book/vol2/day21.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -795,7 +797,7 @@
         <li class="chapter " data-level="2.22" data-path="book/vol2/day22.html">
             
                 
-                    <a href="./book/vol2/day22.html">
+                    <a href="../../book/vol2/day22.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -810,7 +812,7 @@
         <li class="chapter " data-level="2.23" data-path="book/vol2/day23.html">
             
                 
-                    <a href="./book/vol2/day23.html">
+                    <a href="../../book/vol2/day23.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -825,7 +827,7 @@
         <li class="chapter " data-level="2.24" data-path="book/vol2/day24.html">
             
                 
-                    <a href="./book/vol2/day24.html">
+                    <a href="../../book/vol2/day24.html">
                 
                         <i class="fa fa-check"></i>
                         
@@ -865,7 +867,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="./" >24 days of Rust</a>
+        <a href="../../" >24 days of Rust</a>
     </h1>
 </div>
 
@@ -875,17 +877,129 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="24daysofrust">24daysofrust</h1>
-<p><a href="https://travis-ci.org/zsiciarz/24daysofrust" target="_blank"><img src="https://travis-ci.org/zsiciarz/24daysofrust.svg?branch=master" alt="Build Status"></a>
-<a href="https://ci.appveyor.com/project/zsiciarz/24daysofrust" target="_blank"><img src="https://ci.appveyor.com/api/projects/status/ys82q4b43td2mxb7?svg=true" alt="Build status"></a></p>
-<p>The &quot;24 days of Rust&quot; article series.</p>
-<h1 id="author">Author</h1>
+                        <h1 id="day-6--derivebuilder">Day 6 - derive_builder</h1>
+<p>Today our focus is the <a href="https://crates.io/crates/derive_builder" target="_blank">derive_builder</a>
+crate. It provides a macro to automatically generate setter methods
+for struct fields. And since all setters return the struct itself,
+we can chain them in a so called <em>builder pattern</em>.</p>
+<h2 id="builder-and-fluent-interfaces">Builder and fluent interfaces</h2>
+<p><a href="https://en.wikipedia.org/wiki/Builder_pattern" target="_blank">Builder pattern</a> (in the sense
+of the original Design Patterns book) is an object that knows how to construct
+other objects step by step. The builder approach aims to simplify object
+creation. Instead of a long argument list in the constructor (or a method
+ like <code>new()</code> in Rust), we initialize the object by calling subsequent
+ builder methods.</p>
+<p>Each builder method returns the builder itself. This allows for chaining
+the calls right after each other <code>just().like().this()</code>. For example
+<a href="http://diesel.rs/" target="_blank">diesel</a> uses such method chaining to build database queries:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> versions = Version::belonging_to(krate)
+    .select(id)
+    .order(num.desc())
+    .limit(<span class="hljs-number">5</span>);
+</code></pre>
+<p>Fluent interfaces are useful in some contexts; they are not a silver bullet
+(nothing is). Marco Pivetta wrote a good critique in his blog post
+<a href="https://ocramius.github.io/blog/fluent-interfaces-are-evil/" target="_blank">Fluent interfaces are evil</a>.</p>
+<h2 id="game-config-example">Game config example</h2>
+<p>Imagine we&apos;re writing a computer game. We need to store game
+configuration such as screen resolution, save directory location etc. A lot
+of modern games start via a separate launcher which tries to autodetect
+these values and presents initial config to the actual game. Let&apos;s see
+how we could use <code>derive_builder</code> in such a launcher.</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> custom_derive;
+<span class="hljs-preprocessor">#[macro_use]</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">crate</span> derive_builder;
+</code></pre>
+<p><a href="https://crates.io/crates/custom_derive" target="_blank">custom_derive</a> is a helper crate that
+allows deriving user-defined attributes. We&apos;ll see that later, but here&apos;s a
+regular derive:</p>
+<pre><code class="lang-rust"><span class="hljs-preprocessor">#[derive(Debug)]</span>
+<span class="hljs-keyword">struct</span> Resolution {
+    width: <span class="hljs-keyword">u32</span>,
+    height: <span class="hljs-keyword">u32</span>,
+}
+
+<span class="hljs-keyword">impl</span> <span class="hljs-built_in">Default</span> <span class="hljs-keyword">for</span> Resolution {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">default</span></span>() -&gt; Resolution {
+        Resolution {
+            width: <span class="hljs-number">1920</span>,
+            height: <span class="hljs-number">1080</span>,
+        }
+    }
+}
+</code></pre>
+<p><code>Resolution</code> is just a pair of integers with a debugging representation
+derived for us by the Rust compiler. We could also derive <code>Default</code>, but this
+would use default values for both dimensions, giving us a 0px x 0px screen. Not
+really useful...</p>
+<pre><code class="lang-rust">custom_derive! {
+    <span class="hljs-preprocessor">#[derive(Debug, Default, Builder)]</span>
+    <span class="hljs-keyword">struct</span> GameConfig {
+        resolution: Resolution,
+        save_dir: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">String</span>&gt;,
+        autosave: <span class="hljs-keyword">bool</span>,
+        fov: <span class="hljs-keyword">f32</span>,
+        render_distance: <span class="hljs-keyword">u32</span>,
+    }
+}
+</code></pre>
+<p>Here&apos;s the meat of the matter. <code>Debug</code> and <code>Default</code> are standard Rust traits
+that the compiler knows how to derive. <code>Builder</code> on the other hand is actually
+a <code>Builder!</code> macro, that <code>custom_derive!</code> knows how to call on our struct.</p>
+<p>So this is a plain Rust struct inside some macro. What does it buy us?</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> conf = GameConfig::default();
+conf.save_dir(<span class="hljs-string">&quot;saves&quot;</span>.to_string()).fov(<span class="hljs-number">70.0</span>).render_distance(<span class="hljs-number">1000u32</span>);
+<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, conf);
+</code></pre>
+<pre><code class="lang-text">$ cargo run
+GameConfig { resolution: Resolution { width: 1920, height: 1080 }, save_dir: Some(&quot;saves&quot;), autosave: false, fov: 70, render_distance: 1000 }
+</code></pre>
+<p>Note how the resolution and autosave flag are still correctly set from the
+defaults, while we use generated setters for the rest of settings.
+Another interesting thing happens when we set <code>save_dir</code>. The struct contains
+an <code>Option&lt;String&gt;</code>, but we&apos;re passing a <code>String</code> into the setter. How does
+that even compile?</p>
+<p>Since <a href="https://blog.rust-lang.org/2016/09/29/Rust-1.12.html" target="_blank">Rust 1.12</a>,
+<code>Option&lt;T&gt;</code> implements <code>From&lt;T&gt;</code>. And the generated setter signature
+would look like:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">save_dir</span></span>&lt;VALUE: <span class="hljs-built_in">Into</span>&lt;<span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">String</span>&gt;&gt;(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, value: VALUE) -&gt; &amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">Self</span>
+</code></pre>
+<p><code>From</code> and <code>Into</code> traits complement each other, hence everything typechecks.</p>
+<p>We can of course add <code>impl GameConfig</code> and implement our own methods - this is
+still a regular Rust struct. The only thing <code>derive_builder</code> does is adding
+public setter methods.</p>
+<h2 id="nonconsuming-builders">(Non)-consuming builders</h2>
+<p>There&apos;s a small gotcha with <code>derive_builder</code>. We can&apos;t initialize config like
+this:</p>
+<pre><code class="lang-rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> conf = GameConfig::default().fov(<span class="hljs-number">0.0</span>);
+</code></pre>
+<p>This will fail to compile with an error like below:</p>
+<pre><code class="lang-text">error: borrowed value does not live long enough
+  --&gt; src\day6.rs:34:50
+   |
+34 |     let mut conf = GameConfig::default().fov(0.0);
+   |                    ---------------------         ^ temporary value dropped here while still borrowed
+   |                    |
+   |                    temporary value created here
+...
+37 | }
+   | - temporary value needs to live until here
+   |
+   = note: consider using a `let` binding to increase its lifetime
+</code></pre>
+<p><code>derive_builder</code> prefers a so called <em>non-consuming</em> builder approach, as
+described in <a href="https://aturon.github.io/ownership/builders.html" target="_blank">The builder pattern</a>.
+See <a href="https://github.com/colin-kiegel/rust-derive-builder/issues/2" target="_blank">this issue</a>
+for the rationale behind this choice.</p>
+<h2 id="further-reading">Further reading</h2>
 <ul>
-<li>Zbigniew Siciarz (zbigniew at siciarz dot net)</li>
+<li><a href="https://aturon.github.io/ownership/builders.html" target="_blank">The builder pattern</a></li>
+<li><a href="http://martinfowler.com/bliki/FluentInterface.html" target="_blank">FluentInterface by Martin Fowler</a></li>
+<li><a href="http://www.erikschierboom.com/2014/10/08/fluent-interfaces/" target="_blank">Fluent interfaces</a> (in C#)</li>
+<li><a href="https://ocramius.github.io/blog/fluent-interfaces-are-evil/" target="_blank">Fluent interfaces are evil</a></li>
+<li><a href="https://crates.io/crates/smelter" target="_blank">smelter</a> - a similar crate for deriving builders</li>
 </ul>
-<h1 id="license">License</h1>
-<p>This work is released under the MIT license. A copy of the license is provided
-in the LICENSE file.</p>
 
                     
                     </section>
@@ -896,29 +1010,31 @@ in the LICENSE file.</p>
         </div>
 
         
+        <a href="../../book/vol2/day5.html" class="navigation navigation-prev " aria-label="Previous page: Day 5 - environment variables"><i class="fa fa-angle-left"></i></a>
         
-        <a href="./book/vol1/index.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Volume 1"><i class="fa fa-angle-right"></i></a>
+        
+        <a href="../../book/vol2/day7.html" class="navigation navigation-next " aria-label="Next page: Day 7 - static initialization"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
 
         
-<script src="gitbook/app.js"></script>
+<script src="../../gitbook/app.js"></script>
 
     
-    <script src="gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
-    
-
-    
-    <script src="gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    <script src="../../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
     
 
     
-    <script src="gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    <script src="../../gitbook/plugins/gitbook-plugin-search/search.js"></script>
     
 
     
-    <script src="gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    <script src="../../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
     
 
 <script>
