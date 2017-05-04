@@ -26,13 +26,13 @@ fn main() {
     ctx.add("content", &LIPSUM);
     ctx.add("todos",
             &vec!["buy milk", "walk the dog", "write about tera"]);
-    let rendered = tera.render("index.html", ctx).expect("Failed to render template");
+    let rendered = tera.render("index.html", &ctx).expect("Failed to render template");
     println!("{}", rendered);
 
     tera.register_filter("markdown", markdown_filter);
     let mut ctx = Context::new();
     ctx.add("content", &"**bold** and `beautiful`");
-    let rendered = tera.render("blog.html", ctx).expect("Failed to render template");
+    let rendered = tera.render("blog.html", &ctx).expect("Failed to render template");
     println!("{}", rendered);
 
     let mut config = HashMap::new();
@@ -41,6 +41,6 @@ fn main() {
     config.insert("email", "NAME@example.com");
     let mut ctx = Context::new();
     ctx.add("config", &config);
-    let rendered = tera.render("config.ini", ctx).expect("Failed to render template");
+    let rendered = tera.render("config.ini", &ctx).expect("Failed to render template");
     println!("{}", rendered);
 }

@@ -5,7 +5,7 @@ extern crate clap;
 extern crate slog;
 extern crate slog_term;
 
-use slog::DrainExt;
+use slog::Drain;
 use std::process;
 use clap::{Arg, ArgMatches, App, SubCommand};
 
@@ -24,7 +24,8 @@ fn run(matches: ArgMatches) -> Result<(), String> {
         1 => slog::Level::Debug,
         2 | _ => slog::Level::Trace,
     };
-    let drain = slog::level_filter(min_log_level, slog_term::streamer().build()).fuse();
+    let decorator = slog_term::PlainSyncDecorator::new(std::io::stderr());
+    let drain = slog_term::FullFormat::new(decorator).build().filter_level(min_log_level).fuse();
     let logger = slog::Logger::root(drain, o!());
     trace!(logger, "app_setup");
     // setting up app...

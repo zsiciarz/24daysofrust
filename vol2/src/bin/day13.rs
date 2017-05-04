@@ -11,7 +11,7 @@ use zip::write::{FileOptions, ZipWriter};
 #[cfg(target_family="unix")]
 use lzma::{LzmaWriter, LzmaError};
 
-static FILE_CONTENTS: &'static [u8] = include_bytes!("../Cargo.lock");
+static FILE_CONTENTS: &'static [u8] = include_bytes!("../../Cargo.lock");
 
 fn create_zip_archive<T: Seek + Write>(buf: &mut T) -> ZipResult<()> {
     let mut writer = ZipWriter::new(buf);
