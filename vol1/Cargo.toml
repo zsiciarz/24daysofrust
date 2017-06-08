@@ -64,7 +64,7 @@ image = "0.13.0"
 itertools = "0.6.0"
 json_macros = { git = "https://github.com/zsiciarz/json_macros.git" }
 libc = "0.2.23"
-nalgebra = "0.10.1"
+nalgebra = "0.12.3"
 num = "0.1.37"
 postgres = { version = "0.13.6", features = ["with-rustc-serialize", "with-time"] }
 postgres_array = "0.7.1"

@@ -5,7 +5,7 @@ use std::f64::consts::{PI, FRAC_PI_2};
 use std::fs::File;
 use std::path::Path;
 use image::{GenericImage, Pixel, Rgba};
-use nalgebra::{DVector, Matrix2, Point2, Rotation2, Vector1, Vector2, Vector3};
+use nalgebra::{DVector, Matrix2, Point2, Rotation2, Vector2, Vector3};
 
 fn draw(v: &DVector<f64>, path: &Path) {
     let width = v.len() as u32;
@@ -31,35 +31,31 @@ fn main() {
     //  0, 1
     // -1, 0
     let rot = Matrix2::new(0.0f64, -1.0, 1.0, 0.0);
-    println!("{:?}", rot * v);
+    println!("{}", rot * v);
     let angle = FRAC_PI_2;
-    let rot = Rotation2::new(Vector1::new(angle));
-    println!("{:?}", rot * v);
+    let rot = Rotation2::new(angle);
+    println!("{}", rot * v);
     let point = Point2::new(4.0f64, 4.0);
-    println!("Translate from {:?} to {:?}",
-             point,
-             nalgebra::translate(&v, &point));
+    println!("Translate from {} to {}", point, point + v);
 
     let v1 = Vector3::new(2.0f64, 2.0, 0.0);
     let v2 = Vector3::new(2.0f64, -2.0, 0.0);
-    if nalgebra::approx_eq(&0.0f64, &nalgebra::dot(&v1, &v2)) {
-        println!("v1 is orthogonal to v2");
-    }
+    println!("Dot product: {}", v1.dot(&v2));
 
-    println!("{:?}", nalgebra::cross(&v1, &v2));
-    println!("{:?}", nalgebra::cross(&v2, &v1));
+    println!("{}", v1.cross(&v2));
+    println!("{}", v2.cross(&v1));
 
     const SIZE: usize = 512;
-    let sine = DVector::from_fn(SIZE, |i: usize| {
+    let sine = DVector::from_fn(SIZE, |i: usize, _| {
         let t = i as f64 / 16.0f64;
         t.sin()
     });
     draw(&sine, Path::new("out_sine.png"));
 
-    let window = DVector::from_fn(SIZE, |i: usize| {
+    let window = DVector::from_fn(SIZE, |i: usize, _| {
         0.54f64 - 0.46 * (PI * 2.0 * (i as f64) / (SIZE - 1) as f64).cos()
     });
     draw(&window, Path::new("out_window.png"));
 
-    draw(&(sine * window), Path::new("out_windowed.png"));
+    draw(&sine.component_mul(&window), Path::new("out_windowed.png"));
 }
