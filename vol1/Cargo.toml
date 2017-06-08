@@ -57,13 +57,13 @@ name = "day21"
 [dependencies]
 anymap = "0.12.1"
 csv = "0.15.0"
-docopt = "0.7.0"
+docopt = "0.8.0"
 #docopt_macros = "0.7.0"
-hyper = { version = "0.10.9", default-features = false }
-image = "0.12.3"
-itertools = "0.5.9"
+hyper = { version = "0.10.12", default-features = false }
+image = "0.13.0"
+itertools = "0.6.0"
 json_macros = { git = "https://github.com/zsiciarz/json_macros.git" }
-libc = "0.2.21"
+libc = "0.2.23"
 nalgebra = "0.10.1"
 num = "0.1.37"
 postgres = { version = "0.13.6", features = ["with-rustc-serialize", "with-time"] }
@@ -76,8 +76,8 @@ rust-crypto = "0.2.36"
 rustc-serialize = "0.3.18"
 time = "0.1.36"
 tau = "1.0.4"
-url = "1.4.0"
-uuid = { version = "0.4.0", features = ["v4"] }
+url = "1.4.1"
+uuid = { version = "0.5.0", features = ["v4"] }
 
 [target.'cfg(unix)'.dependencies]
 fuse = "0.3.0"
