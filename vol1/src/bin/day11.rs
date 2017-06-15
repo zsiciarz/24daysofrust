@@ -1,5 +1,5 @@
-#![feature(plugin)]
-#![cfg_attr(target_family="unix", plugin(postgres_macros))]
+// #![feature(plugin)]
+// #![cfg_attr(target_family="unix", plugin(postgres_macros))]
 
 
 extern crate rustc_serialize;
@@ -31,8 +31,8 @@ where
 
 #[cfg(target_family = "unix")]
 fn sql_macro() {
-    let query = sql!("select '{4, 5, 6}'::int[]");
-    println!("{:?}", query);
+    //let query = sql!("select '{4, 5, 6}'::int[]");
+    //println!("{:?}", query);
 }
 
 #[cfg(not(target_family = "unix"))]

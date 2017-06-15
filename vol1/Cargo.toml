@@ -81,7 +81,7 @@ uuid = { version = "0.5.0", features = ["v4"] }
 
 [target.'cfg(unix)'.dependencies]
 fuse = "0.3.0"
-postgres_macros = "0.1.13"
+#postgres_macros = "0.1.13"
 zmq = "0.8.0"
 
 #[replace]
