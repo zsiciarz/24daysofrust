@@ -29,7 +29,8 @@ fn post_query(url: &str, query: Query) -> hyper::Result<String> {
 }
 
 fn post_json<T>(url: &str, payload: &T) -> hyper::Result<String>
-    where T: Encodable
+where
+    T: Encodable,
 {
     let client = Client::new();
     let body = json::encode(payload).unwrap();

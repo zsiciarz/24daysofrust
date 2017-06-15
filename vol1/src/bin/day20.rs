@@ -1,11 +1,11 @@
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 extern crate zmq;
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use zmq::{Context, Message, Error};
 
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     let sock = ctx.socket(zmq::REQ)?;
     sock.connect(addr)?;
@@ -19,7 +19,7 @@ fn run_client(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     Ok(())
 }
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     let sock = ctx.socket(zmq::REP)?;
     sock.bind(addr)?;
@@ -31,13 +31,13 @@ fn run_server(ctx: &mut Context, addr: &str) -> Result<(), Error> {
     }
 }
 
-#[cfg(target_family="windows")]
+#[cfg(target_family = "windows")]
 fn main() {
     println!("24 days of Rust - zmq (day 20)");
     println!("This example does not work on Windows :(");
 }
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 fn main() {
     println!("24 days of Rust - zmq (day 20)");
     let args = std::env::args().collect::<Vec<_>>();

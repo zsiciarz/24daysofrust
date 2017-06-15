@@ -1,33 +1,33 @@
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 extern crate fuse;
 extern crate time;
 extern crate libc;
 extern crate rustc_serialize;
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use std::collections::BTreeMap;
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use std::env;
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use std::ffi::OsStr;
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use libc::ENOENT;
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use time::Timespec;
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use fuse::{FileAttr, FileType, Filesystem, Request, ReplyAttr, ReplyData, ReplyEntry,
            ReplyDirectory};
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 use rustc_serialize::json;
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 struct JsonFilesystem {
     tree: json::Object,
     attrs: BTreeMap<u64, FileAttr>,
     inodes: BTreeMap<String, u64>,
 }
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 impl JsonFilesystem {
     fn new(tree: &json::Object) -> JsonFilesystem {
         let mut attrs = BTreeMap::new();
@@ -79,7 +79,7 @@ impl JsonFilesystem {
     }
 }
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 impl Filesystem for JsonFilesystem {
     fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
         println!("getattr(ino={})", ino);
@@ -110,18 +110,22 @@ impl Filesystem for JsonFilesystem {
         };
     }
 
-    fn read(&mut self,
-            _req: &Request,
-            ino: u64,
-            fh: u64,
-            offset: u64,
-            size: u32,
-            reply: ReplyData) {
-        println!("read(ino={}, fh={}, offset={}, size={})",
-                 ino,
-                 fh,
-                 offset,
-                 size);
+    fn read(
+        &mut self,
+        _req: &Request,
+        ino: u64,
+        fh: u64,
+        offset: u64,
+        size: u32,
+        reply: ReplyData,
+    ) {
+        println!(
+            "read(ino={}, fh={}, offset={}, size={})",
+            ino,
+            fh,
+            offset,
+            size
+        );
         for (key, &inode) in &self.inodes {
             if inode == ino {
                 let value = &self.tree[key];
@@ -132,12 +136,14 @@ impl Filesystem for JsonFilesystem {
         reply.error(ENOENT);
     }
 
-    fn readdir(&mut self,
-               _req: &Request,
-               ino: u64,
-               fh: u64,
-               offset: u64,
-               mut reply: ReplyDirectory) {
+    fn readdir(
+        &mut self,
+        _req: &Request,
+        ino: u64,
+        fh: u64,
+        offset: u64,
+        mut reply: ReplyDirectory,
+    ) {
         println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
         if ino == 1 {
             if offset == 0 {
@@ -159,13 +165,13 @@ impl Filesystem for JsonFilesystem {
     }
 }
 
-#[cfg(target_family="windows")]
+#[cfg(target_family = "windows")]
 fn main() {
     println!("24 days of Rust - fuse (days 15 & 16)");
     println!("This example does not work on Windows :(");
 }
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 fn main() {
     println!("24 days of Rust - fuse (days 15 & 16)");
     let data = json::Json::from_str("{\"foo\": \"bar\", \"answer\": 42}").unwrap();

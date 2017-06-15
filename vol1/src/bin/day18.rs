@@ -14,10 +14,11 @@ fn add_friend(conn: &Connection, my_id: UserId, their_id: UserId) -> RedisResult
     Ok(())
 }
 
-fn friends_in_common(conn: &Connection,
-                     my_id: UserId,
-                     their_id: UserId)
-                     -> RedisResult<HashSet<UserId>> {
+fn friends_in_common(
+    conn: &Connection,
+    my_id: UserId,
+    their_id: UserId,
+) -> RedisResult<HashSet<UserId>> {
     let my_key = format!("friends:{}", my_id);
     let their_key = format!("friends:{}", their_id);
     conn.sinter((my_key, their_key))
@@ -53,8 +54,10 @@ fn main() {
     for i in 1..10u64 {
         add_friend(&conn, i, i + 2).expect("Friendship failed :(");
     }
-    println!("You have {} friends in common.",
-             friends_in_common(&conn, 2, 3).map(|s| s.len()).unwrap_or(0));
+    println!(
+        "You have {} friends in common.",
+        friends_in_common(&conn, 2, 3).map(|s| s.len()).unwrap_or(0)
+    );
 
     let players = vec!["raynor", "kerrigan", "mengsk", "zasz", "tassadar"];
     for player in &players {

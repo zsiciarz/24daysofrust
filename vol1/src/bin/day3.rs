@@ -37,7 +37,11 @@ fn main() {
     let mut reader = Reader::from_file(path).unwrap().has_headers(false);
     for row in reader.decode() {
         let movie: Movie = row.unwrap();
-        println!("{} was a bad guy in '{}' in {}",
-            movie.bad_guy, movie.title, movie.pub_year);
+        println!(
+            "{} was a bad guy in '{}' in {}",
+            movie.bad_guy,
+            movie.title,
+            movie.pub_year
+        );
     }
 }

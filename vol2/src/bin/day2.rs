@@ -13,14 +13,14 @@ trait Signal {
 }
 
 impl<'a, R> Signal for WavSamples<'a, R, i16>
-    where R: std::io::Read
+where
+    R: std::io::Read,
 {
     fn energy(self) -> f64 {
         self.map(|x| {
-                let sample = x.unwrap() as f64;
-                sample * sample
-            })
-            .sum()
+            let sample = x.unwrap() as f64;
+            sample * sample
+        }).sum()
     }
 }
 
@@ -46,12 +46,14 @@ fn find_spectral_peak(filename: &str) -> Option<f32> {
     let mut reader = WavReader::open(filename).expect("Failed to open WAV file");
     let num_samples = reader.len() as usize;
     let mut fft = FFT::new(num_samples, false);
-    let signal = reader.samples::<i16>()
+    let signal = reader
+        .samples::<i16>()
         .map(|x| Complex::new(x.unwrap() as f32, 0f32))
         .collect::<Vec<_>>();
     let mut spectrum = signal.clone();
     fft.process(&signal[..], &mut spectrum[..]);
-    let max_peak = spectrum.iter()
+    let max_peak = spectrum
+        .iter()
         .take(num_samples / 2)
         .enumerate()
         .max_by_key(|&(_, freq)| freq.norm() as u32);

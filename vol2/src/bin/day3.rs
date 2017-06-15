@@ -36,7 +36,8 @@ fn semicircle(x: f64) -> f64 {
 }
 
 fn integrate<F>(f: F, points: usize) -> f64
-    where F: Fn(f64) -> f64
+where
+    F: Fn(f64) -> f64,
 {
     let delta = 1f64 / points as f64;
     (0..points)
@@ -48,7 +49,8 @@ fn integrate<F>(f: F, points: usize) -> f64
 }
 
 fn parallel_integrate<F>(f: F, points: usize) -> f64
-    where F: Fn(f64) -> f64 + Sync
+where
+    F: Fn(f64) -> f64 + Sync,
 {
     let delta = 1f64 / points as f64;
     (0..points)
@@ -64,8 +66,10 @@ fn main() {
     println!("24 Days of Rust vol. 2 - rayon");
     println!("This machine has {} CPUs", num_cpus::get());
     println!("sequential: {}", 4f64 * integrate(semicircle, 10_000_000));
-    println!("parallel: {}",
-             4f64 * parallel_integrate(semicircle, 10_000_000));
+    println!(
+        "parallel: {}",
+        4f64 * parallel_integrate(semicircle, 10_000_000)
+    );
     println!("sequential MC: {}", monte_carlo_pi(1_000_000));
     println!("parallel MC: {}", parallel_monte_carlo_pi(1_000_000));
 }

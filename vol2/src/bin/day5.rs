@@ -30,8 +30,10 @@ fn main() {
     // };
 
     dotenv::dotenv().expect("Failed to read .env file");
-    println!("Email backend: {}",
-             env::var("EMAIL_BACKEND").expect("EMAIL_BACKEND not found"));
+    println!(
+        "Email backend: {}",
+        env::var("EMAIL_BACKEND").expect("EMAIL_BACKEND not found")
+    );
 
     // match envy::from_env::<MailerConfig>() {
     //     Ok(config) => println!("{:?}", config),

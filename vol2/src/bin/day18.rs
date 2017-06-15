@@ -78,7 +78,9 @@ fn main() {
 }
 
 fn run() -> Result<()> {
-    let schedule = load_schedule("data/schedule.json").chain_err(|| "failed to load schedule")?;
+    let schedule = load_schedule("data/schedule.json").chain_err(
+        || "failed to load schedule",
+    )?;
     if schedule.rules.is_empty() {
         bail!("the schedule is empty");
     }
@@ -93,13 +95,16 @@ fn load_schedule<P: AsRef<Path>>(path: P) -> Result<Schedule> {
 }
 
 fn update_crontab(schedule: &Schedule) -> Result<()> {
-    let mut file =
-        tempfile::NamedTempFile::new().chain_err(|| "failed to create a temporary file")?;
+    let mut file = tempfile::NamedTempFile::new().chain_err(
+        || "failed to create a temporary file",
+    )?;
     let schedule_str = format!("{}", schedule);
-    file.write_all(&schedule_str.into_bytes()[..]).chain_err(|| "failed to write schedule")?;
+    file.write_all(&schedule_str.into_bytes()[..]).chain_err(
+        || "failed to write schedule",
+    )?;
     let path = file.path().to_str().ok_or("temporary path is not UTF-8")?;
-    Command::new("crontab").arg(path)
-        .spawn()
-        .chain_err(|| "failed to run crontab command")?;
+    Command::new("crontab").arg(path).spawn().chain_err(
+        || "failed to run crontab command",
+    )?;
     Ok(())
 }

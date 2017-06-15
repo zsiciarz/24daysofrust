@@ -25,7 +25,10 @@ fn run(matches: ArgMatches) -> Result<(), String> {
         2 | _ => slog::Level::Trace,
     };
     let decorator = slog_term::PlainSyncDecorator::new(std::io::stderr());
-    let drain = slog_term::FullFormat::new(decorator).build().filter_level(min_log_level).fuse();
+    let drain = slog_term::FullFormat::new(decorator)
+        .build()
+        .filter_level(min_log_level)
+        .fuse();
     let logger = slog::Logger::root(drain, o!());
     trace!(logger, "app_setup");
     // setting up app...
@@ -60,24 +63,31 @@ fn main() {
         .version("0.1")
         .author("Zbigniew Siciarz")
         .about("learn you some Rust!")
-        .arg(Arg::with_name("verbose")
-            .short("v")
-            .multiple(true)
-            .help("verbosity level"))
-        .subcommand(SubCommand::with_name("analyse")
-            .about("Analyses the data from file")
-            .arg(Arg::with_name("input-file")
-                .short("i")
-                .default_value("default.csv")
-                .value_name("FILE")))
-        .subcommand(SubCommand::with_name("verify")
-            .about("Verifies the data")
-            .arg(Arg::with_name("algorithm")
-                .short("a")
-                .help("Hash algorithm to use")
-                .possible_values(&Algorithm::variants())
-                .required(true)
-                .value_name("ALGORITHM")))
+        .arg(Arg::with_name("verbose").short("v").multiple(true).help(
+            "verbosity level",
+        ))
+        .subcommand(
+            SubCommand::with_name("analyse")
+                .about("Analyses the data from file")
+                .arg(
+                    Arg::with_name("input-file")
+                        .short("i")
+                        .default_value("default.csv")
+                        .value_name("FILE"),
+                ),
+        )
+        .subcommand(
+            SubCommand::with_name("verify")
+                .about("Verifies the data")
+                .arg(
+                    Arg::with_name("algorithm")
+                        .short("a")
+                        .help("Hash algorithm to use")
+                        .possible_values(&Algorithm::variants())
+                        .required(true)
+                        .value_name("ALGORITHM"),
+                ),
+        )
         .get_matches();
     if let Err(e) = run(matches) {
         println!("Application error: {}", e);

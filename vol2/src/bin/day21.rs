@@ -35,5 +35,7 @@ fn main() {
     println!("{:?}", config);
     config.save_dir = Some(save_dir);
     config.autosave = true;
-    config.save(&APP_INFO, "game_config").expect("Failed to save game config");
+    config.save(&APP_INFO, "game_config").expect(
+        "Failed to save game config",
+    );
 }

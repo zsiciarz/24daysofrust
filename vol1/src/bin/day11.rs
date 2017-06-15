@@ -19,7 +19,8 @@ use rustc_serialize::json::Json;
 use time::Timespec;
 
 fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
-    where T: FromSql
+where
+    T: FromSql,
 {
     println!("Executing query: {}", query);
     let stmt = conn.prepare(query)?;
@@ -28,13 +29,13 @@ fn get_single_value<T>(conn: &Connection, query: &str) -> PgResult<T>
     row.get_opt(0).unwrap()
 }
 
-#[cfg(target_family="unix")]
+#[cfg(target_family = "unix")]
 fn sql_macro() {
     let query = sql!("select '{4, 5, 6}'::int[]");
     println!("{:?}", query);
 }
 
-#[cfg(not(target_family="unix"))]
+#[cfg(not(target_family = "unix"))]
 fn sql_macro() {
     println!("TODO");
 }
@@ -49,13 +50,14 @@ fn main() {
             return;
         }
     };
-    conn.execute("create table if not exists blog (
+    conn.execute(
+        "create table if not exists blog (
         id serial primary key,
         title \
                   varchar(255),
         body text)",
-                 &[])
-        .expect("Table creation failed");
+        &[],
+    ).expect("Table creation failed");
     let stmt = match conn.prepare("insert into blog (title, body) values ($1, $2)") {
         Ok(stmt) => stmt,
         Err(e) => {
@@ -66,7 +68,9 @@ fn main() {
     for i in 1..5 {
         let title = format!("Blogpost number {}", i);
         let text = format!("Content of the blogpost #{}", i);
-        stmt.execute(&[&title, &text]).expect("Inserting blogposts failed");
+        stmt.execute(&[&title, &text]).expect(
+            "Inserting blogposts failed",
+        );
     }
     let stmt = match conn.prepare("select id, title, body from blog where id < $1") {
         Ok(stmt) => stmt,
@@ -87,12 +91,10 @@ fn main() {
 
     type IntArray = Array<Option<i32>>;
     let arr = get_single_value::<IntArray>(&conn, "select '{4, 5, 6}'::int[]");
-    println!("{:?}",
-             arr.map(|arr| {
-                 arr.iter()
-                     .filter_map(|x| *x)
-                     .collect::<Vec<_>>()
-             }));
+    println!(
+        "{:?}",
+        arr.map(|arr| arr.iter().filter_map(|x| *x).collect::<Vec<_>>())
+    );
 
     let json = get_single_value::<Json>(&conn, "select '{\"foo\": \"bar\", \"answer\": 42}'::json");
     println!("{:?}", json);

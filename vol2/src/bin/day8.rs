@@ -20,7 +20,7 @@ struct Task {
 
 #[derive(Deserialize, Debug)]
 struct Play {
-    #[serde(rename="hosts")]
+    #[serde(rename = "hosts")]
     host_list: String,
     tasks: Vec<Task>,
 }

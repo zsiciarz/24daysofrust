@@ -24,8 +24,10 @@ struct User {
 fn main() {
     println!("24 days of Rust - json (day 6)");
     println!("{:?}", json::encode(&42));
-    println!("{:?}",
-             json::encode(&vec!["to", "be", "or", "not", "to", "be"]));
+    println!(
+        "{:?}",
+        json::encode(&vec!["to", "be", "or", "not", "to", "be"])
+    );
     println!("{:?}", json::encode(&Some(true)));
     let user = User {
         name: "Zbyszek".to_string(),
@@ -46,13 +48,15 @@ fn main() {
     let incoming_request = "{\"name\":\"John\",\"post_count\":2,\"likes_burgers\":false,\
                             \"avatar\":null}";
     let decoded: User = json::decode(incoming_request).unwrap();
-    println!("My name is {} and I {} burgers",
-             decoded.name,
-             if decoded.likes_burgers {
-                 "love"
-             } else {
-                 "don't like"
-             });
+    println!(
+        "My name is {} and I {} burgers",
+        decoded.name,
+        if decoded.likes_burgers {
+            "love"
+        } else {
+            "don't like"
+        }
+    );
     assert!(decoded.avatar.is_none());
     let new_request = "{\"id\":64,\"title\":\"24days\",\"stats\":{\"pageviews\":1500}}";
     if let Ok(request_json) = json::Json::from_str(new_request) {

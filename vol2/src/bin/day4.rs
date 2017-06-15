@@ -57,10 +57,10 @@ fn main() {
     user.sign_in();
     let _ = user.find_waldo();
 
-    let console_drain =
-        slog_term::FullFormat::new(slog_term::PlainSyncDecorator::new(std::io::stdout()))
-            .build()
-            .fuse();
+    let console_drain = slog_term::FullFormat::new(
+        slog_term::PlainSyncDecorator::new(std::io::stdout()),
+    ).build()
+        .fuse();
     let file = File::create("app.log").expect("Couldn't open log file");
     let file_drain = slog_term::FullFormat::new(slog_term::PlainSyncDecorator::new(file))
         .build()
