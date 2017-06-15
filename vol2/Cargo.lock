@@ -35,7 +35,7 @@ dependencies = [
  "slog-stream 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "slog-term 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "tempfile 2.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "tera 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tera 0.10.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.37 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "winreg 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1210,7 +1210,7 @@ dependencies = [
 
 [[package]]
 name = "tera"
-version = "0.10.1"
+version = "0.10.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "chrono 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1591,7 +1591,7 @@ dependencies = [
 "checksum synom 0.11.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a393066ed9010ebaed60b9eafa373d4b1baac186dd7e008555b0f702b51945b6"
 "checksum tempdir 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "87974a6f5c1dfb344d733055601650059a3363de2a6104819293baff662132d6"
 "checksum tempfile 2.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "3213fd2b7ed87e39306737ccfac04b1233b57a33ca64cfbf52f2ffaa2b765e2f"
-"checksum tera 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "462408d239ffff6439089628a5fa7fec1bce31e6a633780baea93d31c64070af"
+"checksum tera 0.10.6 (registry+https://github.com/rust-lang/crates.io-index)" = "9c931ade2857155d5e55115375d4d2b8a441536e2b9e44643a8b67e235e09030"
 "checksum term 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)" = "d168af3930b369cfe245132550579d47dfd873d69470755a19c2c6568dbbd989"
 "checksum term_size 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e2b6b55df3198cc93372e85dd2ed817f0e38ce8cc0f22eb32391bfad9c4bf209"
 "checksum thread-id 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "a9539db560102d1cef46b8b78ce737ff0bb64e7e18d35b2a5688f7d097d0ff03"
