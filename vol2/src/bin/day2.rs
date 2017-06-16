@@ -5,7 +5,7 @@ extern crate rustfft;
 use std::f32::consts::PI;
 use hound::{SampleFormat, WavReader, WavSamples, WavSpec, WavWriter};
 use num::complex::Complex;
-use rustfft::FFT;
+use rustfft::FFTplanner;
 
 
 trait Signal {
@@ -45,13 +45,14 @@ fn generate_sine(filename: &str, frequency: f32, duration: u32) {
 fn find_spectral_peak(filename: &str) -> Option<f32> {
     let mut reader = WavReader::open(filename).expect("Failed to open WAV file");
     let num_samples = reader.len() as usize;
-    let mut fft = FFT::new(num_samples, false);
-    let signal = reader
+    let mut planner = FFTplanner::new(false);
+    let fft = planner.plan_fft(num_samples);
+    let mut signal = reader
         .samples::<i16>()
         .map(|x| Complex::new(x.unwrap() as f32, 0f32))
         .collect::<Vec<_>>();
     let mut spectrum = signal.clone();
-    fft.process(&signal[..], &mut spectrum[..]);
+    fft.process(&mut signal[..], &mut spectrum[..]);
     let max_peak = spectrum
         .iter()
         .take(num_samples / 2)
