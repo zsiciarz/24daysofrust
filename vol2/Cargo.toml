@@ -96,7 +96,7 @@ slog = "2.0.6"
 slog-json = "2.0.1"
 slog-term = "2.0.1"
 tempfile = "2.1.5"
-tera = "0.10.6"
+tera = "0.10.7"
 time = "0.1.37"
 uuid = { version = "0.5.0", features = ["v4"] }
 zip = "0.2.3"
