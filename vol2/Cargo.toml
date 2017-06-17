@@ -78,7 +78,7 @@ lazy_static = "0.2.8"
 leftpad = "0.2.0"
 #lettre = "0.6.1"
 markdown = "0.2.0"
-nom = "3.0.0"
+nom = "3.1.0"
 num = "0.1.39"
 num_cpus = "1.5.1"
 preferences = { git = "https://github.com/Eh2406/preferences-rs.git", rev = "4f426cf52da97d3b8914e10d4492f953d4304238" }
