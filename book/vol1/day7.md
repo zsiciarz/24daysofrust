@@ -18,7 +18,7 @@ foreach
 
 This and a few other functions live in the `Itertools` trait, so we need to bring them into scope by placing `use itertools::Itertools` in our module.
 
-`foreach()` is very simple conceptually. It consumes the (mutable) iterator, calling a closure witch each of the elements. The return type is `()` (unit), meaning that `foreach()` usually should be at the end of a call chain, like below:
+`foreach()` is very simple conceptually. It consumes the iterator, calling a closure witch each of the elements. The return type is `()` (unit), meaning that `foreach()` usually should be at the end of a call chain, like below:
 
 [include:8-9](../../vol1/src/bin/day7.rs)
 

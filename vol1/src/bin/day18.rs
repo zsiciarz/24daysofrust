@@ -9,8 +9,8 @@ type UserId = u64;
 fn add_friend(conn: &Connection, my_id: UserId, their_id: UserId) -> RedisResult<()> {
     let my_key = format!("friends:{}", my_id);
     let their_key = format!("friends:{}", their_id);
-    conn.sadd(my_key, their_id)?;
-    conn.sadd(their_key, my_id)?;
+    let _: () = conn.sadd(my_key, their_id)?;
+    let _: () = conn.sadd(their_key, my_id)?;
     Ok(())
 }
 

@@ -5,7 +5,7 @@ use itertools::Itertools;
 
 fn main() {
     println!("24 days of Rust - itertools (day 7)");
-    let mut words = "hello supercalifragilisticexpialidocious programmer".split(|c| c == ' ');
+    let words = "hello supercalifragilisticexpialidocious programmer".split(|c| c == ' ');
     words.foreach(|word| {
         println!("{} is {} characters long", word, word.len())
     });
