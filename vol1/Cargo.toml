@@ -57,7 +57,7 @@ name = "day21"
 [dependencies]
 anymap = "0.12.1"
 csv = "0.15.0"
-docopt = "0.8.0"
+docopt = "0.8.1"
 #docopt_macros = "0.7.0"
 hyper = { version = "0.10.12", default-features = false }
 image = "0.14.0"
@@ -76,8 +76,8 @@ rust-crypto = "0.2.36"
 rustc-serialize = "0.3.18"
 time = "0.1.36"
 tau = "1.0.4"
-url = "1.5.0"
-uuid = { version = "0.5.0", features = ["v4"] }
+url = "1.5.1"
+uuid = { version = "0.5.1", features = ["v4"] }
 
 [target.'cfg(unix)'.dependencies]
 fuse = "0.3.0"
