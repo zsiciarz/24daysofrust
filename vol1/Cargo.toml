@@ -59,30 +59,30 @@ anymap = "0.12.1"
 csv = "0.15.0"
 docopt = "0.8.1"
 #docopt_macros = "0.7.0"
-hyper = { version = "0.10.12", default-features = false }
+hyper = { version = "0.10.13", default-features = false }
 image = "0.14.0"
-itertools = "0.6.0"
+itertools = "0.6.5"
 json_macros = { git = "https://github.com/zsiciarz/json_macros.git" }
 libc = "0.2.24"
 nalgebra = "0.12.3"
-num = "0.1.39"
+num = "0.1.40"
 postgres = { version = "0.13.6", features = ["with-rustc-serialize", "with-time"] }
 postgres_array = "0.7.1"
 #postgres_range = "0.8.2"
 primal = "0.2.3"
-rand = "0.3.14"
+rand = "0.3.18"
 redis = "0.8.0"
 rust-crypto = "0.2.36"
 rustc-serialize = "0.3.18"
-time = "0.1.36"
+time = "0.1.38"
 tau = "1.0.4"
-url = "1.5.1"
+url = "1.6.0"
 uuid = { version = "0.5.1", features = ["v4"] }
 
 [target.'cfg(unix)'.dependencies]
-fuse = "0.3.0"
+fuse = "0.3.1"
 #postgres_macros = "0.1.13"
-zmq = "0.8.0"
+zmq = "0.8.2"
 
 #[replace]
 #"docopt_macros:0.7.0" = { git = "https://github.com/zsiciarz/docopt.rs.git" }

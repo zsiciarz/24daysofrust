@@ -115,7 +115,7 @@ impl Filesystem for JsonFilesystem {
         _req: &Request,
         ino: u64,
         fh: u64,
-        offset: u64,
+        offset: i64,
         size: u32,
         reply: ReplyData,
     ) {
@@ -141,7 +141,7 @@ impl Filesystem for JsonFilesystem {
         _req: &Request,
         ino: u64,
         fh: u64,
-        offset: u64,
+        offset: i64,
         mut reply: ReplyDirectory,
     ) {
         println!("readdir(ino={}, fh={}, offset={})", ino, fh, offset);
@@ -153,7 +153,7 @@ impl Filesystem for JsonFilesystem {
                     if inode == 1 {
                         continue;
                     }
-                    let offset = inode; // hack
+                    let offset = inode as i64; // hack
                     println!("\tkey={}, inode={}, offset={}", key, inode, offset);
                     reply.add(inode, offset, FileType::RegularFile, key);
                 }
