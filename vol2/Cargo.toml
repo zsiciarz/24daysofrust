@@ -106,7 +106,7 @@ winreg = "0.4"
 
 [target.'cfg(unix)'.dependencies]
 cursive = { git = "https://github.com/gyscos/Cursive", rev = "f485f608edcfc8a65e9b3ff79a0169ba94c0d4f5", default-features = false, features=["pancurses"] }
-diesel = "0.13.1"
-diesel_codegen = { version = "0.13.0", features=["postgres"]}
+diesel = "0.16.0"
+diesel_codegen = { version = "0.16.0", features=["postgres"]}
 git2 = "0.6.8"
 rust-lzma = "0.2.1"

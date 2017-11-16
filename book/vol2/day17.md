@@ -49,7 +49,6 @@ mod schema {
 use schema::*;
 
 #[derive(Debug, Queryable, Identifiable, Associations, AsChangeset)]
-#[has_many(photos)]
 pub struct User {
     pub id: i32,
     pub username: String,
