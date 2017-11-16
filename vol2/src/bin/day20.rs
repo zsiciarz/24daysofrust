@@ -43,7 +43,7 @@ fn main() {
     println!("{}", buf);
     copy(&mut response, &mut stdout()).expect("Failed to read response");
 
-    let client = reqwest::Client::new().expect("Couldn't create client");
+    let client = reqwest::Client::new();
     let mut params = HashMap::new();
     params.insert("name", "Sir Lancelot");
     params.insert("quest", "to seek the Holy Grail");

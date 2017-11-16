@@ -92,7 +92,7 @@ working with a `Client`.
 ```rust
 use std::collections::HashMap;
 
-let client = reqwest::Client::new().expect("Couldn't create client");
+let client = reqwest::Client::new();
 let mut params = HashMap::new();
 params.insert("name", "Sir Lancelot");
 params.insert("quest", "to seek the Holy Grail");
