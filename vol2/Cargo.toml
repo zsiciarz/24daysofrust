@@ -85,7 +85,7 @@ preferences = { git = "https://github.com/Eh2406/preferences-rs.git", rev = "4f4
 phf = "0.7.21"
 phf_macros = "0.7.21"
 rand = "0.3.18"
-rayon = "0.8.2"
+rayon = "0.9.0"
 reqwest = "0.8.1"
 rustfft = "2.0.0"
 serde = "1.0.21"
