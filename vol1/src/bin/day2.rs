@@ -3,10 +3,9 @@ extern crate primal;
 use primal::Sieve;
 
 fn num_divisors(n: usize, primes: &Sieve) -> Option<usize> {
-    match primes.factor(n) {
-        Ok(factors) => Some(factors.into_iter().fold(1, |acc, (_, x)| acc * (x + 1))),
-        Err(_) => None,
-    }
+    primes.factor(n)
+        .map(|factors| factors.into_iter().map(|(_, x)| x + 1).product())
+        .ok()
 }
 
 fn main() {
