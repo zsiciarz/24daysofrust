@@ -74,7 +74,7 @@ dotenv = "0.10.1"
 #envy = "0.1.2"
 error-chain = "0.11.0"
 hound = "3.2.0"
-lazy_static = "0.2.10"
+lazy_static = "0.2.11"
 leftpad = "0.2.0"
 #lettre = "0.6.1"
 markdown = "0.2.0"
@@ -105,7 +105,7 @@ zip = "0.2.6"
 winreg = "0.4"
 
 [target.'cfg(unix)'.dependencies]
-cursive = { version = "0.7.2", default-features = false, features=["pancurses-backend"] }
+cursive = { version = "0.7.4", default-features = false, features=["pancurses-backend"] }
 diesel = "0.16.0"
 diesel_codegen = { version = "0.16.0", features=["postgres"]}
 git2 = "0.6.8"
