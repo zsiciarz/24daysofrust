@@ -116,7 +116,7 @@ fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
     if ino == 1 {
         reply.attr(&ttl, &attr);
     } else {
-        reply.error(ENOSYS);
+        reply.error(ENOENT);
     }
 }
 ```
