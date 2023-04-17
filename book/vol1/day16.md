@@ -62,7 +62,7 @@ drwxrwxrwt 10 root root 4096 Dec 10 00:38 ..
 
 Starting to look good! Our JSON keys are there, but what's with these question marks? Turns out FUSE calls another method called `lookup()` and since we haven't defined it yet, a default implementation will be used. But before we write our customized `lookup`, let's refactor the code a bit.
 
-Both `getattr` and `lookup` create `FileAttr` values based on inode number or filename (JSON key in our example). Since we intend our filesystem to be read-only, let's create all necessary atributes upon initialization. This will simplify the other methods a lot.
+Both `getattr` and `lookup` create `FileAttr` values based on inode number or filename (JSON key in our example). Since we intend our filesystem to be read-only, let's create all necessary attributes upon initialization. This will simplify the other methods a lot.
 
 ```rust
 use std::collections::BTreeMap;
